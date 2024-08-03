@@ -35,7 +35,9 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+.h-45px{
+  height: 45px;
+}
 #popup {
   position: absolute;
   display: none;
