@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: epiz_33648996_main
+      MYSQL_USER: dbs
+      MYSQL_PASSWORD: pass
+    ports:
+      - "3306:3306"
+  web:
+      build:
+        context: .
+      container_name: apache_php
+      volumes:
+        - ./web:/var/www/html
+      ports:
+        - "80:80"
+      depends_on:
+        - db
+     #s user: "1000:1000"  # Set UID and GID to 1000
+
+volumes:
+  db_data:
+    driver: local
