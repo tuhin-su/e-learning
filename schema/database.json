@@ -5,7 +5,7 @@
                 "id":"fileHash",
                 "name":"String",
                 "data":"String",
-                "date":"String",
+                "date": "Crunttime Strap",
                 "version":"String"
             }
         },
@@ -17,7 +17,8 @@
                 "email":"String",
                 "password":"String",
                 "mobile":"String",
-                "groups":"group-id"
+                "groups":"group-id",
+                "date": "Crunttime Strap"
             }
         },
 
@@ -27,8 +28,19 @@
                 "name":"String",
                 "priorty":"Number",
                 "creator":"Number",
-                "gropup-code":"String"
+                "gropup-code":"String",
+                "date": "Crunttime Strap"
             }
+        },
+        
+        "user_info":{
+            "name":"String",
+            "age":"Number",
+            "gender":"String",
+            "address":"String",
+            "date": "Crunttime Strap",
+            "profile_picher":"String",
+            "bio":"String"
         }
 
     }
