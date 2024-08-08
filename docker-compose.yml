@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: epiz_33648996_main
+      MYSQL_USER: dbs
+      MYSQL_PASSWORD: pass
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./schema:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    user: "1000:1000"  # Set UID and GID to 1000
+
+  web:
+    image: php:apache
+    container_name: apache_php
+    volumes:
+      - ./web:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    user: "1000:1000"  # Set UID and GID to 1000
+    # environment:
+    #   DB_HOST: db
+    #   DB_NAME: ddthis
+    #   DB_USER: dbs
+    #   DB_PASSWORD: 1se
+
+volumes:
+  db_data:
+    driver: local
