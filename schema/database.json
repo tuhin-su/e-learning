@@ -5,8 +5,9 @@
                 "id":"fileHash",
                 "name":"String",
                 "data":"String",
-                "date": "Crunttime Strap",
-                "version":"String"
+                "version":"String",
+                "type":"String",
+                "date": "Crunttime Strap"
             }
         },
 

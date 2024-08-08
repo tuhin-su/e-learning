@@ -29,3 +29,29 @@ function base64ToJson(base64String) {
         return null;
     }
 }
+
+function fetchData(data) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        var apiUrl = 'http://localhost/api?data=' + jsonToBase64(data); // Example API endpoint
+
+        xhr.open('GET', apiUrl, true);
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                var response = base64ToJson(xhr.responseText);
+                resolve(response);
+            } else {
+                console.error('Request failed. Status:', xhr.status);
+                reject('Error: ' + xhr.status);
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('Request failed.');
+            reject('Request failed.');
+        };
+
+        xhr.send();
+    });
+}

@@ -1,9 +1,0 @@
-### GET Request Example
-GET http://localhost/api
-Accept: application/json
-
-### POST Request Example with text/plain
-POST https://jsonplaceholder.typicode.com/posts
-Content-Type: text/plain
-
-This is the body of the POST request, sent as plain text.
