@@ -1,53 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bootstrap demo</title>
-    <link href="/resource/css/main.css" rel="stylesheet">
+    <link href="/resource/css/main.css" rel="stylesheet" />
     <script src="/resource/js/jquery-3.7.1.min.js"></script>
   </head>
-  <body>
-        <div id="bg" style="overflow: hidden;">
-        </div>
-        <div id="main"> 
-            <div id="body">
-                <div class="w-100 h-100 flex-column flex overflow-hidden">
-                    <div class="bg-primary w-100 h-25 flex">
-                        <img src="/resource/imgs/student.jpg" class="rounded-circle h-75 my-4 m-3"/>
-                        <div class="m-4 float-end">
-                           <h2 class="text-white">Student Name</h2>
-                           <p class="text-white">Student ID: 123456789</p>
-                           <div>
-                              <button type="button" class="btn btn-success">
-                                <i class="bi bi-bell">
-                                  <span class="badge badge-light">4</span>
-                                </i> 
-                              </button>
-
-                              
-                           </div>
-                    
-                        </div>
-                      </div>
-                      <div class="w-100 h-75 p-4 overflow-scroll">
-                          <div class="card mb-3 h-90px flex-row align-items-center overflow-hidden">
-                            <div class=" h-100 w-25">
-                              <img src="/resource/imgs/icon-att.jpg" class="h-100">
-                            </div>
-                            <div class="h-100 w-50 text-center p-2">
-                              <span>Attendants</span>
-                              <span class="">Add Your Attendants</span>
-                            </div>
-                            <div class="m-1 h-100 float-end w-25">
-                              <i class="bi bi-arrow-90deg-right"></i>
-                            </div>
-                          </div>
-                      </div>
-                </div>
+  <body class="bg-body-tertiary">
+    <div id="bg" style="overflow: hidden"></div>
+    <div id="main">
+      <div id="body">
+        <div class="w-100 h-100 flex-column flex overflow-hidden">
+          <div class="bg-primary w-100 h-25 flex">
+            <img
+              src="/resource/imgs/student.jpg"
+              class="rounded-circle h-75 my-4 m-3"
+            />
+            <div class="m-4 float-end">
+              <h2 class="text-white">Student Name</h2>
+              <p class="text-white">Student ID: 123456789</p>
+              <div>
+                <button type="button" class="btn btn-success">
+                  <i class="bi bi-bell">
+                    <span class="badge badge-light">4</span>
+                  </i>
+                </button>
+              </div>
             </div>
+          </div>
+          <div class="w-100 h-75 p-4 overflow-scroll">
+            <!-- attendens -->
+            <div
+              class="btn card mb-3 h-90px flex-row align-items-center overflow-hidden"
+            >
+              <div class="h-100 w-25">
+                <img src="/resource/imgs/icon-att.jpg" class="h-100" />
+              </div>
+              <div class="h-100 w-50 p-2 flex justify-content-center def-flex">
+                <h3>Attendants</h3>
+              </div>
+              <div
+                class="m-1 h-100 float-end w-25 flex justify-content-center align-items-center def-flex"
+              >
+                <i
+                  class="bi bi-chevron-compact-right"
+                  style="font-size: 2em"
+                ></i>
+              </div>
+            </div>
+
+            <!-- Daily Classes -->
+            <div
+              class="btn card mb-3 h-90px flex-row align-items-center overflow-hidden"
+            >
+              <div class="h-100 w-25">
+                <img src="/resource/imgs/DailyClasses.jpg" class="h-100 rounded-1" />
+              </div>
+              <div class="h-100 w-50 p-2 flex justify-content-center def-flex">
+                <h3>Daily Classes</h3>
+              </div>
+              <div
+                class="m-1 h-100 float-end w-25 flex justify-content-center align-items-center def-flex"
+              >
+                <i
+                  class="bi bi-chevron-compact-right"
+                  style="font-size: 2em"
+                ></i>
+              </div>
+            </div>
+
+            <!-- Show Case  -->
+            <div
+              class="btn card mb-3 h-90px flex-row align-items-center overflow-hidden"
+            >
+              <div class="h-100 w-25">
+                <img src="/resource/imgs/ShowCase.jpg" class="h-100" />
+              </div>
+              <div class="h-100 w-50 p-2 flex justify-content-center def-flex">
+                <h3>Attendants</h3>
+              </div>
+              <div
+                class="m-1 h-100 float-end w-25 flex justify-content-center align-items-center def-flex"
+              >
+                <i
+                  class="bi bi-chevron-compact-right"
+                  style="font-size: 2em"
+                ></i>
+              </div>
+            </div>
+            <!-- Calendar -->
+            <div
+              class="btn card mb-3 h-90px flex-row align-items-center overflow-hidden"
+            >
+              <div class="h-100 w-25">
+                <img src="/resource/imgs/Calendar.jpg" class="h-100" />
+              </div>
+              <div class="h-100 w-50 p-2 flex justify-content-center def-flex">
+                <h3>Attendants</h3>
+              </div>
+              <div
+                class="m-1 h-100 float-end w-25 flex justify-content-center align-items-center def-flex"
+              >
+                <i
+                  class="bi bi-chevron-compact-right"
+                  style="font-size: 2em"
+                ></i>
+              </div>
+            </div>
+
+            <!-- Setting -->
+            <div
+            class="btn card mb-3 h-90px flex-row align-items-center overflow-hidden"
+          >
+            <div class="h-100 w-25">
+              <img src="/resource/imgs/Setting.jpg" class="h-100" />
+            </div>
+            <div class="h-100 w-50 p-2 flex justify-content-center def-flex">
+              <h3>Attendants</h3>
+            </div>
+            <div
+              class="m-1 h-100 float-end w-25 flex justify-content-center align-items-center def-flex"
+            >
+              <i
+                class="bi bi-chevron-compact-right"
+                style="font-size: 2em"
+              ></i>
+            </div>
+          </div>
+          </div>
         </div>
-        <div id="popup"></div>
+      </div>
+    </div>
+    <div id="popup"></div>
     <script src="/resource/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/resource/js/main.js"></script>
   </body>

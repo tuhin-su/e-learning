@@ -50,4 +50,10 @@ body {
 
 .h-90px {
   height: 90px;
+}
+
+.def-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=main.css.map */
