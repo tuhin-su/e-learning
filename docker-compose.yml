@@ -9,10 +9,10 @@ services:
       MYSQL_PASSWORD: pass
     volumes:
       - ./data:/var/lib/mysql
-      - ./schema:/docker-entrypoint-initdb.d
+      - ./schema-db:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
-    user: "1000:1000"  # Set UID and GID to 1000
+#    user: "1000:1000"  # Set UID and GID to 1000
 
   web:
     image: php:apache

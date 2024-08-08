@@ -1,0 +1,36 @@
+{
+    "Tables":{
+        "resorces":{
+            "columns":{
+                "id":"fileHash",
+                "name":"String",
+                "data":"String",
+                "date":"String",
+                "version":"String"
+            }
+        },
+
+        "user":{
+            "columns":{
+                "id":"hash",
+                "name":"String",
+                "email":"String",
+                "password":"String",
+                "mobile":"String",
+                "groups":"group-id"
+            }
+        },
+
+        "gropus":{
+            "columns":{
+                "id":"Number",
+                "name":"String",
+                "priorty":"Number",
+                "creator":"Number",
+                "gropup-code":"String"
+            }
+        }
+
+    }
+    
+}
