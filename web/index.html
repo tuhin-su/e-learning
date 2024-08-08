@@ -169,7 +169,7 @@
         fetchData({ reqFor: "ver" })
           .then((response) => {
             if (response.state.state) {
-              // localStorage.setItem('ver', response.ver);
+              localStorage.setItem('ver', response.ver);
             }
           })
           .catch((error) => {
