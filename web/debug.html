@@ -86,6 +86,10 @@
     </div>
     <div id="popup"></div>
     <script>
+      function showConnerror(error){
+        alert(error);
+      }
+
       // Function to convert JSON to Base64
       function jsonToBase64(jsonObject) {
         try {
@@ -97,7 +101,7 @@
 
           return base64Encoded;
         } catch (error) {
-          console.error("Error encoding JSON to Base64:", error);
+          alert("Error encoding JSON to Base64:", error);
           return null;
         }
       }
@@ -110,7 +114,7 @@
           const jsonObject = JSON.parse(jsonString);
           return jsonObject;
         } catch (error) {
-          console.error("Error decoding Base64 to JSON:", error);
+          alert("Error decoding Base64 to JSON:", error);
           return null;
         }
       }
@@ -127,13 +131,13 @@
               var response = base64ToJson(xhr.responseText);
               resolve(response);
             } else {
-              console.error("Request failed. Status:", xhr.status);
+              alert("Request failed. Status:", xhr.status);
               reject("Error: " + xhr.status);
             }
           };
 
           xhr.onerror = function () {
-            console.error("Request failed.");
+            alert("Request failed.");
             reject("Request failed.");
           };
 
@@ -163,7 +167,7 @@
             }
           })
           .catch((error) => {
-            console.log(error);
+            alert(error);
           });
 
         // load version
@@ -174,11 +178,13 @@
             }
           })
           .catch((error) => {
-            console.log(error);
+            alert(error);
           });
       }
 
+      alert("check local storage")
       if (!localStorage.getItem("ver")) {
+        alert("load comm")
         loadBasicComponent();
       }
 
@@ -188,12 +194,12 @@
             if (response.ver > localStorage.getItem("ver")) {
               loadBasicComponent();
             } else {
-              console.log("No updates available.");
+              alert("No updates available.");
             }
           }
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
     </script>
   </body>
