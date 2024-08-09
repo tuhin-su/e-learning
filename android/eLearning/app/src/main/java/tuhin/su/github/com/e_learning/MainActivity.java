@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure WebView settings
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUserAgentString("myuseragent");
 
+        webView.getSettings().setUserAgentString("ela.timt");
+        webView.setWebChromeClient(new WebChromeClient());
         // Set WebViewClient to handle content
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Load the local HTML file from assets
         webView.loadUrl("file:///android_res/raw/boot.html");
-
+//        webView.loadUrl("http://192.168.43.163/");
         // Additional UI Customization: Full-Screen Mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -63,3 +64,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

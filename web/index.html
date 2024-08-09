@@ -146,20 +146,24 @@
           reqFor: "res",
           name: "main-js",
         };
+
         fetchData(data)
           .then((response) => {
-            if (response.state.state) {
-              localStorage.setItem(
-                response.res[0],
-                JSON.stringify(response.res)
-              );
-              let script = document.createElement("script");
-              script.id = response.res[0];
-              script.innerText = response.res[1];
-              if (!document.getElementById(response.res[0])) {
-                document.head.appendChild(script);
+            console.log(response);
+            if (response != null) {
+              if (response.state.state) {
+                localStorage.setItem(
+                  response.res[0],
+                  JSON.stringify(response.res)
+                );
+                let script = document.createElement("script");
+                script.id = response.res[0];
+                script.innerText = response.res[1];
+                if (!document.getElementById(response.res[0])) {
+                  document.head.appendChild(script);
+                }
+                return;
               }
-              return;
             }
           })
           .catch((error) => {
@@ -169,19 +173,23 @@
         // load version
         fetchData({ reqFor: "ver" })
           .then((response) => {
+           if (response != null) {
             if (response.state.state) {
               localStorage.setItem('ver', response.ver);
             }
+           }
           })
           .catch((error) => {
             console.log(error);
           });
       }
 
+      console.log("Checking localstorage for version")
       if (!localStorage.getItem("ver")) {
+        console.log("ver not found in localstorage")
         loadBasicComponent();
       }
-
+      console.log("local storage found")
       fetchData({ reqFor: "ver" })
         .then((response) => {
           if (response.state.state) {
