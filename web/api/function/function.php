@@ -28,32 +28,23 @@
     function validateSession() {
         session_start();
         $sessionLifetime = 3 * 24 * 60 * 60; // 3 days in seconds
-    
-        // Check if a session start time is set
         if (isset($_SESSION['start_time'])) {
             $currentTime = time();
             $sessionStartTime = $_SESSION['start_time'];
             $sessionExpiryTime = $sessionStartTime + $sessionLifetime;
     
-            // If the current time is greater than the expiry time, destroy the session
             if ($currentTime > $sessionExpiryTime) {
                 session_unset();
                 session_destroy();
-                echo "Session has expired and is destroyed.";
                 return;
             } else {
-                // If a reset request is made before expiration, extend the session
                 if (isset($_POST['reset_request'])) {
                     $_SESSION['start_time'] = time();
-                    echo "Session has been extended for another 3 days.";
                 } else {
-                    echo "Session is active.";
                 }
             }
         } else {
-            // If no session start time is set, initialize it
             $_SESSION['start_time'] = time();
-            echo "Session started.";
         }
     }
 

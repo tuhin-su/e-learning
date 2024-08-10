@@ -9,16 +9,16 @@ services:
       MYSQL_PASSWORD: pass
     ports:
       - "3306:3306"
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: apache_php
-    volumes:
-      - ./web:/var/www/html  # Mount the application directory
-    ports:
-      - "80:80"
-     #s user: "1000:1000"  # Set UID and GID to 1000
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: apache_php
+  #   volumes:
+  #     - ./web:/var/www/html  # Mount the application directory
+  #   ports:
+  #     - "80:80"
+  #    #s user: "1000:1000"  # Set UID and GID to 1000
 
 volumes:
   db_data:

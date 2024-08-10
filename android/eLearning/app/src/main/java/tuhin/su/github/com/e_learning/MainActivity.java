@@ -2,9 +2,12 @@ package tuhin.su.github.com.e_learning;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
@@ -19,39 +22,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Hide the action bar and system UI
+        // Hide the system UI
         hideSystemUI();
 
         webView = findViewById(R.id.webview);
 
-        // Configure WebView settings
-        webView.getSettings().setJavaScriptEnabled(true);
+        // Initialize WebView settings
+        initializeWebViewSettings();
 
-        webView.getSettings().setUserAgentString("ela.timt");
-        webView.setWebChromeClient(new WebChromeClient());
-        // Set WebViewClient to handle content
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // Allow WebView to handle the URL
-            }
-        });
+        // Set WebView clients
+        webView.setWebViewClient(new CustomWebViewClient());
+        webView.setWebChromeClient(new CustomWebChromeClient());
 
-        // Set WebChromeClient to handle JavaScript dialogs
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                // Optionally handle progress changes
-            }
-        });
-
-        // Load the local HTML file from assets
+        // Load the local HTML file or remote URL
         webView.loadUrl("file:///android_res/raw/boot.html");
-//        webView.loadUrl("http://192.168.43.163/");
+        // If using a remote URL, use:
+        // webView.loadUrl("http://yourserver.com");
+
         // Additional UI Customization: Full-Screen Mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    private void initializeWebViewSettings() {
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
+
+        WebView.setWebContentsDebuggingEnabled(true); // Enable WebView debugging
     }
 
     private void hideSystemUI() {
@@ -63,5 +69,50 @@ public class MainActivity extends AppCompatActivity {
             );
         }
     }
-}
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (webView != null) {
+            webView.onPause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (webView != null) {
+            webView.onResume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webView != null) {
+            webView.destroy();
+        }
+    }
+
+    private class CustomWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            // Allow WebView to handle the URL
+            return false;
+        }
+    }
+
+    private class CustomWebChromeClient extends WebChromeClient {
+        @Override
+        public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+            Log.d("WebViewConsole", consoleMessage.message());
+            return super.onConsoleMessage(consoleMessage);
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            // Optionally handle progress changes (e.g., update a progress bar)
+        }
+    }
+}

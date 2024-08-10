@@ -10,11 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // connect databse
-include "./conf/index.php";
+include "conf/index.php";
 // handel GET requst
 $responce = array();
 $sate = new State();
 $sate->state = true;
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // hendel it all type resorses
     if (isset($_GET['data'])) {
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         $sate->state = false;
                         $sate->msg = $res->msg;
                     } else {
-                        $responce["ver"] = $res->msg;
+                        $responce["res"] = ["ver", $res->msg];
                     }
                     break;
 
@@ -61,8 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 // handel post rquest
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "POST";
+    $responce["msg"]="helo";
 }
 
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 $responce["state"] = $sate;
 echo encodeToBase64($responce);
