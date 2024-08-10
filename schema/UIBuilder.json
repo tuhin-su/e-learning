@@ -1,0 +1,13 @@
+[
+    {
+        "perent":"PerentTagName/#id/.class",
+        "name":"ChildTagName",
+        "attribute":{
+            "attributeName":"value",
+            "attributeName2":"value2"
+        },
+        "content":"ChildContent",
+        "children":["Repet"]
+    }
+]
+

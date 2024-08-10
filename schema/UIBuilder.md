@@ -1,0 +1,24 @@
+# Vurnable js injection
+[
+    {
+        "perent":"#body",
+        "name":"ul",
+        "attribute":{
+            "id":"example"
+        },
+        "children":[
+            {
+                "name":"li",
+                "content":"a"
+            },
+            {
+                "name":"li",
+                "content":"b"
+            },
+            {
+                "name":"li",
+                "content":"c"
+            }
+        ]
+    }
+]

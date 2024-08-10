@@ -62,7 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 // handel post rquest
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $responce["msg"]="helo";
+    #$data = decodeFromBase64($_POST['data']);
+    if (authValidation()) {
+        $sate->msg="Do any thing";
+    }
+    else {
+        $sate->state = false;
+        $sate->msg = "Authentication failed";
+    }
 }
 
 
