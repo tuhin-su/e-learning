@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebChromeClient(new CustomWebChromeClient());
 
         // Load the local HTML file or remote URL
-        webView.loadUrl("file:///android_res/raw/boot.html");
+        webView.loadUrl("file:///android_asset/boot.html");
         // If using a remote URL, use:
         // webView.loadUrl("http://yourserver.com");
 

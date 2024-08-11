@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TIMT</title>
-    <style>
+    <link id="bootstrap-icon" rel="stylesheet" href="./fonts/font/bootstrap-icons.min.css">
+    <link id="bootstrap-css" rel="stylesheet" href="./style.css">
+    <style id="boot-sass">
       * {
         padding: 0;
         margin: 0;
@@ -176,6 +178,7 @@
             name: name,
           }
           await fetchData(data);
+          location.reload();
         }
         return JSON.parse(atob(localStorage.getItem(name)));
       }
@@ -217,11 +220,13 @@
         //   obj = resourceBuilder(res);
         //   if (obj) {
         //     document.head.appendChild(obj);
+
         //   }
         // });
-        let sc = document.createElement("script");
-        sc.src = "main.js";
-        document.head.appendChild(sc);
+        let mainjs = document.createElement("script");
+        mainjs.id="main-js";
+        mainjs.src = "./main.js";
+        document.head.appendChild(mainjs);
       }
 
       async function updateResorce(){
@@ -292,8 +297,7 @@
       else{
         checkVer();
       }
-      
-      document.getElementById("boot-script").remove();
     </script>
+    <script id="bootstrap-js" src="./logicUI.js"></script>
   </body>
 </html>

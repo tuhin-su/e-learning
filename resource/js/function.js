@@ -1,4 +1,4 @@
- apiHost="http://localhost/api"
+ apiHost="http://192.168.43.163/api"
  // Function to convert JSON to Base64
  function jsonToBase64(jsonObject) {
   try {
@@ -94,19 +94,26 @@ async function resourceManager(name){
 
 function resourceBuilder(obj){
   let name = '';
+  let content = '';
   switch (obj[2]) {
     case "javascript":
       name = 'script';
+      content = atob(obj[1]);
       break;
+
     case "css":
       name = 'style';
+      content = "@import url('data:text/css;base64,"+atob(obj[1])+"');"
       break;
+    case "png":
+      return obj[1];
     default:
       return;
   }
+  //  @import url('
   let tag = document.createElement(name);
   tag.id = obj[0];
-  tag.innerHTML = atob(obj[1]);
+  tag.innerHTML = content;
   return tag;
 }
 
@@ -144,11 +151,12 @@ async function updateResorce(){
         await fetchData(data);
       }
   }
+  location.reload();
 }
 
 function checkVer(){
       const xhr = new XMLHttpRequest();
-      const url = 'http://localhost/api?data=' + jsonToBase64({"reqFor":"ver"});
+      const url = apiHost+'?data=' + jsonToBase64({"reqFor":"ver"});
       xhr.open('GET', url, true);
       xhr.onload = function() {
           if (xhr.status >= 200 && xhr.status < 300) {

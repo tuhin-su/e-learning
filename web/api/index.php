@@ -57,14 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     } else {
         $sate->state = false;
-        $sate->msg = "No data provided";
+        $sate->msg = "No dagta provided";
     }
 }
 // handel post rquest
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    #$data = decodeFromBase64($_POST['data']);
     if (authValidation()) {
-        $sate->msg="Do any thing";
+        $data = decodeFromBase64($_POST['data']);
+
+        $sate->msg=$data;
     }
     else {
         $sate->state = false;

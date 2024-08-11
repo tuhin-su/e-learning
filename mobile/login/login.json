@@ -1,0 +1,120 @@
+[
+    {
+        "perent":"#body",
+        "requrment":["main-css","jq-js","bootstrap-css","main-js"],
+        "name":"div",
+        "attribute":{
+            "class":"w-75 h-50 flex flex-column"
+        },
+
+        "children":[
+            {
+                "name":"div",
+                "attribute":
+                {
+                    "class":"mb-4 input-group flex-nowrap mb-2 justify-content-center"
+                },
+                "children":[
+                    {
+                        "name":"img",
+                        "src":"student-img",
+                        "attribute":{
+                            "class":"rounded-circle",
+                            "style":"width: 200px;"
+                        }
+                    }
+                ]
+            },
+
+            {
+                "name":"div",
+                "attribute":{
+                    "class":"h-45px input-group flex-nowrap mb-2"
+                },
+                "children":[
+                    {
+                        "name":"span",
+                        "attribute":{
+                            "class":"input-group-text"
+                        },
+                        "children":[
+                            {
+                                "name":"i",
+                                "attribute":{
+                                    "class":"bi bi-person"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name":"input",
+                        "attribute":{
+                            "type":"text",
+                            "class":"form-control",
+                            "placeholder":"User ID",
+                            "aria-label":"UserId",
+                            "aria-describedby":"addon-wrapping"
+                        }
+                    }
+                ]
+            },
+
+            {
+                "name":"div",
+                "attribute":{
+                    "class":"input-group flex-nowrap mb-2 h-45px"
+                },
+                "children":[
+                    {
+                        "name":"span",
+                        "attribute":{
+                            "class":"input-group-text"
+                        },
+                        "children":[
+                            {
+                                "name":"i",
+                                "attribute":{
+                                    "class":"bi bi-file-earmark-lock"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name":"input",
+                        "attribute":{
+                            "type":"password",
+                            "class":"form-control",
+                            "placeholder":"password",
+                            "aria-label":"password",
+                            "aria-describedby":"addon-wrapping"
+                        }
+                    }
+                    
+                ]
+            },
+            {
+                "name":"div",
+                "attribute":{
+                    "class":"input-group flex-nowrap mt-5 flex justify-content-center"
+                },
+                "children":[
+                    {
+                        "name":"button",
+                        "attribute":{
+                            "class":"btn bg-primary text-white",
+                            "style":"width: 100px; height: 44px;"
+                        },
+                        "children":[
+                            {
+                                "name":"i",
+                                "attribute":{
+                                    "class":"bi bi-arrow-right-circle-fill"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -2,6 +2,8 @@
     {
         "perent":"PerentTagName/#id/.class",
         "name":"ChildTagName",
+        "requrment":["bootstrap-css","bootstrap-js"],
+        "src":"URL/resorce-name",
         "attribute":{
             "attributeName":"value",
             "attributeName2":"value2"
