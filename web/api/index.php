@@ -62,14 +62,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 // handel post rquest
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (authValidation()) {
-        $data = decodeFromBase64($_POST['data']);
-
-        $sate->msg=$data;
-    }
-    else {
-        $sate->state = false;
-        $sate->msg = "Authentication failed";
+    $auth = authValidation();
+    $data = decodeFromBase64($_POST['data']);
+    if ($data["reqFor"]=='form') {
+        $fromData=$data["data"];
+        switch ($data['form']) {
+            case 'login':
+                $loginStat = loginCheck($fromData["userId"],$fromData["passwd"]);
+                $sate->msg = $loginStat['msg'];
+                if (!$loginStat["status"]) {
+                    $sate->state=false;
+                }
+                else{
+                    $responce["do"]=[
+                        "redirect"=>"app-dashbord"
+                    ];
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
     }
 }
 

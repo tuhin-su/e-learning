@@ -4,7 +4,8 @@
         "requrment":["main-css","jq-js","bootstrap-css","main-js"],
         "name":"div",
         "attribute":{
-            "class":"w-75 h-50 flex flex-column"
+            "class":"w-75 h-50 flex flex-column",
+            "id":"login"
         },
 
         "children":[
@@ -49,11 +50,14 @@
                     {
                         "name":"input",
                         "attribute":{
+                            "name":"userId",
                             "type":"text",
                             "class":"form-control",
                             "placeholder":"User ID",
                             "aria-label":"UserId",
-                            "aria-describedby":"addon-wrapping"
+                            "aria-describedby":"addon-wrapping",
+                            "required":true,
+                            "pattern":"^[a-zA-Z0-9]+$"
                         }
                     }
                 ]
@@ -82,11 +86,14 @@
                     {
                         "name":"input",
                         "attribute":{
+                            "name":"passwd",
                             "type":"password",
                             "class":"form-control",
                             "placeholder":"password",
                             "aria-label":"password",
-                            "aria-describedby":"addon-wrapping"
+                            "aria-describedby":"addon-wrapping",
+                            "required":true,
+                            "pattern":"^[a-zA-Z0-9]+$"
                         }
                     }
                     
@@ -102,7 +109,8 @@
                         "name":"button",
                         "attribute":{
                             "class":"btn bg-primary text-white",
-                            "style":"width: 100px; height: 44px;"
+                            "style":"width: 100px; height: 44px;",
+                            "fromName":"login"
                         },
                         "children":[
                             {

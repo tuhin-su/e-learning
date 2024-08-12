@@ -1,0 +1,102 @@
+[
+    {
+        "perent":"#body",
+        "requrment":["main-css","jq-js","bootstrap-css","main-js"],
+        "name":"div",
+        "attribute":{
+            "class":"w-100 h-100 flex-column flex overflow-hidden"
+        },
+
+        "children":[
+            {
+                "name":"div",
+                "attribute":{
+                    "class":"bg-primary w-100 h-25 flex"
+                },
+                "children":[
+                    {
+                        "name":"img",
+                        "src":"student-pic",
+                        "attribute":{
+                            "class":"rounded-circle h-75 my-4 m-3"
+                        }
+                    },
+
+                    {
+                        "name":"div",
+                        "append":true,
+                        "attribute":{
+                            "class":"m-4 float-end"
+                        },
+                        "children":[
+                            {
+                                "name":"h2",
+                                "attribute":{
+                                    "class":"text-white"
+                                },
+                                "content":"{{name}}"
+
+                            },
+                            {
+                                "name":"p",
+                                "append":true,
+                                "attribute":{
+                                    "class":"text-white"
+                                },
+                                "content":"Student ID: {{stID}}"
+                            },
+                            {
+                                "name":"div",
+                                "append":true,
+                                "children":[
+                                    {
+                                        "name":"button",
+                                        "attribute":{
+                                            "class":"btn btn-success"
+                                        },
+                                        "children":[
+                                            {
+                                                "name":"i",
+                                                "attribute":{
+                                                    "class":"bi bi-bell"
+                                                },
+                                                "children":[
+                                                    {
+                                                        "name":"span",
+                                                        "attribute":{
+                                                            "class":"badge badge-light"
+                                                        },
+                                                        "content":"{{NotifyNo}}"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "name":"div",
+                "append":true,
+                "attribute":{
+                    "class":"w-100 h-75 p-4 overflow-scroll"
+                },
+                "children":[
+                    {
+                        "name":"div",
+                        "attribute":{
+                            "class":"btn card mb-3 h-90px flex-row align-items-center overflow-hidden",
+                        },
+                        "children":[{
+                            
+                        }]
+                    }
+                ]
+            }
+        ]
+    }
+]

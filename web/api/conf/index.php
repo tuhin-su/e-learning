@@ -45,4 +45,24 @@
         $resp->msg="Unable execute query";
         return $resp;
     }
+
+    function loginCheck($userid, $passwd){
+        global $dbConnect;
+        $reu["status"]=false;
+        $userid = mysqli_escape_string($dbConnect, $userid);
+        $passwd = mysqli_escape_string($dbConnect, $passwd);
+
+        $sql = "SELECT `id` FROM `user` WHERE  id = '".$userid."' AND  password = '".$passwd."';";
+        if ($res = $dbConnect->query($sql)) {
+            if (!$res->num_rows > 0) {
+                $reu["msg"]="UserId ot password not valid";
+                return $reu;
+            }
+            $row=$res->fetch_row();
+            $reu["status"]=true;
+            $reu["msg"]="Login sucess";
+            $_SESSION['login'] = $row[0];
+        }
+        return $reu;
+    }
 ?>

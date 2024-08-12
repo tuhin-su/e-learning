@@ -70,7 +70,7 @@
 
     // authValidation
     function authValidation(){
-        if (isset($_SESSION['auth'])) {
+        if (isset($_SESSION['login'])) {
             return true;
         }
         return false;
