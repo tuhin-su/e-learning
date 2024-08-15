@@ -26,26 +26,25 @@
     }
 
     function validateSession() {
-        session_start();
-        $sessionLifetime = 3 * 24 * 60 * 60; // 3 days in seconds
-        if (isset($_SESSION['start_time'])) {
-            $currentTime = time();
-            $sessionStartTime = $_SESSION['start_time'];
-            $sessionExpiryTime = $sessionStartTime + $sessionLifetime;
+        // $sessionLifetime = 3 * 24 * 60 * 60; // 3 days in seconds
+        // if (isset($_SESSION['start_time'])) {
+        //     $currentTime = time();
+        //     $sessionStartTime = $_SESSION['start_time'];
+        //     $sessionExpiryTime = $sessionStartTime + $sessionLifetime;
     
-            if ($currentTime > $sessionExpiryTime) {
-                session_unset();
-                session_destroy();
-                return;
-            } else {
-                if (isset($_POST['reset_request'])) {
-                    $_SESSION['start_time'] = time();
-                } else {
-                }
-            }
-        } else {
-            $_SESSION['start_time'] = time();
-        }
+        //     if ($currentTime > $sessionExpiryTime) {
+        //         session_unset();
+        //         session_destroy();
+        //         return;
+        //     } else {
+        //         if (isset($_POST['reset_request'])) {
+        //             $_SESSION['start_time'] = time();
+        //         } else {
+        //         }
+        //     }
+        // } else {
+        //     $_SESSION['start_time'] = time();
+        // }
     }
 
     function encodeToBase64($data) {
@@ -70,9 +69,10 @@
 
     // authValidation
     function authValidation(){
-        if (isset($_SESSION['login'])) {
+        if (isset($_SESSION['loginId'])) {
             return true;
         }
         return false;
     }
+    
 ?>

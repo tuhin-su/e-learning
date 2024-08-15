@@ -1,5 +1,17 @@
 <?php
 include "./function/function.php";
+$responce = array();
+// session validation
+if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    session_id($_SERVER["HTTP_AUTHORIZATION"]);
+    session_start();
+}
+else{
+    session_start();
+    $responce["auth"]=session_id();
+}
+
+
 if (!security()->state) {
     die("Access Denied");
 }
@@ -12,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // connect databse
 include "conf/index.php";
 // handel GET requst
-$responce = array();
 $sate = new State();
-$sate->state = true;
+$sate -> state = true;
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // hendel it all type resorses
@@ -84,6 +96,12 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 # code...
                 break;
         }
+    }
+
+    else if ($data["reqFor"]=="auth")
+    {
+        $sate->state=$auth;
+        $sate->msg="Authentication failed";
     }
 }
 

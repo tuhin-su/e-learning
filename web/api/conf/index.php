@@ -61,7 +61,7 @@
             $row=$res->fetch_row();
             $reu["status"]=true;
             $reu["msg"]="Login sucess";
-            $_SESSION['login'] = $row[0];
+            $_SESSION["loginId"] = $row[0];
         }
         return $reu;
     }
