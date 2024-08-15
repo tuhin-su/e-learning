@@ -1,4 +1,3 @@
-@import url("./bootstrap.min.css");
 * {
   padding: 0;
   margin: 0;
@@ -48,11 +47,11 @@ body {
 }
 
 .h-90px {
-  height: 90px;
+  height: 90px !important;
 }
 
 .def-flex {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+}/*# sourceMappingURL=main.css.map */

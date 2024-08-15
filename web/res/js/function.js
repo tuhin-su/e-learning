@@ -4,10 +4,11 @@ function loading(state){
       popup = document.getElementById("popup");
       popup.style.display = "grid";
       popup.innerHTML = atob(data);
+      
       return true;
     }
     popup = document.getElementById("popup");
       popup.style.display = "none";
       popup.innerHTML='';
       return true;
-  }
+}
