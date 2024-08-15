@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TIMT</title>
-    <link id="bootstrap-icon" rel="stylesheet" href="./fonts/font/bootstrap-icons.min.css">
-    <link id="bootstrap-css" rel="stylesheet" href="./style.css">
+
     <style id="boot-sass">
       * {
         padding: 0;
@@ -202,24 +201,7 @@
     }
 
       function loadBasicComponent() {
-        resourceManager("jq-js").then(res=>{
-          obj = resourceBuilder(res);
-          if (obj) {
-            document.head.appendChild(obj);
-          }
-        });
-        
-        // resourceManager("main-js").then(res=>{
-        //   obj = resourceBuilder(res);
-        //   if (obj) {
-        //     document.head.appendChild(obj);
-        //   }
-        // });
-      
-        let mainjs = document.createElement("script");
-        mainjs.id="main-js";
-        mainjs.src = "./main.js";
-        document.head.appendChild(mainjs);
+        window.location.href = "http://localhost/app";
       }
 
       async function updateResorce(){
@@ -237,20 +219,19 @@
 
       function checkVer(){
             const xhr = new XMLHttpRequest();
-            const url = 'http://localhost/api?data=' + jsonToBase64({"reqFor":"ver"});
+            const url = 'http://localhost/api/ver';
             xhr.open('GET', url, true);
+          
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
                         const response = base64ToJson(xhr.responseText);
-                        if (response.state.state) {
-                            
-                            if (response.res[1] != (localStorage.getItem("ver"))) {
-                              updateResorce();
+                        console.log(response)
+                        if (response.state) {
+                            if (response.ver != (localStorage.getItem("ver"))) {
                               localStorage.setItem(response.res[0], (response.res[1]));
                             }
                             loadBasicComponent();
-
                         }
                     } catch (error) {
                         hendelError(error);
@@ -283,14 +264,7 @@
           return true;
       }
       
-      if (!localStorage.getItem("ver")) {
-        loadBasicComponent();
-        fetchData({"reqFor":"ver"});
-      }
-      else{
-        checkVer();
-      }
+      checkVer();
     </script>
-    <script id="bootstrap-js" src="./logicUI.js"></script>
   </body>
 </html>

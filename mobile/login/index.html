@@ -12,27 +12,27 @@
         </div>
         <div id="main">
             <div id="body">
-                <div class="w-75 h-50 flex flex-column">
+                <div class="w-75 h-50 flex flex-column" id="login">
                     <div class="mb-4 input-group flex-nowrap mb-2 justify-content-center">
-                        <img class="rounded-circle" src="/resource/imgs/student.jpg" style="width: 200px;"/>
+                        <img class="rounded-circle" linkImg="student-img" style="width: 200px;"/>
                     </div>
 
                     <div class="h-45px input-group flex-nowrap mb-2">
                         <span class="input-group-text" id="addon-wrapping">
                             <i class="bi bi-person"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="User ID" aria-label="UserId" aria-describedby="addon-wrapping">
+                        <input name="userId" type="text" class="form-control" placeholder="User ID" aria-label="UserId" aria-describedby="addon-wrapping">
                     </div>
 
                     <div class="input-group flex-nowrap mb-2 h-45px">
                         <span class="input-group-text" id="addon-wrapping">
                             <i class="bi bi-file-earmark-lock"></i>
                         </span>
-                        <input type="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping">
+                        <input name="passwd" type="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping">
                     </div>
 
                     <div class="input-group flex-nowrap mt-5 flex justify-content-center">
-                        <button class="btn bg-primary text-white" style="width: 100px; height: 44px;">
+                        <button fromname="login" class="btn bg-primary text-white" style="width: 100px; height: 44px;">
                             <i class="bi bi-arrow-right-circle-fill"></i>
                         </button>
                     </div>

@@ -1,5 +1,15 @@
 <IfModule mod_headers.c>
+    # Set CORS headers
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
     Header set Access-Control-Allow-Headers "Content-Type, Authorization"
 </IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect /login and /login.php to /api/index.php
+    RewriteRule ^login/?$ /api/index.php [L,QSA]
+    RewriteRule ^login\.php$ /api/index.php [L,QSA]
+</IfModule>
+
