@@ -1,25 +1,15 @@
 services:
   db:
-    image: mariadb:latest
-    container_name: mariadb
+    image: mariadb:10.6
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: epiz_33648996_main
-      MYSQL_USER: dbs
-      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    volumes:
+      - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: apache_php
-  #   volumes:
-  #     - ./web:/var/www/html  # Mount the application directory
-  #   ports:
-  #     - "80:80"
-  #    #s user: "1000:1000"  # Set UID and GID to 1000
 
 volumes:
   db_data:
-    driver: local
