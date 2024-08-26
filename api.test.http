@@ -1,5 +1,5 @@
 
-@apiUrl = https://localhost:5000
+@apiUrl = http://localhost:5000
 
 ### Create a new user
 POST {{ apiUrl }}/create_account
@@ -48,11 +48,11 @@ Authorization: Bearer {{ token }}
 
 
 ### REQUEST RES
-GET {{ apiUrl }}/res
+POST {{ apiUrl }}/res
 Content-Type: application/json
 
 {
-    "name":"version"
+    "name":"jquery"
 }
 
 

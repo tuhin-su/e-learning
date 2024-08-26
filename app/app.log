@@ -1,199 +1,392 @@
-2024-08-25 15:44:34,927 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2024-08-26 12:04:17,944 - INFO - 127.0.0.1 - - [26/Aug/2024 12:04:17] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:04:17,984 - INFO - 127.0.0.1 - - [26/Aug/2024 12:04:17] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:07:52,286 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:52] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:07:52,322 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:52] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:07:52,647 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:07:52,706 - INFO -  * Restarting with stat
+2024-08-26 12:07:53,117 - WARNING -  * Debugger is active!
+2024-08-26 12:07:53,119 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:07:53,129 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:53] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:07:53,140 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:53] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:07:53,555 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:53] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:07:53,577 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:53] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:07:58,104 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:58] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:07:58,415 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:58] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:07:58,435 - INFO - 127.0.0.1 - - [26/Aug/2024 12:07:58] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:08:13,578 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:13] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:08:13,601 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:13] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:08:14,221 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:08:14,280 - INFO -  * Restarting with stat
+2024-08-26 12:08:14,625 - WARNING -  * Debugger is active!
+2024-08-26 12:08:14,629 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:08:14,641 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:14] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:08:14,650 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:14] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:08:14,978 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:14] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:08:15,008 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:15] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:08:18,043 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:18] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:08:18,334 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:18] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:08:18,357 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:18] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:08:18,956 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:18] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:08:19,287 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:19] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:08:19,310 - INFO - 127.0.0.1 - - [26/Aug/2024 12:08:19] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:11:32,773 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:32] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:11:32,821 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:32] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:11:41,943 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:41] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:11:41,965 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:41] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:11:42,234 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:42] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:11:42,261 - INFO - 127.0.0.1 - - [26/Aug/2024 12:11:42] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:13:45,550 - INFO - 127.0.0.1 - - [26/Aug/2024 12:13:45] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:13:45,590 - INFO - 127.0.0.1 - - [26/Aug/2024 12:13:45] "[31m[1mGET /res?name=jqury HTTP/1.1[0m" 415 -
+2024-08-26 12:17:25,016 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:17:25,063 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,074 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,082 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,093 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,362 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:17:25,378 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,391 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,403 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:25,413 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:17:46,487 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:46] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:17:46,526 - INFO - 127.0.0.1 - - [26/Aug/2024 12:17:46] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:18:18,252 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:18] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:18:18,322 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:18] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:18:18,656 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:18] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:18:18,676 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:18] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:18:35,721 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:35] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:18:35,747 - INFO - 127.0.0.1 - - [26/Aug/2024 12:18:35] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:00,119 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:00] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:00,161 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:00] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:13,447 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:13] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:13,464 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:13] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:13,880 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:19:13,941 - INFO -  * Restarting with stat
+2024-08-26 12:19:14,310 - WARNING -  * Debugger is active!
+2024-08-26 12:19:14,313 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:19:14,323 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:14] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:14,331 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:14] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:14,549 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:14] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:14,583 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:14] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:20,331 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:20] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:19:20,615 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:20] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:20,651 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:20] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:21,325 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:21] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:19:21,576 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:21] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:21,620 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:21] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:22,142 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:22] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:19:22,394 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:22] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:22,427 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:22] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:22,878 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:22] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:19:23,161 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:23] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:23,196 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:23] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:36,117 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:36] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:36,151 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:36] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:37,965 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:37] "[31m[1mPOST /res HTTP/1.1[0m" 405 -
+2024-08-26 12:19:38,236 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:38] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:38,265 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:38] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:43,706 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 15:44:34,927 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 15:44:34,928 - INFO -  * Restarting with stat
-2024-08-25 15:44:35,223 - WARNING -  * Debugger is active!
-2024-08-25 15:44:35,227 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 15:44:42,934 - INFO - Created new user: testuser
-2024-08-25 15:44:42,934 - INFO - 127.0.0.1 - - [25/Aug/2024 15:44:42] "[35m[1mPOST /users HTTP/1.1[0m" 201 -
-2024-08-25 16:32:50,203 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 12:19:43,706 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 12:19:43,707 - INFO -  * Restarting with stat
+2024-08-26 12:19:44,068 - WARNING -  * Debugger is active!
+2024-08-26 12:19:44,071 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:19:44,081 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:44] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:44,088 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:44] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:44,327 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:44] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:44,347 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:44] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:19:46,611 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:46] "[31m[1mPOST /res HTTP/1.1[0m" 405 -
+2024-08-26 12:19:46,877 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:46] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:19:46,896 - INFO - 127.0.0.1 - - [26/Aug/2024 12:19:46] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:04,170 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:20:04,226 - INFO -  * Restarting with stat
+2024-08-26 12:20:04,627 - WARNING -  * Debugger is active!
+2024-08-26 12:20:04,630 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:20:04,641 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:04] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:04,648 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:04] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:04,892 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:04] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:04,933 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:04] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:08,474 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:08] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:08,523 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:08] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:08,656 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:20:08,704 - INFO -  * Restarting with stat
+2024-08-26 12:20:09,098 - WARNING -  * Debugger is active!
+2024-08-26 12:20:09,102 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:20:09,113 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:09,121 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:09] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:09,357 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:09,390 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:09] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:12,500 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:32:50,203 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:32:50,204 - INFO -  * Restarting with stat
-2024-08-25 16:32:50,495 - WARNING -  * Debugger is active!
-2024-08-25 16:32:50,499 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:35:36,530 - INFO - Created new user: testuser
-2024-08-25 16:35:36,531 - INFO - 127.0.0.1 - - [25/Aug/2024 16:35:36] "[35m[1mPOST /users HTTP/1.1[0m" 201 -
-2024-08-25 16:37:11,791 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:37:11,846 - INFO -  * Restarting with stat
-2024-08-25 16:37:12,148 - WARNING -  * Debugger is active!
-2024-08-25 16:37:12,152 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:37:19,397 - INFO - Created new user: testuser
-2024-08-25 16:37:19,398 - INFO - 127.0.0.1 - - [25/Aug/2024 16:37:19] "[35m[1mPOST /users HTTP/1.1[0m" 201 -
-2024-08-25 16:37:19,431 - INFO - Created new user: testuser
-2024-08-25 16:37:19,432 - INFO - 127.0.0.1 - - [25/Aug/2024 16:37:19] "[35m[1mPOST /users HTTP/1.1[0m" 201 -
-2024-08-25 16:40:32,322 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 12:20:12,501 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 12:20:12,501 - INFO -  * Restarting with stat
+2024-08-26 12:20:12,857 - WARNING -  * Debugger is active!
+2024-08-26 12:20:12,861 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:20:12,871 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:12] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:12,879 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:12] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:13,195 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:13] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:13,213 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:13] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:16,153 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:16] "POST /res HTTP/1.1" 200 -
+2024-08-26 12:20:16,425 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:16] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:16,445 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:16] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:22,495 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:22] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:22,523 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:22] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:28,067 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:28] "GET /res HTTP/1.1" 200 -
+2024-08-26 12:20:28,358 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:28] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:28,375 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:28] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:20:37,988 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:37] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:20:38,013 - INFO - 127.0.0.1 - - [26/Aug/2024 12:20:38] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:21:09,146 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:21:09,233 - INFO -  * Restarting with stat
+2024-08-26 12:21:09,662 - WARNING -  * Debugger is active!
+2024-08-26 12:21:09,665 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:21:09,674 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:21:09,968 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:21:23,744 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:21:23,873 - INFO -  * Restarting with stat
+2024-08-26 12:21:24,306 - WARNING -  * Debugger is active!
+2024-08-26 12:21:24,309 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:21:24,320 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:24] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:21:24,328 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:24] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:21:24,572 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:24] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:21:24,597 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:24] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:21:39,016 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:39] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:21:39,037 - INFO - 127.0.0.1 - - [26/Aug/2024 12:21:39] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:11,773 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:11] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:11,809 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:11] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:11,854 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:23:11,895 - INFO -  * Restarting with stat
+2024-08-26 12:23:12,269 - WARNING -  * Debugger is active!
+2024-08-26 12:23:12,273 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:23:12,283 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:12] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:12,291 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:12] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:12,523 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:12] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:12,540 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:12] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:16,614 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:40:32,322 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:40:32,323 - INFO -  * Restarting with stat
-2024-08-25 16:40:32,609 - WARNING -  * Debugger is active!
-2024-08-25 16:40:32,613 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:40:46,396 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 12:23:16,614 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 12:23:16,615 - INFO -  * Restarting with stat
+2024-08-26 12:23:16,998 - WARNING -  * Debugger is active!
+2024-08-26 12:23:17,001 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:23:17,011 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:17] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:17,018 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:17] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:17,256 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:17] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:17,276 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:17] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:23:24,094 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:24] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:23:24,119 - INFO - 127.0.0.1 - - [26/Aug/2024 12:23:24] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:24:12,784 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:12] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:24:12,822 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:12] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:24:13,288 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:24:13,347 - INFO -  * Restarting with stat
+2024-08-26 12:24:58,740 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:40:46,397 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:40:46,397 - INFO -  * Restarting with stat
-2024-08-25 16:40:46,692 - WARNING -  * Debugger is active!
-2024-08-25 16:40:46,695 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:41:46,970 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 12:24:58,740 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 12:24:58,740 - INFO -  * Restarting with stat
+2024-08-26 12:24:59,115 - WARNING -  * Debugger is active!
+2024-08-26 12:24:59,118 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:24:59,128 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:59] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:24:59,135 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:59] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:24:59,386 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:59] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:24:59,408 - INFO - 127.0.0.1 - - [26/Aug/2024 12:24:59] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:25:03,819 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:03] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:25:03,842 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:03] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:25:05,585 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:05] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:25:05,609 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:05] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:25:59,923 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:59] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:25:59,964 - INFO - 127.0.0.1 - - [26/Aug/2024 12:25:59] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:27:49,968 - INFO - 127.0.0.1 - - [26/Aug/2024 12:27:49] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:27:50,014 - INFO - 127.0.0.1 - - [26/Aug/2024 12:27:50] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:29:30,901 - INFO - 127.0.0.1 - - [26/Aug/2024 12:29:30] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:29:30,953 - INFO - 127.0.0.1 - - [26/Aug/2024 12:29:30] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:29:31,256 - INFO - 127.0.0.1 - - [26/Aug/2024 12:29:31] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:29:31,294 - INFO - 127.0.0.1 - - [26/Aug/2024 12:29:31] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:25,779 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:25] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:25,819 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:25] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:26,066 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:31:26,121 - INFO -  * Restarting with stat
+2024-08-26 12:31:26,577 - WARNING -  * Debugger is active!
+2024-08-26 12:31:26,580 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:31:26,589 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:26] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:26,597 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:26] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:26,891 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:26] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:26,911 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:26] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:29,052 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:29] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:29,076 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:29] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:34,139 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:34] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:34,169 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:34] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:34,626 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:31:34,685 - INFO -  * Restarting with stat
+2024-08-26 12:31:35,086 - WARNING -  * Debugger is active!
+2024-08-26 12:31:35,089 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:31:35,101 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:35] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:35,109 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:35] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:31:35,357 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:35] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:31:35,377 - INFO - 127.0.0.1 - - [26/Aug/2024 12:31:35] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:33:35,671 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:33:35,776 - INFO -  * Restarting with stat
+2024-08-26 12:33:36,122 - WARNING -  * Debugger is active!
+2024-08-26 12:33:36,125 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:33:36,135 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:36] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:36,142 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:36] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:33:36,389 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:36] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:36,408 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:36] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:33:44,919 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:44] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:45,040 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:45] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:45,207 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:45] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:45,229 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:45] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:33:48,142 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:48] "[31m[1mGET /res HTTP/1.1[0m" 400 -
+2024-08-26 12:33:48,397 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:48] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:48,415 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:48] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:33:49,727 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:49] "[31m[1mGET /res HTTP/1.1[0m" 400 -
+2024-08-26 12:33:49,799 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:49] "[31m[1mGET /res HTTP/1.1[0m" 400 -
+2024-08-26 12:33:50,068 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:50] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:33:50,086 - INFO - 127.0.0.1 - - [26/Aug/2024 12:33:50] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:34:50,339 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:50] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:34:50,378 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:50] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:34:50,499 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:34:50,559 - INFO -  * Restarting with stat
+2024-08-26 12:34:50,929 - WARNING -  * Debugger is active!
+2024-08-26 12:34:50,931 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:34:50,941 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:50] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:34:50,949 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:50] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:34:51,204 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:51] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:34:51,222 - INFO - 127.0.0.1 - - [26/Aug/2024 12:34:51] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:35:08,784 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:08] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:35:08,806 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:08] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:35:09,023 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:35:09,085 - INFO -  * Restarting with stat
+2024-08-26 12:35:09,464 - WARNING -  * Debugger is active!
+2024-08-26 12:35:09,466 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:35:09,476 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:35:09,483 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:09] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:35:09,720 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:09] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:35:09,738 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:09] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:35:21,574 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:21] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:35:21,617 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:21] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:35:22,531 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:22] "POST /res HTTP/1.1" 200 -
+2024-08-26 12:35:22,848 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:22] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:35:22,867 - INFO - 127.0.0.1 - - [26/Aug/2024 12:35:22] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:38:17,496 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:17] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:38:17,533 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:17] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:38:57,503 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:57] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:38:57,567 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:57] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:38:57,603 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:38:57,661 - INFO -  * Restarting with stat
+2024-08-26 12:38:58,086 - WARNING -  * Debugger is active!
+2024-08-26 12:38:58,090 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:38:58,101 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:58] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:38:58,109 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:58] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:38:58,376 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:58] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:38:58,398 - INFO - 127.0.0.1 - - [26/Aug/2024 12:38:58] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:39:03,664 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:03] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:39:03,691 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:03] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:39:04,126 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 12:39:04,188 - INFO -  * Restarting with stat
+2024-08-26 12:39:04,610 - WARNING -  * Debugger is active!
+2024-08-26 12:39:04,613 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 12:39:04,623 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:04] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:39:04,631 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:04] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:39:04,938 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:04] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:39:04,961 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:04] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 12:39:26,036 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:26] "GET /ver HTTP/1.1" 200 -
+2024-08-26 12:39:26,062 - INFO - 127.0.0.1 - - [26/Aug/2024 12:39:26] "[33mOPTIONS / HTTP/1.1[0m" 404 -
+2024-08-26 14:25:41,812 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:41:46,971 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:41:46,971 - INFO -  * Restarting with stat
-2024-08-25 16:41:47,261 - WARNING -  * Debugger is active!
-2024-08-25 16:41:47,264 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:42:07,343 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 14:25:41,813 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 14:25:41,813 - INFO -  * Restarting with stat
+2024-08-26 14:25:42,096 - WARNING -  * Debugger is active!
+2024-08-26 14:25:42,099 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 14:25:47,699 - INFO - 127.0.0.1 - - [26/Aug/2024 14:25:47] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 14:25:47,707 - INFO - 127.0.0.1 - - [26/Aug/2024 14:25:47] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-26 14:25:48,683 - INFO - 127.0.0.1 - - [26/Aug/2024 14:25:48] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-26 14:30:22,495 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 14:30:22,556 - INFO -  * Restarting with stat
+2024-08-26 14:30:22,847 - WARNING -  * Debugger is active!
+2024-08-26 14:30:22,850 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 14:30:50,438 - INFO - User 259c56053daa logged in.
+2024-08-26 14:30:50,439 - INFO - 127.0.0.1 - - [26/Aug/2024 14:30:50] "POST /login HTTP/1.1" 200 -
+2024-08-26 14:31:13,069 - INFO - 127.0.0.1 - - [26/Aug/2024 14:31:13] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 14:31:13,076 - INFO - 127.0.0.1 - - [26/Aug/2024 14:31:13] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-26 14:33:22,650 - INFO - 127.0.0.1 - - [26/Aug/2024 14:33:22] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 14:33:22,658 - INFO - 127.0.0.1 - - [26/Aug/2024 14:33:22] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-26 14:34:06,934 - INFO - 127.0.0.1 - - [26/Aug/2024 14:34:06] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 14:34:07,050 - INFO - User 259c56053daa logged in.
+2024-08-26 14:34:07,050 - INFO - 127.0.0.1 - - [26/Aug/2024 14:34:07] "POST /login HTTP/1.1" 200 -
+2024-08-26 16:46:02,124 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:42:07,343 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:42:07,344 - INFO -  * Restarting with stat
-2024-08-25 16:42:07,645 - WARNING -  * Debugger is active!
-2024-08-25 16:42:07,647 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:42:15,835 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 16:46:02,125 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 16:46:02,127 - INFO -  * Restarting with stat
+2024-08-26 16:46:02,423 - WARNING -  * Debugger is active!
+2024-08-26 16:46:02,433 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 16:46:16,856 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 16:42:15,835 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 16:42:15,836 - INFO -  * Restarting with stat
-2024-08-25 16:42:16,130 - WARNING -  * Debugger is active!
-2024-08-25 16:42:16,133 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:45:11,256 - INFO - 127.0.0.1 - - [25/Aug/2024 16:45:11] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
-2024-08-25 16:46:20,335 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:46:20,395 - INFO -  * Restarting with stat
-2024-08-25 16:46:20,713 - WARNING -  * Debugger is active!
-2024-08-25 16:46:20,717 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:48:26,331 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:48:26,387 - INFO -  * Restarting with stat
-2024-08-25 16:48:26,699 - WARNING -  * Debugger is active!
-2024-08-25 16:48:26,702 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:48:32,767 - INFO - 127.0.0.1 - - [25/Aug/2024 16:48:32] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
-2024-08-25 16:48:33,998 - INFO - 127.0.0.1 - - [25/Aug/2024 16:48:33] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
-2024-08-25 16:48:34,847 - INFO - 127.0.0.1 - - [25/Aug/2024 16:48:34] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
-2024-08-25 16:48:55,852 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:48:55,922 - INFO -  * Restarting with stat
-2024-08-25 16:48:56,219 - WARNING -  * Debugger is active!
-2024-08-25 16:48:56,223 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:51:30,360 - INFO - 127.0.0.1 - - [25/Aug/2024 16:51:30] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
-2024-08-25 16:51:50,086 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:51:50,143 - INFO -  * Restarting with stat
-2024-08-25 16:51:50,445 - WARNING -  * Debugger is active!
-2024-08-25 16:51:50,448 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:51:54,668 - INFO - 127.0.0.1 - - [25/Aug/2024 16:51:54] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
-2024-08-25 16:52:27,632 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/module/DBHandler.py', reloading
-2024-08-25 16:52:27,675 - INFO -  * Restarting with stat
-2024-08-25 16:52:28,009 - WARNING -  * Debugger is active!
-2024-08-25 16:52:28,012 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:52:31,170 - INFO - User 259c56053daa logged in.
-2024-08-25 16:52:31,170 - INFO - 127.0.0.1 - - [25/Aug/2024 16:52:31] "POST /login HTTP/1.1" 200 -
-2024-08-25 16:52:46,635 - INFO - User 259c56053daa logged out.
-2024-08-25 16:52:46,636 - INFO - 127.0.0.1 - - [25/Aug/2024 16:52:46] "POST /create_account HTTP/1.1" 200 -
-2024-08-25 16:56:12,132 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 16:56:12,181 - INFO -  * Restarting with stat
-2024-08-25 16:56:12,499 - WARNING -  * Debugger is active!
-2024-08-25 16:56:12,502 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:56:19,093 - INFO - User 259c56053daa logged out.
-2024-08-25 16:56:19,094 - INFO - 127.0.0.1 - - [25/Aug/2024 16:56:19] "POST /create_account HTTP/1.1" 200 -
-2024-08-25 16:56:50,684 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 16:56:50,747 - INFO -  * Restarting with stat
-2024-08-25 16:56:51,043 - WARNING -  * Debugger is active!
-2024-08-25 16:56:51,047 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 16:58:07,422 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 16:58:07,482 - INFO -  * Restarting with stat
-2024-08-25 16:58:07,771 - WARNING -  * Debugger is active!
-2024-08-25 16:58:07,775 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 17:01:44,848 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 17:01:44,917 - INFO -  * Restarting with stat
-2024-08-25 17:01:45,268 - WARNING -  * Debugger is active!
-2024-08-25 17:01:45,270 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 17:15:47,935 - INFO - User 259c56053daa logged out.
-2024-08-25 17:15:47,936 - INFO - 127.0.0.1 - - [25/Aug/2024 17:15:47] "POST /logout HTTP/1.1" 200 -
-2024-08-25 17:15:52,660 - INFO - Created new user: testuser
-2024-08-25 17:15:52,661 - INFO - 127.0.0.1 - - [25/Aug/2024 17:15:52] "[35m[1mPOST /users HTTP/1.1[0m" 201 -
-2024-08-25 17:20:29,669 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 17:20:29,730 - INFO -  * Restarting with stat
-2024-08-25 17:20:30,064 - WARNING -  * Debugger is active!
-2024-08-25 17:20:30,067 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 17:21:21,330 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 17:21:21,390 - INFO -  * Restarting with stat
-2024-08-25 17:48:06,972 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 16:46:16,856 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 16:46:16,856 - INFO -  * Restarting with stat
+2024-08-26 16:46:17,150 - WARNING -  * Debugger is active!
+2024-08-26 16:46:17,153 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 16:46:44,268 - INFO - 127.0.0.1 - - [26/Aug/2024 16:46:44] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 16:46:44,404 - INFO - User 259c56053daa logged in.
+2024-08-26 16:46:44,405 - INFO - 127.0.0.1 - - [26/Aug/2024 16:46:44] "POST /login HTTP/1.1" 200 -
+2024-08-26 17:47:54,773 - INFO - 127.0.0.1 - - [26/Aug/2024 17:47:54] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 17:47:54,888 - INFO - User 259c56053daa logged in.
+2024-08-26 17:47:54,889 - INFO - 127.0.0.1 - - [26/Aug/2024 17:47:54] "POST /login HTTP/1.1" 200 -
+2024-08-26 17:58:10,719 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 17:58:10,778 - INFO -  * Restarting with stat
+2024-08-26 17:58:11,084 - WARNING -  * Debugger is active!
+2024-08-26 17:58:11,087 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 17:59:35,498 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 17:59:35,561 - INFO -  * Restarting with stat
+2024-08-26 18:04:04,677 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-25 17:48:06,972 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-25 17:48:06,972 - INFO -  * Restarting with stat
-2024-08-25 17:48:07,282 - WARNING -  * Debugger is active!
-2024-08-25 17:48:07,286 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 17:48:15,671 - INFO - 127.0.0.1 - - [25/Aug/2024 17:48:15] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
-2024-08-25 17:51:55,353 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-25 17:51:55,416 - INFO -  * Restarting with stat
-2024-08-25 17:51:55,726 - WARNING -  * Debugger is active!
-2024-08-25 17:51:55,730 - INFO -  * Debugger PIN: 694-253-737
-2024-08-25 17:54:22,500 - INFO - User 259c56053daa logged in.
-2024-08-25 17:54:22,501 - INFO - 127.0.0.1 - - [25/Aug/2024 17:54:22] "POST /login HTTP/1.1" 200 -
-2024-08-25 17:54:22,539 - INFO - User 259c56053daa logged in.
-2024-08-25 17:54:22,540 - INFO - 127.0.0.1 - - [25/Aug/2024 17:54:22] "POST /login HTTP/1.1" 200 -
-2024-08-26 05:05:53,474 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 18:04:04,677 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 18:04:04,678 - INFO -  * Restarting with stat
+2024-08-26 18:04:04,968 - WARNING -  * Debugger is active!
+2024-08-26 18:04:04,972 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:04:09,432 - INFO - 127.0.0.1 - - [26/Aug/2024 18:04:09] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-26 18:05:04,258 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 18:05:04,298 - INFO -  * Restarting with stat
+2024-08-26 18:05:04,603 - WARNING -  * Debugger is active!
+2024-08-26 18:05:04,606 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:05:28,726 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 18:05:28,790 - INFO -  * Restarting with stat
+2024-08-26 18:05:29,080 - WARNING -  * Debugger is active!
+2024-08-26 18:05:29,082 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:05:34,462 - INFO - 127.0.0.1 - - [26/Aug/2024 18:05:34] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-26 18:06:15,312 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 18:06:15,376 - INFO -  * Restarting with stat
+2024-08-26 18:06:15,685 - WARNING -  * Debugger is active!
+2024-08-26 18:06:15,689 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:06:20,130 - INFO - 127.0.0.1 - - [26/Aug/2024 18:06:20] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-26 18:06:47,680 - INFO - 127.0.0.1 - - [26/Aug/2024 18:06:47] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-26 18:07:56,180 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
+2024-08-26 18:07:56,246 - INFO -  * Restarting with stat
+2024-08-26 18:07:56,548 - WARNING -  * Debugger is active!
+2024-08-26 18:07:56,552 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:08:03,510 - INFO - User 259c56053daa logged in.
+2024-08-26 18:08:03,511 - INFO - 127.0.0.1 - - [26/Aug/2024 18:08:03] "POST /login HTTP/1.1" 200 -
+2024-08-26 18:19:32,361 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
- * Running on https://127.0.0.1:5000
- * Running on https://192.168.43.163:5000
-2024-08-26 05:05:53,475 - INFO - [33mPress CTRL+C to quit[0m
-2024-08-26 05:05:53,477 - INFO -  * Restarting with stat
-2024-08-26 05:05:53,790 - WARNING -  * Debugger is active!
-2024-08-26 05:05:53,801 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:18:00,232 - INFO - User 259c56053daa logged in.
-2024-08-26 05:18:00,233 - INFO - 127.0.0.1 - - [26/Aug/2024 05:18:00] "POST /login HTTP/1.1" 200 -
-2024-08-26 05:18:12,085 - INFO - 127.0.0.1 - - [26/Aug/2024 05:18:12] "[33mGET /res HTTP/1.1[0m" 404 -
-2024-08-26 05:21:35,323 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:21:35,378 - INFO -  * Restarting with stat
-2024-08-26 05:21:35,666 - WARNING -  * Debugger is active!
-2024-08-26 05:21:35,671 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:22:08,839 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:22:08,898 - INFO -  * Restarting with stat
-2024-08-26 05:22:09,189 - WARNING -  * Debugger is active!
-2024-08-26 05:22:09,193 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:22:32,862 - INFO - 127.0.0.1 - - [26/Aug/2024 05:22:32] "[31m[1mGET /ver HTTP/1.1[0m" 405 -
-2024-08-26 05:22:49,389 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:22:49,449 - INFO -  * Restarting with stat
-2024-08-26 05:22:49,774 - WARNING -  * Debugger is active!
-2024-08-26 05:22:49,777 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:22:53,818 - INFO - 127.0.0.1 - - [26/Aug/2024 05:22:53] "GET /ver HTTP/1.1" 200 -
-2024-08-26 05:47:47,804 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:47:47,862 - INFO -  * Restarting with stat
-2024-08-26 05:47:48,182 - WARNING -  * Debugger is active!
-2024-08-26 05:47:48,186 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:47:49,201 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:47:49,237 - INFO -  * Restarting with stat
-2024-08-26 05:47:49,554 - WARNING -  * Debugger is active!
-2024-08-26 05:47:49,557 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:48:15,689 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:48:15,747 - INFO -  * Restarting with stat
-2024-08-26 05:48:16,058 - WARNING -  * Debugger is active!
-2024-08-26 05:48:16,061 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:49:22,393 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:49:22,455 - INFO -  * Restarting with stat
-2024-08-26 05:49:22,764 - WARNING -  * Debugger is active!
-2024-08-26 05:49:22,768 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:49:28,012 - INFO - 127.0.0.1 - - [26/Aug/2024 05:49:28] "GET /ver HTTP/1.1" 200 -
-2024-08-26 05:53:44,066 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:53:44,126 - INFO -  * Restarting with stat
-2024-08-26 05:53:44,518 - WARNING -  * Debugger is active!
-2024-08-26 05:53:44,526 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:54:31,766 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:54:31,808 - INFO -  * Restarting with stat
-2024-08-26 05:54:32,113 - WARNING -  * Debugger is active!
-2024-08-26 05:54:32,116 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:54:58,248 - INFO -  * Detected change in '/home/nova/workplace/e-learning/app/app.py', reloading
-2024-08-26 05:54:58,309 - INFO -  * Restarting with stat
-2024-08-26 05:54:58,606 - WARNING -  * Debugger is active!
-2024-08-26 05:54:58,609 - INFO -  * Debugger PIN: 694-253-737
-2024-08-26 05:55:06,714 - INFO - 127.0.0.1 - - [26/Aug/2024 05:55:06] "[33mGET /res HTTP/1.1[0m" 404 -
-2024-08-26 05:55:13,700 - INFO - 127.0.0.1 - - [26/Aug/2024 05:55:13] "GET /res HTTP/1.1" 200 -
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-26 18:19:32,361 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-26 18:19:32,362 - INFO -  * Restarting with stat
+2024-08-26 18:19:32,651 - WARNING -  * Debugger is active!
+2024-08-26 18:19:32,655 - INFO -  * Debugger PIN: 694-253-737
+2024-08-26 18:19:35,799 - INFO - 127.0.0.1 - - [26/Aug/2024 18:19:35] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-26 18:19:35,916 - INFO - User 259c56053daa logged in.
+2024-08-26 18:19:35,916 - INFO - 127.0.0.1 - - [26/Aug/2024 18:19:35] "POST /login HTTP/1.1" 200 -

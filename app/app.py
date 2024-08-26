@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import mysql.connector
 from mysql.connector import Error
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_cors import CORS
 
 class apiHandler:
     def __init__(self):
@@ -74,16 +74,6 @@ class apiHandler:
                 return jsonify({"version": ver['ver']})
             return jsonify({"message": "Server Broke"}), 521
 
-        @self.app.route('/res',methods=['GET'])
-        def resources():
-            res_name = request.json['name']
-            query = "SELECT id,name,content FROM resource WHERE name = %s"
-            self.cursor.execute(query, (res_name,))
-            res = self.cursor.fetchone()
-            if res:
-                return jsonify({"id": res['id'], "name": res['name'], "content": res['content']})
-            return jsonify({"message": "Resource not found"}), 404
-        
         @self.app.route('/login', methods=['POST'])
         def login():
             data = request.json
@@ -94,13 +84,22 @@ class apiHandler:
             query = "SELECT id, passwd FROM user WHERE email = %s AND status = 0"
             self.cursor.execute(query, (username,))
             user = self.cursor.fetchone()
-
+           
             if user and check_password_hash(user['passwd'], password):
                 user_id = user['id']
+                response = {}
+                query = "SELECT name,email,phone,address,gender,birth FROM user_info WHERE  user_id = %s;"
+                self.cursor.execute(query, (user_id,))
+                user_info=self.cursor.fetchone()
+                if user_info:
+                    response['info']=user_info;
+                    
                 expiration = datetime.utcnow() + self.token_expiration
                 token = jwt.encode({'user_id': user_id, 'exp': expiration}, self.token_secret, algorithm='HS256')
+                response['token']=token
+
                 self.app.logger.info(f'User {user_id} logged in.')
-                return jsonify({"token": token})
+                return jsonify(response)
             return jsonify({"message": "Invalid credentials"}), 401
         
         @self.app.route('/static_users', methods=['POST'])
@@ -153,7 +152,9 @@ class apiHandler:
 
     def run(self):
         logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
+        CORS(self.app)
+        # self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
+        self.app.run(host=self.host, port=self.port, debug=True)
 
 if __name__ == '__main__':
     app_instance = apiHandler()
