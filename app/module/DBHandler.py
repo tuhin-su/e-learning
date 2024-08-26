@@ -31,7 +31,7 @@ class DBHandler:
         unique_id = hashlib.sha256(unique_string.encode()).hexdigest()[:12]
         return unique_id
 
-    def insert_user(self, username, password):
+    def insert_user(self, username, password, groups):
         if not self.connection or not self.connection.is_connected():
             raise ConnectionError("No connection to the database.")
 
@@ -39,12 +39,12 @@ class DBHandler:
             cursor = self.connection.cursor()
             hashed_password = generate_password_hash(password)
             user_id = self.generate_user_id(username)
-            
+            groups = groups
             insert_query = """
-            INSERT INTO users (id, username, password_hash) 
-            VALUES (%s, %s, %s)
+            INSERT INTO `user` ( `id`, `email`, `passwd`, `groups`) 
+            VALUES (%s, %s, %s, %s);
             """
-            cursor.execute(insert_query, (user_id, username, hashed_password))
+            cursor.execute(insert_query, (user_id, username, hashed_password, groups))
             self.connection.commit()
             return { "code":200}
         except Error as e:
@@ -61,11 +61,11 @@ class DBHandler:
 
         try:
             cursor = self.connection.cursor(dictionary=True)
-            query = "SELECT id, password_hash FROM users WHERE username = %s AND status = 0"
+            query = "SELECT id, passwd FROM user WHERE email = %s AND status = 0"
             cursor.execute(query, (username,))
             user = cursor.fetchone()
             
-            if user and check_password_hash(user['password_hash'], password):
+            if user and check_password_hash(user['passwd'], password):
                 return { "code":200, "id":user['id']}
             else:
                 return {"code":561} # UN AUTH

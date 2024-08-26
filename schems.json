@@ -270,6 +270,10 @@
           "type": "TIMESTAMP",
           "default": "CURRENT_TIMESTAMP",
           "nullable": false
+        },
+        "version":{
+          "type": "INT",
+          "nullable": false
         }
       }
     },

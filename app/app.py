@@ -5,7 +5,10 @@ import json
 import os
 import jwt
 from datetime import datetime, timedelta
-from module.DBHandler import DBHandler  # Ensure this path is correct
+import mysql.connector
+from mysql.connector import Error
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class apiHandler:
     def __init__(self):
@@ -25,14 +28,23 @@ class apiHandler:
         
         self.app.config['SECRET_KEY'] = config['SESSION']['SECRET_KEY']
 
-        # Initialize DBHandler
+        # Initialize MySQL connection
         db_config = config['DATABASE']
-        self.db_handler = DBHandler(
-            host=db_config['HOST'], 
-            database=db_config['NAME'], 
-            user=db_config['USER'], 
-            password=db_config['PASSWORD']
-        )
+        self.conn = None
+        self.cursor = None
+        try:
+            self.conn = mysql.connector.connect(
+                host=db_config['HOST'], 
+                database=db_config['NAME'], 
+                user=db_config['USER'], 
+                password=db_config['PASSWORD']
+            )
+            if self.conn.is_connected():
+                db_info = self.conn.get_server_info()
+                self.cursor = self.conn.cursor(dictionary=True)  # Use dictionary cursor to get column names
+                print(f"Connected to MySQL database... MySQL Server version on {db_info}")
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
 
         # SSL configuration
         self.ssl_cert_path = config['SERVER']['SSL_CERT_PATH']
@@ -45,35 +57,69 @@ class apiHandler:
         self.token_expiration = timedelta(days=3)  # Token expiration time
 
         self.create_app()
-
+    
+    def close_connection(self):
+        if self.conn and self.conn.is_connected():
+            self.cursor.close()
+            self.conn.close()
+            print("MySQL connection is closed")
+            
     def create_app(self):
+        @self.app.route('/ver', methods=['GET'])
+        def version():
+            query="SELECT MAX(version) AS ver FROM resource;";
+            self.cursor.execute(query)
+            ver = self.cursor.fetchone()
+            if ver:
+                return jsonify({"version": ver['ver']})
+            return jsonify({"message": "Server Broke"}), 521
+
+        @self.app.route('/res',methods=['GET'])
+        def resources():
+            res_name = request.json['name']
+            query = "SELECT id,name,content FROM resource WHERE name = %s"
+            self.cursor.execute(query, (res_name,))
+            res = self.cursor.fetchone()
+            if res:
+                return jsonify({"id": res['id'], "name": res['name'], "content": res['content']})
+            return jsonify({"message": "Resource not found"}), 404
+        
         @self.app.route('/login', methods=['POST'])
         def login():
             data = request.json
             username = data.get('username')
             password = data.get('password')
-            data = self.db_handler.authenticate_user(username, password)
-            if data['code'] == 200:
-                user_id = data['id'];
-                if user_id:
-                    expiration = datetime.utcnow() + self.token_expiration
-                    token = jwt.encode({'user_id': user_id, 'exp': expiration}, self.token_secret, algorithm='HS256')
-                    self.app.logger.info(f'User {user_id} logged in.')
-                    return jsonify({"token": token})
+
+            # Use parameterized query to prevent SQL injection
+            query = "SELECT id, passwd FROM user WHERE email = %s AND status = 0"
+            self.cursor.execute(query, (username,))
+            user = self.cursor.fetchone()
+
+            if user and check_password_hash(user['passwd'], password):
+                user_id = user['id']
+                expiration = datetime.utcnow() + self.token_expiration
+                token = jwt.encode({'user_id': user_id, 'exp': expiration}, self.token_secret, algorithm='HS256')
+                self.app.logger.info(f'User {user_id} logged in.')
+                return jsonify({"token": token})
             return jsonify({"message": "Invalid credentials"}), 401
         
-        @self.app.route('/users', methods=['POST'])
+        @self.app.route('/static_users', methods=['POST'])
         def create_user_x():
             data = request.json
             username = data.get('username')
-            password = data.get('password')
+            password = generate_password_hash(data.get('password'))
+            groups = data.get('groups')
+
             try:
-                self.db_handler.insert_user(username, password)
+                # Use parameterized query to prevent SQL injection
+                query = "INSERT INTO user (username, passwd, groups) VALUES (%s, %s, %s)"
+                self.cursor.execute(query, (username, password, groups))
+                self.conn.commit()
                 self.app.logger.info(f'Created new user: {username}')
                 return jsonify({"message": "User created"}), 201
-            except ValueError as e:
+            except Error as e:
+                self.conn.rollback()
                 return jsonify({"message": str(e)}), 400
-            
 
         @self.app.route('/logout', methods=['POST'])
         @self.auth.login_required
@@ -84,8 +130,9 @@ class apiHandler:
         @self.app.route('/create_account', methods=['POST'])
         @self.auth.login_required
         def create_user():
+            data = request.json
             self.app.logger.info(f'User {self.auth.current_user()} logged out.')
-            return jsonify({"message": self.auth.current_user()})
+            return jsonify({"message": self.auth.current_user(), "data": data.get('data')})
         
         @self.app.route('/secure-data', methods=['GET'])
         @self.auth.login_required
@@ -106,8 +153,7 @@ class apiHandler:
 
     def run(self):
         logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        self.app.run(host=self.host, port=self.port, 
-                     debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
+        self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
 
 if __name__ == '__main__':
     app_instance = apiHandler()

@@ -21,13 +21,14 @@ Content-Type: application/json
 }
 
 ### Login with the created user
-# @name login
+# @name user
 POST {{ apiUrl }}/users
 Content-Type: application/json
 
 {
   "username": "testuser",
-  "password": "testpassword"
+  "password": "testpassword",
+  "groups": "SU"
 }
 
 
@@ -51,5 +52,10 @@ GET {{ apiUrl }}/res
 Content-Type: application/json
 
 {
-    "name":"boot"
+    "name":"version"
 }
+
+
+### REQUEST RES
+GET {{ apiUrl }}/ver
+Content-Type: application/json
