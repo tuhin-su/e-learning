@@ -50,12 +50,6 @@
           "length": 255,
           "nullable": true
         },
-        "email": {
-          "type": "VARCHAR",
-          "length": 255,
-          "unique": true,
-          "nullable": true
-        },
         "phone": {
           "type": "VARCHAR",
           "length": 20,

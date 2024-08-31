@@ -48,10 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this.loginServiceHolder = this.loginService.login(username, password).subscribe(
         (response: any) => {
-          if (response.token) {
+          if (response.token && response.group) {
             localStorage.setItem('token', response.token);
-            if (response.PInfo) {
-                localStorage.setItem('PInfo',JSON.stringify(response.PInfo))
+            localStorage.setItem('group', response.group);
+            if (response.info) {
+                localStorage.setItem('info',JSON.stringify(response.info))
                 this.router.navigate(['/']);
             }
             else{

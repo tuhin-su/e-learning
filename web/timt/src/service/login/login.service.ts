@@ -20,4 +20,6 @@ export class LoginService {
   
     return this.http.post<any>(loginUrl, payload, { headers });
   }
+
+  // Define the method logout
 }

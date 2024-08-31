@@ -455,3 +455,222 @@
 2024-08-31 15:40:01,575 - INFO -  * Debugger PIN: 284-677-853
 2024-08-31 15:40:05,492 - INFO - Created new user: testuser
 2024-08-31 15:40:05,492 - INFO - 127.0.0.1 - - [31/Aug/2024 15:40:05] "[35m[1mPOST /static_users HTTP/1.1[0m" 201 -
+2024-08-31 15:43:59,417 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 15:43:59,418 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 15:43:59,421 - INFO -  * Restarting with stat
+2024-08-31 15:43:59,667 - WARNING -  * Debugger is active!
+2024-08-31 15:43:59,668 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 15:44:17,249 - INFO - 127.0.0.1 - - [31/Aug/2024 15:44:17] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 15:44:17,423 - INFO - 127.0.0.1 - - [31/Aug/2024 15:44:17] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 15:44:21,410 - INFO - 127.0.0.1 - - [31/Aug/2024 15:44:21] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 15:48:07,492 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 15:48:07,493 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 15:48:07,494 - INFO -  * Restarting with stat
+2024-08-31 15:48:07,705 - WARNING -  * Debugger is active!
+2024-08-31 15:48:07,706 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 15:48:13,842 - INFO - User 735ab05ecef2f46986d8f5c9c523924c68cd5571e22aee14bed7730f5cea689f logged in.
+2024-08-31 15:48:13,843 - INFO - 127.0.0.1 - - [31/Aug/2024 15:48:13] "POST /login HTTP/1.1" 200 -
+2024-08-31 15:48:18,505 - INFO - 127.0.0.1 - - [31/Aug/2024 15:48:18] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 15:48:18,797 - INFO - User 735ab05ecef2f46986d8f5c9c523924c68cd5571e22aee14bed7730f5cea689f logged in.
+2024-08-31 15:48:18,797 - INFO - 127.0.0.1 - - [31/Aug/2024 15:48:18] "POST /login HTTP/1.1" 200 -
+2024-08-31 15:54:29,439 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 15:54:30,241 - INFO -  * Restarting with stat
+2024-08-31 16:09:28,134 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:09:28,134 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:09:28,137 - INFO -  * Restarting with stat
+2024-08-31 16:09:28,409 - WARNING -  * Debugger is active!
+2024-08-31 16:09:28,411 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:09:45,528 - INFO - 127.0.0.1 - - [31/Aug/2024 16:09:45] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:11:55,414 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/version.py', reloading
+2024-08-31 16:11:57,287 - INFO -  * Restarting with stat
+2024-08-31 16:11:58,617 - WARNING -  * Debugger is active!
+2024-08-31 16:11:58,618 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:01,652 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/login.py', reloading
+2024-08-31 16:12:01,869 - INFO -  * Restarting with stat
+2024-08-31 16:12:02,370 - WARNING -  * Debugger is active!
+2024-08-31 16:12:02,371 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:12,430 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/static_users.py', reloading
+2024-08-31 16:12:12,722 - INFO -  * Restarting with stat
+2024-08-31 16:12:13,562 - WARNING -  * Debugger is active!
+2024-08-31 16:12:13,564 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:22,616 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/logout.py', reloading
+2024-08-31 16:12:22,760 - INFO -  * Restarting with stat
+2024-08-31 16:12:23,670 - WARNING -  * Debugger is active!
+2024-08-31 16:12:23,671 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:30,752 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/create_account.py', reloading
+2024-08-31 16:12:30,965 - INFO -  * Restarting with stat
+2024-08-31 16:12:31,478 - WARNING -  * Debugger is active!
+2024-08-31 16:12:31,478 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:38,520 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/secure_data.py', reloading
+2024-08-31 16:12:38,834 - INFO -  * Restarting with stat
+2024-08-31 16:12:39,334 - WARNING -  * Debugger is active!
+2024-08-31 16:12:39,334 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:12:50,430 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:12:50,796 - INFO -  * Restarting with stat
+2024-08-31 16:14:00,505 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:14:00,506 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:14:00,509 - INFO -  * Restarting with stat
+2024-08-31 16:14:01,159 - WARNING -  * Debugger is active!
+2024-08-31 16:14:01,160 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:14:10,221 - INFO - 127.0.0.1 - - [31/Aug/2024 16:14:10] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:22:11,073 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/login.py', reloading
+2024-08-31 16:22:11,879 - INFO -  * Restarting with stat
+2024-08-31 16:22:13,114 - WARNING -  * Debugger is active!
+2024-08-31 16:22:13,117 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:22:48,343 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/login.py', reloading
+2024-08-31 16:22:48,442 - INFO -  * Restarting with stat
+2024-08-31 16:22:50,425 - WARNING -  * Debugger is active!
+2024-08-31 16:22:50,426 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:23:02,069 - INFO - 127.0.0.1 - - [31/Aug/2024 16:23:02] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:25:21,167 - INFO - 127.0.0.1 - - [31/Aug/2024 16:25:21] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:25:21,308 - INFO - 127.0.0.1 - - [31/Aug/2024 16:25:21] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:25:33,872 - INFO - 127.0.0.1 - - [31/Aug/2024 16:25:33] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:26:41,522 - INFO - 127.0.0.1 - - [31/Aug/2024 16:26:41] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:27:02,025 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:27:02,026 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:27:02,027 - INFO -  * Restarting with stat
+2024-08-31 16:27:02,251 - WARNING -  * Debugger is active!
+2024-08-31 16:27:02,252 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:27:05,656 - INFO - 127.0.0.1 - - [31/Aug/2024 16:27:05] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:27:15,999 - INFO - 127.0.0.1 - - [31/Aug/2024 16:27:15] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:27:16,147 - INFO - 127.0.0.1 - - [31/Aug/2024 16:27:16] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:27:53,645 - INFO - 127.0.0.1 - - [31/Aug/2024 16:27:53] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:27:53,665 - INFO - 127.0.0.1 - - [31/Aug/2024 16:27:53] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:28:52,390 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:28:52,390 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:28:52,394 - INFO -  * Restarting with stat
+2024-08-31 16:28:52,848 - WARNING -  * Debugger is active!
+2024-08-31 16:28:52,850 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:28:54,328 - INFO - 127.0.0.1 - - [31/Aug/2024 16:28:54] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:28:54,360 - INFO - 127.0.0.1 - - [31/Aug/2024 16:28:54] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:29:13,543 - INFO - 127.0.0.1 - - [31/Aug/2024 16:29:13] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:29:24,447 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:29:24,448 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:29:24,451 - INFO -  * Restarting with stat
+2024-08-31 16:29:24,690 - WARNING -  * Debugger is active!
+2024-08-31 16:29:24,691 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:29:27,152 - INFO - 127.0.0.1 - - [31/Aug/2024 16:29:27] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:29:27,173 - INFO - 127.0.0.1 - - [31/Aug/2024 16:29:27] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:29:36,420 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:29:36,420 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:29:36,422 - INFO -  * Restarting with stat
+2024-08-31 16:29:36,648 - WARNING -  * Debugger is active!
+2024-08-31 16:29:36,649 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:29:44,387 - INFO - 127.0.0.1 - - [31/Aug/2024 16:29:44] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:29:45,763 - INFO - 127.0.0.1 - - [31/Aug/2024 16:29:45] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:31:22,357 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:31:22,819 - INFO -  * Restarting with stat
+2024-08-31 16:31:24,142 - WARNING -  * Debugger is active!
+2024-08-31 16:31:24,150 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:31:27,273 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:31:27,273 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:31:27,273 - INFO -  * Restarting with stat
+2024-08-31 16:31:27,507 - WARNING -  * Debugger is active!
+2024-08-31 16:31:27,509 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:31:40,293 - INFO - 127.0.0.1 - - [31/Aug/2024 16:31:40] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:33:17,695 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:33:19,227 - INFO -  * Restarting with stat
+2024-08-31 16:33:20,564 - WARNING -  * Debugger is active!
+2024-08-31 16:33:20,564 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:33:44,722 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:33:44,944 - INFO -  * Restarting with stat
+2024-08-31 16:33:46,190 - WARNING -  * Debugger is active!
+2024-08-31 16:33:46,191 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:33:49,245 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:33:49,351 - INFO -  * Restarting with stat
+2024-08-31 16:33:49,873 - WARNING -  * Debugger is active!
+2024-08-31 16:33:49,873 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:34:15,056 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:34:15,230 - INFO -  * Restarting with stat
+2024-08-31 16:34:16,569 - WARNING -  * Debugger is active!
+2024-08-31 16:34:16,569 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:34:23,955 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:34:23,955 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:34:23,956 - INFO -  * Restarting with stat
+2024-08-31 16:34:24,186 - WARNING -  * Debugger is active!
+2024-08-31 16:34:24,186 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:34:33,210 - INFO - 127.0.0.1 - - [31/Aug/2024 16:34:33] "[35m[1mPOST /static_users HTTP/1.1[0m" 500 -
+2024-08-31 16:35:02,565 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:35:03,618 - INFO -  * Restarting with stat
+2024-08-31 16:35:09,454 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:35:09,454 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:35:09,458 - INFO -  * Restarting with stat
+2024-08-31 16:35:10,139 - WARNING -  * Debugger is active!
+2024-08-31 16:35:10,140 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:35:19,336 - INFO - 127.0.0.1 - - [31/Aug/2024 16:35:19] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:36:05,510 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:36:05,637 - INFO -  * Restarting with stat
+2024-08-31 16:36:09,941 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:36:09,942 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:36:09,943 - INFO -  * Restarting with stat
+2024-08-31 16:36:10,171 - WARNING -  * Debugger is active!
+2024-08-31 16:36:10,173 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:36:20,775 - INFO - 127.0.0.1 - - [31/Aug/2024 16:36:20] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:36:46,460 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-08-31 16:36:46,771 - INFO -  * Restarting with stat
+2024-08-31 16:36:50,666 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2024-08-31 16:36:50,666 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 16:36:50,673 - INFO -  * Restarting with stat
+2024-08-31 16:36:50,901 - WARNING -  * Debugger is active!
+2024-08-31 16:36:50,917 - INFO -  * Debugger PIN: 284-677-853
+2024-08-31 16:37:05,266 - INFO - 127.0.0.1 - - [31/Aug/2024 16:37:05] "[35m[1mPOST /static_users HTTP/1.1[0m" 201 -
+2024-08-31 16:37:08,635 - INFO - 127.0.0.1 - - [31/Aug/2024 16:37:08] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-08-31 16:39:22,455 - INFO - 127.0.0.1 - - [31/Aug/2024 16:39:22] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-31 16:39:27,693 - INFO - 127.0.0.1 - - [31/Aug/2024 16:39:27] "[35m[1mPOST /static_users HTTP/1.1[0m" 201 -
+2024-08-31 16:39:32,240 - INFO - 127.0.0.1 - - [31/Aug/2024 16:39:32] "POST /login HTTP/1.1" 200 -
+2024-08-31 16:39:45,584 - INFO - 127.0.0.1 - - [31/Aug/2024 16:39:45] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-31 16:39:45,772 - INFO - 127.0.0.1 - - [31/Aug/2024 16:39:45] "POST /login HTTP/1.1" 200 -
+2024-08-31 23:56:20,794 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-08-31 23:56:20,795 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-31 23:56:20,797 - INFO -  * Restarting with stat
+2024-08-31 23:56:21,018 - WARNING -  * Debugger is active!
+2024-08-31 23:56:21,018 - INFO -  * Debugger PIN: 130-961-798
+2024-09-01 00:13:41,793 - INFO - 127.0.0.1 - - [01/Sep/2024 00:13:41] "[35m[1mPOST /static_users HTTP/1.1[0m" 201 -
+2024-09-01 00:13:48,119 - INFO - 127.0.0.1 - - [01/Sep/2024 00:13:48] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-09-01 00:14:54,406 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/routes/login.py', reloading
+2024-09-01 00:14:54,470 - INFO -  * Restarting with stat
+2024-09-01 00:14:54,723 - WARNING -  * Debugger is active!
+2024-09-01 00:14:54,724 - INFO -  * Debugger PIN: 130-961-798
+2024-09-01 00:15:04,950 - INFO - 127.0.0.1 - - [01/Sep/2024 00:15:04] "POST /login HTTP/1.1" 200 -
