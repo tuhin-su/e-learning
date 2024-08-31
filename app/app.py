@@ -9,6 +9,7 @@ import mysql.connector
 from mysql.connector import Error
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
+import hashlib
 
 class apiHandler:
     def __init__(self):
@@ -58,6 +59,18 @@ class apiHandler:
 
         self.create_app()
     
+    def generate_signature(self, email, password, group):
+    # Concatenate the parameters with a delimiter
+        data = f"{email}:{password}:{group}"
+        
+        # Create a SHA-256 hash object
+        hash_object = hashlib.sha256(data.encode())
+        
+        # Get the hexadecimal representation of the hash
+        signature = hash_object.hexdigest()
+        
+        return signature
+
     def close_connection(self):
         if self.conn and self.conn.is_connected():
             self.cursor.close()
@@ -108,11 +121,11 @@ class apiHandler:
             username = data.get('username')
             password = generate_password_hash(data.get('password'))
             groups = data.get('groups')
-
+            ids  = self.generate_signature(username, password, groups);
             try:
                 # Use parameterized query to prevent SQL injection
-                query = "INSERT INTO user (username, passwd, groups) VALUES (%s, %s, %s)"
-                self.cursor.execute(query, (username, password, groups))
+                query = "INSERT INTO user (id, email, passwd, groups) VALUES (%s, %s, %s, %s)"
+                self.cursor.execute(query, (ids,username, password, groups))
                 self.conn.commit()
                 self.app.logger.info(f'Created new user: {username}')
                 return jsonify({"message": "User created"}), 201
