@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ### Login with the created user
 # @name user
-POST {{ apiUrl }}/users
+POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
