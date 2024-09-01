@@ -15,8 +15,8 @@ import { AlertComponent } from './alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashbordModule } from './dashbord/dashbord.module';
 import { ModuleModule } from './modules/module.module';
-
-
+import { SettingComponent } from './setting/setting.component';
+import { NotifyComponent } from './notify/notify.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +24,8 @@ import { ModuleModule } from './modules/module.module';
     LogoutComponent,
     LoadingComponent,
     AlertComponent,
+    SettingComponent,
+    NotifyComponent,
   ],
   imports: [
     BrowserModule,

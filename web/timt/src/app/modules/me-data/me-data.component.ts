@@ -70,7 +70,7 @@ export class MeDataComponent implements OnInit {
         tap(
           (res)=>{
             if (res) {
-              localStorage.setItem('info', this.profileForm.value)
+              localStorage.setItem('info', JSON.stringify(this.profileForm.value))
               this.router.navigate(['/'])
             }
           },

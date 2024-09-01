@@ -77,12 +77,12 @@ class apiHandler:
     def create_app(self):
         @self.app.route('/ver', methods=['GET'])
         def version():
-            query="SELECT MAX(version) AS ver FROM resource;";
-            self.cursor.execute(query)
-            ver = self.cursor.fetchone()
-            if ver:
-                return jsonify({"version": ver['ver']})
-            return jsonify({"message": "Server Broke"}), 521
+            # query="SELECT MAX(version) AS ver FROM resource;";
+            # self.cursor.execute(query)
+            # ver = self.cursor.fetchone()
+            # if ver:
+                return jsonify({"version": 0.1})
+            # return jsonify({"message": "Server Broke"}), 521
 
         @self.app.route('/login', methods=['POST'])
         def login():
@@ -99,7 +99,7 @@ class apiHandler:
                 user_id = user['id']
                 response = {}
                 response['group']= user['groups']
-                query = "SELECT name, phone, address, gender, birth FROM user_info WHERE  user_id = %s;"
+                query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE  user_id = %s;"
                 self.cursor.execute(query, (user_id,))
                 user_info=self.cursor.fetchone()
                 if user_info:

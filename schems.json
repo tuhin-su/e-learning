@@ -247,34 +247,6 @@
         }
       }
     },
-    "resource": {
-      "columns": {
-        "id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "primary_key": true,
-          "nullable": false
-        },
-        "name": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "content": {
-          "type": "LONGTEXT",
-          "nullable": true
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        },
-        "version":{
-          "type": "INT",
-          "nullable": false
-        }
-      }
-    },
     "student": {
       "columns": {
         "id": {
