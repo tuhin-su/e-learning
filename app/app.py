@@ -183,7 +183,7 @@ class apiHandler:
         @self.auth.login_required
         def attendance():
             user_id = self.auth.current_user()
-            self.app.logger.info(f'User {user_id} accessed attendance')
+            self.app.logger.info(f'User {user_id['user_id']} accessed attendance')
             if request.method == 'GET':
                 if user_id['groups'] == 'ST':
                     return jsonify({
@@ -205,6 +205,27 @@ class apiHandler:
                     return jsonify({"attendance": attendance})
             elif request.method == 'POST':
                 data = request.json
+                query = """INSERT INTO `attends` (`user_id`, `attendance_date`, `attendance_date_only`)
+                        VALUES (%s, NOW(), CURDATE());"""
+                try:
+                    self.cursor.execute(query, (user_id['user_id'],))
+                    self.conn.commit()
+                    return jsonify({}), 200
+                
+                except mysql.connector.Error as e:
+                    # Check for duplicate entry error
+                    if e.errno == 1062:
+                        error_message = "Attendance already recorded for this user on the same day"
+                        return jsonify({"message": error_message}), 200
+
+                    else:
+                        error_message = str(e)
+                    
+                    # Rollback in case of error
+                    self.conn.rollback()
+                    
+                    return jsonify({"message": error_message}), 400
+
 
             return jsonify({"data": "This is secured data"})
 

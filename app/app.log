@@ -162,3 +162,243 @@
 2024-09-02 02:07:32,151 - INFO - 127.0.0.1 - - [02/Sep/2024 02:07:32] "GET /attendance HTTP/1.1" 200 -
 2024-09-02 02:07:32,173 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
 2024-09-02 02:07:32,174 - INFO - 127.0.0.1 - - [02/Sep/2024 02:07:32] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:24:47,206 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.43.163:5000
+2024-09-02 02:24:47,206 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-02 02:24:47,207 - INFO -  * Restarting with stat
+2024-09-02 02:24:47,416 - WARNING -  * Debugger is active!
+2024-09-02 02:24:47,417 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:24:53,796 - INFO - Created new user: student
+2024-09-02 02:24:53,797 - INFO - 127.0.0.1 - - [02/Sep/2024 02:24:53] "[35m[1mPOST /static_users HTTP/1.1[0m" 201 -
+2024-09-02 02:24:58,037 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 logged in.
+2024-09-02 02:24:58,038 - INFO - 127.0.0.1 - - [02/Sep/2024 02:24:58] "POST /login HTTP/1.1" 200 -
+2024-09-02 02:26:33,527 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:33] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:26:33,532 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:26:33,533 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:33] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:26:33,551 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:26:33,551 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:33] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:26:45,892 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:45] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:26:45,898 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:26:45,898 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:45] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:26:45,961 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:26:45,961 - INFO - 127.0.0.1 - - [02/Sep/2024 02:26:45] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:27:56,095 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:27:56,158 - INFO -  * Restarting with stat
+2024-09-02 02:27:56,381 - WARNING -  * Debugger is active!
+2024-09-02 02:27:56,382 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:28:18,459 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:28:18,517 - INFO -  * Restarting with stat
+2024-09-02 02:28:18,734 - WARNING -  * Debugger is active!
+2024-09-02 02:28:18,735 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:28:22,749 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:28:22,798 - INFO -  * Restarting with stat
+2024-09-02 02:28:23,022 - WARNING -  * Debugger is active!
+2024-09-02 02:28:23,023 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:28:36,070 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:28:36,119 - INFO -  * Restarting with stat
+2024-09-02 02:28:36,344 - WARNING -  * Debugger is active!
+2024-09-02 02:28:36,345 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:28:50,396 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:28:50,440 - INFO -  * Restarting with stat
+2024-09-02 02:28:50,649 - WARNING -  * Debugger is active!
+2024-09-02 02:28:50,649 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:28:56,032 - INFO - 127.0.0.1 - - [02/Sep/2024 02:28:56] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:28:56,035 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:28:56,036 - INFO - 127.0.0.1 - - [02/Sep/2024 02:28:56] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:28:56,067 - INFO - User {'user_id': '099e57406b4545c70e9360c23d95d14547ebeed07fbf98f16af330755533599d', 'groups': 'ST'} accessed attendance
+2024-09-02 02:28:56,069 - INFO - 127.0.0.1 - - [02/Sep/2024 02:28:56] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:29:38,828 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:29:38,886 - INFO -  * Restarting with stat
+2024-09-02 02:29:39,102 - WARNING -  * Debugger is active!
+2024-09-02 02:29:39,102 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:29:59,175 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:29:59,235 - INFO -  * Restarting with stat
+2024-09-02 02:29:59,453 - WARNING -  * Debugger is active!
+2024-09-02 02:29:59,454 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:30:10,495 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:30:10,551 - INFO -  * Restarting with stat
+2024-09-02 02:30:10,770 - WARNING -  * Debugger is active!
+2024-09-02 02:30:10,770 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:30:16,262 - INFO - 127.0.0.1 - - [02/Sep/2024 02:30:16] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:30:16,278 - INFO - 127.0.0.1 - - [02/Sep/2024 02:30:16] "[35m[1mGET /attendance HTTP/1.1[0m" 500 -
+2024-09-02 02:31:25,420 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:25] "OPTIONS /login HTTP/1.1" 200 -
+2024-09-02 02:31:25,530 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 logged in.
+2024-09-02 02:31:25,531 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:25] "POST /login HTTP/1.1" 200 -
+2024-09-02 02:31:41,629 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:41] "OPTIONS /user_info HTTP/1.1" 200 -
+2024-09-02 02:31:41,895 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:41] "POST /user_info HTTP/1.1" 200 -
+2024-09-02 02:31:46,413 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:46] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:31:46,423 - INFO - 127.0.0.1 - - [02/Sep/2024 02:31:46] "[35m[1mGET /attendance HTTP/1.1[0m" 500 -
+2024-09-02 02:32:10,736 - INFO - 127.0.0.1 - - [02/Sep/2024 02:32:10] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:32:10,745 - INFO - 127.0.0.1 - - [02/Sep/2024 02:32:10] "[35m[1mGET /attendance HTTP/1.1[0m" 500 -
+2024-09-02 02:32:39,309 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:32:39,360 - INFO -  * Restarting with stat
+2024-09-02 02:32:39,612 - WARNING -  * Debugger is active!
+2024-09-02 02:32:39,613 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:32:44,953 - INFO - 127.0.0.1 - - [02/Sep/2024 02:32:44] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:32:44,959 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:32:44,960 - INFO - 127.0.0.1 - - [02/Sep/2024 02:32:44] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:32:44,992 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:32:44,999 - INFO - 127.0.0.1 - - [02/Sep/2024 02:32:44] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:33:13,657 - INFO - 127.0.0.1 - - [02/Sep/2024 02:33:13] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:33:13,661 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:33:13,661 - INFO - 127.0.0.1 - - [02/Sep/2024 02:33:13] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:33:13,673 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:33:13,675 - INFO - 127.0.0.1 - - [02/Sep/2024 02:33:13] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:34:01,904 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:34:01,952 - INFO -  * Restarting with stat
+2024-09-02 02:34:02,162 - WARNING -  * Debugger is active!
+2024-09-02 02:34:02,162 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:34:04,530 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:04] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:34:04,539 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:34:04,540 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:04] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:34:04,556 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:34:04,557 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:04] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:34:22,236 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:34:22,294 - INFO -  * Restarting with stat
+2024-09-02 02:34:22,544 - WARNING -  * Debugger is active!
+2024-09-02 02:34:22,545 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:34:26,563 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:34:26,610 - INFO -  * Restarting with stat
+2024-09-02 02:34:26,837 - WARNING -  * Debugger is active!
+2024-09-02 02:34:26,837 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:34:34,156 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:34] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:34:34,162 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:34:34,163 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:34] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:34:34,187 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:34:34,204 - INFO - 127.0.0.1 - - [02/Sep/2024 02:34:34] "[35m[1mPOST /attendance HTTP/1.1[0m" 500 -
+2024-09-02 02:35:39,070 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:35:39,117 - INFO -  * Restarting with stat
+2024-09-02 02:35:39,333 - WARNING -  * Debugger is active!
+2024-09-02 02:35:39,334 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:35:41,467 - INFO - 127.0.0.1 - - [02/Sep/2024 02:35:41] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:35:41,471 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:35:41,471 - INFO - 127.0.0.1 - - [02/Sep/2024 02:35:41] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:35:41,490 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:35:41,507 - INFO - 127.0.0.1 - - [02/Sep/2024 02:35:41] "[35m[1mPOST /attendance HTTP/1.1[0m" 500 -
+2024-09-02 02:35:53,389 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:35:53,454 - INFO -  * Restarting with stat
+2024-09-02 02:35:53,664 - WARNING -  * Debugger is active!
+2024-09-02 02:35:53,664 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:36:00,562 - INFO - 127.0.0.1 - - [02/Sep/2024 02:36:00] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:36:00,570 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:36:00,571 - INFO - 127.0.0.1 - - [02/Sep/2024 02:36:00] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:36:00,599 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:36:00,601 - INFO - 127.0.0.1 - - [02/Sep/2024 02:36:00] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:37:00,911 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:37:00,950 - INFO -  * Restarting with stat
+2024-09-02 02:37:01,207 - WARNING -  * Debugger is active!
+2024-09-02 02:37:01,207 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:37:06,225 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:37:06,262 - INFO -  * Restarting with stat
+2024-09-02 02:37:06,482 - WARNING -  * Debugger is active!
+2024-09-02 02:37:06,482 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:38:25,952 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:25] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:25,955 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:38:25,956 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:25] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:39,678 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:39] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:39,684 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:38:39,685 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:39] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:52,398 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:52] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:52,401 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:38:52,402 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:52] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:38:55,741 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:38:55,741 - INFO - 127.0.0.1 - - [02/Sep/2024 02:38:55] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:17,825 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:17] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:17,831 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:17,832 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:17] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:20,161 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:20,163 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:20] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:40:22,368 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:22,369 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:22] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:22,397 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:22,400 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:22] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:40:35,630 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:35] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:35,634 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:35,634 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:35] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:35,652 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:35,653 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:35] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:40:45,082 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:45] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:45,086 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:45,086 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:45] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:45,104 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:45,105 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:45] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:40:49,910 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:49,911 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:49] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:40:49,936 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:40:49,937 - INFO - 127.0.0.1 - - [02/Sep/2024 02:40:49] "[31m[1mPOST /attendance HTTP/1.1[0m" 400 -
+2024-09-02 02:41:21,378 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:41:21,422 - INFO -  * Restarting with stat
+2024-09-02 02:41:21,670 - WARNING -  * Debugger is active!
+2024-09-02 02:41:21,671 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:41:23,407 - INFO - 127.0.0.1 - - [02/Sep/2024 02:41:23] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:41:23,412 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:41:23,413 - INFO - 127.0.0.1 - - [02/Sep/2024 02:41:23] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:41:23,436 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:41:23,437 - INFO - 127.0.0.1 - - [02/Sep/2024 02:41:23] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:42:58,991 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:42:59,025 - INFO -  * Restarting with stat
+2024-09-02 02:42:59,249 - WARNING -  * Debugger is active!
+2024-09-02 02:42:59,249 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:43:06,276 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:43:06,329 - INFO -  * Restarting with stat
+2024-09-02 02:43:06,545 - WARNING -  * Debugger is active!
+2024-09-02 02:43:06,545 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:43:15,576 - INFO -  * Detected change in '/home/tuhin/workplace/e-learning/app/app.py', reloading
+2024-09-02 02:43:15,633 - INFO -  * Restarting with stat
+2024-09-02 02:43:15,846 - WARNING -  * Debugger is active!
+2024-09-02 02:43:15,846 - INFO -  * Debugger PIN: 130-961-798
+2024-09-02 02:43:37,152 - INFO - 127.0.0.1 - - [02/Sep/2024 02:43:37] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:43:37,157 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:43:37,157 - INFO - 127.0.0.1 - - [02/Sep/2024 02:43:37] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:43:37,184 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:43:37,186 - INFO - 127.0.0.1 - - [02/Sep/2024 02:43:37] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:43:41,346 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:43:41,346 - INFO - 127.0.0.1 - - [02/Sep/2024 02:43:41] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:43:41,367 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:43:41,369 - INFO - 127.0.0.1 - - [02/Sep/2024 02:43:41] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:09,330 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:09] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:09,335 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:44:09,335 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:09] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:09,362 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:44:09,363 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:09] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:31,944 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:31] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:31,948 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:44:31,948 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:31] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:44:31,969 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:44:31,971 - INFO - 127.0.0.1 - - [02/Sep/2024 02:44:31] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:45:22,934 - INFO - 127.0.0.1 - - [02/Sep/2024 02:45:22] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:45:22,939 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:45:22,940 - INFO - 127.0.0.1 - - [02/Sep/2024 02:45:22] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:45:22,965 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:45:22,967 - INFO - 127.0.0.1 - - [02/Sep/2024 02:45:22] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:07,095 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:07] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:07,098 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:07,099 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:07] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:12,859 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:12] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:12,864 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:12,865 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:12] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:23,390 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:23] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:23,399 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:23,401 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:23] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:26,716 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:26,717 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:26] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:30,095 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:30] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:30,099 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:30,100 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:30] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:47:30,154 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:47:30,157 - INFO - 127.0.0.1 - - [02/Sep/2024 02:47:30] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:10,774 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:10] "OPTIONS /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:10,779 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:10,780 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:10] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:10,803 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:10,804 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:10] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:12,488 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:12,489 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:12] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:12,512 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:12,514 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:12] "POST /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:14,957 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:14,958 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:14] "GET /attendance HTTP/1.1" 200 -
+2024-09-02 02:48:14,970 - INFO - User a60e64d99f27528ae0715afd821ccdb249aa9923cd4966ff7dbf82393791fc54 accessed attendance
+2024-09-02 02:48:14,972 - INFO - 127.0.0.1 - - [02/Sep/2024 02:48:14] "POST /attendance HTTP/1.1" 200 -
