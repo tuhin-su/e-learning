@@ -15,8 +15,8 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "password": "testpassword"
+  "username": "student",
+  "password": "stedunt"
 }
 
 ### Create static user
@@ -29,6 +29,20 @@ Content-Type: application/json
   "password": "testpassword",
   "groups": "SU"
 }
+
+### student account
+### Create static user
+# @name static_user
+POST {{ apiUrl }}/static_users
+Content-Type: application/json
+
+{
+  "username": "student",
+  "password": "stedunt",
+  "groups": "ST"
+}
+
+
 
 ### Access secure data (after login)
 # @name secure_data
@@ -68,3 +82,14 @@ Authorization: Bearer {{ token }}
   "dob": "2024-09-14",
   "img": ""
 }
+
+
+### student accout
+
+
+### attendance
+# @name attendance
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/attendance
+Content-Type: application/json
+Authorization: Bearer {{ token }}

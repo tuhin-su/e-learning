@@ -1,299 +1,304 @@
 {
-    "user": {
-      "columns": {
-        "id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "primary_key": true,
-          "nullable": false
-        },
-        "email": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "passwd": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": false
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        },
-        "groups": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "status": {
-          "type": "INT",
-          "default": 0,
-          "nullable": false
+  "user": {
+    "columns": {
+      "id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "primary_key": true,
+        "nullable": false
+      },
+      "email": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "passwd": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "groups": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "status": {
+        "type": "INT",
+        "default": 0,
+        "nullable": false
+      }
+    }
+  },
+  "user_info": {
+    "columns": {
+      "user_id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "primary_key": true,
+        "nullable": false,
+        "foreign_key": {
+          "references": "user(id)"
         }
+      },
+      "name": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "phone": {
+        "type": "VARCHAR",
+        "length": 20,
+        "nullable": true
+      },
+      "address": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "gender": {
+        "type": "VARCHAR",
+        "nullable": true
+      },
+      "birth": {
+        "type": "DATE",
+        "nullable": true
+      },
+      "img": {
+        "type": "LONG TEXT",
+        "nullable": true
+      }
+    }
+  },
+  "group": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "nullable": false
+      },
+      "name": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "code": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "description": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "label": {
+        "type": "INT",
+        "default": 0,
+        "nullable": false
+      }
+    }
+  },
+  "course": {
+    "columns": {
+      "id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "primary_key": true,
+        "nullable": false
+      },
+      "name": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "description": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "course_fees": {
+        "type": "DECIMAL",
+        "precision": 10,
+        "scale": 2,
+        "nullable": true
+      },
+      "course_duration": {
+        "type": "INT",
+        "nullable": true
+      },
+      "status": {
+        "type": "INT",
+        "default": 0,
+        "nullable": false
+      }
+    }
+  },
+  "attends": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "user_id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true,
+        "foreign_key": {
+          "references": "user(id)"
+        }
+      },
+      "attendance_date": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
       }
     },
-    "user_info": {
-      "columns": {
-        "user_id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "primary_key": true,
-          "nullable": false,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "name": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "phone": {
-          "type": "VARCHAR",
-          "length": 20,
-          "nullable": true
-        },
-        "address": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "gender": {
-          "type": "VARCHAR",
-          "nullable": true
-        },
-        "birth": {
-          "type": "DATE",
-          "nullable": true
-        },
-        "img": {
-          "type": "LONG TEXT",
-          "nullable": true
-        }
+    "constraints": {
+      "unique_user_per_day": {
+        "type": "unique",
+        "columns": ["user_id", "DATE(attendance_date)"]
       }
-    },
-    "group": {
-      "columns": {
-        "id": {
-          "type": "INT",
-          "primary_key": true,
-          "nullable": false
-        },
-        "name": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "code": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "description": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        },
-        "label": {
-          "type": "INT",
-          "default": 0,
-          "nullable": false
+    }
+  },
+  "classes": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "host": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true,
+        "foreign_key": {
+          "references": "user(id)"
         }
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "content": {
+        "type": "INT",
+        "nullable": true
       }
-    },
-    "course": {
-      "columns": {
-        "id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "primary_key": true,
-          "nullable": false
-        },
-        "name": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "description": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        },
-        "course_fees": {
-          "type": "DECIMAL",
-          "precision": 10,
-          "scale": 2,
-          "nullable": true
-        },
-        "course_duration": {
-          "type": "INT",
-          "nullable": true
-        },
-        "status": {
-          "type": "INT",
-          "default": 0,
-          "nullable": false
+    }
+  },
+  "class_attends": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "class_id": {
+        "type": "INT",
+        "nullable": true,
+        "foreign_key": {
+          "references": "classes(id)"
         }
+      },
+      "user_id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true,
+        "foreign_key": {
+          "references": "user(id)"
+        }
+      },
+      "attendance_date": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
       }
-    },
-    "attends": {
-      "columns": {
-        "id": {
-          "type": "INT",
-          "primary_key": true,
-          "auto_increment": true,
-          "nullable": false
-        },
-        "user_id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "attendance_date": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        }
+    }
+  },
+  "class_content": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "content": {
+        "type": "TEXT",
+        "nullable": true
+      },
+      "date": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
       }
-    },
-    "classes": {
-      "columns": {
-        "id": {
-          "type": "INT",
-          "primary_key": true,
-          "auto_increment": true,
-          "nullable": false
-        },
-        "host": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        },
-        "content": {
-          "type": "INT",
-          "nullable": true
+    }
+  },
+  "student": {
+    "columns": {
+      "id": {
+        "type": "VARCHAR",
+        "length": 255,
+        "primary_key": true,
+        "nullable": false,
+        "foreign_key": {
+          "references": "user(id)"
         }
-      }
-    },
-    "class_attends": {
-      "columns": {
-        "id": {
-          "type": "INT",
-          "primary_key": true,
-          "auto_increment": true,
-          "nullable": false
-        },
-        "class_id": {
-          "type": "INT",
-          "nullable": true,
-          "foreign_key": {
-            "references": "classes(id)"
-          }
-        },
-        "user_id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "attendance_date": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
+      },
+      "roll": {
+        "type": "INT",
+        "nullable": true
+      },
+      "reg": {
+        "type": "INT",
+        "nullable": true
+      },
+      "course": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "semester": {
+        "type": "INT",
+        "nullable": true
+      },
+      "status": {
+        "type": "INT",
+        "default": 0,
+        "nullable": false
+      },
+      "reg_by": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true,
+        "foreign_key": {
+          "references": "user(id)"
         }
-      }
-    },
-    "class_content": {
-      "columns": {
-        "id": {
-          "type": "INT",
-          "primary_key": true,
-          "auto_increment": true,
-          "nullable": false
-        },
-        "content": {
-          "type": "TEXT",
-          "nullable": true
-        },
-        "date": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        }
-      }
-    },
-    "student": {
-      "columns": {
-        "id": {
-          "type": "VARCHAR",
-          "length": 255,
-          "primary_key": true,
-          "nullable": false,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "roll": {
-          "type": "INT",
-          "nullable": true
-        },
-        "reg": {
-          "type": "INT",
-          "nullable": true
-        },
-        "course": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true
-        },
-        "semester": {
-          "type": "INT",
-          "nullable": true
-        },
-        "status": {
-          "type": "INT",
-          "default": 0,
-          "nullable": false
-        },
-        "reg_by": {
-          "type": "VARCHAR",
-          "length": 255,
-          "nullable": true,
-          "foreign_key": {
-            "references": "user(id)"
-          }
-        },
-        "createDate": {
-          "type": "TIMESTAMP",
-          "default": "CURRENT_TIMESTAMP",
-          "nullable": false
-        }
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
       }
     }
   }
-  
+}

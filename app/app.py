@@ -94,7 +94,6 @@ class apiHandler:
             query = "SELECT id, passwd, groups FROM user WHERE email = %s AND status = 0"
             self.cursor.execute(query, (username,))
             user = self.cursor.fetchone()
-           
             if user and check_password_hash(user['passwd'], password):
                 user_id = user['id']
                 response = {}
@@ -106,7 +105,7 @@ class apiHandler:
                     response['info']=user_info;
                     
                 expiration = datetime.now() + self.token_expiration
-                token = jwt.encode({'user_id': user_id, 'exp': expiration}, self.token_secret, algorithm='HS256')
+                token = jwt.encode({'user_id': user_id, 'groups':user['groups'] ,'exp': expiration}, self.token_secret, algorithm='HS256')
                 response['token']=token
 
                 self.app.logger.info(f'User {user_id} logged in.')
@@ -136,6 +135,7 @@ class apiHandler:
         @self.auth.login_required
         def user_info():
             user_id = self.auth.current_user()
+            user_id = user_id['user_id']
             data = request.json
 
             # Extract values from data
@@ -179,18 +179,40 @@ class apiHandler:
             self.app.logger.info(f'User {self.auth.current_user()} logged out.')
             return jsonify({"message": self.auth.current_user(), "data": data.get('data')})
         
-        @self.app.route('/secure_data', methods=['GET'])
+        @self.app.route('/attendance', methods=['GET', 'POST', 'PUT'])
         @self.auth.login_required
-        def secure_data():
+        def attendance():
             user_id = self.auth.current_user()
-            self.app.logger.info(f'User {user_id} accessed secure data.')
+            self.app.logger.info(f'User {user_id} accessed attendance')
+            if request.method == 'GET':
+                if user_id['groups'] == 'ST':
+                    return jsonify({
+                                "lat": 26.7271012,
+                                "lng": 88.3952861
+                            })
+                
+                elif user_id['groups'] == 'FA' or user_id['groups'] == 'AD':
+                    # Return attendance records for a specific user
+                    stream = data.get("stream")
+                    sem = data.get("sem")
+                    query = """SELECT s.id
+                            FROM student s
+                            JOIN attends a ON s.id = %s
+                            WHERE s.course = %s 
+                            AND s.semester = %s;"""
+                    self.cursor.execute(query, (user_id['user_id'],stream,sem))
+                    attendance = self.cursor.fetchall()
+                    return jsonify({"attendance": attendance})
+            elif request.method == 'POST':
+                data = request.json
+
             return jsonify({"data": "This is secured data"})
 
         @self.auth.verify_token
         def verify_token(token):
             try:
                 payload = jwt.decode(token, self.token_secret, algorithms=['HS256'])
-                return payload['user_id']
+                return { "user_id":payload['user_id'], "groups":payload['groups']}
             except jwt.ExpiredSignatureError:
                 return None
             except jwt.InvalidTokenError:

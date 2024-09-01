@@ -1,4 +1,4 @@
-<div class="holder">
+<div class="holder" *ngIf="group=='ST'">
     <div class="card" *ngIf="success">
         <div>
             <img src="assets/imgs/school_8220314.png" alt="Attendance Update"/>
@@ -24,5 +24,9 @@
         Tray Again
       </button>
     </div>
+
+</div>
+
+<div *ngIf="group=='FA'">
 
 </div>

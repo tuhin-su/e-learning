@@ -22,7 +22,7 @@ export class DashbordComponent implements OnInit {
         this.show = 1;
         break;
       default:
-        this.show = 0;
+        this.show = 1;
         break;
     }
   }
