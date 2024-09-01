@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this.loginServiceHolder = this.loginService.login(username, password).subscribe(
         (response: any) => {
+          console.log(response)
+
           if (response.token && response.group) {
             localStorage.setItem('token', response.token);
             localStorage.setItem('group', response.group);

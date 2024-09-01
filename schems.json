@@ -61,11 +61,15 @@
           "nullable": true
         },
         "gender": {
-          "type": "INT",
+          "type": "VARCHAR",
           "nullable": true
         },
         "birth": {
           "type": "DATE",
+          "nullable": true
+        },
+        "img": {
+          "type": "LONG TEXT",
           "nullable": true
         }
       }

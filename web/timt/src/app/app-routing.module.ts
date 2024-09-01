@@ -9,7 +9,7 @@ import { MeDataComponent } from './modules/me-data/me-data.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'me_data', component: MeDataComponent },
+  { path: 'me_data', component: MeDataComponent , canActivate: [AuthGuardService]},
   { path: 'dash', component: DashbordComponent, canActivate: [AuthGuardService] },
   { path: '', component: DashbordComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: '/login', pathMatch: 'full' } // Catch-all route
