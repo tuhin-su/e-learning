@@ -20,11 +20,28 @@ export class AttendanceComponent implements OnInit {
     if (this.user) {
       this.user = JSON.parse(this.user);
       this.group = localStorage.getItem('group');
-      console.log(this.group);
+      const pm = { "stream": "BCA", "sem":1}
+      switch (this.group) {
+        case "ST":
+          this.attend();
+          break;
+        
+        case "FA":
+          this.getAllStudents(pm);
+          break;
 
-      // Simulate stored location for comparison (you might get this from localStorage or a service)
-      this.attend();
+        default:
+          break;
+      }
     }
+  }
+
+  async getAllStudents(data: any) {
+    this.service.getAllStudent(data).subscribe(
+      (res)=>{
+        console.log(res);
+      }
+    );
   }
 
   async attend() {

@@ -48,4 +48,15 @@ export class AttendanceService {
     return this.http.post<any>(attendanceUrl, {}, { headers });
   }
 
+  getAllStudent(data:{stream:string, sem:Number}){
+    const attendanceUrl = `${this.apiUrl}/attendance`;
+
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.post<any>(attendanceUrl, data, { headers });
+  }
+
 }

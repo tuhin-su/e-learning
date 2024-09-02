@@ -190,42 +190,40 @@ class apiHandler:
                                 "lat": 26.7271012,
                                 "lng": 88.3952861
                             })
-                
-                elif user_id['groups'] == 'FA' or user_id['groups'] == 'AD':
-                    # Return attendance records for a specific user
-                    stream = data.get("stream")
-                    sem = data.get("sem")
-                    query = """SELECT s.id
-                            FROM student s
-                            JOIN attends a ON s.id = %s
-                            WHERE s.course = %s 
-                            AND s.semester = %s;"""
-                    self.cursor.execute(query, (user_id['user_id'],stream,sem))
-                    attendance = self.cursor.fetchall()
-                    return jsonify({"attendance": attendance})
             elif request.method == 'POST':
                 data = request.json
-                query = """INSERT INTO `attends` (`user_id`, `attendance_date`, `attendance_date_only`)
-                        VALUES (%s, NOW(), CURDATE());"""
-                try:
-                    self.cursor.execute(query, (user_id['user_id'],))
-                    self.conn.commit()
-                    return jsonify({}), 200
-                
-                except mysql.connector.Error as e:
-                    # Check for duplicate entry error
-                    if e.errno == 1062:
-                        error_message = "Attendance already recorded for this user on the same day"
-                        return jsonify({"message": error_message}), 200
-
+                if len(data) > 0:
+                    data = request.json
+                    if not data:
+                            return jsonify({"message": "No data provided"}), 400
                     else:
-                        error_message = str(e)
-                    
-                    # Rollback in case of error
-                    self.conn.rollback()
-                    
-                    return jsonify({"message": error_message}), 400
+                        stream = data.get("stream")
+                        sem = data.get("sem")
+                        sem = data.get("sem")
+                        query = """SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date FROM attends a JOIN  user_info u ON a.user_id = u.user_id JOIN student s ON u.user_id = s.id WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();"""
+                        self.cursor.execute(query, (stream,sem))
+                        attendance = self.cursor.fetchall()
+                        return jsonify({"attendance": attendance}), 200
+                else:
+                    query = """INSERT INTO `attends` (`user_id`, `attendance_date`, `attendance_date_only`)
+                        VALUES (%s, NOW(), CURDATE());"""
+                    try:
+                        self.cursor.execute(query, (user_id['user_id'],))
+                        self.conn.commit()
+                        return jsonify({}), 200
+                    except mysql.connector.Error as e:
+                        # Check for duplicate entry error
+                        if e.errno == 1062:
+                            error_message = "Attendance already recorded for this user on the same day"
+                            return jsonify({"message": error_message}), 200
 
+                        else:
+                            error_message = str(e)
+                        
+                        # Rollback in case of error
+                        self.conn.rollback()
+                        
+                        return jsonify({"message": error_message}), 400
 
             return jsonify({"data": "This is secured data"})
 

@@ -25,9 +25,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "password": "testpassword",
-  "groups": "SU"
+  "username": "Staff_10",
+  "password": "passwd",
+  "groups": "FA"
 }
 
 ### student account
