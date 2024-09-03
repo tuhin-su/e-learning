@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:5000"
+  apiUrl: "https://api.ec2-13-48-56-144.eu-north-1.compute.amazonaws.com"
 };
 
