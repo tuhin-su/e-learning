@@ -183,7 +183,7 @@ class apiHandler:
         @self.auth.login_required
         def attendance():
             user_id = self.auth.current_user()
-            self.app.logger.info(f'User {user_id['user_id']} accessed attendance')
+            self.app.logger.info(f'User {user_id["user_id"]} accessed attendance')
             if request.method == 'GET':
                 if user_id['groups'] == 'ST':
                     return jsonify({
