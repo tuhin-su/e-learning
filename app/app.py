@@ -1,17 +1,17 @@
+import logging
 from flask import Flask, request, jsonify, session
 from flask_httpauth import HTTPTokenAuth
-import logging
-import json
-import os
+from flask_cors import CORS
 import jwt
-from datetime import datetime, timedelta
 import mysql.connector
 from mysql.connector import Error
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_cors import CORS
 import hashlib
 import time
 import uuid
+import json
+import os
+from datetime import datetime, timedelta
 
 class apiHandler:
     def __init__(self):
@@ -77,12 +77,7 @@ class apiHandler:
     def create_app(self):
         @self.app.route('/ver', methods=['GET'])
         def version():
-            # query="SELECT MAX(version) AS ver FROM resource;";
-            # self.cursor.execute(query)
-            # ver = self.cursor.fetchone()
-            # if ver:
-                return jsonify({"version": 0.1})
-            # return jsonify({"message": "Server Broke"}), 521
+            return jsonify({"version": 0.1})
 
         @self.app.route('/login', methods=['POST'])
         def login():
@@ -90,23 +85,22 @@ class apiHandler:
             username = data.get('username')
             password = data.get('password')
 
-            # Use parameterized query to prevent SQL injection
             query = "SELECT id, passwd, groups FROM user WHERE email = %s AND status = 0"
             self.cursor.execute(query, (username,))
             user = self.cursor.fetchone()
             if user and check_password_hash(user['passwd'], password):
                 user_id = user['id']
                 response = {}
-                response['group']= user['groups']
-                query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE  user_id = %s;"
+                response['group'] = user['groups']
+                query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE user_id = %s;"
                 self.cursor.execute(query, (user_id,))
-                user_info=self.cursor.fetchone()
+                user_info = self.cursor.fetchone()
                 if user_info:
-                    response['info']=user_info;
+                    response['info'] = user_info
                     
                 expiration = datetime.now() + self.token_expiration
-                token = jwt.encode({'user_id': user_id, 'groups':user['groups'] ,'exp': expiration}, self.token_secret, algorithm='HS256')
-                response['token']=token
+                token = jwt.encode({'user_id': user_id, 'groups': user['groups'], 'exp': expiration}, self.token_secret, algorithm='HS256')
+                response['token'] = token
 
                 self.app.logger.info(f'User {user_id} logged in.')
                 return jsonify(response)
@@ -118,10 +112,9 @@ class apiHandler:
             username = data.get('username')
             password = generate_password_hash(data.get('password'))
             groups = data.get('groups')
-            user_id = self.generate_unique_id(username, password, groups);
+            user_id = self.generate_unique_id(username, password, groups)
 
             try:
-                # Use parameterized query to prevent SQL injection
                 query = "INSERT INTO user (id, email, passwd, groups) VALUES (%s, %s, %s, %s)"
                 self.cursor.execute(query, (user_id, username, password, groups))
                 self.conn.commit()
@@ -131,14 +124,12 @@ class apiHandler:
                 self.conn.rollback()
                 return jsonify({"message": str(e)}), 400
 
-        @self.app.route('/user_info', methods=['POST','PUT'])
+        @self.app.route('/user_info', methods=['POST', 'PUT'])
         @self.auth.login_required
         def user_info():
-            user_id = self.auth.current_user()
-            user_id = user_id['user_id']
+            user_id = self.auth.current_user()['user_id']
             data = request.json
 
-            # Extract values from data
             name = data.get('name')
             phone = data.get('phone')
             address = data.get('address')
@@ -147,14 +138,12 @@ class apiHandler:
             img = data.get('img')
 
             if request.method == 'POST':
-                # Handle POST request (Insert new record)
                 query = """
                     INSERT INTO user_info (user_id, name, phone, address, gender, birth, img)
                     VALUES (%s, %s, %s, %s, %s, %s, %s);
                 """
                 values = (user_id, name, phone, address, gender, birth, img)
             elif request.method == 'PUT':
-                # Handle PUT request (Update existing record)
                 query = """
                     UPDATE user_info
                     SET name = %s, phone = %s, address = %s, gender = %s, birth = %s, img = %s
@@ -171,12 +160,11 @@ class apiHandler:
             except Error as e:
                 self.conn.rollback()
                 return jsonify({"message": str(e)}), 400
-            
+        
         @self.app.route('/create_account', methods=['POST'])
         @self.auth.login_required
         def create_user():
             data = request.json
-            self.app.logger.info(f'User {self.auth.current_user()} logged out.')
             return jsonify({"message": self.auth.current_user(), "data": data.get('data')})
         
         @self.app.route('/attendance', methods=['GET', 'POST', 'PUT'])
@@ -187,43 +175,41 @@ class apiHandler:
             if request.method == 'GET':
                 if user_id['groups'] == 'ST':
                     return jsonify({
-                                "lat": 26.7271012,
-                                "lng": 88.3952861
-                            })
+                        "lat": 26.7271012,
+                        "lng": 88.3952861
+                    })
             elif request.method == 'POST':
                 data = request.json
-                if len(data) > 0:
-                    data = request.json
-                    if not data:
-                            return jsonify({"message": "No data provided"}), 400
-                    else:
-                        stream = data.get("stream")
-                        sem = data.get("sem")
-                        sem = data.get("sem")
-                        query = """SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date FROM attends a JOIN  user_info u ON a.user_id = u.user_id JOIN student s ON u.user_id = s.id WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();"""
-                        self.cursor.execute(query, (stream,sem))
-                        attendance = self.cursor.fetchall()
-                        return jsonify({"attendance": attendance}), 200
-                else:
-                    query = """INSERT INTO `attends` (`user_id`, `attendance_date`, `attendance_date_only`)
-                        VALUES (%s, NOW(), CURDATE());"""
-                    try:
-                        self.cursor.execute(query, (user_id['user_id'],))
-                        self.conn.commit()
-                        return jsonify({}), 200
-                    except mysql.connector.Error as e:
-                        # Check for duplicate entry error
-                        if e.errno == 1062:
-                            error_message = "Attendance already recorded for this user on the same day"
-                            return jsonify({"message": error_message}), 200
+                if not data:
+                    return jsonify({"message": "No data provided"}), 400
+                
+                stream = data.get("stream")
+                sem = data.get("sem")
+                query = """SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date 
+                           FROM attends a 
+                           JOIN user_info u ON a.user_id = u.user_id 
+                           JOIN student s ON u.user_id = s.id 
+                           WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();"""
+                self.cursor.execute(query, (stream, sem))
+                attendance = self.cursor.fetchall()
+                return jsonify({"attendance": attendance}), 200
 
-                        else:
-                            error_message = str(e)
-                        
-                        # Rollback in case of error
-                        self.conn.rollback()
-                        
-                        return jsonify({"message": error_message}), 400
+            elif request.method == 'PUT':
+                query = """INSERT INTO attends (user_id, attendance_date, attendance_date_only)
+                           VALUES (%s, NOW(), CURDATE());"""
+                try:
+                    self.cursor.execute(query, (user_id['user_id'],))
+                    self.conn.commit()
+                    return jsonify({}), 200
+                except mysql.connector.Error as e:
+                    if e.errno == 1062:
+                        error_message = "Attendance already recorded for this user on the same day"
+                        return jsonify({"message": error_message}), 200
+                    else:
+                        error_message = str(e)
+                    
+                    self.conn.rollback()
+                    return jsonify({"message": error_message}), 400
 
             return jsonify({"data": "This is secured data"})
 
@@ -231,7 +217,7 @@ class apiHandler:
         def verify_token(token):
             try:
                 payload = jwt.decode(token, self.token_secret, algorithms=['HS256'])
-                return { "user_id":payload['user_id'], "groups":payload['groups']}
+                return {"user_id": payload['user_id'], "groups": payload['groups']}
             except jwt.ExpiredSignatureError:
                 return None
             except jwt.InvalidTokenError:
@@ -240,8 +226,8 @@ class apiHandler:
     def run(self):
         logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         CORS(self.app)
-        # self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
-        self.app.run(host=self.host, port=self.port, debug=True)
+        # Run the Flask app with SSL context
+        self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
 
 if __name__ == '__main__':
     app_instance = apiHandler()
