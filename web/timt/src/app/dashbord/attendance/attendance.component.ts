@@ -65,7 +65,7 @@ export class AttendanceComponent implements OnInit {
             };
             const distance = this.calculateDistance(currentLocation, this.storedLocation);
 
-            if (distance <= 500) {
+            if (distance <= 57.99) {
               this.add();
             } else {
               this.success = false;

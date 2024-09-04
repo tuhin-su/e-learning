@@ -1,23 +1,23 @@
+import json
+import os
 import logging
+import mysql.connector
+from mysql.connector import Error
 from flask import Flask, request, jsonify, session
 from flask_httpauth import HTTPTokenAuth
 from flask_cors import CORS
 import jwt
-import mysql.connector
-from mysql.connector import Error
 from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
 import time
 import uuid
-import json
-import os
 from datetime import datetime, timedelta
 
 class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
         self.auth = HTTPTokenAuth(scheme='Bearer')
-        
+
         # Load configuration from JSON file
         config_path = 'config.json'
         if not os.path.isfile(config_path):
@@ -175,8 +175,8 @@ class apiHandler:
             if request.method == 'GET':
                 if user_id['groups'] == 'ST':
                     return jsonify({
-                        "lat": 26.7271012,
-                        "lng": 88.3952861
+                        "lat": 22.29367,
+                        "lng": 87.92009
                     })
             elif request.method == 'POST':
                 data = request.json
@@ -227,7 +227,7 @@ class apiHandler:
         logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         CORS(self.app)
         # Run the Flask app with SSL context
-        self.app.run(host=self.host, port=self.port, debug=True, ssl_context=(self.ssl_cert_path, self.ssl_key_path))
+        self.app.run(host=self.host, port=self.port, debug=True)
 
 if __name__ == '__main__':
     app_instance = apiHandler()

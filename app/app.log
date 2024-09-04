@@ -757,3 +757,19 @@
 2024-09-03 01:05:19,880 - INFO - 127.0.0.1 - - [03/Sep/2024 01:05:19] "GET /attendance HTTP/1.1" 200 -
 2024-09-03 01:05:19,924 - INFO - User 15e94835c1aba1bcf44ce0a4ad4cb89e14cf73556080cfa51f098cb331ad35e6 accessed attendance
 2024-09-03 01:05:19,925 - INFO - 127.0.0.1 - - [03/Sep/2024 01:05:19] "POST /attendance HTTP/1.1" 200 -
+2024-09-04 11:57:34,660 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.184.198:5000
+2024-09-04 11:57:34,660 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-04 11:57:34,662 - INFO -  * Restarting with stat
+2024-09-04 11:57:34,820 - WARNING -  * Debugger is active!
+2024-09-04 11:57:34,820 - INFO -  * Debugger PIN: 149-251-381
+2024-09-04 11:57:58,988 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.184.198:5000
+2024-09-04 11:57:58,988 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-04 11:57:58,989 - INFO -  * Restarting with stat
+2024-09-04 11:57:59,132 - WARNING -  * Debugger is active!
+2024-09-04 11:57:59,132 - INFO -  * Debugger PIN: 149-251-381
