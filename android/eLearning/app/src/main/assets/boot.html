@@ -147,20 +147,13 @@
         }
       }
 
-      function checkVer(){
+      function checkVer(url){
             const xhr = new XMLHttpRequest();
-            const url = 'https://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
             xhr.open('GET', url, true);
           
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    try {
-                        const response = base64ToJson(xhr.responseText);
-                        console.log(response)
-                        loadBasicComponent();
-                    } catch (error) {
-                        hendelError(error);
-                    }
+                    loadBasicComponent();
                 } else {
                     showConnError(true);
                     hendelError(error);
@@ -168,8 +161,13 @@
             };
 
             xhr.onerror = function(error) {
+              try {
+                const url = 'http://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
+                checkVer(url);
+              } catch (error) {
                 showConnError(true);
                 hendelError(error);
+              }
             };
 
             xhr.send();
@@ -188,8 +186,8 @@
           popup.innerHTML='';
           return true;
       }
-      
-      checkVer();
+      const url = 'https://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
+      checkVer(url);
     </script>
   </body>
 </html>

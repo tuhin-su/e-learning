@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.widget.Toast;
+import android.annotation.SuppressLint;
+
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
