@@ -201,7 +201,7 @@
     }
 
       function loadBasicComponent() {
-        window.location.href = "https://timtevent.rf.gd/app";
+        window.location.href = "http://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com:8020";
       }
 
       async function updateResorce(){
@@ -219,7 +219,7 @@
 
       function checkVer(){
             const xhr = new XMLHttpRequest();
-            const url = 'http://timtevent.rf.gd/api/ver';
+            const url = 'https://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
             xhr.open('GET', url, true);
           
             xhr.onload = function() {
