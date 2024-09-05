@@ -3,7 +3,7 @@ import os
 import logging
 import mysql.connector
 from mysql.connector import Error
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify
 from flask_httpauth import HTTPTokenAuth
 from flask_cors import CORS
 import jwt
@@ -18,12 +18,12 @@ class apiHandler:
         self.app = Flask(__name__)
         self.auth = HTTPTokenAuth(scheme='Bearer')
 
-        # Load configuration from JSON file
-        config_path = 'config.json'
-        if not os.path.isfile(config_path):
-            raise FileNotFoundError(f"Configuration file '{config_path}' not found.")
+        # Load configuration from environment variables or default values
+        self.config_path = os.getenv('CONFIG_PATH', 'config.json')
+        if not os.path.isfile(self.config_path):
+            raise FileNotFoundError(f"Configuration file '{self.config_path}' not found.")
 
-        with open(config_path) as config_file:
+        with open(self.config_path) as config_file:
             config = json.load(config_file)
 
         if 'SERVER' not in config:
@@ -45,13 +45,14 @@ class apiHandler:
             if self.conn.is_connected():
                 db_info = self.conn.get_server_info()
                 self.cursor = self.conn.cursor(dictionary=True)  # Use dictionary cursor to get column names
-                print(f"Connected to MySQL database... MySQL Server version on {db_info}")
+                self.app.logger.info(f"Connected to MySQL database... MySQL Server version on {db_info}")
         except Error as e:
-            print(f"Error while connecting to MySQL: {e}")
+            self.app.logger.error(f"Error while connecting to MySQL: {e}")
+            raise e
 
         # SSL configuration
-        self.ssl_cert_path = config['SERVER']['SSL_CERT_PATH']
-        self.ssl_key_path = config['SERVER']['SSL_KEY_PATH']
+        self.ssl_cert_path = config.get('SERVER', {}).get('SSL_CERT_PATH', None)
+        self.ssl_key_path = config.get('SERVER', {}).get('SSL_KEY_PATH', None)
         self.host = config['SERVER']['HOST']
         self.port = config['SERVER']['PORT']
 
@@ -65,7 +66,7 @@ class apiHandler:
         if self.conn and self.conn.is_connected():
             self.cursor.close()
             self.conn.close()
-            print("MySQL connection is closed")
+            self.app.logger.info("MySQL connection is closed")
     
     def generate_unique_id(self, username, password, groups):
         unique_value = str(uuid.uuid4())
@@ -122,6 +123,7 @@ class apiHandler:
                 return jsonify({"message": "User created"}), 201
             except Error as e:
                 self.conn.rollback()
+                self.app.logger.error(f"Error creating user: {e}")
                 return jsonify({"message": str(e)}), 400
 
         @self.app.route('/user_info', methods=['POST', 'PUT'])
@@ -159,6 +161,7 @@ class apiHandler:
                 return jsonify({"message": "User info updated"})
             except Error as e:
                 self.conn.rollback()
+                self.app.logger.error(f"Error updating user info: {e}")
                 return jsonify({"message": str(e)}), 400
         
         @self.app.route('/create_account', methods=['POST'])
@@ -209,6 +212,7 @@ class apiHandler:
                         error_message = str(e)
                     
                     self.conn.rollback()
+                    self.app.logger.error(f"Error recording attendance: {e}")
                     return jsonify({"message": error_message}), 400
 
             return jsonify({"data": "This is secured data"})
@@ -224,9 +228,10 @@ class apiHandler:
                 return None
 
     def run(self):
-        logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(filename='/app/app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         CORS(self.app)
-        # Run the Flask app with SSL context
+        # Run the Flask app with SSL context if available
+        ssl_context = (self.ssl_cert_path, self.ssl_key_path) if self.ssl_cert_path and self.ssl_key_path else None
         self.app.run(host=self.host, port=self.port, debug=True)
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: mariadb:10.6
@@ -10,6 +12,34 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
+
+  angular:
+    build:
+      context: .
+      dockerfile: Dockerfile.angular
+    restart: unless-stopped
+    container_name: "myproject_angular"
+    command: ng serve --host 0.0.0.0 --port 8020 --disable-host-check
+    volumes:
+      - ./web/timt:/app
+    ports:
+      - 8020:8020
+    expose:
+      - '8020'
+
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    restart: unless-stopped
+    container_name: "myproject_flask"
+    command: ["python", "app.py"]
+    ports:
+      - 5000:5000
+    volumes:
+      - ./app:/app
+    environment:
+      CONFIG_PATH: /app/config.json  # Environment variable for config path
 
 volumes:
   db_data:

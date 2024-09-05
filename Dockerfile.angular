@@ -1,0 +1,21 @@
+FROM node:lts-alpine
+
+ARG HOST_UID
+
+RUN apk add chromium \
+  && apk add git \
+  && apk update \
+  && apk upgrade
+ENV CHROME_BIN='/usr/bin/chromium-browser'
+
+RUN deluser --remove-home node \
+  && addgroup -S vscode -g 1000 \
+  && adduser -S -G vscode -u 1000 vscode
+
+WORKDIR /app/angular
+
+RUN npm install -g npm@latest @angular/cli
+
+USER vscode
+
+CMD ["sleep", "infinity"]

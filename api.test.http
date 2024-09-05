@@ -15,8 +15,8 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "student",
-  "password": "stedunt"
+  "username": "student_1",
+  "password": "passwd"
 }
 
 ### Create static user

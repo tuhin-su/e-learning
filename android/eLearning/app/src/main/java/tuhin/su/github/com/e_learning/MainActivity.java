@@ -1,12 +1,14 @@
 package tuhin.su.github.com.e_learning;
 
 import android.Manifest;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
+import android.webkit.PermissionRequest;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,39 +22,28 @@ import androidx.core.content.ContextCompat;
 import android.widget.Toast;
 import android.annotation.SuppressLint;
 
-
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 2;
+    private static final int STORAGE_PERMISSION_REQUEST_CODE = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         setContentView(R.layout.activity_main);
-
-        // Hide the system UI
         hideSystemUI();
-
         webView = findViewById(R.id.webview);
-
-        // Initialize WebView settings
         initializeWebViewSettings();
-
-        // Set WebView clients
         webView.setWebViewClient(new CustomWebViewClient());
         webView.setWebChromeClient(new CustomWebChromeClient());
-
-        // Load the local HTML file or remote URL
         webView.loadUrl("file:///android_asset/boot.html");
-        // If using a remote URL, use:
-        // webView.loadUrl("http://yourserver.com");
-
-        // Additional UI Customization: Full-Screen Mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        // Request location permissions
         requestLocationPermissions();
+        requestCameraPermissions();
+        requestStoragePermissions();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -68,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
-
-        WebView.setWebContentsDebuggingEnabled(true); // Enable WebView debugging
+        WebView.setWebContentsDebuggingEnabled(true);
     }
 
     private void hideSystemUI() {
@@ -105,18 +95,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestLocationPermissions() {
-        // Check if location permission is already granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted, request permission
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
         } else {
-            // Permission is granted, proceed with accessing location
             Toast.makeText(this, "Location permission already granted", Toast.LENGTH_SHORT).show();
-            // You can start location services or perform location-based tasks here
+        }
+    }
+
+    private void requestCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_PERMISSION_REQUEST_CODE);
+        } else {
+            Toast.makeText(this, "Camera permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void requestStoragePermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    STORAGE_PERMISSION_REQUEST_CODE);
+        } else {
+            Toast.makeText(this, "Storage permission already granted", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -126,30 +133,50 @@ public class MainActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            // If the request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission was granted, proceed with accessing location
-                Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
-                // You can start location services or perform location-based tasks here
-            } else {
-                // Permission denied, show an explanation to the user
-                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
-                // You might want to disable location-based features or provide an alternative
-            }
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case CAMERA_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case STORAGE_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
         }
     }
 
     private static class CustomWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            // Allow WebView to handle the URL
             return false;
         }
     }
 
-    private static class CustomWebChromeClient extends WebChromeClient {
+    private class CustomWebChromeClient extends WebChromeClient {
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
             Log.d("WebViewConsole", consoleMessage.message());
@@ -159,7 +186,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            // Optionally handle progress changes (e.g., update a progress bar)
+        }
+
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                request.grant(request.getResources());
+            } else {
+                request.deny();
+            }
+        }
+
+        @Override
+        public void onPermissionRequestCanceled(PermissionRequest request) {
+            super.onPermissionRequestCanceled(request);
         }
     }
 }
