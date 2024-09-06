@@ -1,4 +1,4 @@
-05:44:18 [INF][   WBContext UI]: Initializing workbench context UI with these values:
+06:19:54 [INF][   WBContext UI]: Initializing workbench context UI with these values:
 	base dir: /usr/share/mysql-workbench
 	plugin path: /usr/lib/mysql-workbench/plugins
 	struct path: /usr/share/mysql-workbench/grt
@@ -12,23 +12,23 @@
 	Force SW rendering: No
 	Force OpenGL: No
 	quit when done: No
-05:44:18 [INF][      WBContext]: WbContext::init
-05:44:19 [INF][            WBA]: Looking for extension modules for WBA...
-05:44:19 [INF][            WBA]: 0 extension modules found
-05:44:19 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
-05:44:19 [WRN][            grt]: /config/.mysql/workbench/connections.xml:25: link '488d90d2-6c23-11ef-b671-0242ac150005' <object GrtObject> key=owner could not be resolved
-05:44:19 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
-05:44:19 [INF][      WBContext]: System info:
+06:19:54 [INF][      WBContext]: WbContext::init
+06:19:55 [INF][            WBA]: Looking for extension modules for WBA...
+06:19:55 [INF][            WBA]: 0 extension modules found
+06:19:55 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
+06:19:55 [WRN][            grt]: /config/.mysql/workbench/connections.xml:25: link '488d90d2-6c23-11ef-b671-0242ac150005' <object GrtObject> key=owner could not be resolved
+06:19:55 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
+06:19:55 [INF][      WBContext]: System info:
  	MySQL Workbench Community (GPL) for Linux/Unix version 8.0.38 CE build 4270059 (64 bit)
 	Configuration Directory: /config/.mysql/workbench
 	Data Directory: /usr/share/mysql-workbench
 	Cairo Version: 1.18.0
 	OS:  x86_64
-	CPU: 4x 11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz (4002.918MHz) - 7.42GiB RAM
+	CPU: 4x 11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz (1752.500MHz) - 7.42GiB RAM
 No video adapter info available
 	Distribution: Ubuntu 24.04.1 LTS
 
 	Fips mode enabled: no
 
-05:44:19 [INF][    WQE backend]: Found auto-save workspace /config/.mysql/workbench/sql_workspaces/db-1.autosave
-05:44:19 [WRN][       WBModule]: OS not found on supported OS list. OS string: ' x86_64'
+06:19:55 [INF][    WQE backend]: Found auto-save workspace /config/.mysql/workbench/sql_workspaces/db-1.autosave
+06:19:56 [WRN][       WBModule]: OS not found on supported OS list. OS string: ' x86_64'
