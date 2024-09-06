@@ -1,4 +1,4 @@
-03:22:58 [INF][   WBContext UI]: Initializing workbench context UI with these values:
+06:36:16 [INF][   WBContext UI]: Initializing workbench context UI with these values:
 	base dir: /usr/share/mysql-workbench
 	plugin path: /usr/lib/mysql-workbench/plugins
 	struct path: /usr/share/mysql-workbench/grt
@@ -12,51 +12,23 @@
 	Force SW rendering: No
 	Force OpenGL: No
 	quit when done: No
-03:22:58 [INF][      WBContext]: WbContext::init
-03:23:00 [INF][            WBA]: Looking for extension modules for WBA...
-03:23:00 [INF][            WBA]: 0 extension modules found
-03:23:00 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
-03:23:00 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
-03:23:00 [INF][      WBContext]: System info:
+06:36:16 [INF][      WBContext]: WbContext::init
+06:36:17 [INF][            WBA]: Looking for extension modules for WBA...
+06:36:17 [INF][            WBA]: 0 extension modules found
+06:36:17 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
+06:36:17 [WRN][            grt]: /config/.mysql/workbench/connections.xml:25: link '488d90d2-6c23-11ef-b671-0242ac150005' <object GrtObject> key=owner could not be resolved
+06:36:17 [WRN][            grt]: Duplicate plugin name wb.tools.cmdlineClient	There is more than one plugin with the name wb.tools.cmdlineClient (in PyWbUtils and PyWbUtils).
+06:36:17 [INF][      WBContext]: System info:
  	MySQL Workbench Community (GPL) for Linux/Unix version 8.0.38 CE build 4270059 (64 bit)
 	Configuration Directory: /config/.mysql/workbench
 	Data Directory: /usr/share/mysql-workbench
 	Cairo Version: 1.18.0
 	OS:  x86_64
-	CPU: 4x 11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz (3654.978MHz) - 7.42GiB RAM
+	CPU: 4x 11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz (4006.343MHz) - 7.42GiB RAM
 No video adapter info available
 	Distribution: Ubuntu 24.04.1 LTS
 
 	Fips mode enabled: no
 
-03:23:00 [WRN][       WBModule]: OS not found on supported OS list. OS string: ' x86_64'
-03:25:09 [ERR][  GRTDispatcher]: exception in grt execute_task, continuing: Exception: Access denied for user 'myuser'@'172.20.0.5' (using password: NO)
-03:25:09 [ERR][  GRTDispatcher]: worker: task 'execute sql queries' has failed with error:.Access denied for user 'myuser'@'172.20.0.5' (using password: NO)
-03:25:17 [ERR][  GRTDispatcher]: exception in grt execute_task, continuing: Exception: Access denied for user 'myuser'@'172.20.0.5' (using password: YES)
-03:25:17 [ERR][  GRTDispatcher]: worker: task 'execute sql queries' has failed with error:.Access denied for user 'myuser'@'172.20.0.5' (using password: YES)
-03:25:17 [ERR][    WQE backend]: Got an exception during connection: Access denied for user 'myuser'@'172.20.0.5' (using password: YES)
-03:25:17 [ERR][SQL Editor Form]: SQL editor could not be connected: Access denied for user 'myuser'@'172.20.0.5' (using password: YES)
-03:25:17 [ERR][SQL Editor Form]: Your connection attempt failed for user 'myuser' to the MySQL server at db:3306:
-  Access denied for user 'myuser'@'172.20.0.5' (using password: YES)
-
-Please:
-1 Check that MySQL is running on address db
-2 Check that MySQL is reachable on port 3306 (note: 3306 is the default, but this can be changed)
-3 Check the user myuser has rights to connect to db from your address (MySQL rights define what clients can connect to the server and from which machines) 
-4 Make sure you are both providing a password if needed and using the correct password for db connecting from the host address you're connecting from
-03:25:20 [ERR][  GRTDispatcher]: exception in grt execute_task, continuing: Exception: Access denied for user 'myuser'@'172.20.0.5' (using password: NO)
-03:25:20 [ERR][  GRTDispatcher]: worker: task 'execute sql queries' has failed with error:.Access denied for user 'myuser'@'172.20.0.5' (using password: NO)
-03:25:24 [INF][SQL Editor Form]: Opened connection 'db' to mariadb.org binary distribution version 10.6.19-MariaDB-ubu2004
-03:25:24 [INF][  column_widths]: Initializing column width cache for db
-03:25:24 [ERR][      WBContext]: Unsupported server version: mariadb.org binary distribution 10.6.19-MariaDB-ubu2004
-03:25:42 [ERR][ sqlide-history]: Can't open SQL history file /config/.mysql/workbench/sql_history/2024-09-06
-03:25:51 [ERR][SQL Editor Form]: Error Code: 1050. Table 'user' already exists
-03:26:02 [ERR][SQL Editor Form]: Error Code: 1050. Table 'user' already exists
-03:26:08 [INF][wba_monitor_be.py:__init__:396]: WBAMonBE: Data sources were not added. Profile set to non-local or remote admin is disabled.Resource file not found: mysql-logo-106.png
-03:26:08 [WRN][         mforms]: Resource file not found: mysql-logo-106.png
-03:26:08 [WRN][wb_admin_control.py:exec_query:624]: Error executing query SHOW SLAVE STATUS: Error executing 'SHOW SLAVE STATUS'
-Access denied; you need (at least one of) the SUPER, SLAVE MONITOR privilege(s) for this operation.
-SQL Error: 1227
-03:26:36 [WRN][         mforms]: Resource file not found: db.StoredProcedure.16x16.png
-03:26:36 [WRN][         mforms]: Resource file not found: db.Function.16x16.png
-03:26:36 [WRN][         mforms]: Resource file not found: db.Grants.16x16.png
+06:36:17 [INF][    WQE backend]: Found auto-save workspace /config/.mysql/workbench/sql_workspaces/db-1.autosave
+06:36:18 [WRN][       WBModule]: OS not found on supported OS list. OS string: ' x86_64'

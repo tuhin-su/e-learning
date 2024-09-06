@@ -1,0 +1,16 @@
+# Dockerfile.angular
+
+# Use Node.js official image
+FROM node:16
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install http-server to serve the static files
+RUN npm install -g http-server
+
+# Expose the port where the app will run
+EXPOSE 8020
+
+# Use http-server to serve the static files on port 8080
+CMD ["sleep", "infinity"]

@@ -20,14 +20,13 @@ services:
       dockerfile: Dockerfile.angular
     restart: unless-stopped
     container_name: "myproject_angular"
-    command: ng serve --host 0.0.0.0 --port 8020 --disable-host-check
     volumes:
-      - ./web/timt:/app
-    ports:
-      - 8020:8020
-    expose:
-      - '8020'
-
+      - ./web/timt:/app  # Your Angular source code location
+    command: npm run build --prod  # Build Angular for production
+    working_dir: /app
+    depends_on:
+      - db
+      
   flask:
     build:
       context: .

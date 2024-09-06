@@ -14,7 +14,7 @@ RUN deluser --remove-home node \
 
 WORKDIR /app/angular
 
-RUN npm install -g npm@latest @angular/cli
+RUN npm install -g npm@latest @angular/cli@14
 
 USER vscode
 
