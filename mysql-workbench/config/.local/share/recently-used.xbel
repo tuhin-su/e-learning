@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbel version="1.0"
+      xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
+      xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
+>
+  <bookmark href="file:///config/data_st.sql" added="2024-09-06T07:26:56.719054Z" modified="2024-09-06T07:26:56.719058Z" visited="2024-09-06T07:26:56.719054Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/sql"/>
+        <bookmark:applications>
+          <bookmark:application name="MySQL Workbench" exec="&apos;mysql-workbench-bin %u&apos;" modified="2024-09-06T07:26:56.719056Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+</xbel>

@@ -4,12 +4,13 @@ services:
   db:
     image: mariadb:10.6
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: timt#123
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     volumes:
       - db_data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d  # SQL files for execution
     ports:
       - "3306:3306"
 
@@ -40,6 +41,20 @@ services:
       - ./app:/app
     environment:
       CONFIG_PATH: /app/config.json  # Environment variable for config path
+
+  mysql-workbench:
+    image: lscr.io/linuxserver/mysql-workbench:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York  # Set your timezone
+    volumes:
+      - ./mysql-workbench/config:/config  # Store config for Workbench
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - db
 
 volumes:
   db_data:
