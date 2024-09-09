@@ -1,4 +1,4 @@
-@apiUrl = http://localhost:5000
+@apiUrl = https://localhost/api
 
 ### Create a new user
 POST {{ apiUrl }}/create_account
@@ -25,9 +25,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student_1",
+  "username": "staff_1",
   "password": "passwd",
-  "groups": "ST"
+  "groups": "FA"
 }
 
 ### student account

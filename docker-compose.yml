@@ -3,14 +3,15 @@ version: '3.8'
 services:
   db:
     image: mariadb:10.6
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: timt#123
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     volumes:
-      - db_data:/var/lib/mysql
-      - ./db/sql:/docker-entrypoint-initdb.d  # SQL files for execution
+      - ./db_data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
 
@@ -18,11 +19,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.angular
+    container_name: angular
     restart: unless-stopped
-    container_name: "myproject_angular"
     volumes:
-      - ./web/timt:/app  # Your Angular source code location
-    command: npm run build --prod  # Build Angular for production
+      - ./web/timt/dist/timt:/app
     working_dir: /app
     depends_on:
       - db
@@ -31,29 +31,41 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.flask
+    container_name: flask
     restart: unless-stopped
-    container_name: "myproject_flask"
     command: ["python", "app.py"]
-    ports:
-      - 5000:5000
     volumes:
       - ./app:/app
     environment:
-      CONFIG_PATH: /app/config.json  # Environment variable for config path
+      CONFIG_PATH: /app/config.json
+    depends_on:
+      - db
 
-  mysql-workbench:
-    image: lscr.io/linuxserver/mysql-workbench:latest
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
     environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: America/New_York  # Set your timezone
-    volumes:
-      - ./mysql-workbench/config:/config  # Store config for Workbench
+      PMA_HOST: db
+      PMA_PORT: 3306
+      # PMA_USER: myuser
+      # PMA_PASSWORD: mypassword
     ports:
-      - "3000:3000"
+      - "8080:80"
     restart: unless-stopped
     depends_on:
       - db
 
-volumes:
-  db_data:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./web/timt/dist/timt:/usr/share/nginx/html
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - angular
+      - flask
+      - phpmyadmin
