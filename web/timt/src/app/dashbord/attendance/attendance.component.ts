@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AttendanceService } from 'src/service/attendance/attendance.service';
 
 @Component({
@@ -65,7 +66,7 @@ export class AttendanceComponent implements OnInit {
             };
             const distance = this.calculateDistance(currentLocation, this.storedLocation);
 
-            if (distance <= 57.99) {
+            if (distance <= environment.gps_distance) {
               this.add();
             } else {
               this.success = false;

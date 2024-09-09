@@ -1165,3 +1165,19 @@
 2024-09-09 15:16:01,659 - INFO - 172.21.0.6 - - [09/Sep/2024 15:16:01] "POST /login HTTP/1.0" 200 -
 2024-09-09 15:16:22,210 - INFO - Created new user: staff_1
 2024-09-09 15:16:22,210 - INFO - 172.21.0.6 - - [09/Sep/2024 15:16:22] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-09 16:51:55,202 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2024-09-09 16:51:55,202 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-09 16:51:55,204 - INFO -  * Restarting with stat
+2024-09-09 16:51:55,448 - WARNING -  * Debugger is active!
+2024-09-09 16:51:55,451 - INFO -  * Debugger PIN: 803-539-430
+2024-09-09 16:53:28,492 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-09 16:53:28,492 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-09 16:53:28,493 - INFO -  * Restarting with stat
+2024-09-09 16:53:28,750 - WARNING -  * Debugger is active!
+2024-09-09 16:53:28,763 - INFO -  * Debugger PIN: 712-547-024

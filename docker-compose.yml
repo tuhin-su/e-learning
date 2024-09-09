@@ -22,8 +22,10 @@ services:
     container_name: angular
     restart: unless-stopped
     volumes:
-      - ./web/timt/dist/timt:/app
+      - ./web/timt:/app
     working_dir: /app
+    ports:
+      - 4200:4200
     depends_on:
       - db
 
