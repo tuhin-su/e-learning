@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { GlobalStorageService } from './global-storage.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -88,5 +89,28 @@ export class CollegeService {
     };
 
     return this.http.post<any>(`${attendanceUrl}`, body, { headers });
+  }
+
+  // classes service
+  addClass(data:any): Observable<any>{
+    const loginUrl = `${this.api}/classes`;
+    const payload = data;
+  
+    const headers = { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+  
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+  getAll(): Observable<any>{
+    const loginUrl = `${this.api}/classes`;
+  
+    const headers = { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.get<any>(loginUrl, { headers });
   }
 }

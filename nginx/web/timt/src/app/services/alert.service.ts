@@ -10,19 +10,19 @@ export class AlertService {
 
   constructor(private dialog: MatDialog) {}
 
-  showSuccessAlert(message: string, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
+  showSuccessAlert(message: any, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
     this.showDialog('Success', message, cancelButton, onOk, onCancel);
   }
 
-  showErrorAlert(message: string, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
+  showErrorAlert(message: any, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
     this.showDialog('Error', message, cancelButton, onOk, onCancel);
   }
 
-  showWarningAlert(message: string, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
+  showWarningAlert(message: any, cancelButton: boolean = false, onOk?: () => void, onCancel?: () => void): void {
     this.showDialog('Warning', message, cancelButton, onOk, onCancel);
   }
 
-  private showDialog(title: string, message: string, cancelButton: boolean, onOk?: () => void, onCancel?: () => void): void {
+  private showDialog(title: any, message: string, cancelButton: boolean, onOk?: () => void, onCancel?: () => void): void {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
       data: { title, message, cancelButton }
     });

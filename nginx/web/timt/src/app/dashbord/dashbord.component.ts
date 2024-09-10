@@ -6,16 +6,21 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatBadgeModule} from '@angular/material/badge';
 import { GlobalStorageService } from '../services/global-storage.service';
 import { capitalizeUserName } from '../utility/function';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { AlertService } from '../services/alert.service';
 @Component({
   selector: 'app-dashbord',
-  imports: [MatDividerModule,MatCardModule,MatIconModule,MatButtonModule,MatBadgeModule],
+  imports: [MatDividerModule,MatCardModule,MatIconModule,MatButtonModule,MatBadgeModule,RouterModule],
   templateUrl: './dashbord.component.html',
   styleUrl: './dashbord.component.scss'
 })
 export class DashbordComponent implements OnInit {
 
   constructor(
-    private globalStorageService: GlobalStorageService
+    private globalStorageService: GlobalStorageService,
+    private router: Router,
+    private alert: AlertService
   ) { }
 
   user?: any;
@@ -30,5 +35,27 @@ export class DashbordComponent implements OnInit {
       this.user.name = capitalizeUserName(this.user.name);
       
       }
+  }
+  goto(url: string) {
+    this.router.navigate([url]);
+  }
+
+  openPayment(){
+    window.open('https://www.timt.org.in/');
+  }
+
+  showToken(){
+    const token = this.globalStorageService.get('token');
+    if (token != null) {
+      this.alert.showSuccessAlert(token);
     }
+  }
+
+  openShowCase(){
+    window.open('https://www.facebook.com/timttmluk/photos_by');
+  }
+
+  openCalander(){
+    window.open('https://www.timt.org.in/academic/academic-calender');
+  }
 }

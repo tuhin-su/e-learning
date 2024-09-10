@@ -40,6 +40,10 @@ export class LoginComponent implements OnInit {
   loginForm?: FormGroup;
 
   ngOnInit():void {
+    if (this.storage.get('token')) {
+      this.router.navigate(['/'])
+    }
+    
     debug("Execute login component");
     
     this.loginForm = this.fb.group({

@@ -1,0 +1,114 @@
+@if (label == '2' || label == '1') {
+    <div class="flex flex-wrap h-full w-full" style="justify-content: center;">
+        <!-- navbar -->
+          <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full z-10">
+            <button class="btn btn-square btn-ghost bg-transparent border-none">
+              <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
+            </button>
+      
+            <button class="btn bg-white absolute right-3 text-blue-500" (click)="createClass();">
+              <i class="bi bi-patch-plus-fill text-blue-500 text-3xl"></i>
+              Create Class
+            </button>
+      
+          </div>
+          <!-- codes -->
+           <!-- cardes -->
+            @if (createClassView) {
+                <div class="w-full absolute top-[70px] p-4 h-full">
+                    <div class="divider divider-primary text-center">
+                      <div role="tablist" class="tabs tabs-bordered">
+                        <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="All Classes" checked/>
+                        <div role="tabpanel" class="tab-content p-10">All Classes</div>
+                      
+                        <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="My Classes" />
+                        <div role="tabpanel" class="tab-content p-10">My Classes</div>
+                      </div>
+                    </div>
+              
+                   
+              
+                    <div class="w-full h-full pt-2 relative overflow-scroll">
+              
+                      <!-- <post-card [data]="obj" ></post-card> -->
+                
+                
+                      <!-- next page -->
+                      <div class="w-full flex justify-center">
+                        <div class="join mt-2">
+                          <button class="join-item btn">«</button>
+                          <button class="join-item btn">Page 1</button>
+                          <button class="join-item btn">»</button>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+            }
+           
+           <!-- create Clases -->
+            @if (createClassView) {
+                <div  class="w-full absolute top-[70px] p-4 flex flex-col itc">
+                    <h1 class="text-center"> Create Class</h1>
+                    <div class="divider divider-primary"></div>
+                    @if (selectedFile) {
+                      <div class="w-full m-3 flex justify-center items-center relative">
+                          <div class="w-full h-full rounded-lg relative min-h-[300px] flex justify-center items-center">
+                            <i class="bi bi-cloud-arrow-up-fill text-5xl"></i>
+                            <!-- video/mp4 -->
+                          @if (progress) {
+                              <div class="w-full h-full absolute flex justify-center items-center bg-[#ffffff1c]"> 
+                                  <div class="radial-progress text-primary" style="--value:70;" role="progressbar">
+                                    {{ progress.value }}%
+                                  </div>
+                              </div>
+                          }
+                            
+                          </div>
+                
+                        </div>
+                    }
+                    
+            
+                    @if (selectedFile) {
+                      <div class="divider divider-primary"></div>
+                    }
+            
+                    <input type="file" class="file-input file-input-bordered w-full max-w-xs m-3" extensions="pdf,xlsx,mp4,doc" (change)="onFileSelected($event)"/>
+                    
+                    @if (calssForm) {
+                      <form  [formGroup]="calssForm" (ngSubmit)="onSubmit()">
+                          <label class="input input-bordered flex items-center gap-2 m-3">
+                            <input type="text" class="grow" formControlName="title" placeholder="Title or Class name" />
+                           
+                          </label>
+                
+                          <label class="input input-bordered flex items-center gap-2 m-3">
+                           
+                            <input type="text" formControlName="stream"  class="grow" placeholder="stream" />
+                          </label>
+                
+                          <label class="input input-bordered flex items-center gap-2 m-3">
+                            
+                            <input type="text" formControlName="semester" class="grow" placeholder="semester" />
+                          </label>
+                
+                
+                          <textarea class="textarea textarea-bordered grow gap-2 m-3 w-[99%]" type="password" formControlName="description" placeholder="description"></textarea>
+                          <div class="w-full text-center">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                      </form>
+                    }
+                    
+                  </div>
+            }
+           
+    </div>
+}
+
+  @if (label == '3') {
+    <div>
+        <h1>IT is your</h1>
+    </div>
+  }
+  

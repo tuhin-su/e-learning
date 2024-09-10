@@ -22,6 +22,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden !important;
 }
 .mask-black{
     width: 100%;

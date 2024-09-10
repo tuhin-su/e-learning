@@ -29,3 +29,11 @@ export function convertToISODate(mysqlDate: string): string {
     const date = new Date(Date.UTC(year, month, day)); // Create a UTC Date object
     return date.toISOString(); // Convert to ISO 8601 format
   }
+
+export function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0'); // Ensure two-digit format
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }

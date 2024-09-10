@@ -8,10 +8,22 @@ import * as faceapi from 'face-api.js';
 import { OnDestroy } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-attendance',
-  imports: [MatButtonModule],
+  imports: [
+    MatButtonModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
+  ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.scss'
 })
@@ -26,7 +38,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
   attAble:boolean=false;
   months?:any
-  selectedMonth: string = '0';
+  selectedDate: string = '0';
   semester?:any;
   selectedsem: string ='0';
   stream?:any = undefined;
@@ -203,14 +215,14 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   async getAllStudents() {
-    if (this.selectedMonth == '0' || this.selectedsem == '0' || this.selectedstream == '0') {
+    if (this.selectedDate == '0' || this.selectedsem == '0' || this.selectedstream == '0') {
       return
     }
 
     const data = {
       sem: this.selectedsem,
       stream: this.selectedstream,
-      month: this.selectedMonth,
+      month: this.selectedDate,
     }
     this.service.getAllStudent(data).subscribe(
       (res)=>{
@@ -221,22 +233,18 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  selectMonth() {
+  selectSem(value: any){
+    this.selectedsem = value;
     this.getAllStudents();
   }
 
+  selectStream(value: any){
+    this.selectedstream = value;
+    this.getAllStudents();
+  }
   back(){
     this.location.back();
   }
-
-  selectsem(){
-
-    this.getAllStudents();
-  }
-
-  selectstream(){
-    this.getAllStudents();
-  }  
   
   // auto attend
   async attend() {
@@ -444,5 +452,11 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
         this.alertService.showWarningAlert("Geolocation is not supported by this browser.");
       }
     }
+  }
+
+  onDateChange(selectedDate: Date): void {
+    // console.log('Selected date:', `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`);
+    this.selectedDate = selectedDate.getMonth().toString();
+    this.getAllStudents();
   }
 }
