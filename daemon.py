@@ -174,6 +174,7 @@ class DockerComposeManager:
                         bot.send_message(msg)
                         if status == "die":
                             print(f"Container {container_name} ({container_id}) died.")
+                            logger.error(self.client.containers.get(container_name).logs())
                             self.remove_service(container_name)
                             self.start_service(container_name)
                         elif status == "start":
@@ -184,7 +185,6 @@ class DockerComposeManager:
                             self.restart_service(container_name)
                         elif status == "restart":
                             print(f"Container {container_name} ({container_id}) restarted.")
-                            self.restart_service(container_name)
 
             except Exception as e:
                 logger.error(f"Error listening to Docker events: {e}")

@@ -16,6 +16,7 @@ else
     echo "Virtual environment created."
 fi
 
+rm -rf nginx/conf.d/*.conf
 # Activate the virtual environment
 source "$VENV_DIR/bin/activate"
 if [ $? -ne 0 ]; then
@@ -55,5 +56,5 @@ if [ $? -ne 0 ]; then
     deactivate
     exit 1
 fi
-
+rm -rf nginx/conf.d/*.conf
 deactivate
