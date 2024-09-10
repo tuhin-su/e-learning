@@ -6,3 +6,4 @@ db_data/
 __pycache__
 .env
 *.log
+portainer_data/
