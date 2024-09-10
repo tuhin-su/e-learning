@@ -15,7 +15,7 @@ services:
 
   angular:
     build:
-      context: .
+      context: ./build
       dockerfile: Dockerfile.angular
     container_name: angular
     command: ng serve --host 0.0.0.0 --port 4200 --disable-host-check
@@ -34,7 +34,7 @@ services:
 
   flask:
     build:
-      context: .
+      context: ./build
       dockerfile: Dockerfile.flask
     container_name: flask
     restart: unless-stopped
