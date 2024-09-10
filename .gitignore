@@ -1,6 +1,7 @@
 data/
 dist/
-db_data
+db_data/
 .venv
 .vscode/
 __pycache__
+.env
