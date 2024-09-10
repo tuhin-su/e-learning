@@ -79,9 +79,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Access to host Docker socket
       - portainer_data:/data  # Persistent storage for Portainer
-    environment:
-      - ADMIN_PASSWORD=${PORTAINER_PASSWORD}
-      - ADMIN_USER=${PORTAINER_USER}
 
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
