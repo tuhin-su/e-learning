@@ -5,3 +5,4 @@ db_data/
 .vscode/
 __pycache__
 .env
+*.log
