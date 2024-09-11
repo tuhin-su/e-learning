@@ -1,32 +1,7 @@
-<div class="holder" *ngIf="group=='ST'">
-    <div class="card" *ngIf="success">
-        <div>
-            <img src="assets/imgs/school_8220314.png" alt="Attendance Update"/>
-        </div>
-        <div class="text-center">
-            <h1 class="text-green-400">Successfully Updated Your Attendance</h1>
-            <p>Your attendance has been successfully updated. Thank you for your attention!</p>
-        </div>
+<div *ngIf="tableData">
+    <div *ngFor="let item of tableData">
+        <p>
+            {{ item.name }} - {{ item.attendance_date }}
+        </p>
     </div>
-
-    <div class="card" *ngIf="!success">
-        <div>
-            <img src="assets/imgs/school_8220314.png" alt="Update Unsuccessful"/>
-        </div>
-        <div class="text-center">
-            <h1 class="text-red-500">{{ faildMsg }}</h1>
-            <p>There was an issue updating your attendance. Please go your college try again later or contact support.</p>
-        </div>
-        <button
-        class="w-50 mt-3 select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        type="button"
-      >
-        Tray Again
-      </button>
-    </div>
-
-</div>
-
-<div *ngIf="group=='FA'">
-    <h1>FA</h1>
 </div>

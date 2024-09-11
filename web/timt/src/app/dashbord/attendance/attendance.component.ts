@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AttendanceService } from 'src/service/attendance/attendance.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-attendance',
@@ -13,7 +14,7 @@ export class AttendanceComponent implements OnInit {
   user: any = localStorage.getItem('info');
   group?: any;
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
-  faildMsg: string = "Update Unsuccessful";
+  tableData?:any;
 
   constructor(private service: AttendanceService) { }
 
@@ -21,21 +22,33 @@ export class AttendanceComponent implements OnInit {
     if (this.user) {
       this.user = JSON.parse(this.user);
       this.group = localStorage.getItem('group');
-      const pm = { "stream": "BCA", "sem":1}
-      switch (this.group) {
-        case "ST":
-          break;
-        
-        case "FA":
-          this.getAllStudents(pm);
-          break;
-
-        default:
-          break;
+      if (this.group == 1) {
+        this.myatt();
       }
     }
   }
 
+  async myatt(){
+    await firstValueFrom(this.service.getDefualt().pipe(
+      tap(
+        (res) => {
+          if (res) {
+            this.tableData= res;
+          }
+        },
+        error => {
+          Swal.fire({
+            title: 'TIMT SAY',
+            text: "Data Not found About you",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          }); 
+        }
+      )
+    ))
+  }
   async getAllStudents(data: any) {
     this.service.getAllStudent(data).subscribe(
       (res)=>{
@@ -43,5 +56,4 @@ export class AttendanceComponent implements OnInit {
       }
     );
   }
-
 }

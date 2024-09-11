@@ -956,3 +956,11 @@
 2024-09-11 19:19:01,670 - INFO - 172.19.0.6 - - [11/Sep/2024 19:19:01] "GET /location HTTP/1.0" 200 -
 2024-09-11 19:19:02,543 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
 2024-09-11 19:19:02,545 - INFO - 172.19.0.6 - - [11/Sep/2024 19:19:02] "PUT /attendance HTTP/1.0" 200 -
+2024-09-11 19:28:38,537 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:28:38,540 - INFO - 172.19.0.6 - - [11/Sep/2024 19:28:38] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 19:33:22,256 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 19:33:22,302 - INFO -  * Restarting with stat
+2024-09-11 19:33:22,532 - WARNING -  * Debugger is active!
+2024-09-11 19:33:22,532 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 19:33:35,221 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:33:35,223 - INFO - 172.19.0.6 - - [11/Sep/2024 19:33:35] "GET /attendance HTTP/1.0" 200 -

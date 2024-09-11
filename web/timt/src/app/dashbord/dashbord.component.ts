@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./dashbord.component.scss']
 })
 export class DashbordComponent implements OnInit {
-  show: Number = 0;
+  show: number = 1;
   user: any = localStorage.getItem('info');
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
   distent?:number;
@@ -19,11 +19,12 @@ export class DashbordComponent implements OnInit {
 
   @ViewChild('navImg') navImg!: ElementRef<HTMLImageElement>;
 
-  constructor(private router:Router,private service: AttendanceService) { }
-
-  detectType() {
-    this.show = Number(localStorage.getItem('group'));
-  }
+  constructor(private router:Router,private service: AttendanceService) {
+    const num = localStorage.getItem('groups');
+    if(num){
+      this.show = parseInt(num, 10);
+    }
+   }
 
   ngOnInit(): void {
     if (this.user) {

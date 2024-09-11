@@ -202,7 +202,7 @@ class apiHandler:
                     query = """SELECT ui.name, a.attendance_date FROM user_info ui JOIN attends a ON ui.user_id = a.user_id WHERE ui.user_id = %s;"""
                     try:
                         self.cursor.execute(query, (user_id['user_id'],))
-                        record = self.cursor.fetchone()
+                        record = self.cursor.fetchall()
                         return jsonify({"record": record}), 200
                     except mysql.connector.Error as e:
                         self.app.logger.error(f"Error retrieving location: {e}")
