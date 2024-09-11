@@ -447,3 +447,41 @@
 2024-09-11 16:19:14,292 - INFO -  * Debugger PIN: 142-732-660
 2024-09-11 16:19:18,631 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
 2024-09-11 16:19:18,633 - INFO - 172.19.0.6 - - [11/Sep/2024 16:19:18] "GET /location HTTP/1.0" 200 -
+2024-09-11 16:42:47,743 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:42:47,791 - INFO -  * Restarting with stat
+2024-09-11 16:42:48,030 - WARNING -  * Debugger is active!
+2024-09-11 16:42:48,031 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:46:11,686 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:46:11,734 - INFO -  * Restarting with stat
+2024-09-11 16:46:11,973 - WARNING -  * Debugger is active!
+2024-09-11 16:46:11,973 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:46:26,019 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:46:26,072 - INFO -  * Restarting with stat
+2024-09-11 16:46:26,307 - WARNING -  * Debugger is active!
+2024-09-11 16:46:26,308 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:46:59,411 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:46:59,461 - INFO -  * Restarting with stat
+2024-09-11 16:46:59,698 - WARNING -  * Debugger is active!
+2024-09-11 16:46:59,699 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:47:03,714 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:47:03,754 - INFO -  * Restarting with stat
+2024-09-11 16:47:04,020 - WARNING -  * Debugger is active!
+2024-09-11 16:47:04,020 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:47:23,148 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d logged in.
+2024-09-11 16:47:23,149 - INFO - 172.19.0.6 - - [11/Sep/2024 16:47:23] "POST /login HTTP/1.0" 200 -
+2024-09-11 16:47:48,570 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:47:48,572 - INFO - 172.19.0.6 - - [11/Sep/2024 16:47:48] "POST /location HTTP/1.0" 200 -
+2024-09-11 16:48:46,354 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:48:46,406 - INFO -  * Restarting with stat
+2024-09-11 16:48:46,633 - WARNING -  * Debugger is active!
+2024-09-11 16:48:46,634 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:49:26,764 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:49:26,809 - INFO -  * Restarting with stat
+2024-09-11 16:49:27,049 - WARNING -  * Debugger is active!
+2024-09-11 16:49:27,050 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:50:29,749 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 logged in.
+2024-09-11 16:50:29,750 - INFO - 172.19.0.6 - - [11/Sep/2024 16:50:29] "POST /login HTTP/1.0" 200 -
+2024-09-11 16:50:40,030 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 16:50:40,031 - INFO - 172.19.0.6 - - [11/Sep/2024 16:50:40] "[31m[1mPOST /location HTTP/1.0[0m" 403 -
+2024-09-11 16:50:44,419 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 16:50:44,420 - INFO - 172.19.0.6 - - [11/Sep/2024 16:50:44] "GET /location HTTP/1.0" 200 -

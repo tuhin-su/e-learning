@@ -15,7 +15,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "super@admin.in",
+  "username": "student_1",
   "password": "passwd"
 }
 

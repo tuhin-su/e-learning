@@ -224,20 +224,30 @@ class apiHandler:
                 data = request.json
                 if not data:
                     return jsonify({"message": "No data provided"}), 400
-                
-                latitude = data.get("lat")
-                longitude = data.get("lon")
-                dist = data.get("dic")
-                query = """INSERT INTO `collage_location` (`id`, `lat`, `lon`, `distend`, `createBy`, `createDate`) VALUES (NULL, %s, %s, %s, %s, current_timestamp());"""
+                query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
                 try:
-                    self.cursor.execute(query, (latitude, longitude, dist, user_id['user_id']))
-                    self.conn.commit()
-                    return jsonify({}), 200
+                    self.cursor.execute(query, (user_id['user_id'],))
+                    group_label = self.cursor.fetchone()['label']
                 except mysql.connector.Error as e:
                     error_message = str(e)
-                    self.conn.rollback()
                     self.app.logger.error(e)
-                return jsonify({"message": error_message}), 400
+                    return jsonify({"message": error_message}), 400
+                if group_label >= 3:
+                    latitude = data.get("lat")
+                    longitude = data.get("lon")
+                    dist = data.get("dic")
+                    query = """INSERT INTO `collage_location` (`id`, `lat`, `lon`, `distend`, `createBy`, `createDate`) VALUES (NULL, %s, %s, %s, %s, current_timestamp());"""
+                    try:
+                        self.cursor.execute(query, (latitude, longitude, dist, user_id['user_id']))
+                        self.conn.commit()
+                        return jsonify({}), 200
+                    except mysql.connector.Error as e:
+                        error_message = str(e)
+                        self.conn.rollback()
+                        self.app.logger.error(e)
+                    return jsonify({"message": error_message}), 400
+                else:
+                    return jsonify({"message": "You are not authorized to access this endpoint"}), 403
             elif request.method == 'GET':
                 query = """SELECT `lat`, `lon`, `distend`
                             FROM `collage_location`
