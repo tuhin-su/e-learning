@@ -15,6 +15,17 @@ export class AttendanceService {
     return localStorage.getItem('token');
   }
 
+  getLocation() {
+    const attendanceUrl = `${this.apiUrl}/location`;
+
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.get<any>(attendanceUrl, { headers });
+  }
+
   getDefualt(params: any = null) {
     const attendanceUrl = `${this.apiUrl}/attendance`;
 
@@ -45,7 +56,7 @@ export class AttendanceService {
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
     });
-    return this.http.post<any>(attendanceUrl, {}, { headers });
+    return this.http.put<any>(attendanceUrl, {}, { headers });
   }
 
   getAllStudent(data:{stream:string, sem:Number}){

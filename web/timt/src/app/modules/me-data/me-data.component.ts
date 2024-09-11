@@ -76,6 +76,7 @@ export class MeDataComponent implements OnInit {
           },
           (err)=>{
             console.log(err)
+            this.router.navigate(['/'])
           }
         )
       ))

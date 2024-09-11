@@ -98,7 +98,7 @@ class apiHandler:
             if user and check_password_hash(user['passwd'], password):
                 user_id = user['id']
                 response = {}
-                response['group'] = user['groups']
+                response['group'] = str(self.getLabel(user_id))
                 query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE user_id = %s;"
                 self.cursor.execute(query, (user_id,))
                 user_info = self.cursor.fetchone()

@@ -24,7 +24,6 @@ export class AttendanceComponent implements OnInit {
       const pm = { "stream": "BCA", "sem":1}
       switch (this.group) {
         case "ST":
-          this.attend();
           break;
         
         case "FA":
@@ -45,95 +44,4 @@ export class AttendanceComponent implements OnInit {
     );
   }
 
-  async attend() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const currentLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-  
-          const distance = this.calculateDistance(currentLocation, this.storedLocation);
-          if (distance <= environment.gps_distance) {
-            this.add();
-          } else {
-            this.success = false;
-            this.faildMsg = "You are too far from the designated location.";
-          }
-        },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              this.faildMsg = "Permission denied. Please allow location access.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              this.faildMsg = "Location information is unavailable.";
-              break;
-            case error.TIMEOUT:
-              this.faildMsg = "Location request timed out.";
-              break;
-            default:
-              this.faildMsg = "An unknown error occurred.";
-              break;
-          }
-          this.success = false;
-        },
-        {
-          enableHighAccuracy: true, // Use GPS accuracy
-          timeout: 10000, // Wait for 10 seconds
-          maximumAge: 0 // Do not use cached location
-        }
-      );
-    } else {
-      this.faildMsg = "Geolocation is not supported by this browser.";
-      this.success = false;
-    }
-  }
-  
-
-  async add() {
-    try {
-      const res = await firstValueFrom(this.service.addAttendance().pipe(
-        tap(
-          (response) => {
-            if (response.message) {
-              this.faildMsg = response.message;
-              this.success = false;
-            } else {
-              this.success = true;
-              this.faildMsg = "Update Unsuccessful";
-            }
-          }
-        )
-      ));
-    } catch (error) {
-      console.error('Error adding attendance', error);
-      this.faildMsg = "Error updating attendance. Please try again.";
-      this.success = false;
-    }
-  }
-
-  retryAttendance() {
-    this.attend();
-  }
-
-  calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): number {
-    // Haversine formula to calculate distance between two points
-    const toRad = (value: number) => value * Math.PI / 180;
-    const R = 6371e3; // Earth radius in meters
-    const φ1 = toRad(loc1.lat);
-    const φ2 = toRad(loc2.lat);
-    const Δφ = toRad(loc2.lat - loc1.lat);
-    const Δλ = toRad(loc2.lng - loc1.lng);
-
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-
-    return distance;
-  }
 }
