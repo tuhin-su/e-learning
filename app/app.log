@@ -485,3 +485,111 @@
 2024-09-11 16:50:40,031 - INFO - 172.19.0.6 - - [11/Sep/2024 16:50:40] "[31m[1mPOST /location HTTP/1.0[0m" 403 -
 2024-09-11 16:50:44,419 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
 2024-09-11 16:50:44,420 - INFO - 172.19.0.6 - - [11/Sep/2024 16:50:44] "GET /location HTTP/1.0" 200 -
+2024-09-11 16:56:29,400 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:56:29,453 - INFO -  * Restarting with stat
+2024-09-11 16:56:29,678 - WARNING -  * Debugger is active!
+2024-09-11 16:56:29,679 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:00:43,489 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:00:43,532 - INFO -  * Restarting with stat
+2024-09-11 17:02:29,962 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 17:02:29,962 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 17:02:29,963 - INFO -  * Restarting with stat
+2024-09-11 17:02:30,190 - WARNING -  * Debugger is active!
+2024-09-11 17:02:30,191 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:03:18,335 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:03:18,376 - INFO -  * Restarting with stat
+2024-09-11 17:03:18,610 - WARNING -  * Debugger is active!
+2024-09-11 17:03:18,610 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:03:32,657 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:03:32,698 - INFO -  * Restarting with stat
+2024-09-11 17:03:32,928 - WARNING -  * Debugger is active!
+2024-09-11 17:03:32,929 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:03:41,159 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 17:03:41,161 - INFO - 172.19.0.6 - - [11/Sep/2024 17:03:41] "[31m[1mPOST /location HTTP/1.0[0m" 403 -
+2024-09-11 17:03:51,994 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:03:52,042 - INFO -  * Restarting with stat
+2024-09-11 17:03:52,281 - WARNING -  * Debugger is active!
+2024-09-11 17:03:52,282 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:03:58,303 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:03:58,347 - INFO -  * Restarting with stat
+2024-09-11 17:03:58,631 - WARNING -  * Debugger is active!
+2024-09-11 17:03:58,632 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:04:52,800 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:04:52,839 - INFO -  * Restarting with stat
+2024-09-11 17:04:53,076 - WARNING -  * Debugger is active!
+2024-09-11 17:04:53,077 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:05:21,167 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:05:21,212 - INFO -  * Restarting with stat
+2024-09-11 17:07:07,693 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 17:07:07,693 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 17:07:07,693 - INFO -  * Restarting with stat
+2024-09-11 17:07:07,918 - WARNING -  * Debugger is active!
+2024-09-11 17:07:07,918 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:07:10,936 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:07:10,967 - INFO -  * Restarting with stat
+2024-09-11 17:07:11,179 - WARNING -  * Debugger is active!
+2024-09-11 17:07:11,180 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:07:29,239 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:07:29,285 - INFO -  * Restarting with stat
+2024-09-11 17:07:29,496 - WARNING -  * Debugger is active!
+2024-09-11 17:07:29,496 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:08:06,609 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:08:06,654 - INFO -  * Restarting with stat
+2024-09-11 17:08:12,007 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 17:08:12,008 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 17:08:12,008 - INFO -  * Restarting with stat
+2024-09-11 17:08:12,226 - WARNING -  * Debugger is active!
+2024-09-11 17:08:12,227 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:11:24,830 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:11:24,866 - INFO -  * Restarting with stat
+2024-09-11 17:11:25,114 - WARNING -  * Debugger is active!
+2024-09-11 17:11:25,115 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:11:30,132 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:11:30,161 - INFO -  * Restarting with stat
+2024-09-11 17:11:30,382 - WARNING -  * Debugger is active!
+2024-09-11 17:11:30,383 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:11:37,406 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:11:37,443 - INFO -  * Restarting with stat
+2024-09-11 17:11:53,278 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 17:11:53,278 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 17:11:53,279 - INFO -  * Restarting with stat
+2024-09-11 17:11:53,487 - WARNING -  * Debugger is active!
+2024-09-11 17:11:53,488 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:12:25,512 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 17:12:25,514 - INFO - 172.19.0.6 - - [11/Sep/2024 17:12:25] "GET /location HTTP/1.0" 200 -
+2024-09-11 17:12:37,972 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 17:12:37,974 - INFO - 172.19.0.6 - - [11/Sep/2024 17:12:37] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 17:12:47,094 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 17:12:47,095 - INFO - 172.19.0.6 - - [11/Sep/2024 17:12:47] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 17:13:00,701 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:13:00,737 - INFO -  * Restarting with stat
+2024-09-11 17:13:00,986 - WARNING -  * Debugger is active!
+2024-09-11 17:13:00,986 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:13:38,025 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 17:13:38,027 - INFO - 172.19.0.6 - - [11/Sep/2024 17:13:38] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 17:13:50,050 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 logged in.
+2024-09-11 17:13:50,050 - INFO - 172.19.0.6 - - [11/Sep/2024 17:13:50] "POST /login HTTP/1.0" 200 -
+2024-09-11 17:13:57,457 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 17:13:57,458 - INFO - 172.19.0.6 - - [11/Sep/2024 17:13:57] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 17:16:13,609 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:16:13,658 - INFO -  * Restarting with stat
+2024-09-11 17:16:13,881 - WARNING -  * Debugger is active!
+2024-09-11 17:16:13,881 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:16:20,906 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 17:16:20,955 - INFO -  * Restarting with stat
+2024-09-11 17:16:21,172 - WARNING -  * Debugger is active!
+2024-09-11 17:16:21,172 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 17:16:25,882 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 17:16:25,884 - INFO - 172.19.0.6 - - [11/Sep/2024 17:16:25] "GET /attendance HTTP/1.0" 200 -

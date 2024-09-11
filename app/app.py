@@ -71,7 +71,16 @@ class apiHandler:
         data_to_hash = unique_value + timestamp + username + groups + password
         unique_id = hashlib.sha256(data_to_hash.encode()).hexdigest()
         return unique_id
-    
+    def getLabel(self,id):
+        if id:
+            query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
+            try:
+                self.cursor.execute(query, (id,))
+                return self.cursor.fetchone()['label']
+            except mysql.connector.Error as e:
+                self.app.logger.error(e)
+                return None
+
     def create_app(self):
         @self.app.route('/ver', methods=['GET'])
         def version():
@@ -168,33 +177,36 @@ class apiHandler:
             data = request.json
             return jsonify({"message": self.auth.current_user(), "data": data.get('data')})
         
-        @self.app.route('/attendance', methods=['GET', 'POST', 'PUT'])
+        @self.app.route('/attendance', methods=['GET', 'PUT'])
         @self.auth.login_required
         def attendance():
             user_id = self.auth.current_user()
             self.app.logger.info(f'User {user_id["user_id"]} accessed attendance')
             if request.method == 'GET':
-                if user_id['groups'] == 'ST':
-                    return jsonify({
-                        "lat": 22.29367,
-                        "lng": 87.92009
-                    })
-            elif request.method == 'POST':
-                data = request.json
-                if not data:
-                    return jsonify({"message": "No data provided"}), 400
-                
-                stream = data.get("stream")
-                sem = data.get("sem")
-                query = """SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date 
-                           FROM attends a 
-                           JOIN user_info u ON a.user_id = u.user_id 
-                           JOIN student s ON u.user_id = s.id 
-                           WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();"""
-                self.cursor.execute(query, (stream, sem))
-                attendance = self.cursor.fetchall()
-                return jsonify({"attendance": attendance}), 200
-
+                if self.getLabel(user_id['user_id']) >= 2:
+                    data = request.json
+                    if not data:
+                        return jsonify({"message": "No data provided"}), 400
+                    
+                    stream = data.get("stream")
+                    sem = data.get("sem")
+                    query = """SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date 
+                            FROM attends a 
+                            JOIN user_info u ON a.user_id = u.user_id 
+                            JOIN student s ON u.user_id = s.id 
+                            WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();"""
+                    self.cursor.execute(query, (stream, sem))
+                    attendance = self.cursor.fetchall()
+                    return jsonify({"attendance": attendance}), 200
+                else:
+                    query = """SELECT ui.name, a.attendance_date FROM user_info ui JOIN attends a ON ui.user_id = a.user_id WHERE ui.user_id = %s;"""
+                    try:
+                        self.cursor.execute(query, (user_id['user_id'],))
+                        record = self.cursor.fetchone()
+                        return jsonify({"record": record}), 200
+                    except mysql.connector.Error as e:
+                        self.app.logger.error(f"Error retrieving location: {e}")
+                        return jsonify({"message": str(e)}), 500
             elif request.method == 'PUT':
                 query = """INSERT INTO attends (user_id, attendance_date, attendance_date_only)
                            VALUES (%s, NOW(), CURDATE());"""
@@ -212,8 +224,8 @@ class apiHandler:
                     self.conn.rollback()
                     self.app.logger.error(f"Error recording attendance: {e}")
                     return jsonify({"message": error_message}), 400
-
-            return jsonify({"data": "This is secured data"})
+            else:
+                return jsonify({"message": "Invalid request"}), 400
 
         @self.app.route("/location", methods=['POST','GET'])
         @self.auth.login_required
@@ -224,15 +236,8 @@ class apiHandler:
                 data = request.json
                 if not data:
                     return jsonify({"message": "No data provided"}), 400
-                query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
-                try:
-                    self.cursor.execute(query, (user_id['user_id'],))
-                    group_label = self.cursor.fetchone()['label']
-                except mysql.connector.Error as e:
-                    error_message = str(e)
-                    self.app.logger.error(e)
-                    return jsonify({"message": error_message}), 400
-                if group_label >= 3:
+                
+                if self.getLabel(user_id['user_id']) >= 3:
                     latitude = data.get("lat")
                     longitude = data.get("lon")
                     dist = data.get("dic")

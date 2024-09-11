@@ -85,16 +85,6 @@ Authorization: Bearer {{ token }}
 }
 
 
-### student accout
-
-
-### attendance
-# @name attendance
-@token = {{login.response.body.token}}
-GET {{ apiUrl }}/attendance
-Content-Type: application/json
-Authorization: Bearer {{ token }}
-
 ### SET GPS COD
 # @name set_gps_cod
 @token = {{login.response.body.token}}
@@ -115,3 +105,15 @@ Authorization: Bearer {{ token }}
 GET {{ apiUrl }}/location
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
+
+### Attendens
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/attendance
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "sem": 4,
+  "stream": "BCA"
+}
