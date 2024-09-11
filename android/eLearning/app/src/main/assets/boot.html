@@ -131,7 +131,7 @@
       }
 
       function loadBasicComponent() {
-        window.location.href = "http://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com:8020";
+        window.location.href = "https://timt.in/";
       }
 
       async function updateResorce(){
@@ -162,7 +162,7 @@
 
             xhr.onerror = function(error) {
               try {
-                const url = 'http://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
+                const url = 'https://timt.in/api/ver';
                 checkVer(url);
               } catch (error) {
                 showConnError(true);
@@ -186,7 +186,7 @@
           popup.innerHTML='';
           return true;
       }
-      const url = 'https://ec2-13-48-56-144.eu-north-1.compute.amazonaws.com/ver';
+      const url = 'https://timt.in/api/ver';
       checkVer(url);
     </script>
   </body>

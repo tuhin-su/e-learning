@@ -1,4 +1,4 @@
-@apiUrl = https://localhost/api
+@apiUrl = http://localhost/api
 
 ### Create a new user
 POST {{ apiUrl }}/create_account
@@ -15,7 +15,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "student_1",
+  "username": "super@admin.in",
   "password": "passwd"
 }
 
@@ -25,9 +25,10 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student_1",
+  "username": "super@admin.in",
   "password": "passwd",
-  "groups": "ST"
+  "groups": "SU",
+  "ref": 0
 }
 
 ### student account
@@ -91,5 +92,26 @@ Authorization: Bearer {{ token }}
 # @name attendance
 @token = {{login.response.body.token}}
 GET {{ apiUrl }}/attendance
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+### SET GPS COD
+# @name set_gps_cod
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/location
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "lat": 22.381088,
+  "lon": 87.794611,
+  "dic": 27.0
+}
+
+### GET GPS 
+### SET GPS COD
+# @name set_gps_cod
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/location
 Content-Type: application/json
 Authorization: Bearer {{ token }}

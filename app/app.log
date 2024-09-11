@@ -167,3 +167,283 @@
 2024-09-10 19:04:19,220 - INFO -  * Restarting with stat
 2024-09-10 19:04:19,456 - WARNING -  * Debugger is active!
 2024-09-10 19:04:19,465 - INFO -  * Debugger PIN: 326-573-152
+2024-09-11 13:36:27,144 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 13:36:27,145 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 13:36:27,147 - INFO -  * Restarting with stat
+2024-09-11 13:36:27,370 - WARNING -  * Debugger is active!
+2024-09-11 13:36:27,373 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 13:39:48,040 - INFO - 172.19.0.6 - - [11/Sep/2024 13:39:48] "OPTIONS /login HTTP/1.0" 200 -
+2024-09-11 13:39:48,046 - INFO - 172.19.0.6 - - [11/Sep/2024 13:39:48] "[31m[1mPOST /login HTTP/1.0[0m" 401 -
+2024-09-11 13:40:05,081 - INFO - Created new user: student_1
+2024-09-11 13:40:05,082 - INFO - 172.19.0.6 - - [11/Sep/2024 13:40:05] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-11 13:40:09,562 - INFO - 172.19.0.6 - - [11/Sep/2024 13:40:09] "OPTIONS /login HTTP/1.0" 200 -
+2024-09-11 13:40:09,678 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 13:40:09,679 - INFO - 172.19.0.6 - - [11/Sep/2024 13:40:09] "POST /login HTTP/1.0" 200 -
+2024-09-11 13:40:39,963 - INFO - 172.19.0.6 - - [11/Sep/2024 13:40:39] "OPTIONS /user_info HTTP/1.0" 200 -
+2024-09-11 13:40:39,971 - INFO - 172.19.0.6 - - [11/Sep/2024 13:40:39] "POST /user_info HTTP/1.0" 200 -
+2024-09-11 13:47:08,109 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 13:47:08,110 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:08] "POST /login HTTP/1.0" 200 -
+2024-09-11 13:47:12,650 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:12,651 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:12] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:18,888 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:18,888 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:18] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:22,348 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:22,349 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:22] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:23,213 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:23,214 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:23] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:23,981 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:23,982 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:23] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:48,731 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:48,732 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:48] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:50,822 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:50,823 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:50] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:47:53,787 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:47:53,788 - INFO - 172.19.0.6 - - [11/Sep/2024 13:47:53] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:17,991 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:17] "OPTIONS /login HTTP/1.0" 200 -
+2024-09-11 13:48:18,108 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 13:48:18,109 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:18] "POST /login HTTP/1.0" 200 -
+2024-09-11 13:48:20,061 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:20] "OPTIONS /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:20,066 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:48:20,068 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:20] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:25,286 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:25] "OPTIONS /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:25,290 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:48:25,291 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:25] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:37,659 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:37] "OPTIONS /attendance HTTP/1.0" 200 -
+2024-09-11 13:48:37,663 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:48:37,663 - INFO - 172.19.0.6 - - [11/Sep/2024 13:48:37] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:51:19,683 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:19] "OPTIONS /login HTTP/1.0" 200 -
+2024-09-11 13:51:19,799 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 13:51:19,800 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:19] "POST /login HTTP/1.0" 200 -
+2024-09-11 13:51:21,803 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:21] "OPTIONS /attendance HTTP/1.0" 200 -
+2024-09-11 13:51:21,809 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:51:21,810 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:21] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:51:33,950 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:33] "OPTIONS /attendance HTTP/1.0" 200 -
+2024-09-11 13:51:33,953 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 accessed attendance
+2024-09-11 13:51:33,954 - INFO - 172.19.0.6 - - [11/Sep/2024 13:51:33] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 13:59:04,449 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 13:59:04,450 - INFO - 172.19.0.6 - - [11/Sep/2024 13:59:04] "POST /login HTTP/1.0" 200 -
+2024-09-11 14:12:35,422 - INFO - 172.19.0.6 - - [11/Sep/2024 14:12:35] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:12:44,732 - INFO - 172.19.0.6 - - [11/Sep/2024 14:12:44] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:13:05,934 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 14:13:05,935 - INFO - 172.19.0.6 - - [11/Sep/2024 14:13:05] "POST /login HTTP/1.0" 200 -
+2024-09-11 14:21:01,188 - INFO - 172.19.0.6 - - [11/Sep/2024 14:21:01] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:21:29,990 - INFO - 172.19.0.6 - - [11/Sep/2024 14:21:29] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:21:48,485 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 14:21:48,486 - INFO - 172.19.0.6 - - [11/Sep/2024 14:21:48] "POST /login HTTP/1.0" 200 -
+2024-09-11 14:28:01,859 - INFO - 172.19.0.6 - - [11/Sep/2024 14:28:01] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:28:21,122 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 14:28:21,123 - INFO - 172.19.0.6 - - [11/Sep/2024 14:28:21] "POST /login HTTP/1.0" 200 -
+2024-09-11 14:32:30,006 - INFO - 172.19.0.6 - - [11/Sep/2024 14:32:30] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:33:09,062 - INFO - 172.19.0.6 - - [11/Sep/2024 14:33:09] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:33:28,566 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 14:33:28,567 - INFO - 172.19.0.6 - - [11/Sep/2024 14:33:28] "POST /login HTTP/1.0" 200 -
+2024-09-11 14:49:19,653 - INFO - 172.19.0.6 - - [11/Sep/2024 14:49:19] "GET /ver HTTP/1.0" 200 -
+2024-09-11 14:49:40,905 - INFO - User 76fcc6b12b7c265747d24a31131f38b90829960d108f326673ef13ae6a79a7c6 logged in.
+2024-09-11 14:49:40,906 - INFO - 172.19.0.6 - - [11/Sep/2024 14:49:40] "POST /login HTTP/1.0" 200 -
+2024-09-11 15:29:17,603 - INFO - 172.19.0.6 - - [11/Sep/2024 15:29:17] "[35m[1mPOST /static_users HTTP/1.0[0m" 500 -
+2024-09-11 15:30:27,279 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:30:27,344 - INFO -  * Restarting with stat
+2024-09-11 15:30:27,598 - WARNING -  * Debugger is active!
+2024-09-11 15:30:27,599 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:30:48,663 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:30:48,718 - INFO -  * Restarting with stat
+2024-09-11 15:30:48,961 - WARNING -  * Debugger is active!
+2024-09-11 15:30:48,962 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:30:56,987 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:30:57,029 - INFO -  * Restarting with stat
+2024-09-11 15:30:57,294 - WARNING -  * Debugger is active!
+2024-09-11 15:30:57,294 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:31:15,992 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 15:31:15,992 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 15:31:15,993 - INFO -  * Restarting with stat
+2024-09-11 15:31:16,223 - WARNING -  * Debugger is active!
+2024-09-11 15:31:16,224 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:31:39,297 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:31:39,337 - INFO -  * Restarting with stat
+2024-09-11 15:31:39,563 - WARNING -  * Debugger is active!
+2024-09-11 15:31:39,563 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:32:14,681 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:32:14,726 - INFO -  * Restarting with stat
+2024-09-11 15:32:14,964 - WARNING -  * Debugger is active!
+2024-09-11 15:32:14,964 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:32:23,994 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:32:24,044 - INFO -  * Restarting with stat
+2024-09-11 15:32:24,271 - WARNING -  * Debugger is active!
+2024-09-11 15:32:24,271 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:32:31,294 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:32:31,346 - INFO -  * Restarting with stat
+2024-09-11 15:32:31,578 - WARNING -  * Debugger is active!
+2024-09-11 15:32:31,579 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:32:50,095 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 15:32:50,095 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 15:32:50,096 - INFO -  * Restarting with stat
+2024-09-11 15:32:50,319 - WARNING -  * Debugger is active!
+2024-09-11 15:32:50,319 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:32:53,731 - INFO - Created new user: student_1
+2024-09-11 15:32:53,732 - INFO - 172.19.0.6 - - [11/Sep/2024 15:32:53] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-11 15:33:50,155 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 logged in.
+2024-09-11 15:33:50,155 - INFO - 172.19.0.6 - - [11/Sep/2024 15:33:50] "POST /login HTTP/1.0" 200 -
+2024-09-11 15:39:46,497 - INFO - Created new user: super@admin.in
+2024-09-11 15:39:46,497 - INFO - 172.19.0.6 - - [11/Sep/2024 15:39:46] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-11 15:40:00,024 - INFO - User cb3051d1a519ff4ef94f900a0cfffecbea32579b7d432716226657b6f85b8609 logged in.
+2024-09-11 15:40:00,025 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:00] "POST /login HTTP/1.0" 200 -
+2024-09-11 15:40:07,486 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:07] "PUT /user_info HTTP/1.0" 200 -
+2024-09-11 15:40:15,373 - INFO - Created new user: super@admin.in
+2024-09-11 15:40:15,373 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:15] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-11 15:40:37,064 - INFO - Created new user: super@admin.in
+2024-09-11 15:40:37,064 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:37] "[35m[1mPOST /static_users HTTP/1.0[0m" 201 -
+2024-09-11 15:40:39,453 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d logged in.
+2024-09-11 15:40:39,454 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:39] "POST /login HTTP/1.0" 200 -
+2024-09-11 15:40:44,201 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:44] "PUT /user_info HTTP/1.0" 200 -
+2024-09-11 15:40:51,018 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d logged in.
+2024-09-11 15:40:51,018 - INFO - 172.19.0.6 - - [11/Sep/2024 15:40:51] "POST /login HTTP/1.0" 200 -
+2024-09-11 15:46:34,911 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:46:34,960 - INFO -  * Restarting with stat
+2024-09-11 15:46:35,181 - WARNING -  * Debugger is active!
+2024-09-11 15:46:35,182 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:47:32,361 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:47:32,409 - INFO -  * Restarting with stat
+2024-09-11 15:47:32,646 - WARNING -  * Debugger is active!
+2024-09-11 15:47:32,646 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:48:24,814 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:48:24,864 - INFO -  * Restarting with stat
+2024-09-11 15:48:25,121 - WARNING -  * Debugger is active!
+2024-09-11 15:48:25,121 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:48:41,178 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:48:41,238 - INFO -  * Restarting with stat
+2024-09-11 15:48:41,473 - WARNING -  * Debugger is active!
+2024-09-11 15:48:41,473 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:48:57,525 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:48:57,561 - INFO -  * Restarting with stat
+2024-09-11 15:49:52,406 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 15:49:52,406 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 15:49:52,407 - INFO -  * Restarting with stat
+2024-09-11 15:49:52,636 - WARNING -  * Debugger is active!
+2024-09-11 15:49:52,637 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:49:58,658 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:49:58,707 - INFO -  * Restarting with stat
+2024-09-11 15:50:50,522 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 15:50:50,522 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 15:50:50,523 - INFO -  * Restarting with stat
+2024-09-11 15:50:50,762 - WARNING -  * Debugger is active!
+2024-09-11 15:50:50,763 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:51:18,854 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:51:18,897 - INFO -  * Restarting with stat
+2024-09-11 15:51:19,118 - WARNING -  * Debugger is active!
+2024-09-11 15:51:19,119 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:51:30,157 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:51:30,206 - INFO -  * Restarting with stat
+2024-09-11 15:51:30,430 - WARNING -  * Debugger is active!
+2024-09-11 15:51:30,430 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:55:30,189 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:55:30,235 - INFO -  * Restarting with stat
+2024-09-11 15:55:30,486 - WARNING -  * Debugger is active!
+2024-09-11 15:55:30,486 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:55:40,519 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:55:40,567 - INFO -  * Restarting with stat
+2024-09-11 15:55:40,798 - WARNING -  * Debugger is active!
+2024-09-11 15:55:40,798 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:55:45,815 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:55:45,855 - INFO -  * Restarting with stat
+2024-09-11 15:55:46,085 - WARNING -  * Debugger is active!
+2024-09-11 15:55:46,085 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 15:56:30,224 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 15:56:30,254 - INFO -  * Restarting with stat
+2024-09-11 15:56:30,490 - WARNING -  * Debugger is active!
+2024-09-11 15:56:30,491 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:03:40,833 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:03:40,878 - INFO -  * Restarting with stat
+2024-09-11 16:03:41,166 - WARNING -  * Debugger is active!
+2024-09-11 16:03:41,167 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:04:30,320 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:04:30,370 - INFO -  * Restarting with stat
+2024-09-11 16:04:30,601 - WARNING -  * Debugger is active!
+2024-09-11 16:04:30,602 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:04:43,645 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:04:43,693 - INFO -  * Restarting with stat
+2024-09-11 16:04:43,932 - WARNING -  * Debugger is active!
+2024-09-11 16:04:43,932 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:05:15,032 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:05:15,060 - INFO -  * Restarting with stat
+2024-09-11 16:05:15,288 - WARNING -  * Debugger is active!
+2024-09-11 16:05:15,289 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:06:33,984 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:06:33,985 - INFO - 172.19.0.6 - - [11/Sep/2024 16:06:33] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:06:53,721 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.5:5000
+2024-09-11 16:06:53,721 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-11 16:06:53,722 - INFO -  * Restarting with stat
+2024-09-11 16:06:53,958 - WARNING -  * Debugger is active!
+2024-09-11 16:06:53,959 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:07:10,358 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d logged in.
+2024-09-11 16:07:10,359 - INFO - 172.19.0.6 - - [11/Sep/2024 16:07:10] "POST /login HTTP/1.0" 200 -
+2024-09-11 16:07:28,524 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:07:28,525 - INFO - 172.19.0.6 - - [11/Sep/2024 16:07:28] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:08:43,097 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:08:43,098 - ERROR - 1366 (22007): Incorrect decimal value: 'c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d' for column `mydatabase`.`collage_location`.`lat` at row 1
+2024-09-11 16:08:43,098 - INFO - 172.19.0.6 - - [11/Sep/2024 16:08:43] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:12:18,382 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:12:18,383 - ERROR - 1366 (22007): Incorrect decimal value: 'c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d' for column `mydatabase`.`collage_location`.`lat` at row 1
+2024-09-11 16:12:18,383 - INFO - 172.19.0.6 - - [11/Sep/2024 16:12:18] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:12:31,409 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:12:31,410 - ERROR - 1366 (22007): Incorrect decimal value: 'c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d' for column `mydatabase`.`collage_location`.`lat` at row 1
+2024-09-11 16:12:31,411 - INFO - 172.19.0.6 - - [11/Sep/2024 16:12:31] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:15:11,538 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:15:11,588 - INFO -  * Restarting with stat
+2024-09-11 16:15:11,825 - WARNING -  * Debugger is active!
+2024-09-11 16:15:11,826 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:15:19,088 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:15:19,089 - ERROR - 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d'', '22.38108...' at line 1
+2024-09-11 16:15:19,089 - INFO - 172.19.0.6 - - [11/Sep/2024 16:15:19] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:15:56,969 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:15:57,005 - INFO -  * Restarting with stat
+2024-09-11 16:15:57,269 - WARNING -  * Debugger is active!
+2024-09-11 16:15:57,270 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:16:01,287 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:16:01,327 - INFO -  * Restarting with stat
+2024-09-11 16:16:01,572 - WARNING -  * Debugger is active!
+2024-09-11 16:16:01,572 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:16:03,603 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:16:03,605 - ERROR - 1366 (22007): Incorrect decimal value: 'c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d' for column `mydatabase`.`collage_location`.`lat` at row 1
+2024-09-11 16:16:03,606 - INFO - 172.19.0.6 - - [11/Sep/2024 16:16:03] "[31m[1mPOST /location HTTP/1.0[0m" 400 -
+2024-09-11 16:16:33,667 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:16:33,714 - INFO -  * Restarting with stat
+2024-09-11 16:16:33,949 - WARNING -  * Debugger is active!
+2024-09-11 16:16:33,950 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:16:57,023 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:16:57,056 - INFO -  * Restarting with stat
+2024-09-11 16:16:57,283 - WARNING -  * Debugger is active!
+2024-09-11 16:16:57,283 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:17:03,124 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:17:03,127 - INFO - 172.19.0.6 - - [11/Sep/2024 16:17:03] "POST /location HTTP/1.0" 200 -
+2024-09-11 16:18:01,901 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:18:01,912 - INFO - 172.19.0.6 - - [11/Sep/2024 16:18:01] "[35m[1mGET /location HTTP/1.0[0m" 500 -
+2024-09-11 16:18:28,579 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:18:28,618 - INFO -  * Restarting with stat
+2024-09-11 16:18:28,873 - WARNING -  * Debugger is active!
+2024-09-11 16:18:28,873 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:18:34,749 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:18:34,751 - INFO - 172.19.0.6 - - [11/Sep/2024 16:18:34] "GET /location HTTP/1.0" 200 -
+2024-09-11 16:19:14,015 - INFO -  * Detected change in '/app/app.py', reloading
+2024-09-11 16:19:14,064 - INFO -  * Restarting with stat
+2024-09-11 16:19:14,292 - WARNING -  * Debugger is active!
+2024-09-11 16:19:14,292 - INFO -  * Debugger PIN: 142-732-660
+2024-09-11 16:19:18,631 - INFO - User c2b6f3182197edbd53c36420ac93e2033d92c545f553e6269dce0a207da3596d accessed location
+2024-09-11 16:19:18,633 - INFO - 172.19.0.6 - - [11/Sep/2024 16:19:18] "GET /location HTTP/1.0" 200 -

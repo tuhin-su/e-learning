@@ -31,6 +31,10 @@
         "type": "INT",
         "default": 0,
         "nullable": false
+      },
+      "createBy": {
+        "type": "INT",
+        "nullable": false
       }
     }
   },
@@ -69,7 +73,7 @@
         "nullable": true
       },
       "img": {
-        "type": "LONG TEXT",
+        "type": "LONGTEXT",
         "nullable": true
       }
     }
@@ -79,6 +83,7 @@
       "id": {
         "type": "INT",
         "primary_key": true,
+        "auto_increment": true,
         "nullable": false
       },
       "name": {
@@ -168,12 +173,16 @@
         "type": "TIMESTAMP",
         "default": "CURRENT_TIMESTAMP",
         "nullable": false
+      },
+      "attendance_date_only": {
+        "type": "DATE",
+        "nullable": false
       }
     },
     "constraints": {
       "unique_user_per_day": {
         "type": "unique",
-        "columns": ["user_id", "DATE(attendance_date)"]
+        "columns": ["user_id", "attendance_date_only"]
       }
     }
   },
@@ -293,6 +302,43 @@
         "foreign_key": {
           "references": "user(id)"
         }
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      }
+    }
+  },
+  "collage_location": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "lat": {
+        "type": "DECIMAL",
+        "precision": 10,
+        "scale": 6,
+        "nullable": false
+      },
+      "lon": {
+        "type": "DECIMAL",
+        "precision": 10,
+        "scale": 6,
+        "nullable": false
+      },
+      "distend": {
+        "type": "DECIMAL",
+        "precision": 10,
+        "scale": 6,
+        "nullable": false
+      },
+      "createBy": {
+        "type": "VARCHAR",
+        "nullable": false
       },
       "createDate": {
         "type": "TIMESTAMP",

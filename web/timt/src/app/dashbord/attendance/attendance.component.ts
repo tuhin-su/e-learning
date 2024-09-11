@@ -46,50 +46,51 @@ export class AttendanceComponent implements OnInit {
   }
 
   async attend() {
-    try {
-      const res = await firstValueFrom(this.service.getDefualt().pipe(
-        tap(
-          (data) => {
-            if (data) {
-              this.storedLocation = data;
-            }
-          }
-        )
-      ));
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const currentLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            const distance = this.calculateDistance(currentLocation, this.storedLocation);
-
-            if (distance <= environment.gps_distance) {
-              this.add();
-            } else {
-              this.success = false;
-              this.faildMsg = "You are too far from the designated location.";
-            }
-          },
-          (error) => {
-            console.error('Error getting location', error);
-            this.faildMsg = "Error getting location. Please enable location services.";
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+  
+          const distance = this.calculateDistance(currentLocation, this.storedLocation);
+          if (distance <= environment.gps_distance) {
+            this.add();
+          } else {
             this.success = false;
+            this.faildMsg = "You are too far from the designated location.";
           }
-        );
-      } else {
-        console.error('Geolocation is not supported by this browser.');
-        this.faildMsg = "Geolocation is not supported by this browser.";
-        this.success = false;
-      }
-    } catch (error) {
-      console.error('Error fetching default location', error);
-      this.faildMsg = "Error fetching location data.";
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              this.faildMsg = "Permission denied. Please allow location access.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              this.faildMsg = "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              this.faildMsg = "Location request timed out.";
+              break;
+            default:
+              this.faildMsg = "An unknown error occurred.";
+              break;
+          }
+          this.success = false;
+        },
+        {
+          enableHighAccuracy: true, // Use GPS accuracy
+          timeout: 10000, // Wait for 10 seconds
+          maximumAge: 0 // Do not use cached location
+        }
+      );
+    } else {
+      this.faildMsg = "Geolocation is not supported by this browser.";
       this.success = false;
     }
   }
+  
 
   async add() {
     try {

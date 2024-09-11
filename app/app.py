@@ -50,9 +50,6 @@ class apiHandler:
             self.app.logger.error(f"Error while connecting to MySQL: {e}")
             raise e
 
-        # SSL configuration
-        self.ssl_cert_path = config.get('SERVER', {}).get('SSL_CERT_PATH', None)
-        self.ssl_key_path = config.get('SERVER', {}).get('SSL_KEY_PATH', None)
         self.host = config['SERVER']['HOST']
         self.port = config['SERVER']['PORT']
 
@@ -113,11 +110,12 @@ class apiHandler:
             username = data.get('username')
             password = generate_password_hash(data.get('password'))
             groups = data.get('groups')
+            ref = data.get('ref')
             user_id = self.generate_unique_id(username, password, groups)
 
             try:
-                query = "INSERT INTO user (id, email, passwd, groups) VALUES (%s, %s, %s, %s)"
-                self.cursor.execute(query, (user_id, username, password, groups))
+                query = "INSERT INTO user (id, email, passwd, groups, createBy) VALUES (%s, %s, %s, %s,%s)"
+                self.cursor.execute(query, (user_id, username, password, groups, ref))
                 self.conn.commit()
                 self.app.logger.info(f'Created new user: {username}')
                 return jsonify({"message": "User created"}), 201
@@ -217,6 +215,39 @@ class apiHandler:
 
             return jsonify({"data": "This is secured data"})
 
+        @self.app.route("/location", methods=['POST','GET'])
+        @self.auth.login_required
+        def locationManagement():
+            user_id = self.auth.current_user()
+            self.app.logger.info(f'User {user_id["user_id"]} accessed location')
+            if request.method == 'POST':
+                data = request.json
+                if not data:
+                    return jsonify({"message": "No data provided"}), 400
+                
+                latitude = data.get("lat")
+                longitude = data.get("lon")
+                dist = data.get("dic")
+                query = """INSERT INTO `collage_location` (`id`, `lat`, `lon`, `distend`, `createBy`, `createDate`) VALUES (NULL, %s, %s, %s, %s, current_timestamp());"""
+                try:
+                    self.cursor.execute(query, (latitude, longitude, dist, user_id['user_id']))
+                    self.conn.commit()
+                    return jsonify({}), 200
+                except mysql.connector.Error as e:
+                    error_message = str(e)
+                    self.conn.rollback()
+                    self.app.logger.error(e)
+                return jsonify({"message": error_message}), 400
+            elif request.method == 'GET':
+                query = """SELECT `lat`, `lon`, `distend`
+                            FROM `collage_location`
+                            ORDER BY `createDate` DESC
+                            LIMIT 1;
+                        """
+                self.cursor.execute(query)
+                locations = self.cursor.fetchone()
+                return jsonify({"locations": locations}), 200
+            
         @self.auth.verify_token
         def verify_token(token):
             try:
@@ -230,8 +261,6 @@ class apiHandler:
     def run(self):
         logging.basicConfig(filename='/app/app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         CORS(self.app)
-        # Run the Flask app with SSL context if available
-        ssl_context = (self.ssl_cert_path, self.ssl_key_path) if self.ssl_cert_path and self.ssl_key_path else None
         self.app.run(host=self.host, port=self.port, debug=True)
 
 if __name__ == '__main__':

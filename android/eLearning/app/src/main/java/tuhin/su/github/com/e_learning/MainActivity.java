@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
+import android.webkit.GeolocationPermissions;
 import android.webkit.PermissionRequest;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -25,8 +26,6 @@ import android.annotation.SuppressLint;
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 2;
-    private static final int STORAGE_PERMISSION_REQUEST_CODE = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,16 +33,17 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         setContentView(R.layout.activity_main);
         hideSystemUI();
+
         webView = findViewById(R.id.webview);
         initializeWebViewSettings();
         webView.setWebViewClient(new CustomWebViewClient());
         webView.setWebChromeClient(new CustomWebChromeClient());
         webView.loadUrl("file:///android_asset/boot.html");
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        requestLocationPermissions();
-        requestCameraPermissions();
-        requestStoragePermissions();
+
+        requestPermissions();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -70,6 +70,35 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    private void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, LOCATION_PERMISSION_REQUEST_CODE);
+        }Q
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permissions denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -91,72 +120,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         if (webView != null) {
             webView.destroy();
-        }
-    }
-
-    private void requestLocationPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        } else {
-            Toast.makeText(this, "Location permission already granted", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void requestCameraPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA},
-                    CAMERA_PERMISSION_REQUEST_CODE);
-        } else {
-            Toast.makeText(this, "Camera permission already granted", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void requestStoragePermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    STORAGE_PERMISSION_REQUEST_CODE);
-        } else {
-            Toast.makeText(this, "Storage permission already granted", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-            case CAMERA_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-            case STORAGE_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
         }
     }
 
@@ -190,16 +153,20 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPermissionRequest(final PermissionRequest request) {
-            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_GRANTED) {
-                request.grant(request.getResources());
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                request.grant(request.getResources()); // Automatically grant all permissions
             } else {
-                request.deny();
+                request.deny(); // Deny if not granted (although the requestPermissions method should handle this)
             }
+        }
+
+        @Override
+        public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+            // Automatically grant permission for geolocation requests
+            callback.invoke(origin, true, false);  // Grant location permission
         }
 
         @Override

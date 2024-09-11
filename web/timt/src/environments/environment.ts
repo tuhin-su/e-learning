@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: "https://localhost/api",
+  apiUrl: "http://localhost/api",
   gps_distance: 27,
 };
 
