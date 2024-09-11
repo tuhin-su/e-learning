@@ -199,7 +199,7 @@ class apiHandler:
                     attendance = self.cursor.fetchall()
                     return jsonify({"attendance": attendance}), 200
                 else:
-                    query = """SELECT ui.name, a.attendance_date FROM user_info ui JOIN attends a ON ui.user_id = a.user_id WHERE ui.user_id = %s;"""
+                    query = """SELECT ui.name, a.attendance_date FROM user_info ui JOIN attends a ON ui.user_id = a.user_id WHERE ui.user_id = %s LIMIT 10;"""
                     try:
                         self.cursor.execute(query, (user_id['user_id'],))
                         record = self.cursor.fetchall()

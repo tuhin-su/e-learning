@@ -1,7 +1,35 @@
-<div *ngIf="tableData">
-    <div *ngFor="let item of tableData">
-        <p>
-            {{ item.name }} - {{ item.attendance_date }}
-        </p>
-    </div>
+<div>
+    <div *ngIf="tableData"
+    class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+    <table class="w-full text-left table-auto min-w-max">
+        <thead>
+        <tr>
+            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Name
+            </p>
+            </th>
+            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Date
+            </p>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of tableData">
+            <td class="p-4 border-b border-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                {{ item.name }}
+            </p>
+            </td>
+            <td class="p-4 border-b border-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                {{ item.attendance_date }}
+            </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>  
 </div>

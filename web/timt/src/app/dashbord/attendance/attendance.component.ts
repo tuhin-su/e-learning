@@ -33,7 +33,9 @@ export class AttendanceComponent implements OnInit {
       tap(
         (res) => {
           if (res) {
-            this.tableData= res;
+            if (res.record) {
+              this.tableData= res.record;
+            }
           }
         },
         error => {
@@ -47,7 +49,7 @@ export class AttendanceComponent implements OnInit {
           }); 
         }
       )
-    ))
+    ));
   }
   async getAllStudents(data: any) {
     this.service.getAllStudent(data).subscribe(
