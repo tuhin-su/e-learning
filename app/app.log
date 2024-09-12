@@ -1086,3 +1086,9 @@
 2024-09-12 09:45:08,367 - INFO -  * Restarting with stat
 2024-09-12 09:45:08,688 - WARNING -  * Debugger is active!
 2024-09-12 09:45:08,690 - INFO -  * Debugger PIN: 140-896-061
+2024-09-12 11:49:06,501 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-12 11:49:06,502 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-12 11:49:06,504 - INFO -  * Restarting with stat
+2024-09-12 11:49:06,762 - WARNING -  * Debugger is active!
+2024-09-12 11:49:06,778 - INFO -  * Debugger PIN: 143-887-388

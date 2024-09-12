@@ -17,19 +17,9 @@ class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
         self.auth = HTTPTokenAuth(scheme='Bearer')
-
-        # Load configuration from environment variables or default values
-        self.config_path = os.getenv('CONFIG_PATH', 'config.json')
-        if not os.path.isfile(self.config_path):
-            raise FileNotFoundError(f"Configuration file '{self.config_path}' not found.")
-
-        with open(self.config_path) as config_file:
-            config = json.load(config_file)
-
-        if 'SERVER' not in config:
-            raise KeyError("Missing 'SERVER' key in configuration file.")
-        
-        self.app.config['SECRET_KEY'] = config['SESSION']['SECRET_KEY']
+        self.host="0.0.0.0"
+        self.port=5000
+        self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
         # Initialize MySQL connection
         self.conn = None
@@ -49,8 +39,8 @@ class apiHandler:
             self.app.logger.error(f"Error while connecting to MySQL: {e}")
             raise e
 
-        self.host = config['SERVER']['HOST']
-        self.port = config['SERVER']['PORT']
+        self.host = os.getenv("ADDRESS")
+        self.port = os.getenv("PORT")
 
         # Token configuration
         self.token_secret = self.app.config['SECRET_KEY']
