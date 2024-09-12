@@ -19,7 +19,10 @@ class apiHandler:
         self.auth = HTTPTokenAuth(scheme='Bearer')
         self.host="0.0.0.0"
         self.port=5000
+        self.app.logger.disabled=True
         self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+        if os.getenv('LOG') == "true":
+            self.app.logger.disabled=False
 
         # Initialize MySQL connection
         self.conn = None
@@ -263,7 +266,9 @@ class apiHandler:
                 return None
 
     def run(self):
-        logging.basicConfig(filename='/app/app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.disable(logging.CRITICAL)
+        if os.getenv('LOG') == 'true':
+            logging.basicConfig(filename='/app/app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         CORS(self.app)
         self.app.run(host=self.host, port=self.port, debug=True)
 
