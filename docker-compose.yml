@@ -5,10 +5,10 @@ services:
     image: mariadb:10.6
     container_name: db
     environment:
-      MYSQL_ROOT_PASSWORD: timt#123
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db/sql:/docker-entrypoint-initdb.d
@@ -18,7 +18,7 @@ services:
       context: ./build
       dockerfile: Dockerfile.angular
     container_name: angular
-    command: ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+    # command: ng serve --host 0.0.0.0 --port 4200 --disable-host-check
     restart: unless-stopped
     volumes:
       - ./web/timt:/app
@@ -43,6 +43,10 @@ services:
       - ./app:/app
     environment:
       CONFIG_PATH: /app/config.json
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
 
@@ -50,10 +54,8 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
     environment:
-      PMA_HOST: db
+      PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
-      # PMA_USER: myuser
-      # PMA_PASSWORD: mypassword
     restart: unless-stopped
     depends_on:
       - db

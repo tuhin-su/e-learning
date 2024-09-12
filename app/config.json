@@ -1,10 +1,4 @@
 {
-    "DATABASE": {
-        "HOST":"db",
-        "NAME":"mydatabase",
-        "USER":"myuser",
-        "PASSWORD":"mypassword"
-    },
     "SESSION": {
         "SECRET_KEY": "5VpBsh4WJJLtY9vRWmaV5oYuC0wKAJEoFmsMojRmwyiNyywaUo9ZABkUXaMKhL9YqkixRGUMwvBi17jjvVt9uqZKjtWsKg16ZLye"
     },

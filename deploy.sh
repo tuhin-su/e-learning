@@ -15,9 +15,9 @@ if [ "$MODE" != "production" ] && [ "$MODE" != "development" ]; then
 fi
 
 if [ "$MODE" == "production" ]; then
-  docker-compose up -d cloudflare-tunnel
+  docker compose up -d cloudflare-tunnel
   echo "Production mode is enabled"
 elif [ "$MODE" == "development" ]; then
-  docker-compose up -d angular
+  docker compose up -d angular
   echo "Development mode is enabled"
 fi

@@ -12,7 +12,7 @@ import hashlib
 import time
 import uuid
 from datetime import datetime, timedelta
-
+import os
 class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
@@ -32,15 +32,14 @@ class apiHandler:
         self.app.config['SECRET_KEY'] = config['SESSION']['SECRET_KEY']
 
         # Initialize MySQL connection
-        db_config = config['DATABASE']
         self.conn = None
         self.cursor = None
         try:
             self.conn = mysql.connector.connect(
-                host=db_config['HOST'], 
-                database=db_config['NAME'], 
-                user=db_config['USER'], 
-                password=db_config['PASSWORD']
+                host=os.getenv('DB_HOST'), 
+                database=os.getenv('DB_DATABASE'),
+                user=os.getenv('DB_USER'), 
+                password=os.getenv('DB_PASSWORD')
             )
             if self.conn.is_connected():
                 db_info = self.conn.get_server_info()

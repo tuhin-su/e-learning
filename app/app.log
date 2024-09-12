@@ -1053,3 +1053,36 @@
 2024-09-11 19:54:44,018 - INFO - 172.19.0.6 - - [11/Sep/2024 19:54:44] "OPTIONS /attendance HTTP/1.0" 200 -
 2024-09-11 19:54:44,022 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
 2024-09-11 19:54:44,025 - INFO - 172.19.0.6 - - [11/Sep/2024 19:54:44] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 19:56:15,537 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:15] "GET /ver HTTP/1.0" 200 -
+2024-09-11 19:56:20,645 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 19:56:20,646 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:20] "GET /location HTTP/1.0" 200 -
+2024-09-11 19:56:21,188 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:56:21,191 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:21] "PUT /attendance HTTP/1.0" 200 -
+2024-09-11 19:56:30,639 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:30] "GET /ver HTTP/1.0" 200 -
+2024-09-11 19:56:32,596 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 19:56:32,597 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:32] "GET /location HTTP/1.0" 200 -
+2024-09-11 19:56:33,175 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:56:33,177 - INFO - 172.19.0.6 - - [11/Sep/2024 19:56:33] "PUT /attendance HTTP/1.0" 200 -
+2024-09-11 19:57:01,064 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 logged in.
+2024-09-11 19:57:01,065 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:01] "POST /login HTTP/1.0" 200 -
+2024-09-11 19:57:01,617 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 19:57:01,618 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:01] "GET /location HTTP/1.0" 200 -
+2024-09-11 19:57:04,814 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:57:04,816 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:04] "GET /attendance HTTP/1.0" 200 -
+2024-09-11 19:57:25,709 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:25] "GET /ver HTTP/1.0" 200 -
+2024-09-11 19:57:41,523 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 logged in.
+2024-09-11 19:57:41,524 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:41] "POST /login HTTP/1.0" 200 -
+2024-09-11 19:57:42,064 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed location
+2024-09-11 19:57:42,066 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:42] "GET /location HTTP/1.0" 200 -
+2024-09-11 19:57:42,684 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:57:42,686 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:42] "PUT /attendance HTTP/1.0" 200 -
+2024-09-11 19:57:44,270 - INFO - User b0fad24760ae2153452c11b4b01c96984f86b79f7bf42ac4231b12d99da2c780 accessed attendance
+2024-09-11 19:57:44,272 - INFO - 172.19.0.6 - - [11/Sep/2024 19:57:44] "GET /attendance HTTP/1.0" 200 -
+2024-09-12 09:45:08,362 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.0.5:5000
+2024-09-12 09:45:08,364 - INFO - [33mPress CTRL+C to quit[0m
+2024-09-12 09:45:08,367 - INFO -  * Restarting with stat
+2024-09-12 09:45:08,688 - WARNING -  * Debugger is active!
+2024-09-12 09:45:08,690 - INFO -  * Debugger PIN: 140-896-061
