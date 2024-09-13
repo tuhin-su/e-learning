@@ -1,5 +1,26 @@
 #!/bin/bash
 
+# Check if the directory exists
+if [ -d "$HOME/e-learning" ]; then
+    # Navigate to the project directory
+    cd "$HOME/e-learning" || exit
+    
+    # Fetch the latest changes without merging
+    git fetch origin
+    
+    # Check the latest commit message on the remote repository for the "pull-server" keyword
+    if git log origin/main -1 --pretty=%B | grep -q "pull-server"; then
+        # Pull the changes if the keyword is found
+        git pull origin main
+    else
+        echo "No 'pull-server' keyword found in the latest commit."
+    fi
+else
+    echo "Directory ~/e-learning/ does not exist."
+fi
+
+
+
 # Load environment variables from .env file
 export $(grep -v '^#' .env | xargs)
 
@@ -17,9 +38,9 @@ fi
 # Function to run docker compose using the appropriate command
 run_docker_compose() {
   if command -v docker-compose &> /dev/null; then
-    docker-compose "$1" "$2" "$3"
+    docker-compose "$@"
   elif command -v docker &> /dev/null; then
-    docker compose "$1" "$2" "$3"
+    docker compose "$@"
   else
     echo "Neither 'docker-compose' nor 'docker compose' found"
     exit 1
@@ -29,8 +50,7 @@ run_docker_compose() {
 
 # Execute the appropriate action based on the MODE
 if [ "$MODE" == "production" ]; then
-  run_docker_compose
-  run_docker_compose stop angular
+  run_docker_compose up -d cloudflare-tunnel
   echo "Production mode is enabled"
 
 elif [ "$MODE" == "development" ]; then
