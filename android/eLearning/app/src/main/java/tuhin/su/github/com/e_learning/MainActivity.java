@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.CAMERA,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, LOCATION_PERMISSION_REQUEST_CODE);
-        }Q
+        }
     }
 
     @Override

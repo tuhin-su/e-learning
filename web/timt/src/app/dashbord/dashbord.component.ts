@@ -29,7 +29,19 @@ export class DashbordComponent implements OnInit {
   ngOnInit(): void {
     if (this.user) {
       this.user = JSON.parse(this.user);
-      this.attend();
+      let pddate = localStorage.getItem('presentDate');
+      if (pddate != null) {
+        const storedDate = new Date(pddate);
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        storedDate.setHours(0, 0, 0, 0);
+        if (currentDate.getTime() !== storedDate.getTime()) {
+          this.attend();
+        }else{
+          this.attend();
+        }
+      }
+
     }
     setTimeout(() => {
       if (this.user?.img && this.navImg) {
@@ -67,6 +79,8 @@ export class DashbordComponent implements OnInit {
   
           const distance = this.calculateDistance(currentLocation, this.storedLocation);
           if (this.distent != undefined && distance <= this.distent) {
+            const currentDate = new Date();
+            localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
             this.add();
           } else {
             Swal.fire({
@@ -153,32 +167,37 @@ export class DashbordComponent implements OnInit {
     }
   }
 
-  calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): number {
+  calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): string {
     // Convert degrees to radians
     const toRad = (value: number) => value * Math.PI / 180;
-
+  
     // Radius of the Earth in meters (6371 km)
     const R = 6371e3; // in meters
-
+  
     // Destructure latitude and longitude
     const φ1 = toRad(loc1.lat); // Latitude of point 1 (in radians)
     const φ2 = toRad(loc2.lat); // Latitude of point 2 (in radians)
-
+  
     const Δφ = toRad(loc2.lat - loc1.lat); // Difference in latitude (in radians)
     const Δλ = toRad(loc2.lng - loc1.lng); // Difference in longitude (in radians)
-
+  
     // Haversine formula
     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
               Math.cos(φ1) * Math.cos(φ2) *
               Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-
+  
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
+  
     // Distance in meters
-    const distance = R * c;
-
-    // Return distance in kilometers (divide by 1000)
-    return distance / 1000; // Convert to kilometers
-}
-
+    const distanceInMeters = R * c;
+  
+    // Check if distance is greater than or equal to 1000 meters
+    if (distanceInMeters >= 1000) {
+      // Return distance in kilometers
+      return (distanceInMeters / 1000).toFixed(2) + ' km';
+    } else {
+      // Return distance in meters
+      return distanceInMeters.toFixed(2) + ' meters';
+    }
+  }
 }

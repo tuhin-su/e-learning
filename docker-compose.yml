@@ -42,7 +42,7 @@ services:
     volumes:
       - ./app:/app
     environment:
-      CONFIG_PATH: /app/config.json
+      SECRET_KEY: ${SECRET_KEY}
       DB_HOST: ${DB_HOST}
       DB_DATABASE: ${DB_NAME}
       DB_USER: ${DB_USER}
