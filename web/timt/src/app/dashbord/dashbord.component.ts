@@ -78,7 +78,7 @@ export class DashbordComponent implements OnInit {
           };
   
           const distance = this.calculateDistance(currentLocation, this.storedLocation);
-          if (this.distent != undefined && distance <= this.distent) {
+          if (this.distent != undefined && distance <= String(this.distent)) {
             const currentDate = new Date();
             localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
             this.add();
