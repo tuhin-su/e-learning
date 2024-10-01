@@ -12,7 +12,7 @@ fi
 source .venv/bin/activate
 
 # Run your Python script if needed
-# python3 app.py
+python3 app.py
 
 # Sleep indefinitely
-sleep infinity
+# sleep infinity
