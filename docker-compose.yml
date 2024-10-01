@@ -37,7 +37,7 @@ services:
     working_dir: /app
     container_name: flask
     restart: unless-stopped
-    command: ["python", "app.py"]
+    command: ["bash", "run.sh"]
     volumes:
       - ./app:/app
     environment:
