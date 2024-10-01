@@ -3,7 +3,8 @@ dist/
 db_data/
 .venv
 .vscode/
-__pycache__
+*__pycache__
 .env
 *.log
 portainer_data/
+*.venv

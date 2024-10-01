@@ -33,9 +33,8 @@ services:
       - portainer
 
   flask:
-    build:
-      context: ./build
-      dockerfile: Dockerfile.flask
+    image: python:3.9-slim
+    working_dir: /app
     container_name: flask
     restart: unless-stopped
     command: ["python", "app.py"]
