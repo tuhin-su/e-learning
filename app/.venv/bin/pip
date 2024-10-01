@@ -1,4 +1,4 @@
-#!/home/tuhin/workplase/e-learning/app/.venv/bin/python
+#!/app/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

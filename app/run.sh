@@ -4,12 +4,11 @@
 if [ ! -d ".venv" ]; then
     pip install virtualenv
     python3 -m virtualenv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
 fi
 
 # Activate the virtual environment
 source .venv/bin/activate
+pip install -r requirements.txt
 
 # Run your Python script if needed
 python3 app.py

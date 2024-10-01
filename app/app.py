@@ -42,8 +42,11 @@ class apiHandler:
             self.app.logger.error(f"Error while connecting to MySQL: {e}")
             raise e
 
-        self.host = os.getenv("ADDRESS")
-        self.port = os.getenv("PORT")
+        if  os.getenv("ADDRESS"):
+            self.host = os.getenv("ADDRESS")
+            
+        if os.getenv("PORT"):
+            self.port = os.getenv("PORT")
 
         # Token configuration
         self.token_secret = self.app.config['SECRET_KEY']
