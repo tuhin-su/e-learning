@@ -1,0 +1,13 @@
+#!/bin/env
+run_docker_compose() {
+  if command -v docker-compose &> /dev/null; then
+    docker-compose "$@"
+  elif command -v docker &> /dev/null; then
+    docker compose "$@"
+  else
+    echo "Neither 'docker-compose' nor 'docker compose' found"
+    exit 1
+  fi
+}
+
+run_docker_compose $@

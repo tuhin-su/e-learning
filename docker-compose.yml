@@ -18,7 +18,7 @@ services:
       context: ./build
       dockerfile: Dockerfile.angular
     container_name: angular
-    command: bash run.sh
+    command: sh run.sh
     restart: unless-stopped
     volumes:
       - ./web/timt:/app
