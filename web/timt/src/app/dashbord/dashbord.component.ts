@@ -37,9 +37,9 @@ export class DashbordComponent implements OnInit {
         storedDate.setHours(0, 0, 0, 0);
         if (currentDate.getTime() !== storedDate.getTime()) {
           this.attend();
-        }else{
-          this.attend();
         }
+      }else{
+        this.attend()
       }
 
     }
