@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 import os
 
 ## IMPORT Blueprint
-from app.blueprint.version import version
+from blueprint.version.version import version
 
 class apiHandler:
     def __init__(self):
@@ -81,7 +81,12 @@ class apiHandler:
                 return None
 
     def create_app(self):
-        self.app.register_blueprint(version);
+        # @self.app.register_blueprint(version)
+        # self.app.register_blueprint(version)
+
+        @self.app.route('/ver', methods=['GET'])
+        def version():
+            return jsonify({"version": 0.1})
 
         @self.app.route('/login', methods=['POST'])
         def login():
