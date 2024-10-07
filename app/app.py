@@ -15,7 +15,8 @@ from datetime import datetime, timedelta
 import os
 
 ## IMPORT Blueprint
-from blueprint.version.version import version
+from app.blueprint.version import version
+
 class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
