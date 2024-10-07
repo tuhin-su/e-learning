@@ -1,35 +1,83 @@
-<div>
-    <div *ngIf="tableData"
-    class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
-    <table class="w-full text-left table-auto min-w-max">
-        <thead>
-        <tr>
-            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                Name
-            </p>
-            </th>
-            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                Date
-            </p>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of tableData">
-            <td class="p-4 border-b border-blue-gray-50">
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                {{ item.name }}
-            </p>
-            </td>
-            <td class="p-4 border-b border-blue-gray-50">
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                {{ item.attendance_date }}
-            </p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </div>  
-</div>
+
+    <nav class="block w-full max-w-screen-lg px-4 py-2 mx-auto bg-white shadow-md rounded-md lg:px-8 lg:py-3 mt-10">
+
+        <div class="hidden lg:block">
+            <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+                <li style="width: 25rem;" class="flex items-center p-1 text-sm gap-x-2 text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6 text-slate-500">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+
+                    <a href="#" class="flex items-center">
+                        Add friends
+                    </a>
+                </li>
+                <li>
+                    <div style="margin-left: 27rem;" class="items-center hidden gap-x-2 lg:flex">
+                        <div class="w-full max-w-sm min-w-[200px]">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor"
+                                    class="absolute w-5 h-5 top-2.5 left-2.5 text-slate-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                                <input type="text"
+                                    class="w-full pl-10 pr-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    placeholder="Type here..." />
+                            </div>
+                        </div>
+                        <button
+                            class="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button">
+                            Search
+                        </button>
+                    </div>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+
+        <div
+            class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+            <table style="width: 100%;" class="w-full text-left table-auto min-w-max">
+                <thead>
+                    <tr>
+                        <th class="p-4 border-b border-slate-300 bg-slate-50">
+                            <p class="block text-sm font-normal leading-none text-slate-500">
+                                Name
+                            </p>
+                        </th>
+
+                        <th class="p-4 border-b border-slate-300 bg-slate-50">
+                            <p class="block text-sm font-normal leading-none text-slate-500">
+                                Date
+                            </p>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-4 border-b border-blue-gray-50">
+                            <p
+                                class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                John Michael
+                            </p>
+                        </td>
+
+                        <td class="p-4 border-b border-blue-gray-50">
+                            <p
+                                class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                23/04/18
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
