@@ -13,6 +13,9 @@ import time
 import uuid
 from datetime import datetime, timedelta
 import os
+
+## IMPORT Blueprint
+from blueprint.version.version import version
 class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
@@ -77,9 +80,7 @@ class apiHandler:
                 return None
 
     def create_app(self):
-        @self.app.route('/ver', methods=['GET'])
-        def version():
-            return jsonify({"version": 0.1})
+        self.app.register_blueprint(version);
 
         @self.app.route('/login', methods=['POST'])
         def login():
