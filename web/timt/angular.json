@@ -33,7 +33,8 @@
               "./node_modules/sweetalert2/dist/sweetalert2.css"
             ],
             "scripts": [
-              "./node_modules/sweetalert2/dist/sweetalert2.js"
+              "./node_modules/sweetalert2/dist/sweetalert2.js",
+              "src/assets/config.js"
             ]
           },
           "configurations": {

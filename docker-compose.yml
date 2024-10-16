@@ -22,15 +22,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./web/timt:/app
+    environment:
+      - API_URL=${API_URL}
     working_dir: /app
     ports:
       - 4200:4200
-    depends_on:
-      - db
-      - flask
-      - phpmyadmin
-      - nginx
-      - portainer
 
   flask:
     image: python:3.9-slim
@@ -71,6 +67,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./web/timt/dist/timt:/usr/share/nginx/html
     depends_on:
+      - db
       - flask
       - phpmyadmin
       - portainer
