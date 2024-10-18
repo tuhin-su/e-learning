@@ -1,10 +1,4 @@
-<div *ngIf="loading$ | async" class="loading-overlay">
-    <div class="loading-spinner">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
+<div *ngIf="loading$ | async" class="loading-overlay flex justify-center align-middle">
+  <span class="loading loading-ring loading-lg text-primary"></span>
+</div>
   
