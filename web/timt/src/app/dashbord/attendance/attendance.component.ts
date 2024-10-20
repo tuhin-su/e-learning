@@ -15,10 +15,26 @@ export class AttendanceComponent implements OnInit {
   group?: any;
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
   tableData?:any;
+  months?:any
+  selectedMonth: string = '0';
 
   constructor(private service: AttendanceService) { }
 
   ngOnInit(): void {
+    this.months = [
+      { lable: "January", value: 1 },
+      { lable: "February",  value: 2 },
+      { lable: "March", value: 3 },
+      { lable: "April", value: 4 },
+      { lable: "May", value:5 },
+      { lable: "June", value: 6},
+      { lable: "July", value: 7},
+      { lable: "August", value: 8 },
+      { lable: "Septembe", value:9},
+      { lable: "October",value:10},
+      { lable: "November",value:11},
+      { lable: "December",value:12}
+    ]
     if (this.user) {
       this.user = JSON.parse(this.user);
       this.group = localStorage.getItem('group');
@@ -57,5 +73,9 @@ export class AttendanceComponent implements OnInit {
         console.log(res);
       }
     );
+  }
+
+  selectMonth() {
+    console.log(this.selectedMonth);
   }
 }
