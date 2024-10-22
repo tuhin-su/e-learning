@@ -27,7 +27,7 @@ class apiHandler:
         self.app.logger.disabled=True
         self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         self.bot =  Bot(os.getenv('BOT_KEY'), os.getenv('CHANNEL_ID'), os.getenv("SERVER_NAME"), os.getenv('BOT_ENABLE'))
-        
+        self.bot.send_message("Server Strated.")
         if os.getenv('LOG') == "true":
             self.app.logger.disabled=False
 
@@ -286,7 +286,6 @@ class apiHandler:
         self.bot.send_message("Server Stoped!")
 if __name__ == '__main__':
     app_instance = apiHandler()
-    app_instance.bot.send_message("Server Strated.")
     signal.signal(signal.SIGTERM, app_instance.stop)
     signal.signal(signal.SIGINT, app_instance.stop)
     signal.signal(signal.SIGHUP, app_instance.stop)
