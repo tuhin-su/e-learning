@@ -42,6 +42,10 @@ services:
       DB_DATABASE: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      SERVER_NAME: ${SERVER_NAME}
+      BOT_KEY: ${BOT_KEY}
+      CHANNEL_ID: ${CHANNEL_ID}
+      BOT_ENABLE: ${BOT_ENABLE}
     expose:
       - 5000
     depends_on:
