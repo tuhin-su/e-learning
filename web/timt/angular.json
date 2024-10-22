@@ -30,7 +30,8 @@
             "styles": [
               "./node_modules/aos/dist/aos.css",
               "src/styles.scss",
-              "./node_modules/sweetalert2/dist/sweetalert2.css"
+              "./node_modules/sweetalert2/dist/sweetalert2.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
               "./node_modules/sweetalert2/dist/sweetalert2.js",

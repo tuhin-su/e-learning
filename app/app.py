@@ -13,7 +13,8 @@ import time
 import uuid
 from datetime import datetime, timedelta
 import os
-
+from modules.bot import Bot
+import signal
 ## IMPORT Blueprint
 from blueprint.version.version import version_bp
 
@@ -25,6 +26,8 @@ class apiHandler:
         self.port=5000
         self.app.logger.disabled=True
         self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+        self.bot =  Bot(os.getenv('BOT_KEY'), os.getenv('CHANNEL_ID'), os.getenv("SERVER_NAME"), os.getenv('BOT_ENABLE'))
+        
         if os.getenv('LOG') == "true":
             self.app.logger.disabled=False
 
@@ -43,6 +46,7 @@ class apiHandler:
                 self.cursor = self.conn.cursor(dictionary=True)  # Use dictionary cursor to get column names
                 self.app.logger.info(f"Connected to MySQL database... MySQL Server version on {db_info}")
         except Error as e:
+            self.bot.send_message("Error while connecting to MySQL check logs for more information.")
             self.app.logger.error(f"Error while connecting to MySQL: {e}")
             raise e
 
@@ -70,6 +74,7 @@ class apiHandler:
         data_to_hash = unique_value + timestamp + username + groups + password
         unique_id = hashlib.sha256(data_to_hash.encode()).hexdigest()
         return unique_id
+    
     def getLabel(self,id):
         if id:
             query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
@@ -277,6 +282,15 @@ class apiHandler:
         CORS(self.app)
         self.app.run(host=self.host, port=self.port, debug=True)
 
+    def stop(self):
+        self.bot.send_message("Server Stoped!")
 if __name__ == '__main__':
     app_instance = apiHandler()
-    app_instance.run()
+    app_instance.bot.send_message("Server Strated.")
+    signal.signal(signal.SIGTERM, app_instance.stop)
+    signal.signal(signal.SIGINT, app_instance.stop)
+    signal.signal(signal.SIGHUP, app_instance.stop)
+    try:
+        app_instance.run()
+    except:
+        app_instance.stop()

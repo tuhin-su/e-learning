@@ -6,7 +6,7 @@ import { AdminComponent } from './admin/admin.component';
 import { ModuleModule } from '../modules/module.module';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { RouterModule, Routes } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   { path: 'attendance', component: AttendanceComponent },
 ];
@@ -21,6 +21,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     ModuleModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   providers: [],
