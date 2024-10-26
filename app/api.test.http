@@ -1,7 +1,11 @@
 @apiUrl = http://localhost/api
 
-### Create a new user
-POST {{ apiUrl }}/create_account
+### REQUEST VER
+GET {{ apiUrl }}/ver
+Content-Type: application/json
+
+### Create a new user by file
+POST {{ apiUrl }}/create_account 
 Content-Type: application/json
 Authorization: Bearer {{ token }}
 
@@ -15,7 +19,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "student_1",
+  "username": "stff@admin.in",
   "password": "passwd"
 }
 
@@ -25,9 +29,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "super@admin.in",
+  "username": "stff@admin.in",
   "password": "passwd",
-  "groups": "SU",
+  "groups": "FM",
   "ref": 0
 }
 
@@ -44,13 +48,6 @@ Content-Type: application/json
 }
 
 
-
-### Access secure data (after login)
-# @name secure_data
-@token = {{login.response.body.token}}
-GET {{ apiUrl }}/secure_data
-Authorization: Bearer {{ token }}
-
 ### Logout the current user
 POST {{ apiUrl }}/logout
 Content-Type: application/json
@@ -64,9 +61,7 @@ Content-Type: application/json
   "name": "jquery"
 }
 
-### REQUEST VER
-GET {{ apiUrl }}/ver
-Content-Type: application/json
+
 
 ### user_data
 # @name update_user_data
