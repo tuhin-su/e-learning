@@ -40,4 +40,3 @@ def app():
                 locations = app.cursor.fetchone()
                 return jsonify({"locations": locations}), 200
     return locationManagement()
-            
