@@ -10,8 +10,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./dashbord.component.scss']
 })
 export class DashbordComponent implements OnInit {
-  show: number = 1;
   user: any = localStorage.getItem('info');
+  lable: any = localStorage.getItem('lable')
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
   distent?:number;
   
@@ -19,14 +19,13 @@ export class DashbordComponent implements OnInit {
 
   @ViewChild('navImg') navImg!: ElementRef<HTMLImageElement>;
 
-  constructor(private router:Router,private service: AttendanceService) {
-    const num = localStorage.getItem('groups');
-    if(num){
-      this.show = parseInt(num, 10);
-    }
-   }
+  constructor(
+    private router:Router,
+    private service: AttendanceService
+  ) {}
 
   ngOnInit(): void {
+    console.log(this.lable)
     if (this.user) {
       this.user = JSON.parse(this.user);
       let pddate = localStorage.getItem('presentDate');
@@ -49,12 +48,13 @@ export class DashbordComponent implements OnInit {
       }
     }, 0);
   }
+
   setting(){
     this.router.navigate(['setting'])
   }
+
   notify(){
     this.router.navigate(['notify'])
-
   }
 
   // auto attend
