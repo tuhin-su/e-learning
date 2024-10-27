@@ -7,7 +7,6 @@ from flask import Flask, request, jsonify
 from flask_httpauth import HTTPTokenAuth
 from flask_cors import CORS
 import jwt
-from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
 import time
 import uuid
@@ -20,6 +19,7 @@ import signal
 from blueprint.version.version import version_bp
 from blueprint.attendance.attendance import attendance_bp
 from blueprint.login.login import login_bp
+from blueprint.static_users.static_users import static_user
 
 class apiHandler:
     def __init__(self):
@@ -83,29 +83,7 @@ class apiHandler:
         self.app.register_blueprint(version_bp) # version
         self.app.register_blueprint(login_bp) # login
         self.app.register_blueprint(attendance_bp) # attendance
-        
-       
-
-       
-        @self.app.route('/static_users', methods=['POST'])
-        def create_user_x():
-            data = request.json
-            username = data.get('username')
-            password = generate_password_hash(data.get('password'))
-            groups = data.get('groups')
-            ref = data.get('ref')
-            user_id = self.generate_unique_id(username, password, groups)
-
-            try:
-                query = "INSERT INTO user (id, email, passwd, groups, createBy) VALUES (%s, %s, %s, %s,%s)"
-                self.cursor.execute(query, (user_id, username, password, groups, ref))
-                self.conn.commit()
-                self.app.logger.info(f'Created new user: {username}')
-                return jsonify({"message": "User created"}), 201
-            except Error as e:
-                self.conn.rollback()
-                self.app.logger.error(f"Error creating user: {e}")
-                return jsonify({"message": str(e)}), 400
+        self.app.register_blueprint(static_user) # static user create
 
         @self.app.route('/user_info', methods=['POST', 'PUT'])
         @self.auth.login_required
