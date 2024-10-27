@@ -22,7 +22,7 @@ def attendance():
         try:
             if request.method == 'GET':
                 # Check if user has the necessary access
-                if app.getLabel(user_id['user_id']) >= 2:
+                if app.getLabel(user_id['user_id']) <= 2:
                     data = request.json
                     if not data:
                         return jsonify({"message": "No data provided"}), 400
