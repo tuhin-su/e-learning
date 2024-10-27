@@ -18,8 +18,9 @@ import signal
 ## IMPORT Blueprint
 from blueprint.version.version import version_bp
 from blueprint.attendance.attendance import attendance_bp
-from blueprint.login.login import login_bp
-from blueprint.static_users.static_users import static_user
+from blueprint.users.login.login import login_bp
+from blueprint.users.static_users.static_users import static_user
+from blueprint.users.user_info.user_info import user_info
 
 class apiHandler:
     def __init__(self):
@@ -84,44 +85,7 @@ class apiHandler:
         self.app.register_blueprint(login_bp) # login
         self.app.register_blueprint(attendance_bp) # attendance
         self.app.register_blueprint(static_user) # static user create
-
-        @self.app.route('/user_info', methods=['POST', 'PUT'])
-        @self.auth.login_required
-        def user_info():
-            user_id = self.auth.current_user()['user_id']
-            data = request.json
-
-            name = data.get('name')
-            phone = data.get('phone')
-            address = data.get('address')
-            gender = data.get('gender')
-            birth = data.get('dob')
-            img = data.get('img')
-
-            if request.method == 'POST':
-                query = """
-                    INSERT INTO user_info (user_id, name, phone, address, gender, birth, img)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s);
-                """
-                values = (user_id, name, phone, address, gender, birth, img)
-            elif request.method == 'PUT':
-                query = """
-                    UPDATE user_info
-                    SET name = %s, phone = %s, address = %s, gender = %s, birth = %s, img = %s
-                    WHERE user_id = %s;
-                """
-                values = (name, phone, address, gender, birth, img, user_id)
-            else:
-                return jsonify({"message": "Method not allowed"}), 405
-
-            try:
-                self.cursor.execute(query, values)
-                self.conn.commit()
-                return jsonify({"message": "User info updated"})
-            except Error as e:
-                self.conn.rollback()
-                self.app.logger.error(f"Error updating user info: {e}")
-                return jsonify({"message": str(e)}), 400
+        self.app.register_blueprint(user_info) # user info
         
         @self.app.route('/create_account', methods=['POST'])
         @self.auth.login_required
