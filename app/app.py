@@ -19,6 +19,7 @@ import signal
 ## IMPORT Blueprint
 from blueprint.version.version import version_bp
 from blueprint.attendance.attendance import attendance_bp
+from blueprint.login.login import login_bp
 
 class apiHandler:
     def __init__(self):
@@ -79,36 +80,13 @@ class apiHandler:
         return unique_id
     
     def create_app(self):
-        self.app.register_blueprint(version_bp)
-        self.app.register_blueprint(attendance_bp)
-
-        @self.app.route('/login', methods=['POST'])
-        def login():
-            data = request.json
-            username = data.get('username')
-            password = data.get('password')
-
-            query = "SELECT id, passwd, groups FROM user WHERE email = %s AND status = 0"
-            self.cursor.execute(query, (username,))
-            user = self.cursor.fetchone()
-            if user and check_password_hash(user['passwd'], password):
-                user_id = user['id']
-                response = {}
-                response['lable'] = str(self.getLabel(user_id))
-                query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE user_id = %s;"
-                self.cursor.execute(query, (user_id,))
-                user_info = self.cursor.fetchone()
-                if user_info:
-                    response['info'] = user_info
-                    
-                expiration = datetime.now() + self.token_expiration
-                token = jwt.encode({'user_id': user_id, 'groups': user['groups'], 'exp': expiration}, self.token_secret, algorithm='HS256')
-                response['token'] = token
-
-                self.app.logger.info(f'User {user_id} logged in.')
-                return jsonify(response)
-            return jsonify({"message": "Invalid credentials"}), 401
+        self.app.register_blueprint(version_bp) # version
+        self.app.register_blueprint(login_bp) # login
+        self.app.register_blueprint(attendance_bp) # attendance
         
+       
+
+       
         @self.app.route('/static_users', methods=['POST'])
         def create_user_x():
             data = request.json
@@ -224,7 +202,10 @@ class apiHandler:
             query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
             try:
                 self.cursor.execute(query, (id,))
-                return self.cursor.fetchone()['label']
+                rst = self.cursor.fetchone()
+                if rst != None:
+                    return rst['label']
+                print(rst)
             except mysql.connector.Error as e:
                 self.app.logger.error(e)
                 return None
