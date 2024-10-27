@@ -31,7 +31,7 @@ Content-Type: application/json
 {
   "username": "stff@admin.in",
   "password": "passwd",
-  "groups": "FM",
+  "groups": "2",
   "ref": 0
 }
 
