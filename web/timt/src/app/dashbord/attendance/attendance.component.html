@@ -51,16 +51,20 @@
 
 <!-- student -->
 <div *ngIf="lable == 10" class="flex flex-wrap h-full w-full">
-  <button class="btn btn-circle bg-transparent outline-none hover:bg-blue-500">
+  <button class="btn btn-circle bg-transparent outline-none hover:bg-blue-500" (click)="back();">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
   </button>
 
   <div class="flex w-full h-full flex-col place-items-center  ">
-    <div class="w-52 bg-black  h-36 place-items-center rounded-box my-24">content</div>
+    <!-- scanner box -->
+    <div class="w-52 h-52 bg-black place-items-center rounded-box my-24 my_shdow" id="camara">
 
-    <div class="flex items-center gap-3">
+    </div>
+
+    <!-- usercard -->
+    <div class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md">
 
       <div class="avatar">
         <div class="mask mask-squircle h-12 w-12">
@@ -71,19 +75,18 @@
       <div>
         <div class="font-bold text-white">Madhumita rana</div>
         <div class="text-sm opacity-50 text-white">21201222008</div>
-
       </div>
 
-      <div class="tooltip m-6 text-white" data-tip="Give Attendance">
+      <div class="tooltip my-6 ml-4 text-white" data-tip="Give Attendance">
         <button class="btn btn-outline btn-info "><i class="bi bi-person-check text-2xl"></i></button>
       </div>
 
     </div>
 
-
+    <!-- myatt btn -->
     <div class="m-14">
-      <button class="btn btn-outline btn-info">
-        <i class="bi bi-person-raised-hand text-2xl"></i> My Attendance</button>
+      <button class="btn btn-outline btn-info disabled" (click)="attend();" [disabled]="attAble">
+        <i class="bi bi-person-raised-hand text-2xl"></i>{{ attAble ? "Attendance alrady given" : "Give Attendance" }}</button>
     </div>
 
   </div>

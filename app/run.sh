@@ -12,6 +12,4 @@ pip install -r requirements.txt
 
 # Run your Python script if needed
 python3 app.py
-
-# Sleep indefinitely
 # sleep infinity

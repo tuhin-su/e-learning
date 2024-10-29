@@ -22,7 +22,7 @@ def attendance():
         try:
             if request.method == 'GET':
                 # Check if user has the necessary access
-                if app.getLabel(user_id['user_id']) <= 2:
+                if app.getLabel(user_id['user_id']) <= 2: # for admin and staff
                     data = request.json
                     if not data:
                         return jsonify({"message": "No data provided"}), 400
@@ -51,8 +51,8 @@ def attendance():
                         SELECT ui.name, a.attendance_date 
                         FROM user_info ui 
                         JOIN attends a ON ui.user_id = a.user_id 
-                        WHERE ui.user_id = %s 
-                        LIMIT 10;
+                        WHERE ui.user_id = %s AND a.attendance_date_only =  CURDATE()
+                        LIMIT 1;
                     """
                     app.cursor.execute(query, (user_id['user_id'],))
                     record = app.cursor.fetchall()
