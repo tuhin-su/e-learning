@@ -2,10 +2,6 @@ FROM node:lts-alpine
 
 ARG HOST_UID
 
-RUN apk add chromium \
-  && apk add git \
-  && apk update \
-  && apk upgrade
 ENV CHROME_BIN='/usr/bin/chromium-browser'
 
 RUN deluser --remove-home node \

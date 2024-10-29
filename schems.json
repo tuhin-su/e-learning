@@ -33,7 +33,8 @@
         "nullable": false
       },
       "createBy": {
-        "type": "INT",
+        "type": "VARCHAR",
+        "length":255,
         "nullable": false
       }
     }

@@ -31,7 +31,7 @@ Content-Type: application/json
 {
   "username": "stff@admin.in",
   "password": "passwd",
-  "groups": "2",
+  "groups": "FA",
   "ref": 0
 }
 
@@ -42,9 +42,10 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student",
-  "password": "stedunt",
-  "groups": "ST"
+  "username": "student@admin.in",
+  "password": "passwd",
+  "groups": "ST",
+  "ref": "1197c6924f4e11d1003b3681a483088a3a491ce2bf90e928e9f935756b3f8829"
 }
 
 

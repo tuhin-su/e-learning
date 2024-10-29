@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `createDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     `groups` VARCHAR(255) DEFAULT NULL,
     `status` INT DEFAULT 0 NOT NULL,
-    `createBy` INT NOT NULL,
+    `createBy` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 );
 

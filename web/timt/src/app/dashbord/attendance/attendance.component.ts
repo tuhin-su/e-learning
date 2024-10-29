@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class AttendanceComponent implements OnInit {
   success: boolean = false;
   user: any = localStorage.getItem('info');
-  group?: any;
+  lable?: any;
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
   tableData?:any;
   months?:any
@@ -35,10 +35,11 @@ export class AttendanceComponent implements OnInit {
       { lable: "November",value:11},
       { lable: "December",value:12}
     ]
+
     if (this.user) {
       this.user = JSON.parse(this.user);
-      this.group = localStorage.getItem('group');
-      if (this.group == 1) {
+      this.lable = localStorage.getItem('lable');
+      if (this.lable == 10) {
         this.myatt();
       }
     }
@@ -67,6 +68,7 @@ export class AttendanceComponent implements OnInit {
       )
     ));
   }
+
   async getAllStudents(data: any) {
     this.service.getAllStudent(data).subscribe(
       (res)=>{

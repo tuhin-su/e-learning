@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (response.token && response.lable) {
             localStorage.setItem('token', response.token);
             localStorage.setItem('lable', response.lable);
-            console.log("Localstorage set")
+            // console.log("Localstorage set")
             if (response.info) {
                 localStorage.setItem('info',JSON.stringify(response.info))
                 this.router.navigate(['/']);
