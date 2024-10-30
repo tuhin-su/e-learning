@@ -27,7 +27,9 @@ services:
       - 4200:4200
 
   flask:
-    image: python:3.9-slim
+    build:
+      context: ./build
+      dockerfile: Dockerfile.flask
     working_dir: /app
     container_name: flask
     restart: unless-stopped
