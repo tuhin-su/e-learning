@@ -26,6 +26,11 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   attAble:boolean=true;
   months?:any
   selectedMonth: string = '0';
+  semester?:any;
+  selectedsem: string ='0';
+  stream?:any;
+  selectedstream: string = "0";
+  
   msg="";
   distent?:number;
   faceSignature: string | null = null;
@@ -54,6 +59,27 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       { lable: "October",value:10},
       { lable: "November",value:11},
       { lable: "December",value:12}
+    ]
+
+    this.semester = [
+      { lable: "First sem", value: 1 },
+      { lable: "Second sem",  value: 2 },
+      { lable: "Third sem", value: 3 },
+      { lable: "Fourth sem", value: 4 },
+      { lable: "Fifth sem", value:5 },
+      { lable: "six sem", value: 6},
+      { lable: "Seven sem", value: 7},
+      { lable: "Eight sem", value: 8 },
+      
+    ]
+
+
+    this.stream = [
+      { lable: "BCA", value: 1 },
+      { lable: "BBA",  value: 2 },
+      { lable: "BHM", value: 3 },
+      { lable: "MSC", value: 4 },
+      
     ]
 
     if (this.user) {
@@ -136,6 +162,15 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   back(){
     this.location.back();
   }
+
+  selectsem(){
+    console.log(this.selectedsem);
+  }
+
+  selectstream(){
+    console.log(this.selectedstream);
+  }  
+  
   // facemath
   matchAndGive(){
     console.log("Face Signature:", this.faceSignature);

@@ -1,5 +1,5 @@
-<!-- Staff and admin -->
-<div *ngIf="lable == 1 || lable == 2" class="flex flex-wrap h-full w-full">
+<!-- Staff and admin    *ngIf="lable == 1 || lable == 2" -->
+<div *ngIf="lable == 1 || lable == 2"  class="flex flex-wrap h-full w-full">
   <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full">
     <button class="btn btn-square btn-ghost bg-transparent border-none">
       <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
@@ -7,21 +7,33 @@
     <div class="flex-1">
       <i class="bi bi-person-hearts text-white btn btn-ghost text-3xl" title="Add friend"></i>
     </div>
-    
+
     <div class="flex-none">
-
-
       <label class="form-control w-fit">
         <select class="select select-bordered" [(ngModel)]="selectedMonth" (change)="selectMonth();">
           <option disabled selected value="0">Months</option>
           <option *ngFor="let month of months" [value]="month.value">{{ month.lable }}</option>
         </select>
-        
-        
       </label>
+
+      <label class="form-control w-fit m-3">
+        <select class="select select-bordered" [(ngModel)]="selectedstream" (change)="selectstream();">
+          <option disabled selected value="0">Stream</option>
+          <option *ngFor="let s of stream" [value]="s.value">{{ s.lable }}</option>
+        </select>
+      </label>
+  
+
+
+        <label class="form-control w-fit m-3">
+          <select class="select select-bordered" [(ngModel)]="selectedsem" (change)="selectsem();">
+            <option disabled selected value="0">Semester</option>
+            <option *ngFor="let sem of semester" [value]="sem.value">{{ sem.lable }}</option>
+          </select>
+        </label>
     </div>
 
-    
+
   </div>
 
   <!-- Scrollable table container -->
@@ -39,7 +51,19 @@
           <tbody>
             <tr class="hover:bg-blue-500">
               <th>1</th>
-              <td>Cy Ganderton</td>
+              <td><div class="flex items-center gap-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle h-12 w-12">
+                    <img
+                      src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                      alt="Avatar Tailwind CSS Component" />
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold">Hart Hagerty</div>
+                  <div class="text-sm opacity-50">232424255</div>
+                </div>
+              </div></td>
               <td>12/16/2020</td>
             </tr>
           </tbody>
@@ -49,7 +73,7 @@
   </div>
 </div>
 
-<!-- student -->
+<!-- student   *ngIf="lable == 10" -->
 <div *ngIf="lable == 10" class="flex flex-wrap h-full w-full">
   <button class="btn btn-circle bg-transparent outline-none hover:bg-blue-500" (click)="back();">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,13 +83,18 @@
 
   <div class="flex w-full h-full flex-col place-items-center  ">
     <!-- scanner box -->
-    <div class="w-52 h-52 bg-black place-items-center rounded-box my-24 my_shdow overflow-hidden outline outline-[#647bfd7a] relative">
+    <div
+      class="w-52 h-52 bg-black place-items-center rounded-box  my_shdow overflow-hidden outline outline-[#647bfd7a] relative">
       <video #video autoplay class="rounded-box" width="100%" height="100%"></video>
-      <canvas #overlay style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 100%; width: 100%;"></canvas>
+      <canvas #overlay
+        style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 100%; width: 100%;"></canvas>
     </div>
+    <button class="btn btn-outline btn-info m-4">
+      <i class="bi bi-arrow-clockwise text-2xl"></i>
+    </button>
 
     <!-- usercard -->
-    <div class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md">
+    <div class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md m-5">
 
       <div class="avatar">
         <div class="mask mask-squircle h-12 w-12">
@@ -87,7 +116,10 @@
     <!-- myatt btn -->
     <div class="m-14">
       <button class="btn btn-outline btn-info disabled" (click)="attend();" [disabled]="attAble">
-        <i class="bi bi-person-raised-hand text-2xl"></i>{{ attAble ? "Attendance alrady given" : "Give Attendance" }}</button>
+        <i class="bi bi-person-raised-hand text-2xl"></i>{{ attAble ? "Attendance alrady given" : "Give Attendance"
+        }}</button>
+        
+
     </div>
 
   </div>
