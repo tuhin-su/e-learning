@@ -36,6 +36,11 @@
             "scripts": [
               "./node_modules/sweetalert2/dist/sweetalert2.js",
               "src/assets/config.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "face-api.js",
+              "@tensorflow/tfjs-core",
+              "sweetalert2"
             ]
           },
           "configurations": {
@@ -43,8 +48,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",

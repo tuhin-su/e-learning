@@ -25,6 +25,7 @@
     "cordova": "^12.0.0",
     "daisyui": "^4.12.13",
     "dotenv": "^16.4.5",
+    "face-api.js": "^0.22.2",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.14.0",
     "tslib": "^2.3.0",

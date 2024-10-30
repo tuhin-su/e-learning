@@ -1,16 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AttendanceService } from 'src/service/attendance/attendance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { flush } from '@angular/core/testing';
+import { FaceRecognitionService } from 'src/service/FaceRecognitionService/face-recognition.service';
+import { AfterViewInit } from '@angular/core';
+import * as faceapi from 'face-api.js';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.scss']
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent implements OnInit, AfterViewInit {
+  @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
+  @ViewChild('overlay') overlayRef!: ElementRef<HTMLCanvasElement>;
+
+  faceSignacture: string | null = null;
+  detectionInterval:any;
+
   success: boolean = false;
   user: any = localStorage.getItem('info');
   lable?: any;
@@ -20,13 +28,19 @@ export class AttendanceComponent implements OnInit {
   selectedMonth: string = '0';
   msg="";
   distent?:number;
+  faceSignature: string | null = null;
+  oldfaceSignature: string | null = null;
+  enableReset:boolean = false;
 
   constructor(
     private service: AttendanceService, 
     private location: Location,
-    private attService: AttendanceService) { }
+    private attService: AttendanceService,
+    private faceRecognitionService: FaceRecognitionService
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.faceRecognitionService.loadModels();
     this.months = [
       { lable: "January", value: 1 },
       { lable: "February",  value: 2 },
@@ -46,7 +60,6 @@ export class AttendanceComponent implements OnInit {
       this.user = JSON.parse(this.user);
       this.lable = localStorage.getItem('lable');
       if (this.lable == 10) {
-
         let pddate = localStorage.getItem('presentDate');
         if (pddate != null) {
           const storedDate = new Date(pddate);
@@ -62,6 +75,51 @@ export class AttendanceComponent implements OnInit {
       }
     }
   }
+  ngAfterViewInit() {
+    this.startVideo();
+  }
+
+
+  startVideo(){
+    navigator.mediaDevices.getUserMedia({ video: true }).then(
+      stream => {
+        this.videoRef.nativeElement.srcObject = stream;
+        this.startDetection();
+      }
+    ).catch(err => {
+      console.log(err);
+    });
+  }
+  async startDetection() {
+    const video = this.videoRef.nativeElement;
+    const overlay = this.overlayRef.nativeElement;
+    const displaySize = { width: video.width, height: video.height };
+
+    faceapi.matchDimensions(overlay, displaySize);
+
+    this.detectionInterval = setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks();
+
+        const ctx = overlay.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+            const resizedDetections = faceapi.resizeResults(detections, displaySize);
+            faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
+
+            if (detections.length > 0) {
+                const bestFace = detections[0];
+                const landmarks = bestFace.landmarks.positions;
+                this.faceSignature = btoa(JSON.stringify(landmarks));
+                if (this.oldfaceSignature != this.faceSignacture) {
+                  this.enableReset=true;
+                  this.matchAndGive();
+                }
+            }
+        }
+    }, 100);
+}
 
   async getAllStudents(data: any) {
     this.service.getAllStudent(data).subscribe(
@@ -78,7 +136,11 @@ export class AttendanceComponent implements OnInit {
   back(){
     this.location.back();
   }
-
+  // facemath
+  matchAndGive(){
+    console.log("Face Signature:", this.faceSignature);
+    // this.oldfaceSignature=null;
+  }
   // auto attend
   async attend() {
     await firstValueFrom(this.service.getDefualt().pipe(
@@ -238,5 +300,9 @@ export class AttendanceComponent implements OnInit {
       // Return distance in meters
       return distanceInMeters.toFixed(2) + ' meters';
     }
+  }
+
+  reset(){
+    this.oldfaceSignature=null;
   }
 }

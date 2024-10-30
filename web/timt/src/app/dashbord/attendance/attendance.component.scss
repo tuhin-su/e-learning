@@ -40,3 +40,9 @@
 .my_shdow{
     box-shadow: rgba(16, 122, 243, 0.05) 0px 0px 0px 1px, rgba(1, 92, 228, 0.541) 0px 0px 0px 1px inset;
 }
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
