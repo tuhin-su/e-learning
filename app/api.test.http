@@ -113,3 +113,13 @@ Authorization: Bearer {{ token }}
   "sem": 4,
   "stream": "BCA"
 }
+
+#### Attendens by face /attendance/face
+# @name att_by_face
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/attendance/face
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+{
+  "sem":"d"
+}

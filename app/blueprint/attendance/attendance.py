@@ -85,3 +85,11 @@ def attendance():
             current_app.logger.error(f"Database error: {e}")
             return jsonify({"message": "An error occurred while processing your request"}), 500
     return hendel_att()
+
+@attendance_bp.route('/attendance/face', methods=['GET', 'PUT'])
+def attFace():
+    app = current_app.config["app"]
+    @app.auth.login_required
+    def heandel():
+        return request.json
+    return heandel()
