@@ -92,6 +92,29 @@ def attendance():
             return jsonify({"message": "An error occurred while processing your request"}), 500
     return hendel_att()
 
+@attendance_bp.route('/attendance/comeHaven', methods=['POST'])
+def attGive():
+    app = current_app.config["app"]
+    @app.auth.login_required
+    def heandel():
+        data = request.json
+        if not data["id"]:
+            return jsonify({"message": "No data provided"}), 400
+        
+        sql = "INSERT INTO attends (user_id, attendance_date, attendance_date_only)VALUES (%s, NOW(), CURDATE())"
+        try:
+            app.cursor.execute(sql, (data["id"],))
+            app.conn.commit()
+            return jsonify({"message": "Attendance recorded"}), 200
+        except mysql.connector.errors.IntegrityError as e:
+            if e.errno == 1062:
+                return jsonify({"message": "Attendance already recorded"}), 200
+            return jsonify({"message": str(e)}), 400
+
+
+    
+    return heandel()
+
 @attendance_bp.route('/attendance/face', methods=['POST'])
 def attFace():
     app = current_app.config["app"]
@@ -115,7 +138,7 @@ def attFace():
         
 
         # select all user img from user_info
-        sql = """SELECT * FROM user_info u JOIN student s ON u.user_id = s.id WHERE s.id != %s AND course = %s AND semester = %s AND u.img IS NOT NULL;"""    
+        sql = """SELECT u.user_id, u.img,u.name,s.roll FROM user_info u JOIN student s ON u.user_id = s.id WHERE s.id != %s AND course = %s AND semester = %s AND u.img IS NOT NULL;"""    
         app.cursor.execute(sql, (user_id, result['course'], result['semester']))
         result = app.cursor.fetchall()
 
@@ -147,7 +170,7 @@ def attFace():
             result = face_recognition.compare_faces([img1_encoding[0]], img2_encoding[0])
 
             if result:
-                return jsonify({"res": i}),200
+                return jsonify(i),200
             else:
                 return jsonify({"res":"No face matched plese update face data or tray agen"}),400
             

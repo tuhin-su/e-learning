@@ -7,23 +7,23 @@ import { Location } from '@angular/common';
 import { FaceRecognitionService } from 'src/service/FaceRecognitionService/face-recognition.service';
 import { AfterViewInit } from '@angular/core';
 import * as faceapi from 'face-api.js';
+import { OnDestroy } from '@angular/core';
+
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.scss']
 })
-export class AttendanceComponent implements OnInit, AfterViewInit {
+export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('overlay') overlayRef!: ElementRef<HTMLCanvasElement>;
-
-  faceSignacture: string | null = null;
   detectionInterval:any;
 
   success: boolean = false;
   user: any = localStorage.getItem('info');
   lable?: any;
   storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
-  attAble:boolean=true;
+  attAble:boolean=false;
   months?:any
   selectedMonth: string = '0';
   semester?:any;
@@ -36,12 +36,20 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   alradyDetected: boolean = false;
   enableReset:boolean = false;
 
+  currentStream:any
+  giveUser:any = undefined;
+
+
   constructor(
     private service: AttendanceService, 
     private location: Location,
     private attService: AttendanceService,
     private faceRecognitionService: FaceRecognitionService
   ) { }
+  ngOnDestroy(): void {
+    clearInterval(this.detectionInterval);
+    this.releaseStream();
+  }
 
   async ngOnInit() {
     await this.faceRecognitionService.loadModels();
@@ -92,28 +100,40 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
           currentDate.setHours(0, 0, 0, 0);
           storedDate.setHours(0, 0, 0, 0);
           if (currentDate.getTime() !== storedDate.getTime()) {
-            this.attend();
+            this.attAble=true;
           }
         }else{
-          this.attend();
+          this.attAble=true;
+          console.log(this.attAble)
         }
       }
     }
   }
+
   ngAfterViewInit() {
     this.startVideo();
   }
 
 
   startVideo(){
+    this.releaseStream();
     navigator.mediaDevices.getUserMedia({ video: true }).then(
       stream => {
         this.videoRef.nativeElement.srcObject = stream;
         this.startDetection();
+        this.currentStream = stream;
       }
     ).catch(err => {
       console.log(err);
     });
+  }
+
+  releaseStream() {
+    if (this.currentStream) {
+      this.currentStream.getTracks().forEach((track: { stop: () => any; }) => track.stop());
+      this.videoRef.nativeElement.srcObject = null; // Detach the stream from the video element
+      this.currentStream = null;
+    }
   }
 
   async startDetection() {
@@ -131,15 +151,14 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       if (ctx) {
         ctx.clearRect(0, 0, overlay.width, overlay.height);
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
-        faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
+        // faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
   
         if (detections.length > 0) {
           const bestFace = detections[0];
           if (!this.alradyDetected) {
             this.alradyDetected = true;
-            this.captureFaceImage(video); // Capture the image for the best face found
-          clearInterval(this.detectionInterval); // Stop detection after capturing the image
-          // this.videoRef.srcObject.getTracks().forEach(track => track.stop());
+            this.captureFaceImage(video);
+            clearInterval(this.detectionInterval);
           }
         }
       }
@@ -162,7 +181,12 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
    await firstValueFrom(this.attService.getStudentByface(base64Image).pipe(
       tap(
         (res)=>{
-          console.log(res);
+          if(res){
+            this.giveUser = res
+          }
+        },
+        (error)=>{
+          console.log(error)
         }
       )
    ))
@@ -222,8 +246,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
               
                       const distance = this.calculateDistance(currentLocation, this.storedLocation);
                       if (this.distent != undefined && distance <= String(this.distent)) {
-                        const currentDate = new Date();
-                        localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
                         this.add();
                       } else {
                         Swal.fire({
@@ -304,6 +326,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'OK'
                 });
+              const currentDate = new Date();
+              localStorage.setItem('presentDate', currentDate.toISOString());
               this.attAble=false
             }
           }
@@ -358,5 +382,117 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   reset(){
     this.alradyDetected=false;
     this.startDetection();
+  }
+
+  async giveTOHaven(){
+    if (this.giveUser.user_id != null) {
+      if (navigator.geolocation) {
+        await firstValueFrom(this.attService.getLocation().pipe(
+          tap(position => {
+            this.storedLocation = {
+              lat: position.locations.lat,
+              lng: position.locations.lon
+            };
+            this.distent = position.locations.distend;
+          })
+        ));
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const currentLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+    
+            const distance = this.calculateDistance(currentLocation, this.storedLocation);
+            if (this.distent != undefined && distance <= String(this.distent)) {
+              const currentDate = new Date();
+              localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
+              /// give att
+              await firstValueFrom(this.attService.sendHaven(this.giveUser.user_id).pipe(
+                tap(
+                  (response) => {
+                    if (response.message) {
+                      Swal.fire({
+                        title: 'TIMT SAY',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                      });
+                      this.giveUser=undefined;
+                    }else{
+                      Swal.fire({
+                        title: 'TIMT SAY',
+                        text: "Error updating attendance. Please try again.",
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                      });
+                    }
+                  },
+                  (error)=>{
+                    Swal.fire({
+                      title: 'TIMT SAY',
+                      text: "Error updating attendance. Please try again.",
+                      icon: 'error',
+                      confirmButtonColor: '#3085d6',
+                      confirmButtonText: 'OK'
+                    });
+                  }
+                )
+              ))
+            } else {
+              Swal.fire({
+                title: 'TIMT SAY',
+                text: "You are too far from the collage location.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+                });
+            }
+          },
+          (error) => {
+            
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                
+                this.msg = "Permission denied. Please allow location access.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                this.msg = "Location information is unavailable.";
+                break;
+              case error.TIMEOUT:
+                this.msg = "Location request timed out.";
+                break;
+              default:
+                this.msg = "An unknown error occurred.";
+                break;
+            }
+            Swal.fire({
+              title: 'TIMT SAY',
+              text: this.msg,
+              icon: 'warning',
+              confirmButtonColor: '#1474f5',
+              confirmButtonText: 'OK'
+              });
+          },
+          {
+            enableHighAccuracy: true, // Use GPS accuracy
+            timeout: 10000, // Wait for 10 seconds
+            maximumAge: 0 // Do not use cached location
+          }
+        );
+      } else {
+        Swal.fire({
+          title: 'TIMT SAY',
+          text: "Geolocation is not supported by this browser.",
+          icon: 'warning',
+          confirmButtonColor: '#1474f5',
+          confirmButtonText: 'OK'
+          });
+      }
+    }
   }
 }
