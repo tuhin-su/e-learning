@@ -94,29 +94,29 @@
     </button>
 
     <!-- usercard -->
-    <div class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md m-5">
+    <div *ngIf="giveUser" class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md m-5">
 
       <div class="avatar">
         <div class="mask mask-squircle h-12 w-12">
-          <img src="https://img.daisyui.com/images/profile/demo/5@94.webp" alt="Avatar Tailwind CSS Component" />
+          <img [src]="giveUser.img" alt="Avatar Tailwind CSS Component" />
         </div>
       </div>
 
       <div>
-        <div class="font-bold text-white">Madhumita rana</div>
-        <div class="text-sm opacity-50 text-white">21201222008</div>
+        <div class="font-bold text-white">{{giveUser.name}}</div>
+        <div class="text-sm opacity-50 text-white">{{giveUser.roll}}</div>
       </div>
 
       <div class="tooltip my-6 ml-4 text-white" data-tip="Give Attendance">
-        <button class="btn btn-outline btn-info "><i class="bi bi-person-check text-2xl"></i></button>
+        <button class="btn btn-outline btn-info "><i class="bi bi-person-check text-2xl" (click)="giveTOHaven();"></i></button>
       </div>
 
     </div>
 
     <!-- myatt btn -->
     <div class="m-14">
-      <button class="btn btn-outline btn-info disabled" (click)="attend();" [disabled]="attAble">
-        <i class="bi bi-person-raised-hand text-2xl"></i>{{ attAble ? "Attendance alrady given" : "Give Attendance"
+      <button class="btn btn-outline btn-info disabled" (click)="attend();" [disabled]="!attAble">
+        <i class="bi bi-person-raised-hand text-2xl"></i>{{ !attAble ? "Attendance alrady given" : "Give Attendance"
         }}</button>
         
 

@@ -85,5 +85,21 @@ export class AttendanceService {
 
     return this.http.post<any>(`${this.apiUrl}/attendance/face`, body, { headers });
   }
+
+  sendHaven(id:string){
+    const attendanceUrl = `${this.apiUrl}/attendance/comeHaven`;
+
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+
+    const body = {
+      id: id 
+    };
+
+    return this.http.post<any>(`${attendanceUrl}`, body, { headers });
+  }
     
 }
