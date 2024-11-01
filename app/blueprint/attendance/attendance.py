@@ -1,5 +1,11 @@
 from flask import Blueprint, jsonify, request, current_app
 import mysql.connector
+from flask import request, jsonify
+import base64
+import face_recognition
+import io
+import base64
+
 
 try:
     from rich import print
@@ -86,10 +92,65 @@ def attendance():
             return jsonify({"message": "An error occurred while processing your request"}), 500
     return hendel_att()
 
-@attendance_bp.route('/attendance/face', methods=['GET', 'PUT'])
+@attendance_bp.route('/attendance/face', methods=['POST'])
 def attFace():
     app = current_app.config["app"]
     @app.auth.login_required
     def heandel():
-        return request.json
+        user_id = app.auth.current_user()['user_id']
+        data = request.json
+
+        image_b64 = data.get('image')
+        if not image_b64:
+            return jsonify({'error': 'No image provided'}), 400
+
+        
+        #  get curent user info
+        sql = "SELECT `course`,`semester` FROM `student` WHERE `id` = %s;"
+        app.cursor.execute(sql, (user_id, ))
+        result = app.cursor.fetchone()
+
+        if not result:
+            return jsonify({'error': 'Invalid Login'}), 404
+        
+
+        # select all user img from user_info
+        sql = """SELECT * FROM user_info u JOIN student s ON u.user_id = s.id WHERE s.id != %s AND course = %s AND semester = %s AND u.img IS NOT NULL;"""    
+        app.cursor.execute(sql, (user_id, result['course'], result['semester']))
+        result = app.cursor.fetchall()
+
+
+        if not result:
+            return jsonify({'error': f'Invalid sql query {result}'}), 404
+    
+        for i in result:
+            img_data = i['img']
+            
+            if img_data is None:
+                continue
+            
+            if img_data.startswith("data:image"):
+                img_data = img_data.split(",")[1]
+
+            if image_b64.startswith("data:image"):
+                image_b64 = img_data.split(",")[1]
+
+            img1_array = face_recognition.load_image_file(io.BytesIO(base64.b64decode(image_b64)))
+            img2_array = face_recognition.load_image_file(io.BytesIO(base64.b64decode(img_data)))
+
+            img1_encoding = face_recognition.face_encodings(img1_array)
+            img2_encoding = face_recognition.face_encodings(img2_array)
+
+            if not img1_encoding or not img2_encoding:
+                return jsonify({"res":"Could not detect a face in one of the images."})
+
+            result = face_recognition.compare_faces([img1_encoding[0]], img2_encoding[0])
+
+            if result:
+                return jsonify({"res": i}),200
+            else:
+                return jsonify({"res":"No face matched plese update face data or tray agen"}),400
+            
+        return jsonify({'error': 'Invalid data'}), 400
+
     return heandel()

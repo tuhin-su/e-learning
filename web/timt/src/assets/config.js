@@ -1,5 +1,5 @@
 (function (window) {
     window.env = window.env || {};
-    window.env.apiUrl = 'https://devs.timt.in/api'; // 'API_URL'
+    window.env.apiUrl = 'http://localhost/api'; // 'API_URL'
   })(this);
   
