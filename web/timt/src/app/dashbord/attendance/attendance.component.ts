@@ -33,8 +33,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   
   msg="";
   distent?:number;
-  faceSignature: string | null = null;
-  oldfaceSignature: string | null = null;
+  alradyDetected: boolean = false;
   enableReset:boolean = false;
 
   constructor(
@@ -116,36 +115,60 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       console.log(err);
     });
   }
+
   async startDetection() {
     const video = this.videoRef.nativeElement;
     const overlay = this.overlayRef.nativeElement;
     const displaySize = { width: video.width, height: video.height };
-
+  
     faceapi.matchDimensions(overlay, displaySize);
-
+  
     this.detectionInterval = setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-            .withFaceLandmarks();
-
-        const ctx = overlay.getContext('2d');
-        if (ctx) {
-            ctx.clearRect(0, 0, overlay.width, overlay.height);
-
-            const resizedDetections = faceapi.resizeResults(detections, displaySize);
-            faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
-
-            if (detections.length > 0) {
-                const bestFace = detections[0];
-                const landmarks = bestFace.landmarks.positions;
-                this.faceSignature = btoa(JSON.stringify(landmarks));
-                if (this.oldfaceSignature != this.faceSignacture) {
-                  this.enableReset=true;
-                  this.matchAndGive();
-                }
-            }
+      const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks();
+  
+      const ctx = overlay.getContext('2d');
+      if (ctx) {
+        ctx.clearRect(0, 0, overlay.width, overlay.height);
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
+  
+        if (detections.length > 0) {
+          const bestFace = detections[0];
+          if (!this.alradyDetected) {
+            this.alradyDetected = true;
+            this.captureFaceImage(video); // Capture the image for the best face found
+          clearInterval(this.detectionInterval); // Stop detection after capturing the image
+          // this.videoRef.srcObject.getTracks().forEach(track => track.stop());
+          }
         }
+      }
     }, 100);
-}
+  }
+  
+  captureFaceImage(video: HTMLVideoElement) {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const base64Image = canvas.toDataURL('image/jpeg').split(',')[1]; // Remove the header if needed
+      this.sendImageToBackend(base64Image);
+    }
+  }
+  
+ async sendImageToBackend(base64Image: string) {
+   await firstValueFrom(this.attService.getStudentByface(base64Image).pipe(
+      tap(
+        (res)=>{
+          console.log(res);
+        }
+      )
+   ))
+  }
+  
+
 
   async getAllStudents(data: any) {
     this.service.getAllStudent(data).subscribe(
@@ -171,11 +194,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     console.log(this.selectedstream);
   }  
   
-  // facemath
-  matchAndGive(){
-    console.log("Face Signature:", this.faceSignature);
-    // this.oldfaceSignature=null;
-  }
   // auto attend
   async attend() {
     await firstValueFrom(this.service.getDefualt().pipe(
@@ -338,6 +356,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   }
 
   reset(){
-    this.oldfaceSignature=null;
+    this.alradyDetected=false;
+    this.startDetection();
   }
 }

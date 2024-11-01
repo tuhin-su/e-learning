@@ -70,4 +70,20 @@ export class AttendanceService {
     return this.http.post<any>(attendanceUrl, data, { headers });
   }
 
+  getStudentByface(data: any) {
+    const attendanceUrl = `${this.apiUrl}/attendance/face`;
+
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+
+    const body = {
+      image: data // The base64 image data
+    };
+
+    return this.http.post<any>(`${this.apiUrl}/attendance/face`, body, { headers });
+  }
+    
 }

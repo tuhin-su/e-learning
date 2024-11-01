@@ -42,7 +42,7 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student@admin.in",
+  "username": "student_three@admin.in",
   "password": "passwd",
   "groups": "ST",
   "ref": "1197c6924f4e11d1003b3681a483088a3a491ce2bf90e928e9f935756b3f8829"
@@ -72,7 +72,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "name": "João Souza Silva",
+  "name": "João Souza Silva tow",
   "phone": "3121286800",
   "address": "Rua Inexistente, 2000",
   "gender": "M",
@@ -117,9 +117,10 @@ Authorization: Bearer {{ token }}
 #### Attendens by face /attendance/face
 # @name att_by_face
 @token = {{login.response.body.token}}
-GET {{ apiUrl }}/attendance/face
+POST {{ apiUrl }}/attendance/face
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
 {
-  "sem":"d"
+  "image" : "f"
 }

@@ -89,7 +89,7 @@
       <canvas #overlay
         style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 100%; width: 100%;"></canvas>
     </div>
-    <button class="btn btn-outline btn-info m-4">
+    <button *ngIf="alradyDetected" class="btn btn-outline btn-info m-4" (click)="reset();">
       <i class="bi bi-arrow-clockwise text-2xl"></i>
     </button>
 
