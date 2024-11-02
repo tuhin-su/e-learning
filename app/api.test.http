@@ -19,7 +19,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "student@admin.in",
+  "username": "stff@admin.in",
   "password": "passwd"
 }
 
@@ -110,9 +110,11 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "sem": 4,
-  "stream": "BCA"
+    "sem": "2",
+    "stream": "BCA",
+    "month": "1"
 }
+
 
 #### Attendens by face /attendance/face
 # @name att_by_face

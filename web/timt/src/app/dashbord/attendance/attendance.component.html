@@ -4,11 +4,11 @@
     <button class="btn btn-square btn-ghost bg-transparent border-none">
       <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
     </button>
-    <div class="flex-1">
+    <!-- <div class="flex-1">
       <i class="bi bi-person-hearts text-white btn btn-ghost text-3xl" title="Add friend"></i>
-    </div>
+    </div> -->
 
-    <div class="flex-none">
+    <div style="position: absolute; right: 2px;">
       <label class="form-control w-fit">
         <select class="select select-bordered" [(ngModel)]="selectedMonth" (change)="selectMonth();">
           <option disabled selected value="0">Months</option>
@@ -16,7 +16,7 @@
         </select>
       </label>
 
-      <label class="form-control w-fit m-3">
+      <label *ngIf="selectedMonth != '0'" class="form-control w-fit m-3">
         <select class="select select-bordered" [(ngModel)]="selectedstream" (change)="selectstream();">
           <option disabled selected value="0">Stream</option>
           <option *ngFor="let s of stream" [value]="s.value">{{ s.lable }}</option>
@@ -25,47 +25,56 @@
   
 
 
-        <label class="form-control w-fit m-3">
+        <label *ngIf="selectedstream != '0'" class="form-control w-fit m-3">
           <select class="select select-bordered" [(ngModel)]="selectedsem" (change)="selectsem();">
             <option disabled selected value="0">Semester</option>
             <option *ngFor="let sem of semester" [value]="sem.value">{{ sem.lable }}</option>
           </select>
         </label>
     </div>
-
-
   </div>
 
+  <div *ngIf="!usersList" style="display: flex; justify-content: center; align-items: center;" class="w-full h-full">
+    <h1 *ngIf="selectedMonth=='0'">Selecet Month</h1>
+    <h1 *ngIf="selectedstream == '0' && selectedMonth !='0'">Selecet Stream</h1>
+    <h1 *ngIf="selectedMonth != '0' && selectedstream != '0' && selectedsem == '0'">Selecet semester</h1>
+
+  </div>
   <!-- Scrollable table container -->
-  <div class="overflow-x-hidden" style="position: absolute; top: 70px; left: 0; right: 0; bottom: 0;">
+  <div *ngIf="usersList" class="overflow-x-hidden" style="position: absolute; top: 70px; left: 0; right: 0; bottom: 0;">
     <div class="w-full h-full overflow-hidden">
       <div class="overflow-y-auto" style="max-height: calc(100vh - 70px);">
         <table class="table table-xs text-center w-full">
           <thead class="sticky top-0 bg-[#042f4b]">
             <tr class="h-45px  hover:bg-slate-500 text-white text-lg">
-              <th></th>
               <th>Name</th>
               <th>Attendance Date</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="hover:bg-blue-500">
-              <th>1</th>
+
+            <tr *ngFor="let user of usersList" class="hover:bg-blue-500">
               <td><div class="flex items-center gap-3">
                 <div class="avatar">
                   <div class="mask mask-squircle h-12 w-12">
-                    <img
-                      src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                    <img *ngIf="user.img == ''"
+                      src="/assets/imgs/user-286-512.png"
                       alt="Avatar Tailwind CSS Component" />
+                    
+                    <img *ngIf="user.img != ''"
+                      [src]="user.img"
+                      alt="profile img" />
+
                   </div>
                 </div>
                 <div>
-                  <div class="font-bold">Hart Hagerty</div>
-                  <div class="text-sm opacity-50">232424255</div>
+                  <div class="font-bold">{{user.name}}</div>
+                  <div class="text-sm opacity-50">{{ user.roll }}</div>
                 </div>
               </div></td>
               <td>12/16/2020</td>
             </tr>
+
           </tbody>
         </table>
       </div>
