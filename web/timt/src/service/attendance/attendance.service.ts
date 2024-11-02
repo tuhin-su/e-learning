@@ -35,17 +35,7 @@ export class AttendanceService {
       'Authorization': token ? `Bearer ${token}` : ''
     });
 
-    // Create HttpParams from the provided params object
-    if (params) {
-      let httpParams = new HttpParams();
-      for (const key in params) {
-        if (params.hasOwnProperty(key)) {
-          httpParams = httpParams.set(key, params[key]);
-        }
-      }
-      return this.http.get<any>(attendanceUrl, { headers, params: httpParams });
-    }
-    return this.http.get<any>(attendanceUrl, { headers });
+    return this.http.post<any>(attendanceUrl, params, { headers });
   }
 
   addAttendance(){
@@ -59,7 +49,7 @@ export class AttendanceService {
     return this.http.put<any>(attendanceUrl, {}, { headers });
   }
 
-  getAllStudent(data:{stream:string, sem:Number}){
+  getAllStudent(data:{stream:string, sem:string, month: string}){
     const attendanceUrl = `${this.apiUrl}/attendance`;
 
     const token = this.getToken();

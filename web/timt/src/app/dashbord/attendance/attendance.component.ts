@@ -28,7 +28,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedMonth: string = '0';
   semester?:any;
   selectedsem: string ='0';
-  stream?:any;
+  stream?:any = undefined;
   selectedstream: string = "0";
   
   msg="";
@@ -38,6 +38,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
   currentStream:any
   giveUser:any = undefined;
+  usersList?: any[];
 
 
   constructor(
@@ -82,10 +83,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     this.stream = [
-      { lable: "BCA", value: 1 },
-      { lable: "BBA",  value: 2 },
-      { lable: "BHM", value: 3 },
-      { lable: "MSC", value: 4 },
+      { lable: "BCA", value: "BCA" },
+      { lable: "BBA",  value: "BBA" },
+      { lable: "BHM", value: "BHM" },
+      { lable: "MSC", value: "MSC" },
       
     ]
 
@@ -104,7 +105,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }else{
           this.attAble=true;
-          console.log(this.attAble)
         }
       }
     }
@@ -194,16 +194,27 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   
 
 
-  async getAllStudents(data: any) {
+  async getAllStudents() {
+    if (this.selectedMonth == '0' || this.selectedsem == '0' || this.selectedstream == '0') {
+      return
+    }
+
+    const data = {
+      sem: this.selectedsem,
+      stream: this.selectedstream,
+      month: this.selectedMonth,
+    }
     this.service.getAllStudent(data).subscribe(
       (res)=>{
-        console.log(res);
+        if (res.attendance) {
+          this.usersList = res.attendance;
+        }
       }
     );
   }
 
   selectMonth() {
-    console.log(this.selectedMonth);
+    this.getAllStudents();
   }
 
   back(){
@@ -211,11 +222,12 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectsem(){
-    console.log(this.selectedsem);
+
+    this.getAllStudents();
   }
 
   selectstream(){
-    console.log(this.selectedstream);
+    this.getAllStudents();
   }  
   
   // auto attend
@@ -300,10 +312,12 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                     });
                 }
 
+              }else{
+                const currentDate = new Date();
+                localStorage.setItem('presentDate', currentDate.toISOString());
+                this.attAble= false;
               }
-              const currentDate = new Date();
-              localStorage.setItem('presentDate', currentDate.toISOString());
-              this.attAble= false;
+             
             }
           }
         }

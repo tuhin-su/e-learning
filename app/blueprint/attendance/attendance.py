@@ -15,7 +15,7 @@ except:
 attendance_bp = Blueprint("Attendance", __name__)
 
 
-@attendance_bp.route('/attendance', methods=['GET', 'PUT'])
+@attendance_bp.route('/attendance', methods=['POST', 'PUT'])
 def attendance():
     app = current_app.config["app"]
     
@@ -26,7 +26,7 @@ def attendance():
 
 
         try:
-            if request.method == 'GET':
+            if request.method == 'POST':
                 # Check if user has the necessary access
                 if app.getLabel(user_id['user_id']) <= 2: # for admin and staff
                     data = request.json
@@ -41,7 +41,7 @@ def attendance():
                         return jsonify({"message": "Stream and semester are required"}), 400
 
                     query = """
-                        SELECT a.id AS attend_id, a.user_id, u.name AS user_name, a.attendance_date 
+                        SELECT a.id AS attend_id, a.user_id, u.name AS name, a.attendance_date, u.img, s.roll 
                         FROM attends a 
                         JOIN user_info u ON a.user_id = u.user_id 
                         JOIN student s ON u.user_id = s.id 
