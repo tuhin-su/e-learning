@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
+import { getToken } from 'src/app/utils/global-functions';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,14 +11,11 @@ export class AttendanceService {
 
   constructor(private http: HttpClient) { }
 
-  private getToken(): string | null {
-    return localStorage.getItem('token');
-  }
 
   getLocation() {
     const attendanceUrl = `${this.apiUrl}/location`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
@@ -29,7 +26,7 @@ export class AttendanceService {
   getDefualt(params: any = null) {
     const attendanceUrl = `${this.apiUrl}/attendance`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
@@ -41,7 +38,7 @@ export class AttendanceService {
   addAttendance(){
     const attendanceUrl = `${this.apiUrl}/attendance`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
@@ -52,7 +49,7 @@ export class AttendanceService {
   getAllStudent(data:{stream:string, sem:string, month: string}){
     const attendanceUrl = `${this.apiUrl}/attendance`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
@@ -63,7 +60,7 @@ export class AttendanceService {
   getStudentByface(data: any) {
     const attendanceUrl = `${this.apiUrl}/attendance/face`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
@@ -79,7 +76,7 @@ export class AttendanceService {
   sendHaven(id:string){
     const attendanceUrl = `${this.apiUrl}/attendance/comeHaven`;
 
-    const token = this.getToken();
+    const token = getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''

@@ -1,8 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AttendanceService } from 'src/service/attendance/attendance.service';
-import Swal from 'sweetalert2';
+import { showErrorAlert,showSuccessAlert,showWarningAlert } from 'src/app/utils/global-functions';
 import { Location } from '@angular/common';
 import { FaceRecognitionService } from 'src/service/FaceRecognitionService/face-recognition.service';
 import { AfterViewInit } from '@angular/core';
@@ -93,7 +92,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.user) {
       this.user = JSON.parse(this.user);
       this.lable = localStorage.getItem('lable');
-      if (this.lable == 10) {
+      if (this.lable == 3) {
         let pddate = localStorage.getItem('presentDate');
         if (pddate != null) {
           const storedDate = new Date(pddate);
@@ -186,7 +185,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
         (error)=>{
-          console.log(error)
+          showErrorAlert(error.error.massage)
+          this.back();
         }
       )
    ))
@@ -260,15 +260,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                       if (this.distent != undefined && distance <= String(this.distent)) {
                         this.add();
                       } else {
-                        Swal.fire({
-                          title: 'TIMT SAY',
-                          text: "You are too far from the collage location.",
-                          icon: 'error',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'OK'
-                          });
+                        showErrorAlert("You are too far from the collage location.")
                       }
                     },
                     (error) => {
@@ -288,13 +280,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                           this.msg = "An unknown error occurred.";
                           break;
                       }
-                      Swal.fire({
-                        title: 'TIMT SAY',
-                        text: this.msg,
-                        icon: 'warning',
-                        confirmButtonColor: '#1474f5',
-                        confirmButtonText: 'OK'
-                        });
+                      showErrorAlert(this.msg);
                     },
                     {
                       enableHighAccuracy: true, // Use GPS accuracy
@@ -303,13 +289,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                   );
                 } else {
-                  Swal.fire({
-                    title: 'TIMT SAY',
-                    text: "Geolocation is not supported by this browser.",
-                    icon: 'warning',
-                    confirmButtonColor: '#1474f5',
-                    confirmButtonText: 'OK'
-                    });
+                  showWarningAlert("Geolocation is not supported by this browser.");
                 }
 
               }else{
@@ -331,15 +311,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
         tap(
           (response) => {
             if (!response.message) {
-              Swal.fire({
-                title: 'TIMT SAY',
-                text: "Attendees Update successfully!",
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'OK'
-                });
+              showSuccessAlert("Attendees Update successfully!");
               const currentDate = new Date();
               localStorage.setItem('presentDate', currentDate.toISOString());
               this.attAble=false
@@ -348,14 +320,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       ));
     } catch (error) {
-      Swal.fire({
-        title: 'TIMT SAY',
-        text: "Error updating attendance. Please try again.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
-        }); 
+      showErrorAlert("Error updating attendance. Please try again.");
     }
   }
 
@@ -426,45 +391,19 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                 tap(
                   (response) => {
                     if (response.message) {
-                      Swal.fire({
-                        title: 'TIMT SAY',
-                        text: response.message,
-                        icon: 'success',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                      });
+                      showSuccessAlert(response.message);
                       this.giveUser=undefined;
                     }else{
-                      Swal.fire({
-                        title: 'TIMT SAY',
-                        text: "Error updating attendance. Please try again.",
-                        icon: 'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                      });
+                      showErrorAlert("Error updating attendance. Please try again.");
                     }
                   },
                   (error)=>{
-                    Swal.fire({
-                      title: 'TIMT SAY',
-                      text: "Error updating attendance. Please try again.",
-                      icon: 'error',
-                      confirmButtonColor: '#3085d6',
-                      confirmButtonText: 'OK'
-                    });
+                    showErrorAlert("Error updating attendance. Please try again.");
                   }
                 )
               ))
             } else {
-              Swal.fire({
-                title: 'TIMT SAY',
-                text: "You are too far from the collage location.",
-                icon: 'error',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'OK'
-                });
+              showErrorAlert("You are too far from the collage location.");
             }
           },
           (error) => {
@@ -484,13 +423,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.msg = "An unknown error occurred.";
                 break;
             }
-            Swal.fire({
-              title: 'TIMT SAY',
-              text: this.msg,
-              icon: 'warning',
-              confirmButtonColor: '#1474f5',
-              confirmButtonText: 'OK'
-              });
+            showWarningAlert(this.msg);
           },
           {
             enableHighAccuracy: true, // Use GPS accuracy
@@ -499,13 +432,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         );
       } else {
-        Swal.fire({
-          title: 'TIMT SAY',
-          text: "Geolocation is not supported by this browser.",
-          icon: 'warning',
-          confirmButtonColor: '#1474f5',
-          confirmButtonText: 'OK'
-          });
+        showWarningAlert("Geolocation is not supported by this browser.");
       }
     }
   }

@@ -57,6 +57,7 @@ services:
     environment:
       PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
+      PMA_ABSOLUTE_URI: "/dba"
     restart: unless-stopped
     depends_on:
       - db

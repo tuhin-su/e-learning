@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/service/login/login.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-
+import { showErrorAlert,showSuccessAlert,showWarningAlert } from '../utils/global-functions';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (response.info) {
                 localStorage.setItem('info',JSON.stringify(response.info))
                 this.router.navigate(['/']);
+                showSuccessAlert("Login successful");
             }
             else{
               this.router.navigate(['/me_data']);
@@ -64,10 +65,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         },
         (error: any) => {
+          showErrorAlert(error.error.message);
           this.errorMessage = 'Login failed';
         }
       );
     } else {
+      showWarningAlert('Please fill all the fields');
       this.errorMessage = 'Form is invalid';
     }
   }

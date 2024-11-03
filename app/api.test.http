@@ -4,22 +4,13 @@
 GET {{ apiUrl }}/ver
 Content-Type: application/json
 
-### Create a new user by file
-POST {{ apiUrl }}/create_account 
-Content-Type: application/json
-Authorization: Bearer {{ token }}
-
-{
-  "data": "data"
-}
-
 ### Login with the created user
 # @name login
 POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "stff@admin.in",
+  "username": "student@admin.in",
   "password": "passwd"
 }
 
@@ -29,10 +20,10 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "stff@admin.in",
+  "username": "su@admin.in",
   "password": "passwd",
-  "groups": "FA",
-  "ref": 0
+  "groups": "SU",
+  "ref": "0"
 }
 
 ### student account
@@ -42,7 +33,7 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student_three@admin.in",
+  "username": "student_@admin.in",
   "password": "passwd",
   "groups": "ST",
   "ref": "1197c6924f4e11d1003b3681a483088a3a491ce2bf90e928e9f935756b3f8829"
@@ -126,3 +117,55 @@ Authorization: Bearer {{ token }}
 {
   "image" : "f"
 }
+
+#### classes
+# @name Classes
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/classes
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "id" : "someting"
+}
+
+#### STudent
+#### add student
+# @name student
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/student
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "id":"5dbf5e71cadcffdc933f726341ce7252ec20ddf2608d018e2fea351f1efdb037",
+  "roll":"2002",
+  "reg":"23001",
+  "course":"1",
+  "semester":"4"
+}
+
+#### POSTS
+# @name posts
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/posts
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "file":"5dbf5e71cadcffdc933f726341ce7252ec20ddf2608d018e2fea351f1efdb037"
+}
+
+#### NOTICE
+# @name noticeBord
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/notice
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+#### GET ALL Classes
+# @name Classes
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/classes
+Content-Type: application/json
+Authorization: Bearer {{ token }}

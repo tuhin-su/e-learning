@@ -1,0 +1,45 @@
+<div *ngIf="data" class="card bg-base-100 w-full card-css m-2">
+    <div class="card-body">
+      <div class="w-full flex relative" style="align-items: center;">
+        <div class="avatar">
+          <div class="mask mask-hexagon h-24">
+            <img class="h-24" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+          </div>
+        </div>
+        <div class="m-2">
+          <h1 class="card-title">{{ host.name }}</h1>
+          <h2>***</h2>
+        </div>
+        <div class="absolute right-0">
+          <i class="bi bi-share mr-4 active:text-secondary text-2xl"></i>
+          <i class="bi bi-pencil-square mr-1  active:text-secondary text-2xl"></i>              
+        </div>
+      </div>
+    </div>
+    <figure class="h-[150px]">
+      <img class="h-max"
+        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+        alt="Shoes" />
+    </figure>
+    <div class="card-body text-black">
+      <h2 class="card-title">
+        {{ data.title }}
+        <div class="badge badge-primary">NEW</div>
+      </h2>
+      <p>{{ data.description }}</p>
+    </div>
+    <!-- buttom batch -->
+    <div class="card-actions justify-center">
+      <div class="btn-group">
+        <button class="btn" (click)="like('no');">
+          <i *ngIf="!liked" class="bi bi-balloon-heart text-2xl"></i>
+          <i *ngIf="liked" class="bi bi-balloon-heart-fill text-red-600 text-2xl"></i>
+          200 Like
+        </button>
+        <button class="btn ml-2">
+          <i class="bi bi-chat-dots-fill text-2xl"></i>
+          Comment
+        </button>
+      </div>
+    </div>
+  </div>

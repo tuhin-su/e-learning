@@ -7,22 +7,21 @@ import { getToken } from 'src/app/utils/global-functions';
 @Injectable({
   providedIn: 'root'
 })
-export class UserInfomationService {
-  private apiUrl = environment.apiUrl; // Get the API URL from the environment configuration
+export class PostService {
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
+  
+  getPost(id: number) {}
 
-  // Define the method for logging in
-  postInfo(data: any): Observable<any> {
-    const userData = `${this.apiUrl}/user_info`;
-
-    // Get the token and set the headers
+  postPost(FileData:File): Observable<any>{
     const token = getToken();
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': token ? `Bearer ${token}` : ''
     });
-    // Make the POST request with the headers
-    return this.http.post<any>(userData, data, { headers });
+
+    const formData = new FormData();
+    formData.append('file', FileData);
+    return this.http.post<{ id: number }>(this.apiUrl+'/posts', formData, { headers });
   }
 }

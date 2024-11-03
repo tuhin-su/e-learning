@@ -16,6 +16,10 @@ export class AppCardComponent implements OnInit {
   }
 
   clickBtn(){
+    // check this link have https:// then redirate this url
+    if (this.link?.startsWith("https://")){
+      window.location.href = this.link;
+    }
     if (this.link) {
       this.router.navigate([this.link])
     }

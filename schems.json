@@ -117,7 +117,8 @@
   "course": {
     "columns": {
       "id": {
-        "type": "VARCHAR",
+        "type": "INT",
+        "auto_increment":true,
         "length": 255,
         "primary_key": true,
         "nullable": false
@@ -187,6 +188,47 @@
       }
     }
   },
+  "posts_data":{
+    "columns":{
+      "id":{
+        "type":"INT",
+        "primary_key":true,
+        "auto_increment":true,
+        "nullable":false
+      },
+      "content":{
+        "type":"LONGBLOB",
+        "nullable":true
+      },
+      "content_name":{
+        "type":"VARCHAR",
+        "length":255,
+        "nullable":true
+      },
+      "content_type":{
+        "type":"VARCHAR",
+        "length":255,
+        "nullable":true
+      },
+      "content_size":{
+        "type":"INT",
+        "nullable":false,
+        "default":0
+      },
+      "createBy":{
+        "type":"VARCHAR",
+        "nullable":false,
+        "foreign_key":{
+          "references":"user(id)"
+        }
+      },
+      "createDate":{
+        "type":"TIMESTAMP",
+        "default":"CURRENT_TIMESTAMP",
+        "nullable":false
+      }
+    }
+  },
   "classes": {
     "columns": {
       "id": {
@@ -203,14 +245,89 @@
           "references": "user(id)"
         }
       },
+      "title":{
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false
+      },
+      "stream": {
+        "type": "INT",
+        "nullable": false,
+        "foreign_key": {
+          "references": "course(id)"
+        }
+      },
+      "semester": {
+        "type": "INT",
+        "nullable": false
+      },
+      "description": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
       "createDate": {
         "type": "TIMESTAMP",
         "default": "CURRENT_TIMESTAMP",
         "nullable": false
       },
-      "content": {
+      "content_id": {
         "type": "INT",
-        "nullable": true
+        "nullable": false,
+        "default": 0,
+        "foreign_key": {
+          "references": "posts_data(id)"
+        }
+      }
+    }
+  },
+  "class_comment": {
+    "id": {
+      "type": "INT",
+      "primary_key": true,
+      "auto_increment": true,
+      "nullable": false
+    },
+    "class_id": {
+      "type": "INT",
+      "nullable": true,
+      "foreign_key": {
+        "references": "classes(id)"
+      }
+    },
+    "user_id": {
+      "type": "VARCHAR",
+      "length": 255,
+      "nullable": true,
+      "foreign_key": {
+        "references": "user(id)"
+      }
+    },
+    "comment": {
+      "type": "VARCHAR",
+      "length": 255,
+      "nullable": true
+    }
+  },
+  "class_likes": {
+    "id": {
+      "type": "INT",
+      "primary_key": true,
+      "auto_increment": true,
+    },
+    "class_id": {
+      "type": "INT",
+      "nullable": true,
+      "foreign_key": {
+        "references": "classes(id)"
+      }
+    },
+    "user_id": {
+      "type": "VARCHAR",
+      "length": 255,
+      "nullable": true,
+      "foreign_key": {
+        "references": "user(id)"
       }
     }
   },
@@ -244,25 +361,6 @@
       }
     }
   },
-  "class_content": {
-    "columns": {
-      "id": {
-        "type": "INT",
-        "primary_key": true,
-        "auto_increment": true,
-        "nullable": false
-      },
-      "content": {
-        "type": "TEXT",
-        "nullable": true
-      },
-      "date": {
-        "type": "TIMESTAMP",
-        "default": "CURRENT_TIMESTAMP",
-        "nullable": false
-      }
-    }
-  },
   "student": {
     "columns": {
       "id": {
@@ -283,9 +381,12 @@
         "nullable": true
       },
       "course": {
-        "type": "VARCHAR",
+        "type": "INT",
         "length": 255,
-        "nullable": true
+        "nullable": true,
+        "foreign_key": {
+          "references": "course(id)"
+        }
       },
       "semester": {
         "type": "INT",
@@ -294,7 +395,7 @@
       "status": {
         "type": "INT",
         "default": 0,
-        "nullable": false
+        "nullable": true
       },
       "reg_by": {
         "type": "VARCHAR",

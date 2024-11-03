@@ -125,7 +125,7 @@ def attFace():
 
         image_b64 = data.get('image')
         if not image_b64:
-            return jsonify({'error': 'No image provided'}), 400
+            return jsonify({'massage': 'No image provided'}), 400
 
         
         #  get curent user info
@@ -134,7 +134,7 @@ def attFace():
         result = app.cursor.fetchone()
 
         if not result:
-            return jsonify({'error': 'Invalid Login'}), 404
+            return jsonify({'massage': 'Only Student allow to give attendance'}), 404
         
 
         # select all user img from user_info
@@ -144,7 +144,7 @@ def attFace():
 
 
         if not result:
-            return jsonify({'error': f'Invalid sql query {result}'}), 404
+            return jsonify({'massage': f'Invalid sql query {result}'}), 404
     
         for i in result:
             img_data = i['img']
@@ -174,6 +174,6 @@ def attFace():
             else:
                 return jsonify({"res":"No face matched plese update face data or tray agen"}),400
             
-        return jsonify({'error': 'Invalid data'}), 400
+        return jsonify({'massage': 'Invalid data'}), 400
 
     return heandel()
