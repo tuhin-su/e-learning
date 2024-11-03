@@ -1,8 +1,63 @@
-<div class="flex flex-wrap h-full w-full">
-    <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full">
+<div class="flex flex-wrap h-full w-full" style="justify-content: center;">
+  <!-- navbar -->
+    <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full z-10">
       <button class="btn btn-square btn-ghost bg-transparent border-none">
         <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
       </button>
+
+      <button class="btn bg-white absolute right-3 text-blue-500">
+        <i class="bi bi-patch-plus-fill text-blue-500 text-3xl"></i>
+        Create Class
+      </button>
+
     </div>
     <!-- codes -->
+     <!-- cardes -->
+     <div class="w-full absolute top-[70px] p-4" style="bottom: 10px;">
+      <div class="divider divider-primary">Classes List</div>
+      <div class="w-full h-full pt-2 relative overflow-scroll">
+
+        <div class="card bg-base-100 w-full card-css m-2">
+          <div class="card-body">
+            <div class="w-full flex relative" style="align-items: center;">
+              <div class="avatar">
+                <div class="mask mask-hexagon h-24">
+                  <img class="h-24" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
+              </div>
+              <div class="m-2">
+                <h1 class="card-title">Techer name</h1>
+                <h2>***</h2>
+              </div>
+              <div class="absolute right-0">
+                <i class="bi bi-share mr-4 active:text-secondary text-2xl"></i>
+                <i class="bi bi-pencil-square mr-1  active:text-secondary text-2xl"></i>              
+              </div>
+            </div>
+          </div>
+          <figure>
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+              alt="Shoes" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">
+              Shoes!
+              <div class="badge badge-primary">NEW</div>
+            </h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+          </div>
+        </div>
+  
+  
+        <!-- next page -->
+        <div class="w-full flex justify-center">
+          <div class="join mt-2">
+            <button class="join-item btn">«</button>
+            <button class="join-item btn">Page 1</button>
+            <button class="join-item btn">»</button>
+          </div>
+        </div>
+      </div>
+     </div>
 </div>
