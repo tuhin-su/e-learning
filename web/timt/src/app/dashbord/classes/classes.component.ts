@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./classes.component.scss']
 })
 export class ClassesComponent implements OnInit {
-
+  allClassesView:boolean = false;
   constructor() { }
 
   ngOnInit(): void {

@@ -22,6 +22,7 @@ from blueprint.users.login.login import login_bp
 from blueprint.users.static_users.static_users import static_user
 from blueprint.users.user_info.user_info import user_info
 from blueprint.geo_location.geo_location import geo_lan
+from blueprint.education.classes.classes import classes
 
 class apiHandler:
     def __init__(self):
@@ -88,7 +89,8 @@ class apiHandler:
         self.app.register_blueprint(static_user) # static user create
         self.app.register_blueprint(user_info) # user info
         self.app.register_blueprint(geo_lan) # Collage location
-        
+        self.app.register_blueprint(classes) # Collage location
+
         @self.auth.verify_token
         def verify_token(token):
             try:
