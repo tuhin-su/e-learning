@@ -1,0 +1,10 @@
+FROM python:3.10-slim
+
+# Install wssh
+RUN pip install webssh
+
+# Expose port for web access
+EXPOSE 8888
+
+# Start wssh server
+CMD ["sleep", "infinity"]

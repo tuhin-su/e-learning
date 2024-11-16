@@ -85,6 +85,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock  # Access to host Docker socket
       - portainer_data:/data  # Persistent storage for Portainer
 
+  wssh:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.wssh
+    container_name: wssh
+    command: ["wssh", "--address=0.0.0.0", "--port=80"]
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    working_dir: /usr/src/app
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     container_name: cloudflare-tunnel
