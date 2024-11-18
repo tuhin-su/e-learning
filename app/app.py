@@ -133,16 +133,11 @@ class apiHandler:
         CORS(self.app)
         self.app.run(host=self.host, port=self.port, debug=True)
 
-
 if __name__ == '__main__':
     app_instance = apiHandler()
-    signal.signal(signal.SIGTERM, app_instance.bot.send_message("Server Stoped",))
-    signal.signal(signal.SIGINT, app_instance.bot.send_message("Server Stoped",))
-    signal.signal(signal.SIGHUP, app_instance.bot.send_message("Server Stoped",))
     try:
-        app_instance.bot.send_message("Server Strated.")
+        app_instance.bot.send_message("Server Updated.")
         app_instance.run()
     except:
-        app_instance.stop()
-        app_instance.bot.send_message("Server Stoped!")
+        app_instance.bot.send_message("Server Crashed.")
 
