@@ -10,5 +10,5 @@ else
     echo "API_URL environment variable is not set."
 fi
 
-ng serve --host 0.0.0.0 --port 4200 --disable-host-check
-# sleep infinity
+# ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+sleep infinity

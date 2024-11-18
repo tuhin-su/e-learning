@@ -7,6 +7,7 @@ class Bot:
         self.channel_id = channel_id
         self.name =server_name
         self.state=enable
+        
         if self.bot_token == None:
             raise TypeError("bot_token can't None")
         
@@ -17,7 +18,7 @@ class Bot:
             raise TypeError("server_name can't None")
         
         if self.state == None:
-            raise TypeError("server_name can't None")
+            raise TypeError("state can't None")
         
         
     def send_message(self, message):

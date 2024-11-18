@@ -13,5 +13,5 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Run your Python script if needed
-#python3 app.py
- sleep infinity
+python3 app.py
+#sleep infinity
