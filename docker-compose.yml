@@ -10,6 +10,7 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db/sql:/docker-entrypoint-initdb.d
+    network_mode: "host"
 
   angular:
     build:
@@ -23,8 +24,7 @@ services:
     environment:
       - API_URL=${API_URL}
     working_dir: /app
-    ports:
-      - 4200:4200
+    network_mode: "host"
 
   flask:
     build:
@@ -46,10 +46,7 @@ services:
       BOT_KEY: ${BOT_KEY}
       CHANNEL_ID: ${CHANNEL_ID}
       BOT_ENABLE: ${BOT_ENABLE}
-    expose:
-      - 5000
-    depends_on:
-      - db
+    network_mode: "host"
 
   webssh:
     image: webssh-server:latest
@@ -70,24 +67,17 @@ services:
       PMA_PORT: 3306
       PMA_ABSOLUTE_URI: "/dba"
     restart: unless-stopped
-    depends_on:
-      - db
+    network_mode: "host"
 
   nginx:
     image: nginx:latest
     container_name: nginx
     restart: unless-stopped
-    ports:
-      - 80:80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./web/timt/dist/timt:/usr/share/nginx/html
       - ./web/download:/usr/share/nginx/download
-    depends_on:
-      - db
-      - flask
-      - phpmyadmin
-      - webssh
+    network_mode: "host"
 
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
@@ -95,12 +85,4 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
-    depends_on:
-      - db
-      - flask
-      - phpmyadmin
-      - nginx
-
-networks:
-  default:
-    driver: bridge
+    network_mode: "host"
