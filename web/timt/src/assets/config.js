@@ -1,5 +1,5 @@
 (function (window) {
     window.env = window.env || {};
-    window.env.apiUrl = 'http://localhost/api'; // 'API_URL'
+    window.env.apiUrl = '%API_URL%'; // 'API_URL'
   })(this);
   

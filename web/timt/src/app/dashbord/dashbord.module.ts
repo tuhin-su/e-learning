@@ -7,11 +7,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClassesComponent } from './classes/classes.component';
 import { NoticBordComponent } from './notic-bord/notic-bord.component';
+import { TokenViwerComponent } from '../modules/token-viwer/token-viwer.component';
+import { AuthGuardService } from '../auth-guard.service';
 
 const routes: Routes = [
-  { path: 'attendance', component: AttendanceComponent },
-  { path: 'classes', component: ClassesComponent },
-  { path: 'notic_bord', component: NoticBordComponent },
+  { path: 'attendance', component: AttendanceComponent, canActivate: [AuthGuardService]},
+  { path: 'classes', component: ClassesComponent, canActivate: [AuthGuardService] },
+  { path: 'notic_bord', component: NoticBordComponent, canActivate: [AuthGuardService] },
+  { path: 'token', component: TokenViwerComponent, canActivate: [AuthGuardService]},
 ];
 
 @NgModule({

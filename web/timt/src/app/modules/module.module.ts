@@ -4,12 +4,14 @@ import { MeDataComponent } from './me-data/me-data.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppCardComponent } from './app-card/app-card.component';
 import { PostCardComponent } from './post-card/post-card.component';
+import { TokenViwerComponent } from './token-viwer/token-viwer.component';
 
 @NgModule({
   declarations: [
     MeDataComponent,
     AppCardComponent,
-    PostCardComponent
+    PostCardComponent,
+    TokenViwerComponent
   ],
   imports: [
     BrowserModule,
@@ -17,6 +19,10 @@ import { PostCardComponent } from './post-card/post-card.component';
     ReactiveFormsModule,
   ],
   bootstrap: [],
-  exports: [AppCardComponent, PostCardComponent]
+  exports: [
+    AppCardComponent,
+    PostCardComponent,
+    TokenViwerComponent
+  ]
 })
 export class ModuleModule { }

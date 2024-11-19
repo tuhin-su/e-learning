@@ -1,0 +1,40 @@
+<div class="w-full h-full">
+    <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full z-10">
+        <button class="btn btn-square btn-ghost bg-transparent border-none">
+          <i (click)="back()" class="bi bi-box-arrow-left text-white text-3xl"></i>
+        </button>
+    </div>
+    <div class="absolute top-[70px] left-0 right-0 bottom-0">
+        <div class="divider">API KEY</div>
+        <div role="alert" class="alert alert-warning">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span>Warning: API KEY are confidential and should not be shared or published.</span>
+          </div>
+        <div class="w-full h-full flex justify-center items-center">
+            <div *ngIf="token" role="alert" class="alert">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="stroke-info h-6 w-6 shrink-0">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>{{ token }}</span>
+              </div>
+        </div>
+    </div>
+</div>
