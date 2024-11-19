@@ -1,4 +1,4 @@
-@apiUrl = http://localhost/api
+@apiUrl = http://timt.in/api
 
 ### REQUEST VER
 GET {{ apiUrl }}/ver
@@ -20,9 +20,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "su@admin.in",
-  "password": "passwd",
-  "groups": "SU",
+  "username": "ghoshshilpa06091997@gmail.com",
+  "password": "06091999",
+  "groups": "FA",
   "ref": "0"
 }
 

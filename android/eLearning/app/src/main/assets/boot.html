@@ -153,7 +153,12 @@
           
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    loadBasicComponent();
+                    if(JSON.parse(xhr.response).version){
+                      loadBasicComponent();
+                    }
+                    else{
+                      showConnError(true);
+                    }
                 } else {
                     showConnError(true);
                     hendelError(error);
