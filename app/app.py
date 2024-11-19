@@ -26,6 +26,7 @@ from blueprint.education.classes.classes import classes
 from blueprint.education.students.students import students
 from blueprint.org.posts.post import posts
 from blueprint.org.notics.notics import notice
+from blueprint.users.mng.manage import mng
 
 class apiHandler:
     def __init__(self):
@@ -94,7 +95,9 @@ class apiHandler:
         self.app.register_blueprint(classes) # Collage location
         self.app.register_blueprint(students) # Collage location
         self.app.register_blueprint(posts) # All post
-        self.app.register_blueprint(notice) # All post
+        self.app.register_blueprint(notice) # All notic
+        self.app.register_blueprint(mng) # All user manage
+        
         @self.auth.verify_token
         def verify_token(token):
             try:

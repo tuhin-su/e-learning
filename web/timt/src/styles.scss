@@ -16,6 +16,12 @@ html,body{
     height: 100%;
 }
 
+body{
+    background-image: url('/assets/imgs/timt-tr.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px, 150px;
+}
 .flex{
     display: flex;
 }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: true,
-  apiUrl: (window as any).env.apiUrl,
+  // apiUrl: (window as any).env.apiUrl,
+  apiUrl: 'https://timt.in/api',
   gps_distance: 27,
 };
 

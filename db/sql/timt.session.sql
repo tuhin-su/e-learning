@@ -133,4 +133,3 @@ CREATE TABLE `collage_location` (
     `createBy` VARCHAR(255) NOT NULL,
     `createDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-

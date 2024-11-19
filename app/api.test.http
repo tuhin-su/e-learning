@@ -1,4 +1,4 @@
-@apiUrl = http://timt.in/api
+@apiUrl = http://localhost:8081/api
 
 ### REQUEST VER
 GET {{ apiUrl }}/ver
@@ -166,6 +166,18 @@ Authorization: Bearer {{ token }}
 #### GET ALL Classes
 # @name Classes
 @token = {{login.response.body.token}}
-GET {{ apiUrl }}/classes
+POST {{ apiUrl }}/users/mng
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
+{
+  "FROM":"student_ac",
+  "data":{
+    "email":"student_demo@email.com",
+    "dob":"10112001",
+    "roll":"12345",
+    "reg":"29941",
+    "course":"BCA",
+    "semester": 4
+  }
+}

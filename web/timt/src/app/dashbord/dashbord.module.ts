@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClassesComponent } from './classes/classes.component';
 import { NoticBordComponent } from './notic-bord/notic-bord.component';
+
 const routes: Routes = [
   { path: 'attendance', component: AttendanceComponent },
   { path: 'classes', component: ClassesComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
     ClassesComponent,
     NoticBordComponent
   ],
+
   imports: [
     BrowserModule,
     ModuleModule,
@@ -27,6 +29,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes)
   ],
+  
   providers: [],
   bootstrap: [DashbordModule],
   exports:[RouterModule]
