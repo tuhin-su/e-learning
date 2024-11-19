@@ -39,6 +39,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   giveUser:any = undefined;
   usersList?: any[];
 
+  scan: boolean = false;
+
 
   constructor(
     private service: AttendanceService, 
@@ -110,10 +112,13 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.startVideo();
+    // this.startVideo();
   }
 
-
+  enableScan() {
+    this.scan = true;
+    this.startVideo();
+  }
   startVideo(){
     this.releaseStream();
     navigator.mediaDevices.getUserMedia({ video: true }).then(

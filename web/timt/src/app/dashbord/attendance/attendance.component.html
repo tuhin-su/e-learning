@@ -92,9 +92,9 @@
 
   <div class="flex w-full h-full flex-col place-items-center  ">
     <!-- scanner box -->
-    <div
+    <div id="scan-box" (click)="enableScan()"
       class="w-52 h-52 bg-black place-items-center rounded-box  my_shdow overflow-hidden outline outline-[#647bfd7a] relative">
-      <video #video autoplay class="rounded-box" width="100%" height="100%"></video>
+      <video *ngIf="scan" #video autoplay class="rounded-box" width="100%" height="100%"></video>
       <canvas #overlay
         style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 100%; width: 100%;"></canvas>
     </div>

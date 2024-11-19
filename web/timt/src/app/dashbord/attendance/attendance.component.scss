@@ -46,3 +46,9 @@ video {
     height: 100%;
     object-fit: cover;
   }
+#scan-box{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('assets/imgs/face-scan.png');
+    background-size: contain;
+}
