@@ -2,7 +2,6 @@ from werkzeug.security import generate_password_hash
 from flask import Flask,Blueprint ,request, jsonify,current_app
 from datetime import datetime, timedelta
 from mysql.connector import Error
-from modules.utilty import getLable
 
 mng = Blueprint("User Management", __name__)
 
@@ -15,7 +14,7 @@ def app():
             user_id_ad = app.auth.current_user()['user_id']
             data = request.json
             
-            if getLable(user_id_ad) != 1 and getLable(user_id_ad) != 2:
+            if app.getLable(user_id_ad) != 1 and app.getLable(user_id_ad) != 2:
                 return jsonify({"message": "You are not authorized to perform this action"}), 403
             
             if "FROM" not in data:
