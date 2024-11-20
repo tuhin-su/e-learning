@@ -84,10 +84,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     this.stream = [
-      { lable: "BCA", value: "BCA" },
-      { lable: "BBA",  value: "BBA" },
-      { lable: "BHM", value: "BHM" },
-      { lable: "MSC", value: "MSC" },
+      { lable: "BCA", value: 3 },
+      { lable: "BBA",  value: 1 },
+      { lable: "BHM", value: 2 },
+      { lable: "MSC", value: 4 },
       
     ]
 
@@ -250,6 +250,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                       lng: position.locations.lon
                     };
                     this.distent = position.locations.distend;
+                    console.log(this.distent);
                   })
                 ));
 

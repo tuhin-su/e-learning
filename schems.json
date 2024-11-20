@@ -373,12 +373,13 @@
         }
       },
       "roll": {
-        "type": "INT",
-        "nullable": true
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false
       },
       "reg": {
-        "type": "INT",
-        "nullable": true
+        "type": "VARCHAR",
+        "nullable": false
       },
       "course": {
         "type": "INT",

@@ -112,8 +112,8 @@ CREATE TABLE `class_attends` (
 -- Table: student
 CREATE TABLE `student` (
     `id` VARCHAR(255) NOT NULL PRIMARY KEY,
-    `roll` INT NULL,
-    `reg` INT NULL,
+    `roll` VARCHAR(255) NOT NULL,
+    `reg` VARCHAR(255) NOT NULL,
     `course` INT,
     `semester` INT NULL,
     `status` INT DEFAULT 0 NULL,

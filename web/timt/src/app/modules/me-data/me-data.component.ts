@@ -14,7 +14,8 @@ import { Routes } from '@angular/router';
 export class MeDataComponent implements OnInit {
   profileForm: any = null;
   imageSrc: string | ArrayBuffer | null = null; // For image preview
-
+  userInfo: any = localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')!) : null
+  
   constructor(
     private fb: FormBuilder, 
     private router: Router,
@@ -34,6 +35,11 @@ export class MeDataComponent implements OnInit {
       dob: ['', Validators.required],
       img: ['']
     });
+
+    if (this.userInfo) {
+      this.profileForm.patchValue(this.userInfo)
+      this.imageSrc = this.userInfo.img
+    }
   }
 
   onFileChange(event: Event) {

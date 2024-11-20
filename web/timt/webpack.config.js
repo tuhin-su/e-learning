@@ -15,4 +15,10 @@ const updatedContent = fileContent.replace(
 // Overwrite environment.ts with the updated content
 fs.writeFileSync(envPath, updatedContent);
 
-module.exports = {};
+module.exports = {
+  resolve: {
+    fallback: {
+      fs: false,
+    },
+  },
+};
