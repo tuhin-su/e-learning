@@ -10,5 +10,14 @@ else
     echo "API_URL environment variable is not set."
 fi
 
-# ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+# Check if MODE is set to "development"
+if [ "$MODE" = "development" ]; then
+    echo "Running Angular development server..."
+    ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+else
+    echo "MODE is not development. Skipping Angular server."
+fi
+
+# Keep the container running
+echo "Entering sleep mode..."
 sleep infinity
