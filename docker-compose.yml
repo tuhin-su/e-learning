@@ -60,7 +60,6 @@ services:
     restart: unless-stopped
     environment:
       - MODE=${MODE}
-      - LIVE_IP=${LIVE_IP}
     ports:
       - 8081:80
     volumes:
