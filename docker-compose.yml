@@ -68,6 +68,17 @@ services:
       - ./web/timt/dist/timt:/usr/share/nginx/html
       - ./web/download:/usr/share/nginx/download
 
+    webssh:
+    image: webssh-server:latest
+    build:
+      context: ./build
+      dockerfile: Dockerfile.wssh
+    container_name: wssh
+    command: ["wssh", "--address=0.0.0.0", "--port=8080"]
+    environment:
+      - WSSH_DEBUG=true
+    network_mode: "host"
+    
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     container_name: cloudflare-tunnel
