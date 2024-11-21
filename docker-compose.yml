@@ -67,7 +67,7 @@ services:
       - ./web/timt/dist/timt:/usr/share/nginx/html
       - ./web/download:/usr/share/nginx/download
 
-    webssh:
+  webssh:
       image: webssh-server:latest
       build:
         context: ./build
