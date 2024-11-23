@@ -53,7 +53,16 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setMediaPlaybackRequiresUserGesture(false);
 
         // Set WebViewClient to handle page navigation
-        webView.setWebViewClient(new WebViewClient());
+        // Set WebViewClient to handle page navigation
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // Check if the URL should be opened in an external browser
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);  // Open URL in an external browser
+                return true;  // Return true to indicate we have handled the URL
+            }
+        });
 
         // Set WebChromeClient to handle geolocation, media requests and file chooser
         webView.setWebChromeClient(new WebChromeClient() {
@@ -245,4 +254,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        WebView webView = findViewById(R.id.webView);
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();  // Navigate back in WebView history
+        } else {
+            super.onBackPressed();  // Perform default back behavior (close the activity)
+        }
+    }
+
 }
