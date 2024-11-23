@@ -40,3 +40,10 @@ export function showWarningAlert(message: string, cancelButton: boolean = false)
 export function getToken(): string | null {
     return localStorage.getItem('token') ? localStorage.getItem('token') : null;
 }
+
+export function capitalizeUserName(name: string): string {
+    return name
+        .split(' ')
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+        .join(' ');
+  }

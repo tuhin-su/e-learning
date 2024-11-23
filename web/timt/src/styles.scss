@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+}
+
 *{
     box-sizing: border-box;
     scrollbar-width: 0px;
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
     &::-webkit-scrollbar{
         display: none;
     }
@@ -21,6 +27,8 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 150px, 150px;
+    overflow-x: scroll;
+    background-attachment: fixed;
 }
 .flex{
     display: flex;

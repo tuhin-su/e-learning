@@ -1,12 +1,14 @@
-<a (click)="clickBtn();" routerLinkActive="router-link-active" class="flex items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-blue-700 active:bg-white m-4">
-    <div
-      *ngIf="img"
-      class="w-[25%] h-[100px] rounded-t-lg md:rounded-l-lg md:rounded-t-none bg-cover bg-center conent-img"
-      [ngStyle]="{ 'background-image': 'url(' + img + ')' }">
+<div class="w-[100px] h-[100px] m-2" (click)="clickBtn();">
+  <div class="w-full h-[75%] ">
+    <div class="h-full w-full" style="background-repeat: no-repeat; background-position: center; background-size: 40px 40px;" 
+    [ngStyle]="{ 'background-image': 'url(' + img + ')' }">
+
     </div>
-    <div class="flex flex-col justify-between p-4 leading-normal w-[55%]">
-      <h5 *ngIf="title" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
-      <p *ngIf="subTitle" class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{subTitle}}</p>
-    </div>
-  </a>
-  
+
+  </div>
+
+  <div class="w-full h-[25%] text-wrap text-center">
+    <h5 *ngIf="title" class="mb-2  decoration-auto tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
+  </div>
+</div>
+ 

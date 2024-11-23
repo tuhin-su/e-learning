@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { capitalizeUserName } from '../utils/global-functions';
 @Component({
   selector: 'app-dashbord',
   templateUrl: './dashbord.component.html',
@@ -20,6 +20,7 @@ export class DashbordComponent implements OnInit {
   ngOnInit(): void {
     if (this.user) {
       this.user = JSON.parse(this.user);
+      this.user.name = capitalizeUserName(this.user.name);
     }
     setTimeout(() => {
       if (this.user?.img && this.navImg) {
@@ -27,6 +28,8 @@ export class DashbordComponent implements OnInit {
       }
     }, 0);
   }
+
+  
 
   setting(){
     this.router.navigate(['setting'])

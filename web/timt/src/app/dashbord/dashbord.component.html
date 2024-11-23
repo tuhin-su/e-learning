@@ -1,36 +1,58 @@
 <div class="w-full h-full">
-  <div class="navbar bg-base-100">
+  <div class="navbar bg-base-100 fixed z-50" style="border-bottom: 1px solid gray;">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl">{{ user?.name }}</a>
     </div>
     <div class="flex-none gap-2">
-      <div class="form-control">
-        <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-      </div>
+
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img
-              #navImg
-              alt="user"
-              src="assets/imgs/user-286-64.png" />
+            <img #navImg alt="user" src="assets/imgs/user-286-64.png" />
           </div>
         </div>
-        <ul
-          tabindex="0"
-          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
           <li><a routerLink="/me_data">Settings</a></li>
           <li><a routerLink="/logout">Logout</a></li>
         </ul>
       </div>
     </div>
   </div>
-  
- <div>
-  <app-card img="assets/imgs/attendance.png" title="Attendance" link="attendance" subTitle="Attendance System"></app-card>
-  <app-card img="assets/imgs/school_8220314.png" title="Classes" link="classes" subTitle="College Classes"></app-card>
-  <app-card img="assets/imgs/board_12213968.png" title="NoticBord" link="notic_bord" subTitle="All Notic given by Staff"></app-card>
-  <app-card img="assets/imgs/cash-payment_8830969.png" title="Payment" link="" subTitle="College Payment"></app-card>
-  <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/api-key.png" title="Token" link="token" subTitle="College Payment"></app-card>
- </div>
+
+  <div class=" flex flex-wrap h-auto w-full pb-12 absolute top-14 p-1" style="justify-content: space-around;">
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+
+
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+    <app-card img="assets/imgs/icon/school/college.png" title="Attendance" link="attendance"></app-card>
+    <app-card img="assets/imgs/icon/school/presentation.png" title="Classes" link="classes"></app-card>
+    <app-card img="assets/imgs/icon/school/certificate.png" title="NoticBord" link="notic_bord"></app-card>
+    <app-card img="assets/imgs/icon/school/university.png" title="Payment" link=""></app-card>
+    <app-card *ngIf="lable == '1' || lable == '2'" img="assets/imgs/icon/school/university.png" title="Token" link="token"></app-card>
+  </div>
+
 </div>
