@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 export class AppCardComponent implements OnInit {
   @Input() img: any;
   @Input() title?:String;
-  @Input() subTitle?:String;
   @Input() link?: string;
   constructor(private router:Router) { }
 
