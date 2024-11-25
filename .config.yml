@@ -3,12 +3,12 @@ SERVER:
   PORT: 8081
   
 REPLICAS:
-  flask: 2
+  flask: 1
 
 TUNNEL:
   TOKEN: ${TUNNEL_TOKEN}
 
-MODE: development
+MODE: DEVELOPMENT
 
 DATABASE:
   HOST: db
@@ -32,7 +32,9 @@ BOT:
 DEVELOPMENT:
   contaners: ["db", "flask", "phpmyadmin", "nginx"]
   load_balanser: false
+  blanser_name: "nginx"
 
 PRODUCTION:
   contaners: ["db", "flask", "phpmyadmin", "nginx", "webssh", "cloudflare-tunnel"]
   load_balanser: true
+  blanser_name: "nginx"
