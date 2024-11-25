@@ -1,0 +1,38 @@
+SERVER:
+  NAME: localhost
+  PORT: 8081
+  
+REPLICAS:
+  flask: 2
+
+TUNNEL:
+  TOKEN: ${TUNNEL_TOKEN}
+
+MODE: development
+
+DATABASE:
+  HOST: db
+  NAME: test
+  USER: test
+  PASSWORD: test
+  ROOT_PASSWORD: test@123
+  
+API:
+  ADDRESS: 0.0.0.0
+  PORT: 5000
+  SECRET_KEY: 5VpBsh4WJJLtY9vRWmaV5oYuC0wKAJEoFmsMojRmwyiNyywaUo9ZABkUXaMKhL9YqkixRGUMwvBi17jjvVt9uqZKjtWsKg16ZLye
+  LOG: False
+  API_URL: https://api.timt.local/api
+
+BOT:
+  KEY: ${BOT_KEY}
+  CHANNEL_ID: ${CHANNEL_ID}
+  ENABLE: False
+
+DEVELOPMENT:
+  contaners: ["db", "flask", "phpmyadmin", "nginx"]
+  load_balanser: false
+
+PRODUCTION:
+  contaners: ["db", "flask", "phpmyadmin", "nginx", "webssh", "cloudflare-tunnel"]
+  load_balanser: true

@@ -10,3 +10,5 @@ portainer_data/
 *.venv
 
 *.backup
+config.yml
+nginx/conf.d/*.conf

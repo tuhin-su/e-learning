@@ -1,0 +1,6 @@
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin:latest
+  container_name: phpmyadmin
+  environment:
+    PMA_HOST: ${DB_HOST}
+    PMA_PORT: 3306

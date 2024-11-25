@@ -11,7 +11,7 @@ else
 fi
 
 # Check if MODE is set to "development"
-if [ "$MODE" = "development" ]; then
+if [ "$MODE" = "DEVELOPMENT" ]; then
     echo "Running Angular development server..."
     ng serve --host 0.0.0.0 --port 4200 --disable-host-check
 else

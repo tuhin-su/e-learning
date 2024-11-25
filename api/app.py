@@ -12,7 +12,6 @@ import time
 import uuid
 from datetime import datetime, timedelta
 import os
-from modules.bot import Bot
 import signal
 
 ## IMPORT Blueprint
@@ -37,7 +36,7 @@ class apiHandler:
         self.port=5000
         self.app.logger.disabled=True
         self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-        self.bot =  Bot(os.getenv('BOT_KEY'), os.getenv('CHANNEL_ID'), os.getenv("SERVER_NAME"), os.getenv('BOT_ENABLE'))
+    
         if os.getenv('LOG') == "true":
             self.app.logger.disabled=False
 
@@ -56,7 +55,6 @@ class apiHandler:
                 self.cursor = self.conn.cursor(dictionary=True)  # Use dictionary cursor to get column names
                 self.app.logger.info(f"Connected to MySQL database... MySQL Server version on {db_info}")
         except Error as e:
-            self.bot.send_message("Error while connecting to MySQL check logs for more information.")
             self.app.logger.error(f"Error while connecting to MySQL: {e}")
             raise e
 
@@ -139,8 +137,8 @@ class apiHandler:
 if __name__ == '__main__':
     app_instance = apiHandler()
     try:
-        app_instance.bot.send_message("Server Updated.")
         app_instance.run()
-    except:
-        app_instance.bot.send_message("Server Crashed.")
+    except Exception as e:
+        print(e)
+        pass
 

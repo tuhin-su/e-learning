@@ -1,0 +1,8 @@
+cloudflare-tunnel:
+  image: cloudflare/cloudflared:latest
+  container_name: cloudflare-tunnel
+  environment:
+    - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+  command: "tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}"
+    
+  network_mode: "host"
