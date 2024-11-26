@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
+    private LocalHttpServer localHttpServer;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int MEDIA_PERMISSION_REQUEST_CODE = 2;
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int port = 8080;
+        try {
+            localHttpServer = new LocalHttpServer(this, port);
+            localHttpServer.start();
+        } catch (Exception e) {
+        }
 
         WebView webView = findViewById(R.id.webView);
 
@@ -98,9 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
         // Load the URL
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("http://localhost:"+port);
 //        webView.loadUrl("https://timt.in");
 
         // Start the permission checking process
