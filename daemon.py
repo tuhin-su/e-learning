@@ -234,6 +234,7 @@ class Server:
         os.environ["PORT"] = str(self.config["API"]["PORT"])
         os.environ["LOG"] = str(self.config["API"]["LOG"])
         os.environ["API_URL"] = self.config["API"]["API_URL"]
+        os.environ["SECRET_KEY"] = self.config["API"]["SECRET_KEY"]
 
         os.environ["SERVER_NAME"] = self.config["SERVER"]["NAME"]
         os.environ["SERVER_PORT"] = str(self.config["SERVER"]["PORT"])
