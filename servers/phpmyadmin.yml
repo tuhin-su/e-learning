@@ -4,3 +4,5 @@ phpmyadmin:
   environment:
     PMA_HOST: ${DB_HOST}
     PMA_PORT: 3306
+  ports:
+    - 8081:80
