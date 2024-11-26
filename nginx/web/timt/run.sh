@@ -16,6 +16,7 @@ if [ "$MODE" = "DEVELOPMENT" ]; then
     ng serve --host 0.0.0.0 --port 4200 --disable-host-check
 else
     echo "MODE is not development. Skipping Angular server."
+    ng build
 fi
 
 # Keep the container running

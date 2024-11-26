@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Load the URL
-//        webView.loadUrl("file:///android_asset/index.html");
-        webView.loadUrl("https://timt.in");
+        webView.loadUrl("file:///android_asset/index.html");
+//        webView.loadUrl("https://timt.in");
 
         // Start the permission checking process
         checkLocationPermission();

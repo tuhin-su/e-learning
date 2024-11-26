@@ -56,5 +56,5 @@ if [ $? -ne 0 ]; then
     deactivate
     exit 1
 fi
-rm -rf nginx/conf.d/*.conf
+rm -rf nginx/conf.d/*.conf 
 deactivate
