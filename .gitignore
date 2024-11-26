@@ -1,6 +1,7 @@
 data/
 dist/
 db_data/
+db/db_data/
 .venv
 .vscode/
 *__pycache__
