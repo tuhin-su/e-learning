@@ -3,7 +3,7 @@ services:
     build:
       context: ./build
       dockerfile: Dockerfile.angular
-    command: sh run.sh
+    #command: sh run.sh
     container_name: angular
     environment:
     - API_URL=${API_URL}
@@ -62,6 +62,8 @@ services:
       PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
     image: phpmyadmin/phpmyadmin:latest
+    ports:
+    - 8081:80
   webssh:
     build:
       context: ./build

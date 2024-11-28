@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int port = 8080;
+        int port = 65515;
         try {
             localHttpServer = new LocalHttpServer(this, port);
             localHttpServer.start();

@@ -1,77 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginService } from 'src/service/login/login.service';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { showErrorAlert,showSuccessAlert,showWarningAlert } from '../utils/global-functions';
+import { Component } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+
 @Component({
   selector: 'app-login',
+  imports: [MatButtonModule, MatDividerModule, MatIconModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('bounceUp', [
-      transition(':enter', [
-        style({ transform: 'translateY(100%)', opacity: 0 }),
-        animate('0.6s ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
-      ])
-    ])
-  ]
-
+  styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  loginForm?: FormGroup;
-  loginServiceHolder?: any;
-  errorMessage?: string;
+export class LoginComponent {
 
-  constructor(
-    private fb: FormBuilder,
-    private loginService: LoginService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.loginServiceHolder) {
-      this.loginServiceHolder.unsubscribe();
-    }
-  }
-
-  onSubmit(): void {
-    if (this.loginForm && this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-
-      this.loginServiceHolder = this.loginService.login(username, password).subscribe(
-        (response: any) => {
-          console.log(response)
-
-          if (response.token && response.lable) {
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('lable', response.lable);
-            // console.log("Localstorage set")
-            if (response.info) {
-                localStorage.setItem('info',JSON.stringify(response.info))
-                this.router.navigate(['/']);
-                showSuccessAlert("Login successful");
-            }
-            else{
-              this.router.navigate(['/me_data']);
-            }
-          }
-        },
-        (error: any) => {
-          showErrorAlert(error.error.message);
-          this.errorMessage = 'Login failed';
-        }
-      );
-    } else {
-      showWarningAlert('Please fill all the fields');
-      this.errorMessage = 'Form is invalid';
-    }
-  }
 }
