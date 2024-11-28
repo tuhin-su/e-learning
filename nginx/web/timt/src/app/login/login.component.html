@@ -1,10 +1,35 @@
 <div class="root">
-    <section>
-        <div class="example-label">Basic</div>
-        <div class="example-button-row">
-          <button mat-button>Basic</button>
-          <button mat-button disabled>Disabled</button>
-          <a mat-button href="https://www.google.com/" target="_blank">Link</a>
-        </div>
-    </section>
+  <div class="mask-black">
+    <div class="root bg-blue-500">
+      <div data-aos="zoom-in" class="m-6 rounded-full bg-white bg-center bg-no-repeat bg-contain w-[200px] h-[200px] shadow-2 z-[3] absolute top-[25%]" style="background-image: url('img/timt.jpg');"></div>
+
+      <div data-aos="fade-up" class="h-[55%] w-full shadow-1 p-4 bg-white absolute bottom-0 ml-2 mr-2 mt-[25px] flex justify-center items-center z-[2]" style="border-radius: 32px 32px 0px 0px;">
+        <mat-divider>s</mat-divider>
+        <form class="example-form w-full">
+          <mat-form-field class="example-full-width w-full bg-transparent">
+            <mat-label>Email Id</mat-label>
+            <input matInput placeholder="example@gmial.com">
+          </mat-form-field>
+        
+          <mat-form-field class="example-full-width w-full bg-transparent">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="ddmmyyyy">
+          </mat-form-field>
+          <div class="w-full flex justify-end">
+            <a mat-button href="https://www.google.com/" target="_blank">Forget Password?</a>
+          </div>
+
+          <div class="w-full mt-5">
+            <button mat-flat-button class="w-full shadow-2 justify-center">
+              Login
+            </button>
+          </div>
+          
+        </form>
+      </div>
+
+      <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] top-[-15%] left-[-50%]" data-aos="fade-down-right"></div>
+      <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] top-[-25%] left-[-30%]" data-aos="fade-down-right"></div>
+    </div>
+  </div>
 </div>
