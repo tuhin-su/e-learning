@@ -1,31 +1,34 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root', // Makes this service available globally
 })
-export class GlobalStorageService implements OnDestroy, OnInit {
-  
+export class GlobalStorageService {
   private storage: Map<string, any> = new Map();
+
+  constructor() {
+    // Initialize storage with values from localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.set('token', token);
+    }
+
+    const info = localStorage.getItem('info');
+    if (info) {
+      this.set('info', JSON.parse(info));
+    }
+
+    const label = localStorage.getItem('lable');
+    if (label) {
+      this.set('lable', label);
+    }
+  }
 
   /**
    * Stores a value associated with a key.
    * @param key The key to identify the value.
    * @param value The value to store.
    */
-  ngOnInit(): void {
-    if (localStorage.getItem('token')) {
-      this.set('token', localStorage.getItem('token'));
-    }
-
-    if (localStorage.getItem('info')) {
-      this.set('info', localStorage.getItem('info'));
-    }
-
-    if (localStorage.getItem('lable')) {
-      this.set('lable', localStorage.getItem('lable'));
-    }
-  }
-
   set(key: string, value: any): void {
     this.storage.set(key, value);
   }
@@ -47,12 +50,6 @@ export class GlobalStorageService implements OnDestroy, OnInit {
     this.storage.delete(key);
   }
 
-  /**
-   * Clears all stored values.
-   */
-  clear(): void {
-    this.storage.clear();
-  }
 
   /**
    * Checks if a key exists in the storage.
@@ -61,12 +58,5 @@ export class GlobalStorageService implements OnDestroy, OnInit {
    */
   has(key: string): boolean {
     return this.storage.has(key);
-  }
-
-  /**
-   * Cleans up the storage on service destroy.
-   */
-  ngOnDestroy(): void {
-    this.clear();
   }
 }

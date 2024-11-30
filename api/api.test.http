@@ -20,7 +20,7 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "madhu@student.rana",
+  "username": "xyz@student.xyz",
   "password": "passwd",
   "groups": "ST",
   "ref": "0"

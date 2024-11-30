@@ -8,11 +8,13 @@ import { CommonModule } from '@angular/common';  // Import CommonModule
   standalone: true,
   imports: [MatProgressBarModule, CommonModule],  // Include CommonModule here
   template: `
-    <mat-progress-bar
-      *ngIf="isLoading | async"
+    @if (isLoading | async) {
+<mat-progress-bar
+     
       mode="indeterminate"
       color="primary"
     ></mat-progress-bar>
+}
   `,
   styleUrls: ['./loading.component.scss'],
 })

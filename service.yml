@@ -3,7 +3,7 @@ services:
     build:
       context: ./build
       dockerfile: Dockerfile.angular
-    #command: sh run.sh
+    command: sh run.sh
     container_name: angular
     environment:
     - API_URL=${API_URL}
