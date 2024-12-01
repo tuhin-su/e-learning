@@ -1,0 +1,24 @@
+.rt-12px{
+    border-radius: 24px 24px 0px 0px;
+}
+.bg-img{
+    background-image: url('/img/bg/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.icon{
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 58px;
+    width: 58px;
+}
+
+.mat-card-click:active {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 255, 0.199);
+}

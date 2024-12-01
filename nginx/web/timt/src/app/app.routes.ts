@@ -4,10 +4,12 @@ import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AttendanceComponent } from './college/attendance/attendance.component';
 
 export const routes: Routes = [
     {path: "", component: DashbordComponent,  canActivate: [AuthGuard]},
     {path: "welcome", component: WelcomeComponent},
     {path: "login", component: LoginComponent},
     {path: "me_data", component: ProfileComponent,  canActivate: [AuthGuard]},
+    {path: "college/attendance", component: AttendanceComponent,  canActivate: [AuthGuard]},
 ];

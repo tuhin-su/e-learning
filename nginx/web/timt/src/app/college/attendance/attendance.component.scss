@@ -1,0 +1,54 @@
+.holder {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #f0f4f8, #c9e2f4);
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    width: 350px;
+    max-width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.card p {
+    color: #555555;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.my_shdow{
+    box-shadow: rgba(16, 122, 243, 0.05) 0px 0px 0px 1px, rgba(1, 92, 228, 0.541) 0px 0px 0px 1px inset;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+#scan-box{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('/img/face-scan.png');
+    background-size: contain;
+}

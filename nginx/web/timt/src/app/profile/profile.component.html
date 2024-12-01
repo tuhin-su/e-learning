@@ -1,0 +1,71 @@
+<div class="root bg-img">
+  <div class="w-full h-full p-4 bg-[#ffffff54]">
+    <form [formGroup]="profileForm" (submit)="onSubmit()" class="w-full h-full">
+      <div class="grid h-[25%] rounded-lg p-6 relative">
+        <div class="absolute flex justify-center items-center w-full h-full">
+          <img
+            id="imagePreview"
+            class="circular-image object-cover object-center h-full z-10"
+            [src]="imageSrc || '/img/user-286-512.png'"
+            alt="Profile Image"
+          />
+          <label class="absolute inset-0 flex items-center justify-center">
+            <input
+              type="file"
+              id="fileInput"
+              class="absolute inset-0 opacity-0 cursor-pointer file-input"
+              (change)="onFileChange($event)"
+              formControlName="img"
+            />
+            <span
+              class="block py-2 px-4 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 z-20"
+            >
+              Choose
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="w-full h-[75%] flex justify-center items-center flex-col">
+        <mat-form-field class="example-full-width">
+          <mat-label>Your Name</mat-label>
+          <input matInput formControlName="name" placeholder="John Doe" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Mobile No</mat-label>
+          <input matInput type="number" formControlName="phone" placeholder="9067340000" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Address</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="address"
+            placeholder="John Doe, 456 Elm Street, Suite 3, Los Angeles, CA 90001, USA"
+          />
+        </mat-form-field>
+
+        <mat-radio-group aria-label="Select an option" formControlName="gender">
+          <mat-radio-button value="M">Male</mat-radio-button>
+          <mat-radio-button value="F">Female</mat-radio-button>
+          <mat-radio-button value="O">Other</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field>
+          <mat-label>DOB</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-button type="submit">Submit</button>
+
+        <button mat-button (click)="logout()" target="_blank">It’s not my account</button>
+      </div>
+    </form>
+  </div>
+</div>

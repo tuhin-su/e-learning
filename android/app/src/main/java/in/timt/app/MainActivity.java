@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+//                        finish();
                     }
                 })
                 .create()
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+//                        finish();
                     }
                 })
                 .create()
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+//                        finish();
                     }
                 })
                 .create()
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 checkMediaPermission();
             } else {
                 Toast.makeText(this, "Location permission is required", Toast.LENGTH_LONG).show();
-                finish();
+//                finish();
             }
         } else if (requestCode == MEDIA_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 &&
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 checkCameraPermission();
             } else {
                 Toast.makeText(this, "Media permissions are required", Toast.LENGTH_LONG).show();
-                finish();
+//                finish();
             }
         } else if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                 // All permissions granted, now you can proceed with WebView
             } else {
                 Toast.makeText(this, "Camera permission is required", Toast.LENGTH_LONG).show();
-                finish();
+//                finish();
             }
         }
     }

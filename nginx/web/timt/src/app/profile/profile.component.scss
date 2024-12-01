@@ -1,0 +1,21 @@
+.bg-img{
+    background-image: url('/img/bg/33391314-617d-4c74-8a6c-918976b69cc1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+mat-form-field{
+    width: 95%;
+}
+.grid {
+    position: relative; /* Ensure the container is positioned */
+  }
+  #imagePreview {
+    position: relative; /* Keep the image in the foreground */
+    z-index: 1; /* Ensure it's above other elements */
+  }
+  .file-input {
+    z-index: 2; /* Adjust if necessary */
+  }
+  

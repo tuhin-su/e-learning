@@ -1,1 +1,123 @@
-<p>dashbord works!</p>
+<div class="root bg-img">
+    <div class="w-full h-full p-4">
+        <div class="w-full flex justify-end">
+            <button mat-fab disabled="">
+                <mat-icon matBadge="4">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg>
+                </mat-icon>
+            </button>
+        </div>
+        <div class="relative w-full h-[60px] bg-[#ffffff5e] rounded-md decoration-auto p-1 flex items-center" style="margin-top: 100px;">
+            <div class="rounded-full h-full w-[52px]">
+                <img #navImg alt="user" src="/img/user-286-512.png" />
+            </div>
+            <h1 class="ml-2 parkinsans">{{ user?.name }}</h1>
+        </div>
+    </div>
+    <div class="w-full h-[65%] bg-blue-500 absolute bottom-0 rt-12px flex  p-4 pt-22" data-aos="fade-up">
+        <mat-card class="h-[100px] w-[45%] m-3" appearance="outlined">
+            <mat-card-content class="decoration-auto">Attendance Persentage</mat-card-content>
+            <mat-card-content>0.1%</mat-card-content>
+        </mat-card>
+
+        <mat-card class="h-[100px] w-[45%] m-3 parkinsans" appearance="outlined">
+            <mat-card-content>Class Persentage</mat-card-content>
+            <mat-card-content>0%</mat-card-content>
+        </mat-card>
+    </div>
+    <div class="w-full h-[50%] bg-white absolute bottom-0 rt-12px pt-[25px]" data-aos="fade-up">
+        <div class="grid grid-cols-3 auto-rows-[150px] gap-4 w-full h-full overflow-y-auto p-4">
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Attendance</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/college.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Classes</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/presentation.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Notic Bord</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/noticeboard.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Payment</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/credit-card.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Token</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/blockchain.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Setting</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/cogwheel.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Securty</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/cyber-security.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Showcase</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/portfolio.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Calander</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/calendar.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card  class="h-full w-full mat-card-click" appearance="outlined">
+                <mat-card-content>Feedback</mat-card-content>
+                <div class="w-full h-full flex justify-center items-center">
+                    <div class="icon" style="background-image: url('/icon/school/customer-review.png');">
+
+                    </div>
+                </div>
+            </mat-card>
+        
+        </div>
+
+    </div>
+</div>
