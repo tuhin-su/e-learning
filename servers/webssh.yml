@@ -1,5 +1,6 @@
 webssh:
   image: webssh-server:latest
+  restart: always
   build:
     context: ./build
     dockerfile: Dockerfile.wssh

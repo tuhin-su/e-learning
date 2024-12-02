@@ -1,6 +1,7 @@
 nginx:
   image: nginx:latest
   container_name: nginx
+  restart: always
   ports:
     - ${SERVER_PORT}:80
   volumes:

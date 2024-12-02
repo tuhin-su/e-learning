@@ -3,7 +3,7 @@ flask:
     context: ./build
     dockerfile: Dockerfile.flask
   working_dir: /app
-    
+  restart: always
   command: "bash run.sh"
   volumes:
     - ./api:/app
