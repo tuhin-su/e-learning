@@ -18,6 +18,7 @@ services:
     - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     image: cloudflare/cloudflared:latest
     network_mode: host
+    restart: always
   db:
     container_name: db
     environment:
@@ -26,6 +27,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USER}
     image: mariadb:10.6
+    restart: always
     volumes:
     - ./db/db_data:/var/lib/mysql
     - ./db/sql:/docker-entrypoint-initdb.d
@@ -44,6 +46,7 @@ services:
       DB_USER: ${DB_USER}
       SECRET_KEY: ${SECRET_KEY}
       SERVER_NAME: ${SERVER_NAME}
+    restart: always
     volumes:
     - ./api:/app
     working_dir: /app
@@ -52,6 +55,7 @@ services:
     image: nginx:latest
     ports:
     - ${SERVER_PORT}:80
+    restart: always
     volumes:
     - ./nginx/conf.d:/etc/nginx/conf.d
     - ./nginx/web/timt/dist/timt:/usr/share/nginx/html
@@ -64,6 +68,7 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     ports:
     - 8081:80
+    restart: always
   webssh:
     build:
       context: ./build
@@ -74,3 +79,4 @@ services:
     - WSSH_DEBUG=true
     image: webssh-server:latest
     network_mode: host
+    restart: always

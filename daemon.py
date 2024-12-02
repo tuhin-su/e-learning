@@ -175,11 +175,8 @@ class DockerComposeManager:
                         if status == "die":
                             print(f"Container {container_name} ({container_id}) died.")
                             logger.error(self.client.containers.get(container_name).logs())
-                            self.remove_service(container_name)
-                            self.start_service(container_name)
                         elif status == "start":
                             print(f"Container {container_name} ({container_id}) started.")
-                            self.start_service(container_name)
                         elif status == "stop":
                             print(f"Container {container_name} ({container_id}) stopped.")
                             self.restart_service(container_name)
@@ -192,10 +189,9 @@ class DockerComposeManager:
        
 
     def show_service_list(self) -> dict:
-        """Display the list of services defined in the Docker Compose file."""
         try:
             with open(self.compose_file, 'r') as file:
-                compose_data = yaml.safe_load(file)  # Load the Docker Compose file
+                compose_data = yaml.safe_load(file)
                 services = compose_data.get("services", {})
                 if services:
                     return services.keys()
@@ -244,26 +240,22 @@ class Server:
 
         
     def createService(self):
-        """Process and update services defined in the Docker Compose file."""
-        folder_path = self.server_src_path  # Folder containing YAML files
-        service_data = {}  # Initialize the service dictionary
-
-        # List all .yml files in the folder
+        folder_path = self.server_src_path
+        service_data = {}
         files = [
             file for file in os.listdir(folder_path)
             if file.endswith('.yml') and os.path.isfile(os.path.join(folder_path, file))
         ]
 
-        # Iterate over each file and load its content
         for file in files:
-            file_path = os.path.join(folder_path, file)  # Full path to the YAML file
+            file_path = os.path.join(folder_path, file)
             with open(file_path, 'r') as yaml_file:
                 # Load all YAML documents in the file
                 yaml_data = list(yaml.load_all(yaml_file, Loader=yaml.FullLoader))
 
                 # Process the data if it's not empty
                 if yaml_data and isinstance(yaml_data[0], dict):
-                    first_key = list(yaml_data[0].keys())[0]  # Get the first key of the first document
+                    first_key = list(yaml_data[0].keys())[0]
                     
                     if first_key in self.config["REPLICAS"]:
                         # Add the data three times with modified keys and container names
