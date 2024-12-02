@@ -273,7 +273,7 @@
       },
       "content_id": {
         "type": "INT",
-        "nullable": false,
+        "nullable": true,
         "default": 0,
         "foreign_key": {
           "references": "posts_data(id)"
@@ -313,7 +313,7 @@
     "id": {
       "type": "INT",
       "primary_key": true,
-      "auto_increment": true,
+      "auto_increment": true
     },
     "class_id": {
       "type": "INT",
@@ -447,6 +447,72 @@
         "type": "TIMESTAMP",
         "default": "CURRENT_TIMESTAMP",
         "nullable": false
+      }
+    }
+  },
+  "notification": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "title": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false
+      },
+      "post_id": {
+        "type": "INT",
+        "nullable": false,
+        "foreign_key": {
+          "references": "posts_data(id)"
+        }
+      },
+      "createBy": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false,
+        "foreign_key": {
+          "references": "user(id)"
+        }
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      }
+    }
+  },
+  "galary": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "content_name": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      },
+      "createBy": {
+        "type": "VARCHAR",
+        "nullable": false
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "post_id":{
+        "type":"INT",
+        "nullable":true,
+        "foreign_key":{
+          "references":"posts_data(id)"
+        }
       }
     }
   }
