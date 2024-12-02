@@ -13,3 +13,7 @@ portainer_data/
 *.backup
 config.yml
 nginx/conf.d/*.conf
+dev
+www
+.tmp
+*tmp
