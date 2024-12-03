@@ -1,114 +1,86 @@
-@if (label == '2' || label == '1') {
-    <div class="flex flex-wrap h-full w-full" style="justify-content: center;">
-        <!-- navbar -->
-          <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full z-10">
-            <button class="btn btn-square btn-ghost bg-transparent border-none">
-              <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
-            </button>
-      
-            <button class="btn bg-white absolute right-3 text-blue-500" (click)="createClass();">
-              <i class="bi bi-patch-plus-fill text-blue-500 text-3xl"></i>
-              Create Class
-            </button>
-      
-          </div>
-          <!-- codes -->
-           <!-- cardes -->
-            @if (createClassView) {
-                <div class="w-full absolute top-[70px] p-4 h-full">
-                    <div class="divider divider-primary text-center">
-                      <div role="tablist" class="tabs tabs-bordered">
-                        <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="All Classes" checked/>
-                        <div role="tabpanel" class="tab-content p-10">All Classes</div>
-                      
-                        <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="My Classes" />
-                        <div role="tabpanel" class="tab-content p-10">My Classes</div>
-                      </div>
-                    </div>
-              
-                   
-              
-                    <div class="w-full h-full pt-2 relative overflow-scroll">
-              
-                      <!-- <post-card [data]="obj" ></post-card> -->
-                
-                
-                      <!-- next page -->
-                      <div class="w-full flex justify-center">
-                        <div class="join mt-2">
-                          <button class="join-item btn">«</button>
-                          <button class="join-item btn">Page 1</button>
-                          <button class="join-item btn">»</button>
-                        </div>
-                      </div>
-                    </div>
-                   </div>
-            }
-           
-           <!-- create Clases -->
-            @if (createClassView) {
-                <div  class="w-full absolute top-[70px] p-4 flex flex-col itc">
-                    <h1 class="text-center"> Create Class</h1>
-                    <div class="divider divider-primary"></div>
-                    @if (selectedFile) {
-                      <div class="w-full m-3 flex justify-center items-center relative">
-                          <div class="w-full h-full rounded-lg relative min-h-[300px] flex justify-center items-center">
-                            <i class="bi bi-cloud-arrow-up-fill text-5xl"></i>
-                            <!-- video/mp4 -->
-                          @if (progress) {
-                              <div class="w-full h-full absolute flex justify-center items-center bg-[#ffffff1c]"> 
-                                  <div class="radial-progress text-primary" style="--value:70;" role="progressbar">
-                                    {{ progress.value }}%
-                                  </div>
-                              </div>
-                          }
-                            
-                          </div>
-                
-                        </div>
-                    }
-                    
-            
-                    @if (selectedFile) {
-                      <div class="divider divider-primary"></div>
-                    }
-            
-                    <input type="file" class="file-input file-input-bordered w-full max-w-xs m-3" extensions="pdf,xlsx,mp4,doc" (change)="onFileSelected($event)"/>
-                    
-                    @if (calssForm) {
-                      <form  [formGroup]="calssForm" (ngSubmit)="onSubmit()">
-                          <label class="input input-bordered flex items-center gap-2 m-3">
-                            <input type="text" class="grow" formControlName="title" placeholder="Title or Class name" />
-                           
-                          </label>
-                
-                          <label class="input input-bordered flex items-center gap-2 m-3">
-                           
-                            <input type="text" formControlName="stream"  class="grow" placeholder="stream" />
-                          </label>
-                
-                          <label class="input input-bordered flex items-center gap-2 m-3">
-                            
-                            <input type="text" formControlName="semester" class="grow" placeholder="semester" />
-                          </label>
-                
-                
-                          <textarea class="textarea textarea-bordered grow gap-2 m-3 w-[99%]" type="password" formControlName="description" placeholder="description"></textarea>
-                          <div class="w-full text-center">
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                          </div>
-                      </form>
-                    }
-                    
-                  </div>
-            }
-           
-    </div>
-}
+<div class="root flex-col relative">
 
-  @if (label == '3') {
-    <div>
-        <h1>IT is your</h1>
+  <!-- top secttion -->
+  <div data-aos="fade-down" class="bg-blue-500 w-[140%] h-[200px] absolute top-[-90px] text-center flex justify-center items-center z-[3]" style="border-radius: 100%;">
+    <h1 class="decoration-auto parkinsans text-2xl text-white mt-[20%]">Classes</h1>
+  </div>
+
+  
+
+  <!-- create class btn -->
+   @if (!createClassView) {
+    <div class="bg-red-50 absolute bottom-16 right-4 z-[3]" [hidden]="!(label=='1' || label=='2')">
+      <button mat-fab  (click)="createClass();">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+   }
+ 
+
+  <!-- show to day classes -->
+  <div class="h-full w-full relative">
+    <div class="absolute bottom-[41px] left-0 right-0 top-[100px]">
+      <div class="w-full h-full overflow-x-scroll flex flex-col items-center p-1">
+        <class-card class="w-[95%]" [card]="cardData"></class-card>
+      </div>
+    </div>
+    <div class="absolute w-full bottom-1 h-[40px]">
+      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.value)">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </div>
+
+  <!-- creaate classes -->
+  @if (createClassView) {
+    <div data-aos="fade-up" class="absolute z-[3] shadow-2 w-[95%] h-[60%] bottom-0 bg-white pt-[22px]" style="border-radius: 22px 22px 0px 0px;">
+      <div class="relative w-full h-full">
+        <div class="w-full h-[80%] p-4">
+         @if (calssForm) {
+          
+          <input type="file" class="lock w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:text-neutral-400
+          file:bg-gray-50 file:border-0
+          file:me-4
+          file:py-3 file:px-4
+          dark:file:bg-gray-700 dark:file:text-neutral-400 mb-3" extensions="pdf,xlsx,mp4,doc" (change)="onFileSelected($event)"/>
+          <form  [formGroup]="calssForm" class="w-full h-full">
+            <mat-form-field class="example-full-width">
+              <mat-label>Title or Class name</mat-label>
+              <input matInput type="text" class="grow" formControlName="title" placeholder="Title or Class name" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Semester</mat-label>
+              <mat-select (selectionChange)="selectSem($event.value)">
+                @for (sem of semester; track sem) {
+                  <mat-option [value]="sem.value">{{sem.lable}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Stream</mat-label>
+              <mat-select (selectionChange)="selectStream($event.value)">
+                @for (stre of stream; track stre) {
+                  <mat-option [value]="stre.value">{{stre.lable}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="example-full-width">
+              <mat-label>Leave a comment</mat-label>
+              <textarea matInput class="textarea textarea-bordered grow gap-2 m-3 w-[99%]" type="password" formControlName="description" placeholder="description"></textarea>
+            </mat-form-field>
+
+
+          </form>
+         }
+        </div>
+        <div class="w-full h-[20%] flex justify-center items-center gap-4">
+          <button mat-flat-button extended (click)="createClass()" class="red-btn">Cancle</button>
+          <button mat-flat-button extended (click)="onSubmit()">Save</button>
+        </div>
+      </div>
     </div>
   }
-  
+</div>

@@ -57,7 +57,7 @@ def app():
             return jsonify(res),200
         
         elif lable == 1 and  request.method == 'GET' : # for admin
-            sql = "SELECT * FROM `classes` WHERE `createDate` = CURRENT_DATE();"
+            sql = "SELECT * FROM `classes`;"
             app.cursor.execute(sql)
             res = app.cursor.fetchall()
             return jsonify(res),200

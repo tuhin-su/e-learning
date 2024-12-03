@@ -1,0 +1,23 @@
+@if (card) {
+    <mat-card class="w-[95%] h-auto m-4 overflow-hidden" appearance="outlined">
+          
+        <mat-card-header class="w-full h-[64px border-b-2">
+          <div class="h-[44px] w-[44px] rounded-full" style="background-repeat: no-repeat; background-size: cover; background-position: center; background-image: url('img/user-286-64.png');">
+            
+          </div>
+          <div class="ml-4 h-[90%] flex justify-center items-center decoration-auto parkinsans">
+             {{card.user?.name}}
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          {{card.description}}
+        </mat-card-content>
+        <mat-card-actions class="w-full flex justify-end items-center">
+          @if (card.downloadLink) {
+            <button mat-button>
+                Download
+              </button>
+          }
+        </mat-card-actions>
+    </mat-card>
+}

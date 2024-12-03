@@ -58,4 +58,8 @@ export class DashbordComponent implements OnInit {
   openCalander(){
     window.open('https://www.timt.org.in/academic/academic-calender');
   }
+
+  openUrl(url: string){
+    window.open(url);
+  }
 }
