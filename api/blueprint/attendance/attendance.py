@@ -5,7 +5,7 @@ import base64
 import face_recognition
 import io
 import base64
-
+from modules.DataBase import DBA
 
 try:
     from rich import print
@@ -21,6 +21,9 @@ def attendance():
     
     @app.auth.login_required
     def hendel_att():
+        db = DBA()
+        db.connect()
+
         user_id = app.auth.current_user()
         current_app.logger.info(f'User {user_id["user_id"]} accessed attendance')
 
@@ -31,6 +34,7 @@ def attendance():
                 if app.getLabel(user_id['user_id']) <= 2: # for admin and staff
                     data = request.json
                     if not data:
+                        db.disconnect()
                         return jsonify({"message": "No data provided"}), 400
 
                     stream = data.get("stream")
@@ -38,6 +42,7 @@ def attendance():
 
                     # Validate the stream and semester inputs
                     if not stream or not sem:
+                        db.disconnect()
                         return jsonify({"message": "Stream and semester are required"}), 400
 
                     query = """
@@ -47,9 +52,9 @@ def attendance():
                         JOIN student s ON u.user_id = s.id 
                         WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();
                     """
-                    app.cursor.execute(query, (stream, sem))
-                    attendance = app.cursor.fetchall()
-
+                    db.cursor.execute(query, (stream, sem))
+                    attendance = db.cursor.fetchall()
+                    db.disconnect()
                     return jsonify({"attendance": attendance}), 200
                 else:
                     # User with limited access, fetching own attendance
@@ -60,8 +65,9 @@ def attendance():
                         WHERE ui.user_id = %s AND a.attendance_date_only =  CURDATE()
                         LIMIT 1;
                     """
-                    app.cursor.execute(query, (user_id['user_id'],))
-                    record = app.cursor.fetchall()
+                    db.cursor.execute(query, (user_id['user_id'],))
+                    record = db.cursor.fetchall()
+                    db.disconnect()
                     return jsonify({"record": record}), 200
 
             elif request.method == 'PUT':
@@ -71,25 +77,34 @@ def attendance():
                     VALUES (%s, NOW(), CURDATE());
                 """
                 try:
-                    app.cursor.execute(query, (user_id['user_id'],))
-                    app.conn.commit()
+                    db.cursor.execute(query, (user_id['user_id'],))
+                    db.conn.commit()
+                    db.disconnect()
                     return jsonify({}), 200
                 except mysql.connector.Error as e:
                     # Handle duplicate entry error
                     if e.errno == 1062:
                         error_message = "Attendance already recorded for this user on the same day"
+                        db.disconnect()
                         return jsonify({"message": error_message}), 200
                     else:
                         error_message = str(e)
-                    app.conn.rollback()
+                    db.conn.rollback()
                     current_app.logger.error(f"Error recording attendance: {e}")
+                    db.disconnect()
                     return jsonify({"message": error_message}), 400
+                finally:
+                    db.disconnect()
             else:
                 return jsonify({"message": "Invalid request"}), 400
         except mysql.connector.Error as e:
             # Log any other MySQL errors
             current_app.logger.error(f"Database error: {e}")
+            db.disconnect()
             return jsonify({"message": "An error occurred while processing your request"}), 500
+        finally:
+            db.disconnect()
+    
     return hendel_att()
 
 @attendance_bp.route('/attendance/comeHaven', methods=['POST'])
@@ -97,22 +112,26 @@ def attGive():
     app = current_app.config["app"]
     @app.auth.login_required
     def heandel():
+        db = DBA()
+        db.connect()
         data = request.json
         if not data["id"]:
+            db.disconnect()
             return jsonify({"message": "No data provided"}), 400
         
         sql = "INSERT INTO attends (user_id, attendance_date, attendance_date_only)VALUES (%s, NOW(), CURDATE())"
         try:
-            app.cursor.execute(sql, (data["id"],))
-            app.conn.commit()
+            db.cursor.execute(sql, (data["id"],))
+            db.conn.commit()
+            db.disconnect()
             return jsonify({"message": "Attendance recorded"}), 200
         except mysql.connector.errors.IntegrityError as e:
             if e.errno == 1062:
+                db.disconnect()
                 return jsonify({"message": "Attendance already recorded"}), 200
             return jsonify({"message": str(e)}), 400
-
-
-    
+        finally:
+            db.disconnect()
     return heandel()
 
 @attendance_bp.route('/attendance/face', methods=['POST'])
@@ -120,30 +139,35 @@ def attFace():
     app = current_app.config["app"]
     @app.auth.login_required
     def heandel():
+        db = DBA()
+        db.connect()
         user_id = app.auth.current_user()['user_id']
         data = request.json
 
         image_b64 = data.get('image')
         if not image_b64:
+            db.disconnect()
             return jsonify({'massage': 'No image provided'}), 400
 
         
         #  get curent user info
         sql = "SELECT `course`,`semester` FROM `student` WHERE `id` = %s;"
-        app.cursor.execute(sql, (user_id, ))
-        result = app.cursor.fetchone()
+        db.cursor.execute(sql, (user_id, ))
+        result = db.cursor.fetchone()
 
         if not result:
+            db.disconnect()
             return jsonify({'massage': 'Only Student allow to give attendance'}), 404
         
 
         # select all user img from user_info
         sql = """SELECT u.user_id, u.img,u.name,s.roll FROM user_info u JOIN student s ON u.user_id = s.id WHERE s.id != %s AND course = %s AND semester = %s AND u.img IS NOT NULL;"""    
-        app.cursor.execute(sql, (user_id, result['course'], result['semester']))
-        result = app.cursor.fetchall()
+        db.cursor.execute(sql, (user_id, result['course'], result['semester']))
+        result = db.cursor.fetchall()
 
 
         if not result:
+            db.disconnect()
             return jsonify({'massage': f'Invalid sql query {result}'}), 404
     
         for i in result:
@@ -165,15 +189,19 @@ def attFace():
             img2_encoding = face_recognition.face_encodings(img2_array)
 
             if not img1_encoding or not img2_encoding:
+                db.disconnect()
                 return jsonify({"res":"Could not detect a face in one of the images."})
 
             result = face_recognition.compare_faces([img1_encoding[0]], img2_encoding[0])
 
             if result:
+                db.disconnect()
                 return jsonify(i),200
             else:
+                db.disconnect()
                 return jsonify({"res":"No face matched plese update face data or tray agen"}),400
             
+        db.disconnect()
         return jsonify({'massage': 'Invalid data'}), 400
 
     return heandel()

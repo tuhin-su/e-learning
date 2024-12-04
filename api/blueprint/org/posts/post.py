@@ -1,20 +1,24 @@
 from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from base64 import b64encode, b64decode
+from modules.DataBase import DBA
 
 posts = Blueprint("Posts", __name__)
+db = DBA()
 
-@posts.route('/posts', methods=['POST', 'GET'])
+@posts.route('/posts', methods=['POST'])
 def app():
     app = current_app.config["app"]
 
     @app.auth.login_required
     def handle():
+        db.connect()
         user_id = app.auth.current_user()['user_id']
         
         if request.method == 'POST':
             # Check if a file was provided
             if not request.files:
+                db.disconnect()
                 return jsonify({"message": "No file provided"}), 400
 
             file = request.files['file']
@@ -27,36 +31,42 @@ def app():
                      VALUES (%s, %s, %s, %s, %s);'''
             
             try:
-                app.cursor.execute(sql, (content, content_name, content_type, content_size, user_id))
-                app.conn.commit()
+                db.cursor.execute(sql, (content, content_name, content_type, content_size, user_id))
+                db.conn.commit()
                 
+                db.disconnect()
                 return jsonify({
                     "message": "Post added successfully",
-                    "post_id": app.cursor.lastrowid
+                    "post_id": db.cursor.lastrowid
                 }), 200
             except Error as e:
-                print(e)
+                db.disconnect()
                 return jsonify({"message": str(e)}), 400
+            finally:
+                db.disconnect()
 
-        elif request.method == 'GET':
-            post_id = request.json.get('post_id')
-            if not post_id:
-                return jsonify({"message": "No data id provided"}), 400
+    return handle()
 
-            # Fetch metadata and content from the database
-            sql = '''SELECT `content`, `content_name`, `content_type`, `content_size`, `createBy`, `createDate` 
-                     FROM `posts_data` WHERE `id` = %s;'''
+@posts.route('/posts/<post_id>', methods=['GET'])
+def get_post(post_id):
+    app = current_app.config["app"]
+
+    @app.auth.login_required
+    def handle():
+        db.connect()
+        sql = '''SELECT `content`, `content_name`, `content_type`, `content_size`, `createBy`, `createDate` FROM `posts_data` WHERE `id` = %s;'''
             
-            try:
-                app.cursor.execute(sql, (post_id,))
-                data = app.cursor.fetchone()
-
-                if data:
-                    # Encode binary data to base64 for easier handling
-                    data["content"] = b64encode(data["content"]).decode('utf-8')
-
-                return jsonify(data), 200
-            except Error as e:
-                return jsonify({"message": str(e)}), 400
+        try:
+            db.cursor.execute(sql, (post_id,))
+            data = db.cursor.fetchone()
+            if data:
+                data["content"] = b64encode(data["content"]).decode('utf-8')
+            db.disconnect()
+            return jsonify(data), 200
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
 
     return handle()

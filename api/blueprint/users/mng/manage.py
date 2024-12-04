@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash
 from flask import Flask,Blueprint ,request, jsonify,current_app
 from datetime import datetime, timedelta
 from mysql.connector import Error
+from modules.DataBase import DBA
 
 mng = Blueprint("User Management", __name__)
 
@@ -11,23 +12,30 @@ def app():
         
         @app.auth.login_required
         def heandel():
+            db = DBA()
+            db.connect()
+
             user_id_ad = app.auth.current_user()['user_id']
             data = request.json
             
             if app.getLable(user_id_ad) != 1 and app.getLable(user_id_ad) != 2:
+                db.disconnect()
                 return jsonify({"message": "You are not authorized to perform this action"}), 403
             
             if "FROM" not in data:
+                db.disconnect()
                 return jsonify({"message": "FROM is required"}), 400
             
             if data['FROM'] == 'student_ac':
                 if  "data" not in data:
+                    db.disconnect()
                     return jsonify(["email","dob","roll","reg","course","semester"])
                 
                 else:
                     data = data["data"]
                     for i in ["email","dob","roll","reg","course","semester"]:
                         if i not in data:
+                            db.disconnect()
                             return jsonify({"message": f"{i} is required"}), 400
                     
                     
@@ -37,10 +45,12 @@ def app():
                         app.cursor.execute(sql, (data['email'],))
                         user = app.cursor.fetchone()
                         if user:
+                            db.disconnect()
                             return jsonify({"message": "User already exists"}), 400
                         
                     except Error as e:
                         app.app.logger.error(f"Error checking user: {e}")
+                        db.disconnect()
                         return jsonify({"message": str(e)}), 500
                     
                     user_id = app.generate_unique_id(data['email'], data['dob'], "ST")
@@ -63,17 +73,21 @@ def app():
                                 app.cursor.execute(sql, (user_id, data['roll'], data['reg'], course, data['semester'], user_id_ad))
                                 app.conn.commit()
                                 app.app.logger.info(f'Created new user: {data["email"]}')
+                                db.disconnect()
                                 return jsonify({"message": "User created"}), 201
                             
                             except Error as e:
                                 app.app.logger.error(f"Error creating user: {e}")
+                                db.disconnect()
                                 return jsonify({"message": str(e)}), 500
                         
                         except Error as e:
+                            db.disconnect()
                             return jsonify({"message": str(e)}), 500
                         
                     except Error as e:
                         app.app.logger.error(f"Error creating user: {e}")
+                        db.disconnect()
                         return jsonify({"message": str(e)}), 500
                     
         return heandel();

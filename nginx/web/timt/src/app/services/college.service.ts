@@ -104,13 +104,38 @@ export class CollegeService {
     return this.http.post<any>(loginUrl, payload, { headers });
   }
 
-  getAll(): Observable<any>{
-    const loginUrl = `${this.api}/classes`;
+  getAll(date:string): Observable<any>{
+    const loginUrl = `${this.api}/classes/${date}`;
   
     const headers = { 
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.storage.get('token')}`
     };
     return this.http.get<any>(loginUrl, { headers });
+  }
+
+
+  /// info
+  getInfoSem(value: any): Observable<any>{
+    const loginUrl = `${this.api}/info/sem`;
+    const payload = {
+      "stream": value
+    }
+    const headers = { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+  // stream info
+  getStreamInfo(): Observable<any>{
+    const loginUrl = `${this.api}/info/stream`;
+    const payload = {}
+    const headers = { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
   }
 }

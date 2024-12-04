@@ -11,7 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { debug } from '../../utility/function';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import { ClassCardComponent } from '../../components/class-card/class-card.component';
 @Component({
@@ -37,8 +37,8 @@ export class ClassesComponent {
   selectedFile: File | null = null;              // Holds the selected file
   uploadId?: number; 
   progress?:{value: number};
-  semester?:any;
-  stream?:any;
+  semester:any = [];
+  stream: any = [];
 
   // userInfo
   label :string | null = localStorage.getItem('lable');
@@ -46,16 +46,16 @@ export class ClassesComponent {
   // class from
   calssForm?: FormGroup;
 
-  cardData = {
-    title: 'Demo Card',
-    description: 'lorom32',
-    downloadLink: 'sda',
-    user: {
-      name: 'student',
-      image: ''
-    }
-  }
+  cardData:any = [];
+  dateFilter = (date: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
+    return (date || today) <= today; // Allow dates less than or equal to today
+  };
   
+  // curent timestarp
+  date:string =  new Date().toISOString();;
+
   constructor(
     private postService: FunctionaltyService,
     private fb: FormBuilder,
@@ -64,37 +64,18 @@ export class ClassesComponent {
   ) { }
 
   ngOnInit(): void {
-    this.init();
-    this.fetchClasses();
+    this.fetchClasses(this.date);
+    if (this.label == "1" || this.label == "2") {
+      this.fetchStream();
+    }
   }
-  init(){
-    this.semester = [
-      { lable: "First sem", value: 1 },
-      { lable: "Second sem",  value: 2 },
-      { lable: "Third sem", value: 3 },
-      { lable: "Fourth sem", value: 4 },
-      { lable: "Fifth sem", value:5 },
-      { lable: "six sem", value: 6},
-      { lable: "Seven sem", value: 7},
-      { lable: "Eight sem", value: 8 },
-      
-    ]
 
-
-    this.stream = [
-      { lable: "BCA", value: 3 },
-      { lable: "BBA",  value: 1 },
-      { lable: "BHM", value: 2 },
-      { lable: "MSC", value: 4 },
-      
-    ]
-  }
-  async fetchClasses(){
-    await firstValueFrom(this.service.getAll().pipe(
+  async fetchClasses(date:string){
+    await firstValueFrom(this.service.getAll(date).pipe(
       tap(
         (response)=>{
           if (response) {
-            console.log(response)
+            this.cardData = response;
           }
         },
         (error)=>{
@@ -108,7 +89,7 @@ export class ClassesComponent {
     if (this.createClassView) {
       this.createClassView = !this.createClassView;
       if (!this.createClassView) {
-        this.fetchClasses();
+        this.fetchClasses(this.date);
       }
       return
     }
@@ -176,9 +157,35 @@ export class ClassesComponent {
  }
  selectStream(value: any){
   this.calssForm?.patchValue({stream: value});
+  this.fetchSemester(value);
  }
 
- onDateChange(selectedDate: Date): void {
-  debug(selectedDate);
+ onDateChange(selectedDate: Date | null): void {
+  this.date = selectedDate?.toISOString() || '';
+  this.fetchClasses(this.date);
+ }
+
+ async fetchStream(){
+  await firstValueFrom(this.service.getStreamInfo().pipe(
+    tap(
+      (responce)=>{
+        responce.map((stream: any)=>{
+          this.stream?.push({lable: stream.name, value: stream.id})
+        })
+      }
+    )
+  ))
+ }
+
+ async fetchSemester(value: any){
+  await firstValueFrom(this.service.getInfoSem(value).pipe(
+    tap(
+      (responce)=>{
+        for(let i = 1; i <= Number(responce['course_duration'])*2; i++){
+          this.semester?.push({lable: i, value: i})
+        }
+      }
+    )
+  ))
  }
 }

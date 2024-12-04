@@ -37,3 +37,11 @@ export function formatDate(dateString: string): string {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
+
+export function extractHttpsLinks(paragraph: string): string[] {
+    // Regular expression to match `https://` links
+    const httpsRegex = /https:\/\/[^\s]+/g;
+  
+    // Return matched links or an empty array if no matches are found
+    return paragraph.match(httpsRegex) || [];
+  }

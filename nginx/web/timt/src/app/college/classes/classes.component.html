@@ -21,13 +21,19 @@
   <div class="h-full w-full relative">
     <div class="absolute bottom-[41px] left-0 right-0 top-[100px]">
       <div class="w-full h-full overflow-x-scroll flex flex-col items-center p-1">
-        <class-card class="w-[95%]" [card]="cardData"></class-card>
+        @for (item of cardData; track $index) {
+          <class-card class="w-[95%]" [card]="item"></class-card>
+        }
       </div>
     </div>
-    <div class="absolute w-full bottom-1 h-[40px]">
-      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.value)">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+    <div class="absolute w-full bottom-1 h-[40px] text-center">
+      <input  style="height: 0px; width: 0px;"
+        matInput 
+        [matDatepicker]="picker" 
+        (dateChange)="onDateChange($event.value)" 
+        [matDatepickerFilter]="dateFilter">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </div>
   </div>
 
@@ -50,19 +56,19 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Semester</mat-label>
-              <mat-select (selectionChange)="selectSem($event.value)">
-                @for (sem of semester; track sem) {
-                  <mat-option [value]="sem.value">{{sem.lable}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field>
               <mat-label>Stream</mat-label>
               <mat-select (selectionChange)="selectStream($event.value)">
                 @for (stre of stream; track stre) {
                   <mat-option [value]="stre.value">{{stre.lable}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field>
+              <mat-label>Semester</mat-label>
+              <mat-select (selectionChange)="selectSem($event.value)">
+                @for (sem of semester; track sem) {
+                  <mat-option [value]="sem.value">{{sem.lable}}</mat-option>
                 }
               </mat-select>
             </mat-form-field>

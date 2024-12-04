@@ -31,4 +31,14 @@ export class UserService {
     // Make the POST request with the headers
     return this.http.post<any>(userData, data, { headers });
   }
+
+  getUserinfo(id:string): Observable<ApiResponce> {
+    const userData = `${this.api}/user/info/${id}`;
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.get<ApiResponce>(userData, { headers });
+  }
 }

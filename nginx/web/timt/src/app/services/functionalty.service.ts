@@ -16,7 +16,13 @@ export class FunctionaltyService {
 
   api = environment.api;
 
-  getPost(id: number) {}
+  getPost(id: number): Observable<any> {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    }
+    return this.http.get<any>(`${this.api}/posts/${id}`, {headers});
+  }
 
   postPost(FileData:File): Observable<any>{
     const token = this.storage.get('token');

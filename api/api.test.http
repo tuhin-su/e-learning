@@ -181,3 +181,30 @@ Authorization: Bearer {{ token }}
     "semester": 4
   }
 }
+
+
+######## Info
+# @name info_stream
+@token = {{login.response.body.token}}
+
+POST {{ apiUrl }}/info/stream
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+{
+
+}
+
+######## Info
+# @name info_sem
+@token = {{login.response.body.token}}
+
+POST {{ apiUrl }}/info/sem
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+
+  "stream" : 1
+}

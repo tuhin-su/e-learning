@@ -12,7 +12,6 @@ import time
 import uuid
 from datetime import datetime, timedelta
 import os
-import signal
 
 ## IMPORT Blueprint
 from blueprint.version.version import version_bp
@@ -26,6 +25,7 @@ from blueprint.education.students.students import students
 from blueprint.org.posts.post import posts
 from blueprint.org.notics.notics import notice
 from blueprint.users.mng.manage import mng
+from blueprint.education.info.info import info
 
 class apiHandler:
     def __init__(self):
@@ -95,6 +95,7 @@ class apiHandler:
         self.app.register_blueprint(posts) # All post
         self.app.register_blueprint(notice) # All notic
         self.app.register_blueprint(mng) # All user manage
+        self.app.register_blueprint(info) # give info
         
         @self.auth.verify_token
         def verify_token(token):
