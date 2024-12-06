@@ -1,0 +1,46 @@
+services:
+  db:
+    image: mariadb:10.6
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    restart: always
+    volumes:
+      - ./db/db_data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
+
+  flask:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.flask
+    working_dir: /app
+    restart: always
+    command: "bash run.sh"
+    volumes:
+      - ./api:/app
+    environment:
+      SECRET_KEY: ${API_SECRET_KEY}
+      DB_HOST: ${DATABASE_HOST}
+      DB_DATABASE: ${DATABASE_NAME}
+      DB_USER: ${DATABASE_USER}
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      SERVER_NAME: ${NAME}
+      BOT_KEY: ${BOT_KEY}
+      CHANNEL_ID: ${BOT_CHANNEL_ID}
+      BOT_ENABLE: ${BOT_ENABLE}
+
+  angular:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.angular
+    container_name: angular
+    command: "sh run.sh"
+      
+    volumes:
+      - ./web/timt:/app
+    environment:
+      - MODE=${MODE}
+    working_dir: /app
