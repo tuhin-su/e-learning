@@ -8,6 +8,7 @@ import { AttendanceComponent } from './college/attendance/attendance.component';
 import { ClassesComponent } from './college/classes/classes.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { NoticComponent } from './college/notic/notic.component';
 
 export const routes: Routes = [
     {path: "", component: DashbordComponent,  canActivate: [AuthGuard]},
@@ -17,5 +18,6 @@ export const routes: Routes = [
     {path: "college/attendance", component: AttendanceComponent,  canActivate: [AuthGuard]},
     {path: "college/class", component: ClassesComponent,  canActivate: [AuthGuard]},
     {path: "college/feedback", component: FeedbackComponent,  canActivate: [AuthGuard]},
+    {path: "college/notic", component: NoticComponent,  canActivate: [AuthGuard]},
     {path: "logout", component: LogoutComponent,  canActivate: [AuthGuard]},
 ];
