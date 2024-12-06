@@ -6,5 +6,9 @@ alias fetch="git fetch --all"
 alias prune="git fetch --prune"
 alias pull="git pull"
 alias checkout="git checkout"
+<<<<<<< HEAD
 alias start="bash run.sh"
 alias restart="sudo systemctl restart e-learning.service"
+=======
+# "activate" then "shell angular sh" then  "sh run.sh"
+>>>>>>> 1c599c16 (created notice board)
