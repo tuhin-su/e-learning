@@ -19,9 +19,15 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
   "username": "admin@email.com",
   "password": "passwd",
   "groups": "AD",
+=======
+  "username": "rana@admin.in",
+  "password": "passwd",
+  "groups": "FA",
+>>>>>>> 634d1f40 (notice card update)
   "ref": "0"
 }
 
