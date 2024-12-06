@@ -17,3 +17,4 @@ dev
 www
 .tmp
 *tmp
+dotfiles/*
