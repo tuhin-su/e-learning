@@ -1,5 +1,5 @@
 import { environment } from "../../environments/environment.development";
-
+import { formatDate } from "@angular/common";
 export function debug(msg: any | null) {
     if (!environment.production) {
         console.log(msg);
@@ -30,7 +30,7 @@ export function convertToISODate(mysqlDate: string): string {
     return date.toISOString(); // Convert to ISO 8601 format
   }
 
-export function formatDate(dateString: string): string {
+export function formatDates(dateString: string): string {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0'); // Ensure two-digit format
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
@@ -45,3 +45,33 @@ export function extractHttpsLinks(paragraph: string): string[] {
     // Return matched links or an empty array if no matches are found
     return paragraph.match(httpsRegex) || [];
   }
+
+export function downloadContentInformation(contentInformation:{
+  "id": number,
+  "content": string,
+  "content_name": string,
+  "content_size": number,
+  "content_type": string,
+  "createBy": string,
+  "createDate": string
+} | null | undefined){
+  if (!contentInformation) {
+    return;
+  }
+    const blob = new Blob([contentInformation.content], { type: contentInformation.content_type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = contentInformation.content_name;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+
+export function convertDate(dateStr: string): string {
+  // Convert the date string to a Date object
+  const dateObj = new Date(dateStr);
+
+  // Format the date to "hh:mm a dd/MM/yyyy" format
+  return formatDate(dateObj, 'hh:mm a dd/MM/yyyy', 'en-US');
+}

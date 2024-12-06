@@ -465,10 +465,15 @@
       },
       "post_id": {
         "type": "INT",
-        "nullable": false,
+        "nullable": true,
         "foreign_key": {
           "references": "posts_data(id)"
         }
+      },
+      "content":{
+        "type": "VARCHAR",
+        "nullable": true,
+        "length": 255
       },
       "createBy": {
         "type": "VARCHAR",

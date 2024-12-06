@@ -139,7 +139,8 @@ CREATE TABLE IF NOT EXISTS collage_location (
 CREATE TABLE IF NOT EXISTS notification (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     title VARCHAR(255) NOT NULL,
-    post_id INT NOT NULL,
+    post_id INT NULL,
+    content VARCHAR(255),
     createBy VARCHAR(255) NOT NULL,
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts_data(id),
