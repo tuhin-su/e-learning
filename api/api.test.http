@@ -95,14 +95,14 @@ Authorization: Bearer {{ token }}
 
 ### Attendens
 @token = {{login.response.body.token}}
-GET {{ apiUrl }}/attendance
+POST {{ apiUrl }}/attendance
 Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
     "sem": "2",
     "stream": "BCA",
-    "month": "1"
+    "date": "10/11/2024"
 }
 
 

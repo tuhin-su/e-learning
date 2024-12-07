@@ -33,26 +33,20 @@ def attendance():
                 # Check if user has the necessary access
                 if app.getLabel(user_id['user_id']) <= 2: # for admin and staff
                     data = request.json
-                    if not data:
-                        db.disconnect()
-                        return jsonify({"message": "No data provided"}), 400
+
+                    requerments = ["stream", "sem", "date"]
+                    for i in requerments:
+                        if i not in data:
+                            db.disconnect()
+                            return jsonify({"message": f"{i} is required"}), 400
 
                     stream = data.get("stream")
                     sem = data.get("sem")
+                    date = data.get("date")
 
-                    # Validate the stream and semester inputs
-                    if not stream or not sem:
-                        db.disconnect()
-                        return jsonify({"message": "Stream and semester are required"}), 400
+                    query = """SELECT a.id AS attend_id, a.user_id, u.name AS name, a.attendance_date, u.img, s.roll FROM attends a JOIN user_info u ON a.user_id = u.user_id LEFT JOIN student s ON u.user_id = s.id WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = STR_TO_DATE(%s, '%m/%d/%Y');"""
 
-                    query = """
-                        SELECT a.id AS attend_id, a.user_id, u.name AS name, a.attendance_date, u.img, s.roll 
-                        FROM attends a 
-                        JOIN user_info u ON a.user_id = u.user_id 
-                        JOIN student s ON u.user_id = s.id 
-                        WHERE s.course = %s AND s.semester = %s AND DATE(a.attendance_date) = CURDATE();
-                    """
-                    db.cursor.execute(query, (stream, sem))
+                    db.cursor.execute(query, (stream, sem, date))
                     attendance = db.cursor.fetchall()
                     db.disconnect()
                     return jsonify({"attendance": attendance}), 200

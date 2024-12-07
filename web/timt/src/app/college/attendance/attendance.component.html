@@ -1,100 +1,18 @@
-<!-- Staff and admin    *ngIf="lable == 1 || lable == 2" -->
-<!-- <div *ngIf="lable == 1 || lable == 2"  class="flex flex-wrap h-full w-full">
-  <div class="fixed navbar h-[57px] bg-slate-500 hover:bg-blue-500 w-full">
-    <button class="btn btn-square btn-ghost bg-transparent border-none">
-      <i routerLink="/" class="bi bi-box-arrow-left text-white text-3xl"></i>
-    </button> -->
-    <!-- <div class="flex-1">
-      <i class="bi bi-person-hearts text-white btn btn-ghost text-3xl" title="Add friend"></i>
-    </div> -->
-
-    <!-- <div style="position: absolute; right: 2px;">
-      <label class="form-control w-fit">
-        <select class="select select-bordered" [(ngModel)]="selectedMonth" (change)="selectMonth();">
-          <option disabled selected value="0">Months</option>
-          <option *ngFor="let month of months" [value]="month.value">{{ month.lable }}</option>
-        </select>
-      </label>
-
-      <label *ngIf="selectedMonth != '0'" class="form-control w-fit m-3">
-        <select class="select select-bordered" [(ngModel)]="selectedstream" (change)="selectstream();">
-          <option disabled selected value="0">Stream</option>
-          <option *ngFor="let s of stream" [value]="s.value">{{ s.lable }}</option>
-        </select>
-      </label>
-  
-
-
-        <label *ngIf="selectedstream != '0'" class="form-control w-fit m-3">
-          <select class="select select-bordered" [(ngModel)]="selectedsem" (change)="selectsem();">
-            <option disabled selected value="0">Semester</option>
-            <option *ngFor="let sem of semester" [value]="sem.value">{{ sem.lable }}</option>
-          </select>
-        </label>
-    </div>
-  </div>
-
-  <div *ngIf="!usersList" style="display: flex; justify-content: center; align-items: center;" class="w-full h-full">
-    <h1 *ngIf="selectedMonth=='0'">Selecet Month</h1>
-    <h1 *ngIf="selectedstream == '0' && selectedMonth !='0'">Selecet Stream</h1>
-    <h1 *ngIf="selectedMonth != '0' && selectedstream != '0' && selectedsem == '0'">Selecet semester</h1>
-
-  </div> -->
-  <!-- Scrollable table container -->
-  <!-- <div *ngIf="usersList" class="overflow-x-hidden" style="position: absolute; top: 70px; left: 0; right: 0; bottom: 0;">
-    <div class="w-full h-full overflow-hidden">
-      <div class="overflow-y-auto" style="max-height: calc(100vh - 70px);">
-        <table class="table table-xs text-center w-full">
-          <thead class="sticky top-0 bg-[#042f4b]">
-            <tr class="h-45px  hover:bg-slate-500 text-white text-lg">
-              <th>Name</th>
-              <th>Attendance Date</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr *ngFor="let user of usersList" class="hover:bg-blue-500">
-              <td><div class="flex items-center gap-3">
-                <div class="avatar">
-                  <div class="mask mask-squircle h-12 w-12">
-                    <img *ngIf="user.img == ''"
-                      src="/assets/imgs/user-286-512.png"
-                      alt="Avatar Tailwind CSS Component" />
-                    
-                    <img *ngIf="user.img != ''"
-                      [src]="user.img"
-                      alt="profile img" />
-
-                  </div>
-                </div>
-                <div>
-                  <div class="font-bold">{{user.name}}</div>
-                  <div class="text-sm opacity-50">{{ user.roll }}</div>
-                </div>
-              </div></td>
-              <td>12/16/2020</td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div> -->
-  
-  <!-- student   *ngIf="lable == 3" -->
-<!-- @if (lable == 3) {
-  <div class="flex flex-wrap h-full w-full">
-    
-  
-    
-  </div>
-}
-  -->
-
 <div class="root">
   @if (lable == 1 || lable == 2) {
     <div class="w-full h-[10%] absolute bottom-0 flex items-center justify-center">
+      <mat-form-field>
+        <mat-label>Stream</mat-label>
+        <mat-select (selectionChange)="selectStream($event.value)">
+          @for (sem of stream; track $index) {
+            <mat-option [value]="sem.value">
+              {{ sem.lable }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
       <mat-form-field>
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.value)">
@@ -103,29 +21,51 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Semester</mat-label>
+        <mat-label>semester</mat-label>
         <mat-select (selectionChange)="selectSem($event.value)">
-          @for (sem of semester; track sem) {
-            <mat-option [value]="sem.value">{{sem.lable}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Stream</mat-label>
-        <mat-select (selectionChange)="selectStream($event.value)">
-          @for (st of stream; track st) {
+          @for (st of semester; track st) {
             <mat-option [value]="st.value">{{st.lable}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
-
-
     </div>
-    <div class="w-full h-[90%] overflow-x-scroll bg-red-400 absolute top-0">
-      <div class="h-full w-full relative">
+    <div class="w-full h-[90%] overflow-x-scroll absolute top-0">
+      <div class="h-full w-full relative flex-col">
+        <table mat-table [dataSource]="usersList" class="mat-elevation-z8" *ngIf="usersList.length > 0">
 
+          <!-- No. Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Roll Column -->
+          <ng-container matColumnDef="roll">
+            <th mat-header-cell *matHeaderCellDef> Roll </th>
+            <td mat-cell *matCellDef="let element"> {{element.roll}} </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="deleteUser(element.roll)" style="color: red !important;">
+                Delete
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </div>
+
     </div>
   }
   @if (lable == 3) {
@@ -151,36 +91,36 @@
             <i class="bi bi-arrow-clockwise text-2xl"></i>
           </button>
         }
-    
+
          @if (giveUser) {
           <div class="flex gap-3 items-center bg-[#ffffff2c] px-6 rounded-md m-5">
-    
+
             <div class="avatar">
               <div class="mask mask-squircle h-12 w-12">
                 <img [src]="giveUser.img" alt="Avatar Tailwind CSS Component" />
               </div>
             </div>
-      
+
             <div>
               <div class="font-bold text-white">{{giveUser.name}}</div>
               <div class="text-sm opacity-50 text-white">{{giveUser.roll}}</div>
             </div>
-      
+
             <div class="tooltip my-6 ml-4 text-white" data-tip="Give Attendance">
               <button class="btn btn-outline btn-info "><i class="bi bi-person-check text-2xl" (click)="giveTOHaven();"></i></button>
             </div>
-      
+
           </div>
          }
-        
+
         <div class="m-14">
           <button mat-flat-button extended class="btn btn-outline btn-info disabled" (click)="attend();" [disabled]="!attAble">
             <i class="bi bi-person-raised-hand text-2xl"></i>{{ !attAble ? "Attendance alrady given" : "Give Attendance"
             }}</button>
-            
-    
+
+
         </div>
-    
+
       </div>
     </div>
   }

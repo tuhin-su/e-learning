@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { firstValueFrom, tap } from 'rxjs';
+import { first, firstValueFrom, tap } from 'rxjs';
 import { CollegeService } from '../../services/college.service';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FaceRecognitionService } from '../../services/face-recognition.service';
 import { AfterViewInit } from '@angular/core';
 import * as faceapi from 'face-api.js';
@@ -13,21 +13,32 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
 
+export interface PeriodicElement {
+  position: number;
+  name: string;
+  roll: number;
+}
 @Component({
   selector: 'app-attendance',
   imports: [
+    CommonModule,
     MatButtonModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.scss'
 })
 export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
+deleteUser(arg0: any) {
+throw new Error('Method not implemented.');
+}
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('overlay') overlayRef!: ElementRef<HTMLCanvasElement>;
   detectionInterval:any;
@@ -39,11 +50,11 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   attAble:boolean=false;
   months?:any
   selectedDate: string = '0';
-  semester?:any;
+  semester:{ lable: String, value: Number }[] = [];
   selectedsem: string ='0';
-  stream?:any = undefined;
+  stream?:{ lable: String, value: Number }[] = [];
   selectedstream: string = "0";
-  
+
   msg="";
   distent?:number;
   alradyDetected: boolean = false;
@@ -51,17 +62,17 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
   currentStream:any
   giveUser:any = undefined;
-  usersList?: any[];
+  usersList: PeriodicElement[] = [];
 
   scan: boolean = false;
+  displayedColumns: string[] = ['position', 'name', 'roll', 'symbol'];
 
 
   constructor(
-    private service: CollegeService, 
+    private service: CollegeService,
     private location: Location,
-    private attService: CollegeService,
     private faceRecognitionService: FaceRecognitionService,
-    private alertService: AlertService
+    private alertService: AlertService,
   ) { }
   ngOnDestroy(): void {
     clearInterval(this.detectionInterval);
@@ -84,28 +95,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
       { lable: "November",value:11},
       { lable: "December",value:12}
     ]
-
-    this.semester = [
-      { lable: "First sem", value: 1 },
-      { lable: "Second sem",  value: 2 },
-      { lable: "Third sem", value: 3 },
-      { lable: "Fourth sem", value: 4 },
-      { lable: "Fifth sem", value:5 },
-      { lable: "six sem", value: 6},
-      { lable: "Seven sem", value: 7},
-      { lable: "Eight sem", value: 8 },
-      
-    ]
-
-
-    this.stream = [
-      { lable: "BCA", value: 3 },
-      { lable: "BBA",  value: 1 },
-      { lable: "BHM", value: 2 },
-      { lable: "MSC", value: 4 },
-      
-    ]
-
     if (this.user) {
       this.user = JSON.parse(this.user);
       this.lable = localStorage.getItem('lable');
@@ -124,6 +113,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
+    this.getCources();
   }
 
   ngAfterViewInit() {
@@ -159,19 +149,19 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
     const video = this.videoRef.nativeElement;
     const overlay = this.overlayRef.nativeElement;
     const displaySize = { width: video.width, height: video.height };
-  
+
     faceapi.matchDimensions(overlay, displaySize);
-  
+
     this.detectionInterval = setInterval(async () => {
       const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks();
-  
+
       const ctx = overlay.getContext('2d');
       if (ctx) {
         ctx.clearRect(0, 0, overlay.width, overlay.height);
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
         // faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
-  
+
         if (detections.length > 0) {
           const bestFace = detections[0];
           if (!this.alradyDetected) {
@@ -183,7 +173,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, 100);
   }
-  
+
   captureFaceImage(video: HTMLVideoElement) {
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
@@ -195,9 +185,9 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sendImageToBackend(base64Image);
     }
   }
-  
- async sendImageToBackend(base64Image: string) {
-   await firstValueFrom(this.attService.getStudentByface(base64Image).pipe(
+
+  async sendImageToBackend(base64Image: string) {
+   await firstValueFrom(this.service.getStudentByface(base64Image).pipe(
       tap(
         (res)=>{
           if(res){
@@ -211,26 +201,37 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
       )
    ))
   }
-  
+
 
 
   async getAllStudents() {
     if (this.selectedDate == '0' || this.selectedsem == '0' || this.selectedstream == '0') {
       return
     }
-
     const data = {
       sem: this.selectedsem,
       stream: this.selectedstream,
-      month: this.selectedDate,
+      date: this.selectedDate,
     }
-    this.service.getAllStudent(data).subscribe(
-      (res)=>{
-        if (res.attendance) {
-          this.usersList = res.attendance;
+    await firstValueFrom(this.service.getAllStudent(data).pipe(
+      tap(
+        (res)=>{
+          if (res.attendance.length > 0) {
+            for (let index = 0; index < res.attendance.length; index++) {
+              this.usersList.push({
+                position: index + 1,
+                name: res.attendance[index].name,
+                roll: res.attendance[index].roll,
+              });
+            }
+            console.log(this.usersList);
         }
-      }
-    );
+          else{
+            this.alertService.showWarningAlert("No student recode found");
+          }
+        }
+      )
+    ));
   }
 
   selectSem(value: any){
@@ -241,11 +242,13 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   selectStream(value: any){
     this.selectedstream = value;
     this.getAllStudents();
+    this.getSem();
   }
+
   back(){
     this.location.back();
   }
-  
+
   // auto attend
   async attend() {
     await firstValueFrom(this.service.getDefualt().pipe(
@@ -254,7 +257,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
           if (res) {
             if (res.record) {
               if (res.record.length < 1) {
-                await firstValueFrom(this.attService.getLocation().pipe(
+                await firstValueFrom(this.service.getLocation().pipe(
                   tap(position => {
                     this.storedLocation = {
                       lat: position.locations.lat,
@@ -272,7 +275,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                       };
-              
+
                       const distance = this.calculateDistance(currentLocation, this.storedLocation);
                       if (this.distent != undefined && distance <= String(this.distent)) {
                         this.add();
@@ -281,10 +284,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                       }
                     },
                     (error) => {
-                      
+
                       switch (error.code) {
                         case error.PERMISSION_DENIED:
-                          
+
                           this.msg = "Permission denied. Please allow location access.";
                           break;
                         case error.POSITION_UNAVAILABLE:
@@ -314,17 +317,17 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                 localStorage.setItem('presentDate', currentDate.toISOString());
                 this.attAble= false;
               }
-             
+
             }
           }
         }
       )
     ));
   }
-  
+
   async add() {
     try {
-      const res = await firstValueFrom(this.attService.addAttendance().pipe(
+      const res = await firstValueFrom(this.service.addAttendance().pipe(
         tap(
           (response) => {
             if (!response.message) {
@@ -344,27 +347,27 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): string {
     // Convert degrees to radians
     const toRad = (value: number) => value * Math.PI / 180;
-  
+
     // Radius of the Earth in meters (6371 km)
     const R = 6371e3; // in meters
-  
+
     // Destructure latitude and longitude
     const φ1 = toRad(loc1.lat); // Latitude of point 1 (in radians)
     const φ2 = toRad(loc2.lat); // Latitude of point 2 (in radians)
-  
+
     const Δφ = toRad(loc2.lat - loc1.lat); // Difference in latitude (in radians)
     const Δλ = toRad(loc2.lng - loc1.lng); // Difference in longitude (in radians)
-  
+
     // Haversine formula
     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
               Math.cos(φ1) * Math.cos(φ2) *
               Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-  
+
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  
+
     // Distance in meters
     const distanceInMeters = R * c;
-  
+
     // Check if distance is greater than or equal to 1000 meters
     if (distanceInMeters >= 1000) {
       // Return distance in kilometers
@@ -383,7 +386,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   async giveTOHaven(){
     if (this.giveUser.user_id != null) {
       if (navigator.geolocation) {
-        await firstValueFrom(this.attService.getLocation().pipe(
+        await firstValueFrom(this.service.getLocation().pipe(
           tap(position => {
             this.storedLocation = {
               lat: position.locations.lat,
@@ -398,13 +401,13 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-    
+
             const distance = this.calculateDistance(currentLocation, this.storedLocation);
             if (this.distent != undefined && distance <= String(this.distent)) {
               const currentDate = new Date();
               localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
               /// give att
-              await firstValueFrom(this.attService.sendHaven(this.giveUser.user_id).pipe(
+              await firstValueFrom(this.service.sendHaven(this.giveUser.user_id).pipe(
                 tap(
                   (response) => {
                     if (response.message) {
@@ -424,10 +427,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           },
           (error) => {
-            
+
             switch (error.code) {
               case error.PERMISSION_DENIED:
-                
+
                 this.msg = "Permission denied. Please allow location access.";
                 break;
               case error.POSITION_UNAVAILABLE:
@@ -455,8 +458,30 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDateChange(selectedDate: Date): void {
-    // console.log('Selected date:', `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`);
-    this.selectedDate = selectedDate.getMonth().toString();
+    this.selectedDate = `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`
     this.getAllStudents();
+  }
+
+  async getCources(){
+    await firstValueFrom(this.service.getStreamInfo().pipe(
+      tap(
+        (res)=>{
+          res.map((stream: any)=>{
+            this.stream?.push({lable: stream.name, value: stream.id})
+          })
+        }
+      )
+    ))
+  }
+  async getSem(){
+    await firstValueFrom(this.service.getInfoSem(this.selectedstream).pipe(
+      tap(
+        (res)=>{
+          for(let i = 1; i <= Number(res['course_duration'])*2; i++){
+            this.semester.push({lable: String(i), value: i})
+          }
+        }
+      )
+    ))
   }
 }
