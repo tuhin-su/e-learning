@@ -1,5 +1,4 @@
-@apiUrl = http://api.timt.local
-
+@apiUrl = http://localhost:5000
 ### REQUEST VER
 GET {{ apiUrl }}/ver
 Content-Type: application/json
@@ -10,7 +9,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "student@admin.in",
+  "username": "admin@email.com",
   "password": "passwd"
 }
 
@@ -20,9 +19,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "xyz@student.xyz",
+  "username": "admin@email.com",
   "password": "passwd",
-  "groups": "ST",
+  "groups": "AD",
   "ref": "0"
 }
 

@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS user_info (
 );
 
 -- Table: group
-CREATE TABLE IF NOT EXISTS group (
+-- Table: `group`
+CREATE TABLE IF NOT EXISTS `group` (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(255),
     code VARCHAR(255),
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS group (
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     label INT DEFAULT 0 NOT NULL
 );
+
 
 -- Table: course
 CREATE TABLE IF NOT EXISTS course (
