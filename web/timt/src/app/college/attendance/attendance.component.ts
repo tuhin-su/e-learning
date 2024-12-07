@@ -14,6 +14,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
+import { debug } from '../../utility/function';
 
 export interface PeriodicElement {
   position: number;
@@ -133,7 +134,6 @@ throw new Error('Method not implemented.');
         this.currentStream = stream;
       }
     ).catch(err => {
-      console.log(err);
     });
   }
 
@@ -224,7 +224,6 @@ throw new Error('Method not implemented.');
                 roll: res.attendance[index].roll,
               });
             }
-            console.log(this.usersList);
         }
           else{
             this.alertService.showWarningAlert("No student recode found");
@@ -264,7 +263,7 @@ throw new Error('Method not implemented.');
                       lng: position.locations.lon
                     };
                     this.distent = position.locations.distend;
-                    console.log(this.distent);
+                    debug(this.distent);
                   })
                 ));
 
