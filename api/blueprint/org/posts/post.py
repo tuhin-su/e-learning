@@ -54,7 +54,7 @@ def get_post(post_id):
     @app.auth.login_required
     def handle():
         db.connect()
-        sql = '''SELECT `content`, `content_name`, `content_type`, `content_size`, `createBy`, `createDate` FROM `posts_data` WHERE `id` = %s;'''
+        sql = '''SELECT `id`, `content`, `content_name`, `content_type`, `content_size`, `createBy`, `createDate` FROM `posts_data` WHERE `id` = %s;'''
             
         try:
             db.cursor.execute(sql, (post_id,))

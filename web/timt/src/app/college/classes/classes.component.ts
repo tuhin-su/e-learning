@@ -54,7 +54,7 @@ export class ClassesComponent {
   };
 
   // curent timestarp
-  date:string =  new Date().toISOString();;
+  date:string =  new Date().toISOString();
 
   constructor(
     private postService: FunctionaltyService,

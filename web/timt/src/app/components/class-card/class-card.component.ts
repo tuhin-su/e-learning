@@ -38,8 +38,19 @@ export class ClassCardComponent implements OnInit, OnChanges {
     phone: string,
     user_id: string
 } | any;
-  
+
   videLink?: string;
+
+  contentInformation?: {
+    "id": number,
+    "content": string,
+    "content_name": string,
+    "content_size": number,
+    "content_type": string,
+    "createBy": string,
+    "createDate": string
+  };
+  contentDownloadLink?: boolean
 
   constructor (
     private service: UserService,
@@ -53,15 +64,20 @@ export class ClassCardComponent implements OnInit, OnChanges {
     if (this.card?.description) {
       this.videLink = extractHttpsLinks(this.card.description)[0];
     }
-    // if (this.card?.content_id) {
-    //   // this.getPost(this.card.content_id);
-    // }
+
+    if (this.card?.content_id) {
+      if (this.contentInformation) {
+        if(this.contentInformation.id == this.card.content_id){
+          return;
+        }
+      }
+      this.getPost(this.card.content_id);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['card']) {
       this.ngOnInit();
-     
     }
   }
 
@@ -88,14 +104,31 @@ export class ClassCardComponent implements OnInit, OnChanges {
       tap(
         (response)=>{
           if (response) {
-            // this.downloadLink = response.file
-            console.log(response)
+            this.contentInformation = response
+            if (this.contentInformation?.content_type == 'text/x-python') {
+              this.contentDownloadLink = true
+            }
           }
+        },
+        (error)=>{
+          debug(error)
         }
       )
     ))
   }
   onclickDownload(){
     console.log(this.downloadLink)
+  }
+
+  downloadContentInformation(){
+    if (this.contentInformation) {
+      const blob = new Blob([this.contentInformation.content], { type: this.contentInformation.content_type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = this.contentInformation.content_name;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
   }
 }

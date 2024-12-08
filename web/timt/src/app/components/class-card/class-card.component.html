@@ -1,12 +1,12 @@
 @if (card) {
   <div class=" overflow-scroll p-4 flex-col right-0 justify-center items-center">
       <mat-card class="h-[] w-[] mb-3 mt-0 p-3" style="background-color: rgb(201, 207, 235);">
-          <mat-card-header class="mb-1 font-bold flex-col" style="font-size:large;"> 
+          <mat-card-header class="mb-1 font-bold flex-col" style="font-size:large;">
               <div class=" h-full flex w-full m-4">
                   <div class="h-full items-start ">
-                      <img class="rounded-full h-full" 
-              src="{{user?.img}}" 
-              alt="Profile Image" 
+                      <img class="rounded-full h-full"
+              src="{{user?.img}}"
+              alt="Profile Image"
               onerror="this.onerror=null; this.src='/img/user-286-64.png';">
 
                   </div>
@@ -20,17 +20,36 @@
                  {{card.title}}
               </div>
           </mat-card-header>
+          @if (contentInformation?.content_type == 'image/png' || contentInformation?.content_type == 'image/jpeg') {
+            <mat-card-content class="m-2">
+                <img mat-card-image class="w-full"
+                src="data:{{ contentInformation?.content_type}};base64,{{contentInformation?.content}}"
+                alt="Profile Image"/>
+            </mat-card-content>
+          <mat-divider class="m-4"></mat-divider>
+          }
+          <!-- video from base64 -->
+          @if (contentInformation?.content_type == 'video/mp4') {
+            <mat-card-content class="m-2">
+                <video controls>
+                    <source src="data:{{ contentInformation?.content_type}};base64,{{contentInformation?.content}}" type="video/mp4">
+                </video>
+            </mat-card-content>
+          <mat-divider class="m-4"></mat-divider>
+          }
+          <!-- video from url -->
           @if (videLink) {
             <mat-card-content>
                 @if (videLink) {
                     <iframe width="100%"
-                src="{{videLink}}" 
-                title="YouTube video player" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+                src="{{videLink}}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
                 }
             </mat-card-content>
+            <mat-divider class="m-4"></mat-divider>
           }
           <mat-card-content>
               <p class="p-2 text-justify">{{card.description}}</p>
@@ -39,7 +58,10 @@
               <mat-card-footer class="p-4 opacity-80 flex">
                   <div class="w-full text-end">
                     @if (downloadLink) {
-                      <button mat-flat-button>Download</button>
+                      <button mat-flat-button class="pl-2">Download</button>
+                    }
+                    @if (contentDownloadLink) {
+                      <button mat-flat-button (click)="downloadContentInformation()" class="pl-2">Download</button>
                   }
                   </div>
               </mat-card-footer>
