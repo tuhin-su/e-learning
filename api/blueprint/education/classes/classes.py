@@ -1,3 +1,4 @@
+import time
 from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from modules.DataBase import DBA
@@ -56,9 +57,12 @@ def app_get(date):
     app = current_app.config["app"]
     
     @app.auth.login_required
-    def classes():
+    def classes(date):
         db = DBA()
         db.connect()
+
+        if date == None:
+            date = time.strftime("%m/%d/%Y")
 
         user_id = app.auth.current_user()['user_id']
         lable = app.getLabel(user_id)
@@ -69,18 +73,18 @@ def app_get(date):
             return jsonify({"message": "You are not authorized to access this endpoint"}), 403
         
         if lable == 2: # for teacher
-            sql = "SELECT * FROM `classes` WHERE `host` = %s and DATE(`createDate`) = CURRENT_DATE()"
-            db.cursor.execute(sql, (user_id, ))
+            sql = "SELECT * FROM `classes` WHERE `host` = %s and DATE(`createDate`) = STR_TO_DATE(%s,'%Y-%m-%d');"
+            db.cursor.execute(sql, (user_id, date))
             res = db.cursor.fetchall()
             db.disconnect()
             return jsonify(res),200
         
-        if lable == 1: # for admin
-            sql = "SELECT * FROM `classes`;"
-            db.cursor.execute(sql)
+        if lable == 1:  # for admin
+            sql = "SELECT * FROM `classes` WHERE DATE(`createDate`) = STR_TO_DATE(%s,'%Y-%m-%d');"
+            db.cursor.execute(sql, (date,))
             res = db.cursor.fetchall()
             db.disconnect()
-            return jsonify(res),200
+            return jsonify(res), 200
         
         if lable == 3: # for student
                 sql = "SELECT `semester`,`course` FROM student where id = %s;"
@@ -95,4 +99,4 @@ def app_get(date):
                 res = db.cursor.fetchall()
                 db.disconnect()
                 return jsonify(res),200
-    return classes()
+    return classes(date)

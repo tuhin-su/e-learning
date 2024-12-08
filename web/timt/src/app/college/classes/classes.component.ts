@@ -9,7 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import { debug } from '../../utility/function';
+import { convertToISODate, convertToMySQLDate, debug } from '../../utility/function';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
@@ -29,20 +29,20 @@ import { ClassCardComponent } from '../../components/class-card/class-card.compo
   providers: [provideNativeDateAdapter()],
   templateUrl: './classes.component.html',
   styleUrl: './classes.component.scss'
-  
+
 })
 export class ClassesComponent {
   allClassesView:boolean = false;
   createClassView: boolean = false;
   selectedFile: File | null = null;              // Holds the selected file
-  uploadId?: number; 
+  uploadId?: number;
   progress?:{value: number};
   semester:any = [];
   stream: any = [];
 
   // userInfo
   label :string | null = localStorage.getItem('lable');
-  
+
   // class from
   calssForm?: FormGroup;
 
@@ -52,7 +52,7 @@ export class ClassesComponent {
     today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
     return (date || today) <= today; // Allow dates less than or equal to today
   };
-  
+
   // curent timestarp
   date:string =  new Date().toISOString();;
 
@@ -71,7 +71,7 @@ export class ClassesComponent {
   }
 
   async fetchClasses(date:string){
-    await firstValueFrom(this.service.getAll(date).pipe(
+    await firstValueFrom(this.service.getAll(convertToMySQLDate(date)).pipe(
       tap(
         (response)=>{
           if (response) {
