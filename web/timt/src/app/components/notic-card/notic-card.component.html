@@ -1,5 +1,5 @@
 @if (notic) {
-    <div class=" overflow-scroll p-4 flex-col right-0 justify-center items-center">
+    <div class="overflow-scroll p-4 flex-col right-0 justify-center items-center">
         <mat-card class="h-[] w-[] mb-3 mt-0 p-3" style="background-color: rgb(201, 207, 235);">
             <mat-card-header class="mb-1 font-bold flex-col" style="font-size:large;"> 
                 <div class=" h-full flex w-full m-4">
@@ -14,7 +14,9 @@
                         <mat-card-subtitle>{{notic.user.name}}</mat-card-subtitle>
                         <div class="text-sm opacity-50">{{notic.user.group}}</div>
                     </div>
+                   @if (itNew) {
                     <div class="bg-[#5036e4]  h-[28px] w-[70px] text-center rounded-l-[2rem] rounded-r-[2rem] animate-pulse text-white font-parkinsans">NEW</div>
+                   }
                 </div>
                 <mat-divider class="m-4"></mat-divider>
                 <div class="w-full decoration-auto m-4">

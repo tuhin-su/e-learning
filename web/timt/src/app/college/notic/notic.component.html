@@ -11,7 +11,7 @@
         data-aos="fade-left">
 
         @for (notice of notices; track $index) {
-            <notice-card [notice]="notice"></notice-card>
+            <notic-card [notic]="notice"></notic-card>
         }
         
 
@@ -20,7 +20,7 @@
 
 
     <div class="absolute right-4 bottom-[10%] animate-bounce z-[3]">
-        <button mat-fab>
+        <button mat-fab (click)="switchViewe()">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-patch-plus"
                 viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -31,4 +31,50 @@
         </button>
     </div>
     
+    @if (switchView) {
+        <div data-aos="fade-up" class="absolute z-[3] shadow-2 w-[95%] h-[60%] bottom-0 bg-white pt-[22px]" style="border-radius: 22px 22px 0px 0px;">
+            <div class="relative w-full h-full">
+              <div class="w-full h-[80%] p-4" >
+                
+               @if (noticFrom) {
+                    <input type="file" class="lock w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:text-neutral-400
+                    file:bg-gray-50 file:border-0
+                    file:me-4
+                    file:py-3 file:px-4
+                    dark:file:bg-gray-700 dark:file:text-neutral-400 mb-3"
+                    extensions="pdf,xlsx,mp4,doc"
+                    (change)="onFileSelected($event)"/>
+                    
+                    <form  [formGroup]="noticFrom">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Notice Title</mat-label>
+                            <input matInput
+                                type="text"
+                                class="grow"
+                                formControlName="title"
+                                placeholder="Title or Notic name" />
+                        </mat-form-field>
+                        
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Content</mat-label>
+                            <textarea 
+                                matInput 
+                                class="textarea textarea-bordered grow gap-2 m-3 w-[99%]"
+                                type="password" 
+                                formControlName="content" 
+                                placeholder="description">
+                            </textarea>
+                        </mat-form-field>
+                    </form>
+               }
+              </div>
+
+            <div class="w-full h-[20%] flex justify-center items-center gap-4">
+                <button mat-flat-button extended (click)="createNotic()" style="width: 20%; background-color: #f63b3b;">Cancle</button>
+                <button mat-flat-button extended (click)="onSubmit()" style="width: 20%; background-color: #41f63b;">Save</button>
+            </div>
+
+            </div>
+        </div>
+    }
 </div>
