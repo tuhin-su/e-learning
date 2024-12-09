@@ -1,0 +1,31 @@
+<!--  create password chane component -->
+@if (user) {
+  <div class="root">
+    <div class="absolute top-5">
+      <div class="shadow-2 w-[200px] h-[200px] rounded-full" style="background: url('{{imgUrl}}'); background-size: cover; background-repeat: no-repeat;"></div>
+
+      <div class="w-full text-center mt-4">
+        <h1 class="text-2xl font-bold parkinsans">{{user.name}}</h1>
+      </div>
+    </div>
+    <div class="w-[90%] shadow-1 p-4">
+      @if (passwordFrom ) {
+        <form [formGroup]="passwordFrom">
+          <mat-form-field class="example-full-width w-full bg-transparent">
+            <mat-label>New Password</mat-label>
+            <input matInput type="password" placeholder="password" formControlName="password">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width w-full bg-transparent">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" placeholder="password" formControlName="confirm_password">
+          </mat-form-field>
+          <div class="w-full text-center">
+            <button mat-flat-button (click)="onSubmit();"> Save </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+
+}
