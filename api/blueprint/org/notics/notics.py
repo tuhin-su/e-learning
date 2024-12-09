@@ -31,12 +31,19 @@ def heandel():
 @notice.route('/notice', methods=['POST'])
 def heandel_post():
     app = current_app.config["app"]
-    
-    if getLabel(curent_user) != 1 and getLabel(curent_user) != 2:
-        return jsonify({"message": "Unauthorized End point"}), 400
     @app.auth.login_required
     def info():
         curent_user = app.auth.current_user()['user_id']
+        data = request.json
+
+        if getLabel(curent_user) != 1 and getLabel(curent_user) != 2:
+            return jsonify({"message": "Unauthorized End point"}), 400
+        
+        requre_fild = ['title']
+        for i in requre_fild:
+            if i not in data:
+                return jsonify({"message": f"{i} is required"}), 400
+        
         db = DBA()
         db.connect()
         data = request.json
