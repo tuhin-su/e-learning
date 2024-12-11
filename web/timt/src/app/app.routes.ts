@@ -9,6 +9,7 @@ import { ClassesComponent } from './college/classes/classes.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SecurtyComponent } from './college/securty/securty.component';
+import { NoticComponent } from './college/notic/notic.component';
 
 export const routes: Routes = [
     {path: "", component: DashbordComponent,  canActivate: [AuthGuard]},
@@ -19,5 +20,6 @@ export const routes: Routes = [
     {path: "college/class", component: ClassesComponent,  canActivate: [AuthGuard]},
     {path: "college/feedback", component: FeedbackComponent,  canActivate: [AuthGuard]},
     {path: "user/security", component: SecurtyComponent,  canActivate: [AuthGuard]},
+    {path: "college/notic", component: NoticComponent,  canActivate: [AuthGuard]},
     {path: "logout", component: LogoutComponent,  canActivate: [AuthGuard]},
 ];

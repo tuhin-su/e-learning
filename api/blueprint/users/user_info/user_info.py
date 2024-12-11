@@ -63,7 +63,7 @@ def get_user_info(id):
         db = DBA()
         db.connect()
         try:
-            sql = "SELECT * FROM user_info WHERE user_id = %s"
+            sql = "SELECT name,img FROM user_info WHERE user_id = %s"
             db.cursor.execute(sql, (id,))
             user_info = db.cursor.fetchone()
             if user_info:

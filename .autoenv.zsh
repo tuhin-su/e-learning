@@ -7,3 +7,4 @@ alias pull="git pull"
 alias checkout="git checkout"
 alias start="bash run.sh"
 alias restart="sudo systemctl restart e-learning.service"
+

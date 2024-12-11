@@ -1,1 +1,82 @@
-<p>notic works!</p>
+<div class="root">
+
+    <!-- top bar -->
+    <div class="flex w-[120%] h-[200px]   bg-[#4340dd] absolute top-[-90px] z-[3] justify-center items-center pt-[100px]"
+        style="border-radius: 100%;" data-aos="fade-down">
+        <h4 class="font-bold" style="font-size:large;">Notice Board</h4>
+    </div>
+
+    <!-- body -->
+    <div class="w-full h-full pb-32 overflow-scroll flex flex-col absolute z-[0] top-[100px]"
+        data-aos="fade-left">
+
+        @for (notice of notices; track $index) {
+            <notic-card [notic]="notice"></notic-card>
+        }
+        
+
+    </div>
+
+
+
+    @if (lable=='1' || lable=='2') {
+        <div class="absolute right-4 bottom-[10%] animate-bounce z-[3]">
+            <button mat-fab (click)="switchViewe()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-patch-plus"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5" />
+                    <path
+                        d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z" />
+                </svg>
+            </button>
+        </div>
+    }
+    
+    @if (switchView) {
+        <div data-aos="fade-up" class="absolute z-[3] shadow-2 w-[95%] h-[60%] bottom-0 bg-white pt-[22px]" style="border-radius: 22px 22px 0px 0px;">
+            <div class="relative w-full h-full">
+              <div class="w-full h-[80%] p-4" >
+                
+               @if (noticFrom) {
+                    <input type="file" class="lock w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:text-neutral-400
+                    file:bg-gray-50 file:border-0
+                    file:me-4
+                    file:py-3 file:px-4
+                    dark:file:bg-gray-700 dark:file:text-neutral-400 mb-3"
+                    extensions="pdf,xlsx,mp4,doc"
+                    (change)="onFileSelected($event)"/>
+                    
+                    <form  [formGroup]="noticFrom">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Notice Title</mat-label>
+                            <input matInput
+                                type="text"
+                                class="grow"
+                                formControlName="title"
+                                placeholder="Title or Notic name" />
+                        </mat-form-field>
+                        
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Content</mat-label>
+                            <textarea 
+                                matInput 
+                                class="textarea textarea-bordered grow gap-2 m-3 w-[99%]"
+                                type="password" 
+                                formControlName="content" 
+                                placeholder="description">
+                            </textarea>
+                        </mat-form-field>
+                    </form>
+               }
+              </div>
+
+            <div class="w-full h-[20%] flex justify-center items-center gap-4">
+                <button mat-flat-button extended (click)="switchViewe()" style="width: 20%; background-color: #f63b3b;">Cancle</button>
+                <button mat-flat-button extended (click)="onSubmit()" style="width: 20%; background-color: #41f63b;">Save</button>
+            </div>
+
+            </div>
+        </div>
+    }
+</div>

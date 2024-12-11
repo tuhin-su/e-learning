@@ -1,38 +1,75 @@
 @if (notic) {
-    <div class=" overflow-scroll p-4 flex-col right-0 justify-center items-center">
+    <div class="overflow-scroll p-4 flex-col right-0 justify-center items-center">
         <mat-card class="h-[] w-[] mb-3 mt-0 p-3" style="background-color: rgb(201, 207, 235);">
             <mat-card-header class="mb-1 font-bold flex-col" style="font-size:large;"> 
-                <div class=" h-full flex w-full m-4">
-                    <div class="h-full items-start ">
-                        <img class="rounded-full h-full" 
-                src="{{notic.user.image}}" 
-                alt="Profile Image" 
-                onerror="this.onerror=null; this.src='/img/user-286-64.png';">
-
+                @if (user) {
+                    <div class=" h-full flex w-full m-4">
+                        <div class="h-full items-start ">
+                            <img class="rounded-full h-full" 
+                    src="{{user.img}}" 
+                    alt="Profile Image" 
+                    onerror="this.onerror=null; this.src='/img/user-286-64.png';">
+    
+                        </div>
+                        <div class="h-full w-[75%] ml-10 mt-4">
+                            <mat-card-subtitle>{{user.name}}</mat-card-subtitle>
+                        </div>
+                       @if (itNew) {
+                        <div class="bg-[#5036e4]  h-[28px] w-[70px] text-center rounded-l-[2rem] rounded-r-[2rem] animate-pulse text-white font-parkinsans">NEW</div>
+                       }
                     </div>
-                    <div class="h-full w-[75%] ml-10 mt-4">
-                        <mat-card-subtitle>{{notic.user.name}}</mat-card-subtitle>
-                        <div class="text-sm opacity-50">{{notic.user.group}}</div>
-                    </div>
-                    <div class="bg-[#5036e4]  h-[28px] w-[70px] text-center rounded-l-[2rem] rounded-r-[2rem] animate-pulse text-white font-parkinsans">NEW</div>
-                </div>
+                }
                 <mat-divider class="m-4"></mat-divider>
                 <div class="w-full decoration-auto m-4">
                    {{notic.title}}
                 </div>
             </mat-card-header>
+            
+            @if (contentInformation?.content_type == 'image/png' || contentInformation?.content_type == 'image/jpeg') {
+                <mat-card-content class="m-2">
+                    <img mat-card-image class="w-full"
+                    src="data:{{ contentInformation?.content_type}};base64,{{contentInformation?.content}}"
+                    alt="Profile Image"/>
+                </mat-card-content>
+              <mat-divider class="m-4"></mat-divider>
+            }
+
+            @if (contentInformation?.content_type == 'video/mp4') {
+                <mat-card-content class="m-2">
+                    <video controls>
+                        <source src="data:{{ contentInformation?.content_type}};base64,{{contentInformation?.content}}" type="video/mp4">
+                    </video>
+                </mat-card-content>
+              <mat-divider class="m-4"></mat-divider>
+            }
+
             <mat-card-content>
-                <p class="p-2 text-justify">{{notic.description}}</p>
+                <p class="p-2 text-justify">{{notic.content}}</p>
             </mat-card-content>
             <div class="mt-6">
                 <mat-card-footer class="p-4 opacity-80 flex">
                     <div class="w-[50%]">
-                        @if (notic.downloadLink) {
-                            <button mat-button>Download</button>
+                        @if (downloadLink) {
+                            <button mat-button >
+                                <mat-icon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-browser-chrome" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M16 8a8 8 0 0 1-7.022 7.94l1.902-7.098a3 3 0 0 0 .05-1.492A3 3 0 0 0 10.237 6h5.511A8 8 0 0 1 16 8M0 8a8 8 0 0 0 7.927 8l1.426-5.321a3 3 0 0 1-.723.255 3 3 0 0 1-1.743-.147 3 3 0 0 1-1.043-.7L.633 4.876A8 8 0 0 0 0 8m5.004-.167L1.108 3.936A8.003 8.003 0 0 1 15.418 5H8.066a3 3 0 0 0-1.252.243 2.99 2.99 0 0 0-1.81 2.59M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                      </svg>
+                                </mat-icon>
+                            </button>
                         }
+
+                        @if (contentDownloadLink) {
+                            <button mat-button (click)="downloadContentInformation()">
+                                <mat-icon class="large-icon">
+                                    download_for_offline
+                                </mat-icon>
+                            </button>
+                        }
+
                     </div>
                     <div class="w-[50%] text-end">
-                        {{notic.date}}
+                        {{notic.createDate}}
                     </div>
                 </mat-card-footer>
             </div>

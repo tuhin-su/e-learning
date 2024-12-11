@@ -8,9 +8,11 @@ import { UserService } from '../../services/user.service';
 import { first, firstValueFrom, tap } from 'rxjs';
 import { FunctionaltyService } from '../../services/functionalty.service';
 import { extractHttpsLinks } from '../../utility/function';
+import { downloadContentInformation, convertDate } from '../../utility/function';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'class-card',
-  imports: [MatCardModule, MatButtonModule,MatDivider],
+  imports: [MatCardModule, MatButtonModule,MatDivider, MatIcon],
   providers: [provideNativeDateAdapter()],
   templateUrl: './class-card.component.html',
   styleUrl: './class-card.component.scss'
@@ -65,6 +67,10 @@ export class ClassCardComponent implements OnInit, OnChanges {
       this.videLink = extractHttpsLinks(this.card.description)[0];
     }
 
+    if (this.card?.createDate) {
+      this.card.createDate = convertDate(this.card.createDate);
+    }
+
     if (this.card?.content_id) {
       if (this.contentInformation) {
         if(this.contentInformation.id == this.card.content_id){
@@ -105,7 +111,7 @@ export class ClassCardComponent implements OnInit, OnChanges {
         (response)=>{
           if (response) {
             this.contentInformation = response
-            if (this.contentInformation?.content_type == 'text/x-python') {
+            if (this.contentInformation?.content_type != 'image/jpeg' && this.contentInformation?.content_type != 'image/jpg' && this.contentInformation?.content_type != 'image/png' && this.contentInformation?.content_type != 'image/gif' && this.contentInformation?.content_type != 'image/webp' && this.contentInformation?.content_type != 'image/png' && this.contentInformation?.content_type != 'video/mp4' )  {
               this.contentDownloadLink = true
             }
           }
@@ -121,14 +127,6 @@ export class ClassCardComponent implements OnInit, OnChanges {
   }
 
   downloadContentInformation(){
-    if (this.contentInformation) {
-      const blob = new Blob([this.contentInformation.content], { type: this.contentInformation.content_type });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = this.contentInformation.content_name;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
+    downloadContentInformation(this.contentInformation);
   }
 }

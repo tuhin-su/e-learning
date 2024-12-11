@@ -155,12 +155,6 @@ Authorization: Bearer {{ token }}
   "file":"5dbf5e71cadcffdc933f726341ce7252ec20ddf2608d018e2fea351f1efdb037"
 }
 
-#### NOTICE
-# @name noticeBord
-@token = {{login.response.body.token}}
-GET {{ apiUrl }}/notice
-Content-Type: application/json
-Authorization: Bearer {{ token }}
 
 #### GET ALL Classes
 # @name Classes
@@ -207,3 +201,31 @@ Authorization: Bearer {{ token }}
 
   "stream" : 1
 }
+
+
+#### NOTICE
+# @name noticeBord
+@token = {{login.response.body.token}}
+GET {{ apiUrl }}/notice
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+#### NOTICE
+# @name CreateNoticeBord
+@token = {{login.response.body.token}}
+POST {{apiUrl}}/notice
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "title": "Test NOtic6",
+    "content": "Do noting",
+    "uploadId": null
+}
+
+#### NOTICE
+# @name FetchNoticeBord
+@token = {{login.response.body.token}}
+GET {{apiUrl}}/notice
+Content-Type: application/json
+Authorization: Bearer {{ token }}

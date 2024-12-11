@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment.development';
 import { GlobalStorageService } from './global-storage.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { INoticRequest, INoticResponce } from '../interface/INotic';
 @Injectable({
   providedIn: 'root'
 })
@@ -138,4 +139,25 @@ export class CollegeService {
     };
     return this.http.post<any>(loginUrl, payload, { headers });
   }
+
+  // NoticService
+  getAllNotic(): Observable<any>{
+    const loginUrl = `${this.api}/notice`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.get<any>(loginUrl, { headers });
+  }
+
+  createNotic(data: INoticRequest): Observable<INoticResponce>{ 
+    const loginUrl = `${this.api}/notice`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<INoticResponce>(loginUrl, data, { headers });
+  }
+
+
 }
