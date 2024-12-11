@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { debug } from '../utility/function';
+import { debug, getInvalidFields } from '../utility/function';
 import { ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom, tap } from 'rxjs';
 import { AlertService } from '../services/alert.service';
@@ -81,6 +81,9 @@ export class LoginComponent implements OnInit {
           }
         )
       ));
+    }else{
+      const field = getInvalidFields(this.loginForm!);
+      this.alertService.showErrorAlert('' + field[0] + ' is invalid');
     }
   }
 

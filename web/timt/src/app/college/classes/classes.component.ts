@@ -9,7 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import { convertToISODate, convertToMySQLDate, debug } from '../../utility/function';
+import { convertToISODate, convertToMySQLDate, debug, getInvalidFields } from '../../utility/function';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
@@ -147,8 +147,8 @@ export class ClassesComponent {
     ))
   }
   else{
-    debug(this.calssForm?.value)
-    this.alertService.showWarningAlert("Please fill all the fields");
+    const field = getInvalidFields(this.calssForm!);
+    this.alertService.showWarningAlert('' + field[0] + ' is invalid');
   }
  }
 

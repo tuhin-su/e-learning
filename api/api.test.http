@@ -166,7 +166,7 @@ Authorization: Bearer {{ token }}
 {
   "FROM":"student_ac",
   "data":{
-    "email":"student_demo@email.com",
+    "email":"student_demo2@email.com",
     "dob":"10112001",
     "roll":"12345",
     "reg":"29941",

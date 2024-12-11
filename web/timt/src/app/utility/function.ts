@@ -75,3 +75,17 @@ export function convertDate(dateStr: string): string {
   // Format the date to "hh:mm a dd/MM/yyyy" format
   return formatDate(dateObj, 'hh:mm a dd/MM/yyyy', 'en-US');
 }
+
+import { FormGroup } from '@angular/forms';
+export function getInvalidFields(formGroup: FormGroup): string[] {
+  const invalidFields: string[] = [];
+
+  Object.keys(formGroup.controls).forEach((controlName) => {
+    const control = formGroup.controls[controlName];
+    if (control.invalid && (control.dirty || control.touched)) {
+      invalidFields.push(controlName);
+    }
+  });
+
+  return invalidFields;
+}

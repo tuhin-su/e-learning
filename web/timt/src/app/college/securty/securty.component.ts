@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { AlertService } from '../../services/alert.service';
+import { getInvalidFields } from '../../utility/function';
 @Component({
   selector: 'app-securty',
   imports: [
@@ -52,10 +53,17 @@ export class SecurtyComponent implements OnInit {
         this.alertService.showWarningAlert("Password and Confirm Password not match!")
       }
     }
+    else{
+      const field = getInvalidFields(this.passwordFrom!);
+      this.alertService.showWarningAlert(''+ field[0] + ' is invalid');
+    }
   }
   onOk(){
     if (this.passwordFrom?.valid) {
       console.log(this.passwordFrom.value)
+    }else{
+      const field = getInvalidFields(this.passwordFrom!);
+      this.alertService.showWarningAlert(''+ field[0] + ' is invalid');
     }
   }
 }

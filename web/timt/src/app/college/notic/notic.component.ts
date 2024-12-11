@@ -12,6 +12,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CollegeService } from '../../services/college.service';
 import { GlobalStorageService } from '../../services/global-storage.service';
+import { getInvalidFields } from '../../utility/function';
 
 @Component({
   selector: 'app-notic',
@@ -80,6 +81,9 @@ export class NoticComponent implements OnInit {
           }
         )
       ))
+    }else{
+      const field = getInvalidFields(this.noticFrom!);
+      this.alertService.showWarningAlert('' + field[0] + ' is invalid');
     }
   }
 
