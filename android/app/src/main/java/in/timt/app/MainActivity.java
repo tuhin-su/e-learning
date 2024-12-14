@@ -1,274 +1,160 @@
 package in.timt.app;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.webkit.GeolocationPermissions;
-import android.webkit.PermissionRequest;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
-    private LocalHttpServer localHttpServer;
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private static final int MEDIA_PERMISSION_REQUEST_CODE = 2;
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
-    private static final int FILECHOOSER_RESULTCODE = 4;  // Add this constant
-
-    private boolean isLocationPermissionGranted = false;
-    private boolean isMediaPermissionGranted = false;
-    private boolean isCameraPermissionGranted = false;
-
-    private ValueCallback<Uri> mUploadMessage;  // Add this for handling file upload
-    private ValueCallback<Uri[]> mFilePathCallback;  // This will handle file chooser callback with multiple file support
+    private static final int REQUEST_PERMISSIONS_1 = 1;
+    private static final int REQUEST_PERMISSIONS_2 = 2;
+    private WebView webView;
+    private String savedUrl = "https://app.timt.in";  // Default URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int port = 65515;
-        try {
-            localHttpServer = new LocalHttpServer(this, port);
-            localHttpServer.start();
-        } catch (Exception e) {
-        }
 
-        WebView webView = findViewById(R.id.webView);
-
-        // Enable JavaScript and other WebView settings
+        // Initialize WebView and setup settings
+        webView = findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
+
+        // Modern WebView settings
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
+        webSettings.setDomStorageEnabled(true);  // Enable DOM storage
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  // Use cache when offline
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
-        webSettings.setGeolocationEnabled(true);
-        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        webSettings.setGeolocationEnabled(true);  // Allow Geolocation
+        webSettings.setMediaPlaybackRequiresUserGesture(false);  // Allow autoplay of media
 
-        // Set WebViewClient to handle page navigation
-        // Set WebViewClient to handle page navigation
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // Check if the URL should be opened in an external browser
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);  // Open URL in an external browser
-                return true;  // Return true to indicate we have handled the URL
-            }
-        });
-
-        // Set WebChromeClient to handle geolocation, media requests and file chooser
+        // Set WebChromeClient to handle location/camera permissions
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onPermissionRequest(PermissionRequest request) {
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.M)
-                    @Override
-                    public void run() {
-                        request.grant(request.getResources());
-                    }
-                });
-            }
-            @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                // Automatically grant geolocation permission
-                callback.invoke(origin, true, false);
-            }
-
-            @Override
-            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                mFilePathCallback = filePathCallback;
-                Intent intent = fileChooserParams.createIntent();
-                try {
-                    startActivityForResult(intent, FILECHOOSER_RESULTCODE);
-                } catch (Exception e) {
-                    mFilePathCallback.onReceiveValue(null);
-                    mFilePathCallback = null;
-                    e.printStackTrace();
+            public void onPermissionRequest(final android.webkit.PermissionRequest request) {
+                if (request.getResources().length > 0) {
+                    request.grant(request.getResources());
                 }
-                return true; // Return true to indicate the file chooser is handled
             }
-
         });
 
-        // Load the URL
-        webView.loadUrl("http://localhost:"+port);
-//        webView.loadUrl("https://timt.in");
+        // Handle page loading and errors
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                savedUrl = url; // Save the URL when the page starts loading
+            }
 
-        // Start the permission checking process
-        checkLocationPermission();
-    }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
 
-    // Method to check and request location permission
-    private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestLocationPermission();
-        } else {
-            isLocationPermissionGranted = true;
-            checkMediaPermission();
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (Uri.parse(url).getHost() != null && !Uri.parse(url).getHost().equals("app.timt.in")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                view.loadUrl("file:///android_asset/error.html");
+            }
+        });
+
+        // If activity is being recreated (e.g., after rotation or permission request), reload the saved URL
+        if (savedInstanceState != null) {
+            savedUrl = savedInstanceState.getString("savedUrl", savedUrl);
         }
+
+        // Load the website (either saved URL or default URL)
+        webView.loadUrl(savedUrl);
+
+        // Request permissions when the app is launched
+        requestPermissions();
     }
 
-    // Request location permission
-    private void requestLocationPermission() {
-        new AlertDialog.Builder(this)
-                .setMessage("This app requires location permission to function properly. Please allow access to your location.")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                LOCATION_PERMISSION_REQUEST_CODE);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-                    }
-                })
-                .create()
-                .show();
+    private void requestPermissions() {
+        String[] permissions1 = {
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        };
+
+        // Request the first set of permissions
+        ActivityCompat.requestPermissions(this, permissions1, REQUEST_PERMISSIONS_1);
     }
 
-    // Method to check and request media permissions
-    private void checkMediaPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            requestMediaPermission();
-        } else {
-            isMediaPermissionGranted = true;
-            checkCameraPermission();
-        }
-    }
-
-    // Request media permissions (images, video, audio)
-    private void requestMediaPermission() {
-        new AlertDialog.Builder(this)
-                .setMessage("This app requires access to your media files to function properly. Please allow access.")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO},
-                                MEDIA_PERMISSION_REQUEST_CODE);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-                    }
-                })
-                .create()
-                .show();
-    }
-
-    // Method to check and request camera permission
-    private void checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestCameraPermission();
-        } else {
-            isCameraPermissionGranted = true;
-            // All permissions granted, now you can proceed with the WebView functionality.
-        }
-    }
-
-    // Request camera permission
-    private void requestCameraPermission() {
-        new AlertDialog.Builder(this)
-                .setMessage("This app requires camera access to function properly. Please allow access to your camera.")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.CAMERA},
-                                CAMERA_PERMISSION_REQUEST_CODE);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-                    }
-                })
-                .create()
-                .show();
-    }
-
-    // Handle permission results
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                isLocationPermissionGranted = true;
-                checkMediaPermission();
-            } else {
-                Toast.makeText(this, "Location permission is required", Toast.LENGTH_LONG).show();
-//                finish();
-            }
-        } else if (requestCode == MEDIA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                isMediaPermissionGranted = true;
-                checkCameraPermission();
-            } else {
-                Toast.makeText(this, "Media permissions are required", Toast.LENGTH_LONG).show();
-//                finish();
-            }
-        } else if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                isCameraPermissionGranted = true;
-                // All permissions granted, now you can proceed with WebView
-            } else {
-                Toast.makeText(this, "Camera permission is required", Toast.LENGTH_LONG).show();
-//                finish();
-            }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS_1:
+                // Check if the first set of permissions was granted
+                boolean allPermissionsGranted = true;
+                for (int result : grantResults) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        allPermissionsGranted = false;
+                    }
+                }
+
+                if (allPermissionsGranted) {
+                    // Request the second set of permissions (including Camera)
+                    String[] permissions2 = {Manifest.permission.CAMERA};
+                    ActivityCompat.requestPermissions(this, permissions2, REQUEST_PERMISSIONS_2);
+                } else {
+                    // Handle the case where permissions were not granted
+                    // (e.g., show a message to the user)
+                    Toast.makeText(this, "Permissions not granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case REQUEST_PERMISSIONS_2:
+                // Handle the camera permission request result
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Camera permission granted, continue with your app logic
+                } else {
+                    // Handle the case where the camera permission was not granted
+                    Toast.makeText(this, "Camera permission not granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
-    // Handle the result of the file chooser
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FILECHOOSER_RESULTCODE && resultCode == RESULT_OK) {
-            if (mFilePathCallback != null) {
-                Uri[] results = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
-                mFilePathCallback.onReceiveValue(results);
-                mFilePathCallback = null;
-            }
-        }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save the current URL before activity is destroyed
+        outState.putString("savedUrl", savedUrl);
     }
 
     @Override
     public void onBackPressed() {
-        WebView webView = findViewById(R.id.webView);
+        // Check if the WebView can go back
         if (webView != null && webView.canGoBack()) {
-            webView.goBack();  // Navigate back in WebView history
+            webView.goBack();  // Go back to the previous page in WebView
         } else {
-            super.onBackPressed();  // Perform default back behavior (close the activity)
+            super.onBackPressed();  // Default back button behavior (exit app if no pages to go back)
         }
     }
-
 }
