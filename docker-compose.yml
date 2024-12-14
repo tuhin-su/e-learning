@@ -59,3 +59,11 @@ services:
     environment:
       - MODE=${MODE}
     working_dir: /app
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./web/timt/www/timt/browser:/usr/share/nginx/html
+    ports:
+      - 80:80

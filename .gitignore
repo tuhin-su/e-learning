@@ -21,3 +21,4 @@ dotfiles/*
 dotfiles/.*
 android/app/src/main/assets/*
 android/app/src/main/assets/models
+tools
