@@ -66,4 +66,4 @@ services:
     volumes:
       - ./web/timt/www/timt/browser:/usr/share/nginx/html
     ports:
-      - 80:80
+      - 80:8020
