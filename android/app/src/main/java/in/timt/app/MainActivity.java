@@ -1,6 +1,7 @@
 package in.timt.app;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions1, REQUEST_PERMISSIONS_1);
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
