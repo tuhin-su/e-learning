@@ -1,20 +1,28 @@
 <div class="root bg-blue-500 flex-col" style="overflow: hidden !important; position: relative;">
-    <div data-aos="zoom-in" class="m-6 rounded-full bg-white bg-center bg-no-repeat bg-contain w-[200px] h-[200px] shadow-2 z-[2]" style="background-image: url('img/timt.jpg');"></div>
     <div class="w-full text-center text-white z-[2]">
         <p class="dancing">Welcome</p>
-    </div> 
+    </div>
+
+    <img data-aos="zoom-in" class="m-6 rounded-full bg-white bg-center bg-no-repeat bg-contain h-[25%] shadow-2 z-[2]" src="img/timt.jpg" />
+
+    <!-- collage info -->
     <div class="bg-white w-[85%] p-4 shadow-1 z-[2] rounded-sm text-center absolute bottom-[100px]">
         <p>The Tamralipta Institute of Management &amp; Technology(TIMT) is situated at Tamluk, <span id="donts">....</span><span id="more"> the district head quarter of Purba Medinipur. It is affiliated to Maulana Abdul Kalam Azad University of Technology West Bengal(MAKAUT, WB). The institute has also received approval from All India Council for Technical Education (AICTE) vide letter No: F.NO.Eastern/2024-25/1-44130103223 dated on 09/05/2024 TIMT boasts of one of the best infrastructure which is evident from its consistent high ranking on infrastructure parameter. Its strength lies in its eminent faculty and the quality of its courses that have, in many cases, been trendsetter.</span></p>
         <button mat-button (click)="showHide();">
             {{ this.showMore ? 'Read Less'  : 'Read More' }}
         </button>
     </div>
+
+    <!-- login btn -->
     <div class="w-full text-center absolute bottom-[50px] z-[2]">
         <button class="w-[90%]" mat-raised-button (click)="goLogin();">Go to Login</button>
     </div>
-    <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] bottom-[-15%] left-[-50%]" data-aos="fade-up-right"></div>
-    <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] bottom-[-25%] left-[-40%]" data-aos="fade-up-right"></div>
 
-    <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] top-[-15%] left-[-50%]" data-aos="fade-down-right"></div>
-    <div class="absolute shadow-2 rounded-full w-[400px] h-[400px] bg-white z-[1] top-[-25%] left-[-30%]" data-aos="fade-down-right"></div>
+    <!-- Carcle -->
+    <div class="glow-container w-[100%] h-[100%]" style="position: absolute;">
+        <div class="ball"></div>
+        <div class="ball" style="--delay:-12s;--size:0.35;--speed:25s;"></div>
+        <div class="ball" style="--delay:-10s;--size:0.3;--speed:15s;"></div>
+        
+      </div>
 </div>

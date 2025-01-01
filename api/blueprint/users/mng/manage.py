@@ -4,6 +4,11 @@ from datetime import datetime, timedelta
 from mysql.connector import Error
 from modules.DataBase import DBA
 from modules.utilty import getLabel
+from modules.otp import generate_otp
+from base64 import b64encode, b64decode
+from json import dumps, loads
+from modules.emial_addpet import sendOTP
+
 
 mng = Blueprint("User Management", __name__)
 
@@ -92,4 +97,164 @@ def app():
                         return jsonify({"message": str(e)}), 500
                     
         return heandel();
+
+@mng.route('/users/mng/chpw', methods=['POST'])
+def chpw():
+    app = current_app.config["app"]
+    db = DBA()
+    db.connect()
+    data = request.json
+
+    if "email" in data and not "otp" in data:
+
+        # check email are exsit or not 
+        sql = "SELECT `id` FROM `user` WHERE `email` = %s"
+
+        try:
+            db.cursor.execute(sql,(data["email"],))
+            id = db.cursor.fetchone()
+            if not id:
+                return jsonify({"message": "Email not valid."})
+
+        except Error as e:
+            return jsonify({"message": str(e)}), 500
+        
+        otp = generate_otp()
+        sql =  "INSERT INTO `otp`(`otp`, `for`) VALUES (%s,%s);"
+
+        rfor = b64encode(dumps({
+            "email": data['email'],
+            "for": "chpw"
+        }).encode()).decode()
+        # send email 
+        mail_title = "Your OTP for Password Reset"
+        mail_content = f"""
+    <html>
+    <head>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }}
+            .header {{
+                background-color: #0073e6;
+                color: #ffffff;
+                padding: 10px;
+                text-align: center;
+                border-radius: 8px 8px 0 0;
+            }}
+            .footer {{
+                font-size: 12px;
+                color: #888888;
+                text-align: center;
+                margin-top: 20px;
+            }}
+            .otp {{
+                font-size: 24px;
+                font-weight: bold;
+                color: #333333;
+                text-align: center;
+                padding: 10px;
+                background-color: #f4f4f4;
+                border-radius: 4px;
+            }}
+            .instructions {{
+                font-size: 16px;
+                color: #555555;
+                margin: 20px 0;
+            }}
+            .important {{
+                color: #e74c3c;
+                font-weight: bold;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>Password Reset Request - TIMT App</h2>
+            </div>
+            <p>Dear User,</p>
+            <p>We received a request to reset your password for your <strong>TIMT App</strong> account. To proceed, please use the One-Time Password (OTP) provided below:</p>
             
+            <div class="otp">{otp}</div>
+            
+            <p class="instructions">This OTP is valid for the next <span class="important">10 minute</span>. Please ensure you enter it quickly to complete the password reset process.</p>
+            
+            <p class="instructions">If you did not request a password change, please disregard this email. If you continue to experience issues, feel free to contact our support team.</p>
+            
+            <div class="footer">
+                <p>Thank you for using <strong>TIMT</strong>!</p>
+                <p>The TIMT App Team</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+        if sendOTP(content=mail_content, receiver_email=data["email"], title=mail_title) == False:
+            db.disconnect()
+            return jsonify({"message": "Server error Email not send tray again later"}), 500
+        
+        try:
+            db.cursor.execute(sql, (otp, rfor))
+            id = db.cursor.lastrowid
+            db.conn.commit()
+            db.disconnect()
+            return jsonify({"message": "success", "otp_token": id}), 200
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 500
+        
+    # update passowrd
+    elif "password" in data and "otp_token" in data and "otp" in data and "email" in data:
+        passwd = generate_password_hash(data['password'])
+        otp_token = data['otp_token']
+        sql = "SELECT * FROM `otp` WHERE `id` = %s;"
+        try:
+            db.cursor.execute(sql, (otp_token,))
+            otp = db.cursor.fetchone()
+            if otp:
+                email = loads(b64decode(otp["for"]).decode())['email']
+                curent_time = datetime.now()
+                defftime = curent_time - otp['createDate']
+                # check otp time starap 30 second old or not 
+
+                if defftime > timedelta(seconds=600):
+                    db.disconnect()
+                    return jsonify({"message": "OTP token expired"}), 400
+                
+                if otp['otp'] == data['otp']:
+                    pass
+                else:
+                    db.disconnect()
+                    return jsonify({"message": "Invalid OTP"}), 400
+            else:
+                db.disconnect()
+                return jsonify({"message": "Invalid OTP token"}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 500
+    else:
+        db.disconnect()
+        return jsonify({"message": "No data provided"}), 400
+    
+    sql = "UPDATE `user` SET `passwd`=%s WHERE  `email` = %s;"
+    try:
+        app.cursor.execute(sql, (passwd, email,))
+        app.conn.commit()
+        db.disconnect()
+        return jsonify({"message": "Password changed"}), 200
+    
+    except Error as e:
+        db.disconnect()
+        return jsonify({"message": str(e)}), 500

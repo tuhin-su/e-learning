@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from modules.DataBase import DBA
+from modules.utilty import getLabel
 
 students = Blueprint("Students", __name__)
 
@@ -14,7 +15,7 @@ def app():
         db = DBA()
         db.connect()
         user_id = app.auth.current_user()['user_id']
-        lable = app.getLabel(user_id)
+        lable = getLabel(user_id)
 
         # if not authorized then send this
         if lable != 1 and lable != 2:

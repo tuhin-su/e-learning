@@ -1,4 +1,7 @@
 <app-loading></app-loading>
 <div class="w-full h-full">
+    @if(isLoading){
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <router-outlet></router-outlet>
 </div>

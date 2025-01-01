@@ -28,6 +28,8 @@ services:
     working_dir: /app
     restart: always
     command: "bash run.sh"
+    dns:
+      - 8.8.8.8
     ports:
       - ${API_PORT}:5000
     volumes:
@@ -43,6 +45,8 @@ services:
       BOT_KEY: ${BOT_KEY}
       CHANNEL_ID: ${BOT_CHANNEL_ID}
       BOT_ENABLE: ${BOT_ENABLE}
+      MAIL: ${MAIL}
+      MAIL_KEY: ${MAIL_KEY}
 
   angular:
     build:
@@ -50,7 +54,8 @@ services:
       dockerfile: Dockerfile.angular
     container_name: angular
     command: "sh run.sh"
-      
+    dns:
+      - 8.8.8.8
     volumes:
       - ./web/timt:/app
       - ./dotfiles:/home/vscode

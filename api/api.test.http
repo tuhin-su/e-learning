@@ -229,3 +229,26 @@ Authorization: Bearer {{ token }}
 GET {{apiUrl}}/notice
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
+##### Download file
+GET  = {{apiUrl}}/public/download
+Content-Type: application/json
+
+#### password change
+POST {{apiUrl}}/users/mng/chpw
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "password": "12345",
+  "otp_token": 20,
+  "otp": "331151"
+}
+
+#### password change otp send
+POST {{apiUrl}}/users/mng/chpw
+Content-Type: application/json
+
+{
+  "email": "admin@email.com"
+}

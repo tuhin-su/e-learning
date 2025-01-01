@@ -13,6 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CollegeService } from '../../services/college.service';
 import { GlobalStorageService } from '../../services/global-storage.service';
 import { getInvalidFields } from '../../utility/function';
+import { MatIconModule } from '@angular/material/icon';
+import { Location } from '@angular/common';
+import { LoadingService } from '../../services/loading-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notic',
@@ -24,7 +28,8 @@ import { getInvalidFields } from '../../utility/function';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatIconModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './notic.component.html',
@@ -43,7 +48,9 @@ export class NoticComponent implements OnInit {
     private postService: FunctionaltyService,
     private alertService: AlertService,
     private collageService: CollegeService,
-    private storage: GlobalStorageService
+    private storage: GlobalStorageService,
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
   
   
@@ -70,6 +77,7 @@ export class NoticComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.loadingService.showLoading();
     if (this.noticFrom.valid) {
       await firstValueFrom(this.collageService.createNotic(this.noticFrom.value).pipe(
         tap(
@@ -85,6 +93,7 @@ export class NoticComponent implements OnInit {
       const field = getInvalidFields(this.noticFrom!);
       this.alertService.showWarningAlert('' + field[0] + ' is invalid');
     }
+    this.loadingService.hideLoading();
   }
 
   createNotic() {
@@ -92,6 +101,7 @@ export class NoticComponent implements OnInit {
   }
 
   async uploadFile() {
+    this.loadingService.showLoading();
     if (this.selectedFile) {
       await firstValueFrom(this.postService.postPost(this.selectedFile).pipe(
         tap(
@@ -109,6 +119,7 @@ export class NoticComponent implements OnInit {
         )
       ));
     }
+    this.loadingService.hideLoading();
   }
 
   switchViewe() {
@@ -120,6 +131,7 @@ export class NoticComponent implements OnInit {
 
   //  fetchAllnotic
   async fetchAllnotic() {
+    this.loadingService.showLoading();
     await firstValueFrom(this.collageService.getAllNotic().pipe(
       tap(
         (response) => {
@@ -132,5 +144,10 @@ export class NoticComponent implements OnInit {
         }
       )
     ));
+    this.loadingService.hideLoading();
+  }
+
+  back() {
+    this.router.navigate(["/"])
   }
 }

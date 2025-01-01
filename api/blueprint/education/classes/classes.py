@@ -2,7 +2,7 @@ import time
 from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from modules.DataBase import DBA
-
+from modules.utilty import getLabel
 classes = Blueprint("Clasess", __name__)
 
 
@@ -16,7 +16,7 @@ def app_post():
         db.connect()
 
         user_id = app.auth.current_user()['user_id']
-        lable = app.getLabel(user_id)
+        lable = getLabel(user_id)
         student = None
         # if not authorized then send this
         if lable != 1 and lable != 2 and lable != 3:
@@ -65,7 +65,7 @@ def app_get(date):
             date = time.strftime("%m/%d/%Y")
 
         user_id = app.auth.current_user()['user_id']
-        lable = app.getLabel(user_id)
+        lable = getLabel(user_id)
         student = None
         # if not authorized then send this
         if lable != 1 and lable != 2 and lable != 3:

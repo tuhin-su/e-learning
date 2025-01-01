@@ -1,13 +1,18 @@
 <div class="root">
 
     <!-- top bar -->
-    <div class="flex w-[120%] h-[200px]   bg-[#4340dd] absolute top-[-90px] z-[3] justify-center items-center pt-[100px]"
-        style="border-radius: 100%;" data-aos="fade-down">
-        <h4 class="font-bold" style="font-size:large;">Notice Board</h4>
-    </div>
+    <div class="top-nav">
+        <button mat-flat-button (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
 
+        <h1 style="margin: 0 auto; color: wheat; font-size: large;" class="parkinsans">Notic Bord</h1>
+
+        <img src="/icon/school/college.png" style="max-height: 50%;">
+    </div>
     <!-- body -->
-    <div class="w-full h-full pb-32 overflow-scroll flex flex-col absolute z-[0] top-[100px]"
+    <div class="layout-nav-ajust">
+        <div class="w-full h-full pb-32 overflow-scroll flex flex-col z-[0]"
         data-aos="fade-left">
 
         @for (notice of notices; track $index) {
@@ -79,4 +84,5 @@
             </div>
         </div>
     }
+    </div>
 </div>

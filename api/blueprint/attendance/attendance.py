@@ -6,7 +6,7 @@ import face_recognition
 import io
 import base64
 from modules.DataBase import DBA
-
+from modules.utilty import getLabel
 try:
     from rich import print
 except:
@@ -31,7 +31,7 @@ def attendance():
         try:
             if request.method == 'POST':
                 # Check if user has the necessary access
-                if app.getLabel(user_id['user_id']) <= 2: # for admin and staff
+                if getLabel(user_id['user_id']) <= 2: # for admin and staff
                     data = request.json
 
                     requerments = ["stream", "sem", "date"]
