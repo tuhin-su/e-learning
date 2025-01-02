@@ -11,7 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { convertToMySQLDate, debug, getInvalidFields } from '../utility/function';
-
+import { LoadingService } from '../services/loading-service.service';
 @Component({
   selector: 'app-profile',
   imports: [
@@ -37,7 +37,8 @@ export class ProfileComponent {
     private fb: FormBuilder, 
     private router: Router,
     private userInfoService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService:LoadingService
   ) {
     this.init();
   }
@@ -119,6 +120,7 @@ export class ProfileComponent {
   }
 
   async onSubmit() {
+    this.loadingService.showLoading();
     if (this.profileForm && this.profileForm.valid) {
       this.profileForm.patchValue({
         "dob": convertToMySQLDate(this.profileForm.value.dob)
@@ -148,6 +150,7 @@ export class ProfileComponent {
       const field  = getInvalidFields(this.profileForm!);
       this.alertService.showErrorAlert('' + field[0] + ' is invalid');
     }
+    this.loadingService.hideLoading();
   }
 
   logout() {

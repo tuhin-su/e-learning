@@ -12,7 +12,8 @@ import { firstValueFrom, tap } from 'rxjs';
 import { AlertService } from '../services/alert.service';
 import { Router } from '@angular/router';
 import { GlobalStorageService } from '../services/global-storage.service';
-
+import { LoadingService } from '../services/loading-service.service';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [
@@ -22,7 +23,9 @@ import { GlobalStorageService } from '../services/global-storage.service';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    RouterModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -33,7 +36,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private storage: GlobalStorageService
+    private storage: GlobalStorageService,
+    private loadingService: LoadingService
   ) { }
 
   // veriables
@@ -54,6 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit(){
+    this.loadingService.showLoading();
     if (this.loginForm?.valid) {
       debug("Submit login form");
       debug(this.loginForm?.value);
@@ -78,6 +83,8 @@ export class LoginComponent implements OnInit {
           },
           (error) => {
             this.alertService.showErrorAlert(error.error.message)
+            this.loadingService.hideLoading();
+
           }
         )
       ));
@@ -85,6 +92,7 @@ export class LoginComponent implements OnInit {
       const field = getInvalidFields(this.loginForm!);
       this.alertService.showErrorAlert('' + field[0] + ' is invalid');
     }
+    this.loadingService.hideLoading();
   }
 
   onOkError(){

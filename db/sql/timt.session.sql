@@ -156,3 +156,11 @@ CREATE TABLE IF NOT EXISTS galary (
     post_id INT,
     FOREIGN KEY (post_id) REFERENCES posts_data(id)
 );
+
+-- Table: otp
+CREATE TABLE IF NOT EXISTS otp (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    otp VARCHAR(7) NULL,
+    createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    `for` VARCHAR(255) NULL
+);

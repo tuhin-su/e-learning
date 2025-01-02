@@ -46,25 +46,13 @@ export function extractHttpsLinks(paragraph: string): string[] {
     return paragraph.match(httpsRegex) || [];
   }
 
-export function downloadContentInformation(contentInformation:{
-  "id": number,
-  "content": string,
-  "content_name": string,
-  "content_size": number,
-  "content_type": string,
-  "createBy": string,
-  "createDate": string
-} | null | undefined){
-  if (!contentInformation) {
+export function downloadContentInformation(id:String|any){
+  if (!id) {
     return;
   }
-    const blob = new Blob([contentInformation.content], { type: contentInformation.content_type });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = contentInformation.content_name;
-    link.click();
-    URL.revokeObjectURL(url);
+    let link = environment.api+"/public/download/" +id;
+    // window.open(link, "_blank");
+    window.location.href = link;
   }
 
 
@@ -88,4 +76,8 @@ export function getInvalidFields(formGroup: FormGroup): string[] {
   });
 
   return invalidFields;
+}
+
+export function back() {
+  window.history.back();
 }

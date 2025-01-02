@@ -58,4 +58,28 @@ export class UserService {
       )
     );
   }
+
+  sendOTP(email:String){
+    const userData = `${this.api}/users/mng/chpw`;
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+   
+    let data = {
+      "email": email
+    }
+    return this.http.post<any>(userData, data, { headers });
+  }
+
+  changepasswd(data:any){
+    const userData = `${this.api}/users/mng/chpw`;
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.post<any>(userData, data, { headers });
+  }
 }

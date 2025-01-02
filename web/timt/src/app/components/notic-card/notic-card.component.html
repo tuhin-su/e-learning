@@ -73,6 +73,9 @@
                     </div>
                 </mat-card-footer>
             </div>
+            @if(loading){
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }
         </mat-card>
     </div>
 }

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, current_app
 import mysql.connector
 from modules.DataBase import DBA
+from modules.utilty import getLabel
 
 geo_lan = Blueprint("GEO Location",__name__)
 @geo_lan.route("/location", methods=['POST','GET'])
@@ -18,7 +19,7 @@ def app():
                     db.disconnect()
                     return jsonify({"message": "No data provided"}), 400
                 
-                if app.getLabel(user_id['user_id']) == 1:
+                if getLabel(user_id['user_id']) == 1:
                     latitude = data.get("lat")
                     longitude = data.get("lon")
                     dist = data.get("dic")

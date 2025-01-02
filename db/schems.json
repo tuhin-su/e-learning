@@ -520,5 +520,30 @@
         }
       }
     }
+  },
+  "otp": {
+    "columns": {
+      "id": {
+        "type": "INT",
+        "primary_key": true,
+        "auto_increment": true,
+        "nullable": false
+      },
+      "otp": {
+        "type": "VARCHAR",
+        "length": 7,
+        "nullable": true    
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "for": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": true
+      }
+    }
   }
 }

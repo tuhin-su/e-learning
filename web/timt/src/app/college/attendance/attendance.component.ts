@@ -15,6 +15,8 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import { debug } from '../../utility/function';
+import { LoadingService } from '../../services/loading-service.service';
+import { Route, Router } from '@angular/router';
 
 export interface PeriodicElement {
   position: number;
@@ -72,8 +74,10 @@ throw new Error('Method not implemented.');
   constructor(
     private service: CollegeService,
     private location: Location,
+    private router: Router,
     private faceRecognitionService: FaceRecognitionService,
     private alertService: AlertService,
+    private loadingService: LoadingService
   ) { }
   ngOnDestroy(): void {
     clearInterval(this.detectionInterval);
@@ -98,7 +102,7 @@ throw new Error('Method not implemented.');
     ]
     if (this.user) {
       this.user = JSON.parse(this.user);
-      this.lable = localStorage.getItem('lable');
+      this.lable = Number(localStorage.getItem('lable'));
       if (this.lable == 3) {
         let pddate = localStorage.getItem('presentDate');
         if (pddate != null) {
@@ -187,17 +191,20 @@ throw new Error('Method not implemented.');
   }
 
   async sendImageToBackend(base64Image: string) {
-   await firstValueFrom(this.service.getStudentByface(base64Image).pipe(
+    await this.loadingService.showLoading();
+    await firstValueFrom(this.service.getStudentByface(base64Image).pipe(
       tap(
-        (res)=>{
+        (res:any)=>{
           if(res){
             this.giveUser = res
           }
+          this.loadingService.hideLoading();
         },
-        (error)=>{
-          this.alertService.showErrorAlert(error.error.massage)
+        (error:any)=>{
+          this.alertService.showErrorAlert(error.error.massage);
+          this.loadingService.hideLoading();
           this.back();
-        }
+        },
       )
    ))
   }
@@ -213,6 +220,7 @@ throw new Error('Method not implemented.');
       stream: this.selectedstream,
       date: this.selectedDate,
     }
+    this.loadingService.showLoading();
     await firstValueFrom(this.service.getAllStudent(data).pipe(
       tap(
         (res)=>{
@@ -224,6 +232,7 @@ throw new Error('Method not implemented.');
                 roll: res.attendance[index].roll,
               });
             }
+            this.loadingService.hideLoading();
         }
           else{
             this.alertService.showWarningAlert("No student recode found");
@@ -245,11 +254,12 @@ throw new Error('Method not implemented.');
   }
 
   back(){
-    this.location.back();
+    this.router.navigate(["/"])
   }
 
   // auto attend
   async attend() {
+    this.loadingService.showLoading();
     await firstValueFrom(this.service.getDefualt().pipe(
       tap(
         async (res) => {
@@ -262,7 +272,7 @@ throw new Error('Method not implemented.');
                       lat: position.locations.lat,
                       lng: position.locations.lon
                     };
-                    this.distent = position.locations.distend;
+                    this.distent = Number(position.locations.distend);
                     debug(this.distent);
                   })
                 ));
@@ -275,11 +285,11 @@ throw new Error('Method not implemented.');
                         lng: position.coords.longitude
                       };
 
-                      const distance = this.calculateDistance(currentLocation, this.storedLocation);
-                      if (this.distent != undefined && distance <= String(this.distent)) {
+                      const distance = (this.calculateDistance(currentLocation, this.storedLocation));
+                      if ((this.distent != undefined) && (distance <= this.distent)) {
                         this.add();
                       } else {
-                        this.alertService.showErrorAlert("You are too far from the collage location.")
+                        this.alertService.showErrorAlert("You are "+String(distance)+"meters far from the collage location.")
                       }
                     },
                     (error) => {
@@ -319,6 +329,7 @@ throw new Error('Method not implemented.');
 
             }
           }
+          this.loadingService.hideLoading();
         }
       )
     ));
@@ -343,7 +354,7 @@ throw new Error('Method not implemented.');
     }
   }
 
-  calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): string {
+  calculateDistance(loc1: { lat: number; lng: number }, loc2: { lat: number; lng: number }): number {
     // Convert degrees to radians
     const toRad = (value: number) => value * Math.PI / 180;
 
@@ -367,14 +378,7 @@ throw new Error('Method not implemented.');
     // Distance in meters
     const distanceInMeters = R * c;
 
-    // Check if distance is greater than or equal to 1000 meters
-    if (distanceInMeters >= 1000) {
-      // Return distance in kilometers
-      return (distanceInMeters / 1000).toFixed(2) + ' km';
-    } else {
-      // Return distance in meters
-      return distanceInMeters.toFixed(2) + ' meters';
-    }
+    return distanceInMeters;
   }
 
   reset(){
@@ -383,6 +387,7 @@ throw new Error('Method not implemented.');
   }
 
   async giveTOHaven(){
+    this.loadingService.showLoading();
     if (this.giveUser.user_id != null) {
       if (navigator.geolocation) {
         await firstValueFrom(this.service.getLocation().pipe(
@@ -402,7 +407,7 @@ throw new Error('Method not implemented.');
             };
 
             const distance = this.calculateDistance(currentLocation, this.storedLocation);
-            if (this.distent != undefined && distance <= String(this.distent)) {
+            if (this.distent != undefined && distance <= this.distent) {
               const currentDate = new Date();
               localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
               /// give att
@@ -454,6 +459,7 @@ throw new Error('Method not implemented.');
         this.alertService.showWarningAlert("Geolocation is not supported by this browser.");
       }
     }
+    this.loadingService.hideLoading();
   }
 
   onDateChange(selectedDate: Date): void {
@@ -462,6 +468,7 @@ throw new Error('Method not implemented.');
   }
 
   async getCources(){
+    this.loadingService.showLoading();
     await firstValueFrom(this.service.getStreamInfo().pipe(
       tap(
         (res)=>{
@@ -470,9 +477,11 @@ throw new Error('Method not implemented.');
           })
         }
       )
-    ))
+    ));
+    this.loadingService.hideLoading();
   }
   async getSem(){
+    this.loadingService.showLoading();
     await firstValueFrom(this.service.getInfoSem(this.selectedstream).pipe(
       tap(
         (res)=>{
@@ -481,6 +490,7 @@ throw new Error('Method not implemented.');
           }
         }
       )
-    ))
+    ));
+    this.loadingService.hideLoading();
   }
 }

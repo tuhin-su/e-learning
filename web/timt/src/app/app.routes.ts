@@ -10,6 +10,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SecurtyComponent } from './college/securty/securty.component';
 import { NoticComponent } from './college/notic/notic.component';
+import { ChangePasswordComponent } from './college/chpw/change-password/change-password.component';
 
 export const routes: Routes = [
     {path: "", component: DashbordComponent,  canActivate: [AuthGuard]},
@@ -22,4 +23,6 @@ export const routes: Routes = [
     {path: "user/security", component: SecurtyComponent,  canActivate: [AuthGuard]},
     {path: "college/notic", component: NoticComponent,  canActivate: [AuthGuard]},
     {path: "logout", component: LogoutComponent,  canActivate: [AuthGuard]},
+    {path: "chpw", component: ChangePasswordComponent},
+    {path: "**", component: DashbordComponent,  canActivate: [AuthGuard]},
 ];

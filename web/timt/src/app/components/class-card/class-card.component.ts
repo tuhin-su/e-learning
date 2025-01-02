@@ -10,6 +10,7 @@ import { FunctionaltyService } from '../../services/functionalty.service';
 import { extractHttpsLinks } from '../../utility/function';
 import { downloadContentInformation, convertDate } from '../../utility/function';
 import { MatIcon } from '@angular/material/icon';
+import { LoadingService } from '../../services/loading-service.service';
 @Component({
   selector: 'class-card',
   imports: [MatCardModule, MatButtonModule,MatDivider, MatIcon],
@@ -56,7 +57,8 @@ export class ClassCardComponent implements OnInit, OnChanges {
 
   constructor (
     private service: UserService,
-    private postService: FunctionaltyService
+    private postService: FunctionaltyService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +90,7 @@ export class ClassCardComponent implements OnInit, OnChanges {
   }
 
   async hostInfo(host:string){
+    this.loadingService.showLoading()
     await firstValueFrom(this.service.getUserinfo(host).pipe(
       tap(
         (response)=>{
@@ -102,10 +105,12 @@ export class ClassCardComponent implements OnInit, OnChanges {
           }
         }
       )
-    ))
+    ));
+    this.loadingService.hideLoading()
   }
 
   async getPost(id: number){
+    this.loadingService.showLoading();
     await firstValueFrom(this.postService.getPost(id).pipe(
       tap(
         (response)=>{
@@ -120,7 +125,8 @@ export class ClassCardComponent implements OnInit, OnChanges {
           debug(error)
         }
       )
-    ))
+    ));
+    this.loadingService.hideLoading();
   }
   onclickDownload(){
     console.log(this.downloadLink)

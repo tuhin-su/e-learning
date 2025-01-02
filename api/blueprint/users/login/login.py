@@ -3,6 +3,8 @@ from flask import Flask,Blueprint ,request, jsonify,current_app
 from datetime import datetime, timedelta
 import jwt
 from modules.DataBase import DBA
+from modules.utilty import getLabel
+
 login_bp = Blueprint("login", __name__)
 
 
@@ -23,7 +25,7 @@ def login():
         if user and check_password_hash(user['passwd'], password):
             user_id = user['id']
             response = {}
-            response['lable'] = str(app.getLabel(user_id))
+            response['lable'] = str(getLabel(user_id))
             query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE user_id = %s;"
             db.cursor.execute(query, (user_id,))
             user_info = db.cursor.fetchone()

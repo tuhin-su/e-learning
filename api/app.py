@@ -26,7 +26,7 @@ from blueprint.org.posts.post import posts
 from blueprint.org.notics.notics import notice
 from blueprint.users.mng.manage import mng
 from blueprint.education.info.info import info
-
+from blueprint.public.download.download_bp import download_bp
 class apiHandler:
     def __init__(self):
         self.app = Flask(__name__)
@@ -96,6 +96,7 @@ class apiHandler:
         self.app.register_blueprint(notice) # All notic
         self.app.register_blueprint(mng) # All user manage
         self.app.register_blueprint(info) # give info
+        self.app.register_blueprint(download_bp) # download public files
         
         @self.auth.verify_token
         def verify_token(token):

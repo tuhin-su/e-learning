@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import { ClassCardComponent } from '../../components/class-card/class-card.component';
+import { LoadingService } from '../../services/loading-service.service';
 @Component({
   selector: 'app-classes',
   imports: [
@@ -60,7 +61,8 @@ export class ClassesComponent {
     private postService: FunctionaltyService,
     private fb: FormBuilder,
     private service: CollegeService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +73,7 @@ export class ClassesComponent {
   }
 
   async fetchClasses(date:string){
+    this.loadingService.showLoading();
     await firstValueFrom(this.service.getAll(convertToMySQLDate(date)).pipe(
       tap(
         (response)=>{
@@ -82,7 +85,8 @@ export class ClassesComponent {
           this.alertService.showWarningAlert(error.error.message);
         }
       )
-    ))
+    ));
+    this.loadingService.hideLoading();
   }
   // create class
   createClass(){
@@ -113,6 +117,7 @@ export class ClassesComponent {
   }
 
   async uploadFile(){
+    this.loadingService.showLoading();
     if (this.selectedFile) {
       await firstValueFrom(this.postService.postPost(this.selectedFile).pipe(
         tap(
@@ -128,11 +133,13 @@ export class ClassesComponent {
         )
       ))
     }
+    this.loadingService.hideLoading();
   }
 
 
  async onSubmit(){
   // set content_id
+  this.loadingService.showLoading();
   this.calssForm?.patchValue({content_id: this.uploadId});
   if (this.calssForm?.valid) {
     await firstValueFrom(this.service.addClass(this.calssForm.value).pipe(
@@ -150,6 +157,7 @@ export class ClassesComponent {
     const field = getInvalidFields(this.calssForm!);
     this.alertService.showWarningAlert('' + field[0] + ' is invalid');
   }
+  this.loadingService.hideLoading();
  }
 
  selectSem(value: any){
@@ -166,6 +174,7 @@ export class ClassesComponent {
  }
 
  async fetchStream(){
+  this.loadingService.showLoading();
   await firstValueFrom(this.service.getStreamInfo().pipe(
     tap(
       (responce)=>{
@@ -174,10 +183,12 @@ export class ClassesComponent {
         })
       }
     )
-  ))
+  ));
+  this.loadingService.hideLoading();
  }
 
  async fetchSemester(value: any){
+  this.loadingService.showLoading();
   await firstValueFrom(this.service.getInfoSem(value).pipe(
     tap(
       (responce)=>{
@@ -186,6 +197,7 @@ export class ClassesComponent {
         }
       }
     )
-  ))
+  ));
+  this.loadingService.hideLoading();
  }
 }
