@@ -33,6 +33,19 @@ export class UserService {
     return this.http.post<any>(userData, data, { headers });
   }
 
+  updateInfo(data: any): Observable<any> {
+    const userData = `${this.api}/user_info`;
+
+    // Get the token and set the headers
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    // Make the POST request with the headers
+    return this.http.put<any>(userData, data, { headers });
+  }
+
    getUserinfo(id: string): Observable<any | ApiResponce> {
     const cacheKey = `userinfo-${id}`;
     const cachedData = this.cache[cacheKey];

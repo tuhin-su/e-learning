@@ -81,3 +81,17 @@ export function getInvalidFields(formGroup: FormGroup): string[] {
 export function back() {
   window.history.back();
 }
+
+export function compareObjectsAndReturnSecondValue(newObj: any, oldObj: any): any {
+  const result: any = {};
+
+  for (const key in oldObj) {
+    if (oldObj.hasOwnProperty(key) && newObj.hasOwnProperty(key)) {
+      if ((!(oldObj[key] === newObj[key]))) {
+        result[key] = newObj[key];
+      }
+    }
+  }
+
+  return result;
+}

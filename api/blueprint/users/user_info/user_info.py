@@ -15,14 +15,14 @@ def app():
             user_id = app.auth.current_user()['user_id']
             data = request.json
 
-            name = data.get('name')
-            phone = data.get('phone')
-            address = data.get('address')
-            gender = data.get('gender')
-            birth = data.get('dob')
-            img = data.get('img')
-
             if request.method == 'POST':
+                name = data.get('name')
+                phone = data.get('phone')
+                address = data.get('address')
+                gender = data.get('gender')
+                birth = data.get('dob')
+                img = data.get('img')
+                
                 query = """
                     INSERT INTO user_info (user_id, name, phone, address, gender, birth, img)
                     VALUES (%s, %s, %s, %s, %s, %s, %s);
@@ -30,13 +30,31 @@ def app():
                 values = (user_id, name, phone, address, gender, birth, img)
 
             elif request.method == 'PUT':
-                query = """
-                    UPDATE user_info
-                    SET name = %s, phone = %s, address = %s, gender = %s, birth = %s, img = %s
-                    WHERE user_id = %s;
-                """
-                values = (name, phone, address, gender, birth, img, user_id)
+                query = "UPDATE user_info SET "
+                values = list()
+                if "name" in data:
+                    query += "name = %s, "
+                    values.append(data['name'])
+                if "phone" in data:
+                    query += "phone = %s, "
+                    values.append(data['phone'])
+                if "address" in data:
+                    query += "address = %s, "
+                    values.append(data['address'])
+                if "gender" in data:
+                    query += "gender = %s, "
+                    values.append(data['gender'])
+                if "dob" in data:
+                    query += "birth = %s, "
+                    values.append(data['dob'])
+                if "img" in data:
+                    query += "img = %s, "
+                    values.append(data['img'])
+                
+                query = query[:-2]
+                query += " WHERE user_id = %s;"
 
+                values = tuple(values) + (user_id,)
             else:
                 db.disconnect()
                 return jsonify({"message": "Method not allowed"}), 405
@@ -46,6 +64,7 @@ def app():
                 db.conn.commit()
                 db.disconnect()
                 return jsonify({"message": "User info updated"})
+                
             except Error as e:
                 app.conn.rollback()
                 app.app.logger.error(f"Error updating user info: {e}")
