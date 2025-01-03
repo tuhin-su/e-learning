@@ -233,7 +233,7 @@ def chpw():
                     db.disconnect()
                     return jsonify({"message": "OTP token expired"}), 400
                 
-                if otp['otp'] == data['otp']:
+                if str(otp['otp']) == str(data['otp']):
                     pass
                 else:
                     db.disconnect()
