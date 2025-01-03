@@ -82,8 +82,8 @@ export class ProfileComponent {
       if (detection) {
         const { x, y, width, height } = detection.detection.box;
         const canvas = document.createElement('canvas');
-        canvas.width = 100;
-        canvas.height = 100;
+        canvas.width = 400;
+        canvas.height = 400;
 
         const ctx = canvas.getContext('2d');
         if (ctx) {
