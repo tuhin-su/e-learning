@@ -13,6 +13,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { compareObjectsAndReturnSecondValue, convertToMySQLDate, debug, getInvalidFields } from '../utility/function';
 import { LoadingService } from '../services/loading-service.service';
 import { GlobalStorageService } from '../services/global-storage.service';
+
 @Component({
   selector: 'app-profile',
   imports: [
@@ -27,19 +28,19 @@ import { GlobalStorageService } from '../services/global-storage.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-
 export class ProfileComponent {
   profileForm: FormGroup = new FormGroup({});
   imageSrc: string | ArrayBuffer | null = null;
   userInfo: any = null;
   update: boolean = false;
+  modelsLoaded: boolean = false; // Add this flag to track model loading status
 
   constructor(
     private fb: FormBuilder, 
     private router: Router,
     private userInfoService: UserService,
     private alertService: AlertService,
-    private loadingService:LoadingService,
+    private loadingService: LoadingService,
     private golbalStorageService: GlobalStorageService
   ) {
     this.userInfo = this.golbalStorageService.get('info');
@@ -47,9 +48,16 @@ export class ProfileComponent {
   }
 
   async ngOnInit(): Promise<void> {
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
-    await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-    await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
+    this.loadingService.showLoading();
+    try {
+      await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
+      this.modelsLoaded = true; // Set flag to true once models are loaded
+    } catch (error) {
+      this.alertService.showErrorAlert('Failed to load face recognition models. Please try again later.', false);
+    }
+    this.loadingService.hideLoading();
   }
 
   init() {
@@ -68,52 +76,57 @@ export class ProfileComponent {
       this.imageSrc = this.userInfo.img;
       this.profileForm.patchValue({
         dob: new Date(this.userInfo.birth)
-      })
+      });
     }
   }
 
   async onFileChange(event: Event) {
+    if (!this.modelsLoaded) {
+      this.alertService.showErrorAlert('Models are still loading. Please try again shortly.', false);
+      return;
+    }
+
     const input = event.target as HTMLInputElement;
-  
+
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      
+
       try {
         // Load the image file and perform face detection
         const image = await this.loadImage(file);
         const detection = await faceapi.detectSingleFace(image).withFaceLandmarks();
-  
+
         if (detection) {
           // Get the face detection box
           const { x, y, width, height } = detection.detection.box;
-  
+
           // Add padding to the bounding box to include more area like neck and ears
           const padding = 50; // Adjust the padding as needed
           const paddedX = Math.max(x - padding, 0); // Ensure we don't go out of bounds
           const paddedY = Math.max(y - padding, 0);
           const paddedWidth = width + 2 * padding; // Increase width
           const paddedHeight = height + 2 * padding; // Increase height
-  
+
           // Create a canvas for cropping and circular masking
           const canvas = document.createElement('canvas');
           canvas.width = 400;
           canvas.height = 400;
           const ctx = canvas.getContext('2d');
-  
+
           if (ctx) {
             // Step 1: Draw the cropped image onto the canvas
             ctx.drawImage(image, paddedX, paddedY, paddedWidth, paddedHeight, 0, 0, 400, 400);
-  
+
             // Step 2: Create a circular mask
             ctx.globalCompositeOperation = 'destination-in'; // Use destination-in to crop into a circle
             ctx.beginPath();
             ctx.arc(200, 200, 200, 0, Math.PI * 2); // Circle in the center
             ctx.closePath();
             ctx.fill();
-  
+
             // Step 3: Convert the canvas to a PNG data URL
             this.imageSrc = canvas.toDataURL('image/png');
-  
+
             // Step 4: Update the form with the new profile image
             if (this.profileForm) {
               this.profileForm.patchValue({
@@ -122,7 +135,7 @@ export class ProfileComponent {
             }
           }
         } else {
-          this.alertService.showErrorAlert('No face detected chose another image', false);
+          this.alertService.showErrorAlert('No face detected, choose another image.', false);
         }
       } catch (error) {
         console.error('Error processing the file:', error);
@@ -130,7 +143,6 @@ export class ProfileComponent {
       }
     }
   }
-  
 
   loadImage(file: File): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
@@ -153,14 +165,14 @@ export class ProfileComponent {
     if (this.profileForm && this.profileForm.valid) {
       this.profileForm.patchValue({
         "dob": convertToMySQLDate(this.profileForm.value.dob)
-      })
+      });
       try {
         if (!this.update) {
           await firstValueFrom(this.userInfoService.postInfo(this.profileForm.value).pipe(
             tap(
               (res) => {
                 if (res) {
-                  this.golbalStorageService.set('info', this.profileForm?.value);
+                  this.golbalStorageService.set('info', this.profileForm?.value, true);
                   this.router.navigate(['/']);
                 }
               },
@@ -187,7 +199,7 @@ export class ProfileComponent {
         console.error('Submission error:', error);
       }
     } else {
-      this.alertService.showErrorAlert('Plese fill all fields and select an Your image. also make sure your face is in the image properly and clearly visible', false);
+      this.alertService.showErrorAlert('Please fill all fields and select an image. Also, make sure your face is visible and clear in the image.', false);
     }
     this.loadingService.hideLoading();
   }
@@ -195,7 +207,8 @@ export class ProfileComponent {
   logout() {
     this.router.navigate(['/logout']);
   }
+
   onOkError() {
-    this.golbalStorageService.set('info', this.profileForm?.value);
+    this.golbalStorageService.set('info', this.profileForm.value, true);
   }
 }

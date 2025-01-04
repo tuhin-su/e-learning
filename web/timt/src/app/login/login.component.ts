@@ -66,14 +66,11 @@ export class LoginComponent implements OnInit {
         tap(
           (res) => {
             if (res.token && res.lable) {
-              localStorage.setItem('token', res.token);
-              this.storage.set('token', res.token);
-              localStorage.setItem('lable', res.lable);
-              this.storage.set('lable', res.lable);
+              this.storage.set('token', res.token, true);
+              this.storage.set('lable', res.lable, true);
 
               if (res.info) {
-                  localStorage.setItem('info',JSON.stringify(res.info))
-                  this.storage.set('info',res.info)
+                  this.storage.set('info',res.info, true);
                   this.router.navigate(['/']);
               }
               else{

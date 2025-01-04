@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { debug } from '../utility/function';
 
 @Injectable({
   providedIn: 'root', // Makes this service available globally
@@ -7,20 +8,15 @@ export class GlobalStorageService {
   private storage: Map<string, any> = new Map();
 
   constructor() {
-    // Initialize storage with values from localStorage
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.set('token', token);
-    }
-
-    const info = localStorage.getItem('info');
-    if (info) {
-      this.set('info', JSON.parse(info));
-    }
-
-    const label = localStorage.getItem('lable');
-    if (label) {
-      this.set('lable', label);
+    // restore localstorage to storage
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) {
+        const value = localStorage.getItem(key);
+        if (value) {
+          this.storage.set(key, JSON.parse(value));
+        }
+      }
     }
   }
 
@@ -29,8 +25,12 @@ export class GlobalStorageService {
    * @param key The key to identify the value.
    * @param value The value to store.
    */
-  set(key: string, value: any): void {
+  set(key: string, value: any, permanent: boolean = false): void {
     this.storage.set(key, value);
+
+    if (permanent) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   }
 
   /**
@@ -46,8 +46,12 @@ export class GlobalStorageService {
    * Deletes a value associated with a key.
    * @param key The key to identify the value.
    */
-  delete(key: string): void {
+  delete(key: string, permanent: boolean = false): void {
     this.storage.delete(key);
+
+    if (permanent) {
+      localStorage.removeItem(key);
+    }
   }
 
 
