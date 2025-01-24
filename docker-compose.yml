@@ -71,7 +71,7 @@ services:
       context: ./docker/build
       dockerfile: Dockerfile.angular
     container_name: admin
-    #command: "sh run.sh"
+    command: "sh run.sh"
     dns:
       - 8.8.8.8
     volumes:
