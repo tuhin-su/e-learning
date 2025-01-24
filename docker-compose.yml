@@ -11,6 +11,7 @@ services:
     volumes:
       - ./db/db_data:/var/lib/mysql
       - ./db/sql:/docker-entrypoint-initdb.d
+  
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -23,7 +24,7 @@ services:
 
   flask:
     build:
-      context: ./build
+      context: ./docker/build
       dockerfile: Dockerfile.flask
     working_dir: /app
     restart: always
@@ -34,7 +35,7 @@ services:
       - ${API_PORT}:5000
     volumes:
       - ./api:/app
-      - ./dotfiles:/home/vscode
+      - ./docker/containers/flask:/home/vscode
     environment:
       SECRET_KEY: ${API_SECRET_KEY}
       DB_HOST: ${DATABASE_HOST}
@@ -50,7 +51,7 @@ services:
 
   angular:
     build:
-      context: ./build
+      context: ./docker/build
       dockerfile: Dockerfile.angular
     container_name: angular
     command: "sh run.sh"
@@ -58,28 +59,32 @@ services:
       - 8.8.8.8
     volumes:
       - ./web/timt:/app
-      - ./dotfiles:/home/vscode
+      - ./docker/containers/angular:/home/vscode
     ports:
       - 4200:4200
     environment:
       - MODE=${MODE}
     working_dir: /app
-  react:
+  
+  admin:
     build:
-      context: ./build
-      dockerfile: Dockerfile.react
-    container_name: react
-    command: "sh run.sh"
+      context: ./docker/build
+      dockerfile: Dockerfile.angular
+    container_name: admin
+    #command: "sh run.sh"
     dns:
       - 8.8.8.8
     volumes:
-      - ./web/timt:/app
-      - ./dotfiles:/home/vscode
+      - ./web/admin:/app
+      - ./docker/containers/admin:/home/vscode
     ports:
-      - 3000:3000
+      - 5173:5173
+    expose:
+      - 5173
     environment:
       - MODE=${MODE}
     working_dir: /app
+  
   nginx:
     image: nginx:latest
     container_name: nginx

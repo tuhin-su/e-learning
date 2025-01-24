@@ -1,77 +1,97 @@
-# CHANGELOG.md
+# Changelog
 
-## [3.1.0] - 2024-12-08
+All notable changes to this project will be documented in this file.
 
-- Update dependencies
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0] - 2024-07-05
+## [Unreleased]
 
-- Mosaic Redesign
+## [0.9.0] - 2024-10-27
 
-## [2.1.0] - 2023-12-08
+### Added
 
-- Update Vite to 5
-- Update other dependencies
+- add table filters
 
-## [2.0.1] - 2023-10-04
+### Fixed
 
-- Dependencies update
+- fix table component tests
 
-## [2.0.0] - 2023-06-01
+## [0.8.1] - 2024-10-27
 
-- Dark version added
+### Fixed
 
-## [1.7.4] - 2023-04-11
+- menu display issue behind components #18
 
-- Update dependencies
+### Added
 
-## [1.7.3] - 2023-02-13
+- error handling with dummy data fallback in user fetching #20
 
-- Further sidebar color improvements
+## [0.8.0] - 2024-08-08
 
-## [1.7.2] - 2023-02-13
+### Added
 
-- Update dependencies
-- Improve sidebar icons color logic
+- table component
 
-## [1.7.0] - 2022-08-30
+### Changed
 
-- Update sidebar
-- Fix mobile menu issue
+- error page menu icon
 
-## [1.6.0] - 2022-07-15
+## [0.7.0] - 2024-07-17
 
-- Replace Sass with CSS files
-- Update dependencies
-- Update React to v18
+### Added
 
-## [1.3.1] - 2022-01-27
+- update minor version of angular 18
 
-- Fix tailwind.config.js file
+## [0.6.0] - 2024-07-05
 
-## [1.3.0] - 2022-01-25
+### Added
 
-- Replace CRA (Create React App) with Vite
-- Remove Craco
-- Update dependencies
+- update angular 17 to 18
 
-## [1.2.0] - 2021-12-13
+## [0.5.0] - 2024-04-30
 
-- Update Tailwind 3
-- Several improvements
+### Added
 
-## [1.1.1] - 2021-11-23
+- add error module
 
-- Alignment issue## [1.1.1] - 2021-11-23
+## [0.4.1] - 2024-02-27
 
-- Alignment issue
+### Fixed
 
-## [1.1.0] - 2021-11-15
+- profile menu z-index
+- podcast music play button
 
-- Update dependencies
-- Enable Tailwind JIT
-- Add expandable / collapsible sidebar feature
+## [0.4.0] - 2024-02-22
 
-## [1.0.0] - 2021-04-20
+### Added
 
-First release
+- button component
+
+### Changed
+
+- update angular minor version
+
+## [0.3.0] - 2024-02-21
+
+### Added
+
+- Multi theme
+
+## [0.2.0] - 2023-11-09
+
+### Changed
+
+- Upgrade angular version from 16 to 17
+
+## [0.1.2] - 2023-10-24
+
+### Fixed
+
+- Scroll to top when route change (#9)
+
+## [0.1.1] - 2023-02-03
+
+### Fixed
+
+- Mobile navbar menu index order
