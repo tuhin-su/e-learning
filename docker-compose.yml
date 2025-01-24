@@ -64,7 +64,22 @@ services:
     environment:
       - MODE=${MODE}
     working_dir: /app
-  
+  react:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.react
+    container_name: react
+    command: "sh run.sh"
+    dns:
+      - 8.8.8.8
+    volumes:
+      - ./web/timt:/app
+      - ./dotfiles:/home/vscode
+    ports:
+      - 3000:3000
+    environment:
+      - MODE=${MODE}
+    working_dir: /app
   nginx:
     image: nginx:latest
     container_name: nginx
