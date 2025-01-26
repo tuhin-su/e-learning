@@ -146,8 +146,12 @@ def attFace():
         
         #  get curent user info
         sql = "SELECT `course`,`semester` FROM `student` WHERE `id` = %s;"
-        db.cursor.execute(sql, (user_id, ))
-        result = db.cursor.fetchone()
+        try:
+            db.cursor.execute(sql, (user_id, ))
+            result = db.cursor.fetchone()
+        except:
+            db.disconnect()
+            return jsonify({'massage': 'Internal server error code: DCE'}), 500
 
         if not result:
             db.disconnect()
@@ -156,8 +160,12 @@ def attFace():
 
         # select all user img from user_info
         sql = """SELECT u.user_id, u.img,u.name,s.roll FROM user_info u JOIN student s ON u.user_id = s.id WHERE s.id != %s AND course = %s AND semester = %s AND u.img IS NOT NULL;"""    
-        db.cursor.execute(sql, (user_id, result['course'], result['semester']))
-        result = db.cursor.fetchall()
+        try:
+            db.cursor.execute(sql, (user_id, result['course'], result['semester']))
+            result = db.cursor.fetchall()
+        except:
+            db.disconnect()
+            return jsonify({'massage': 'Internal server error code: DCE'}), 500
 
 
         if not result:

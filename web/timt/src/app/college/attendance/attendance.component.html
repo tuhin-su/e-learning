@@ -1,5 +1,5 @@
 <div class="root">
-  @if (lable == 1 || lable == 2) {
+  @if (lable == "1" || lable == "2") {
     <div class="w-full h-[10%] absolute bottom-0 flex items-center justify-center">
       <mat-form-field>
         <mat-label>Stream</mat-label>
@@ -68,7 +68,7 @@
 
     </div>
   }
-  @if (lable == 3) {
+  @if (lable == "3") {
     <div class="w-full h-[54px] absolute top-0 flex items-center pl-2">
       <button mat-button class="btn btn-circle bg-transparent outline-none hover:bg-blue-500" (click)="back();">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

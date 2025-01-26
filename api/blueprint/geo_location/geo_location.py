@@ -44,8 +44,13 @@ def app():
                             ORDER BY `createDate` DESC
                             LIMIT 1;
                         """
-                db.cursor.execute(query)
-                locations = db.cursor.fetchone()
+                try:
+                    db.cursor.execute(query)
+                    locations = db.cursor.fetchone()
+                except:
+                    db.disconnect()
+                    return jsonify({"message": "Internal server error code: DEC"}), 500
+                
                 db.disconnect()
                 return jsonify({"locations": locations}), 200
     return locationManagement()

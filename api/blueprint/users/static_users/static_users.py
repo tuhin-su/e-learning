@@ -20,8 +20,8 @@ def app():
 
     try:
         sql = "SELECT id FROM user WHERE email = %s"
-        app.cursor.execute(sql, (username,))
-        user = app.cursor.fetchone()
+        db.cursor.execute(sql, (username,))
+        user = db.cursor.fetchone()
         if user:
             db.disconnect()
             return jsonify({"message": "User already exists"}), 400
@@ -34,14 +34,14 @@ def app():
     try:
         query = """INSERT INTO user (id, email, passwd, groups, createBy)
 VALUES (%s, %s, %s, %s, %s);"""
-        app.cursor.execute(query, (user_id, username, password, groups, ref))
-        app.conn.commit()
+        db.cursor.execute(query, (user_id, username, password, groups, ref))
+        db.conn.commit()
         app.app.logger.info(f'Created new user: {username}')
         db.disconnect()
         return jsonify({"message": "User created"}), 201
     
     except Error as e:
-        app.conn.rollback()
+        db.conn.rollback()
         app.app.logger.error(f"Error creating user: {e}")
         db.disconnect()
         return jsonify({"message": str(e)}), 400
