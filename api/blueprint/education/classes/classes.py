@@ -74,29 +74,48 @@ def app_get(date):
         
         if lable == 2: # for teacher
             sql = "SELECT * FROM `classes` WHERE `host` = %s and DATE(`createDate`) = STR_TO_DATE(%s,'%Y-%m-%d');"
-            db.cursor.execute(sql, (user_id, date))
-            res = db.cursor.fetchall()
+            try:
+                db.cursor.execute(sql, (user_id, date))
+                res = db.cursor.fetchall()
+            except:
+                db.disconnect()
+                return jsonify({"message": "You are not authorized to access this endpoint"}), 403
+            
             db.disconnect()
             return jsonify(res),200
         
         if lable == 1:  # for admin
             sql = "SELECT * FROM `classes` WHERE DATE(`createDate`) = STR_TO_DATE(%s,'%Y-%m-%d');"
-            db.cursor.execute(sql, (date,))
-            res = db.cursor.fetchall()
+            try:
+                db.cursor.execute(sql, (date,))
+                res = db.cursor.fetchall()
+            except:
+                db.disconnect()
+                return jsonify({"message": "Internal server error code: DCE"}), 500
+            
             db.disconnect()
             return jsonify(res), 200
         
         if lable == 3: # for student
                 sql = "SELECT `semester`,`course` FROM student where id = %s;"
-                db.cursor.execute(sql, (user_id, ))
-                student = db.cursor.fetchone()
+                try:
+                    db.cursor.execute(sql, (user_id, ))
+                    student = db.cursor.fetchone()
+                except:
+                    db.disconnect()
+                    return jsonify({"message": "Internal server error code: DCE"}), 500
+                
                 if student == None:
                     db.disconnect()
                     return jsonify({"message": "You are not authorized to access this endpoint"}), 403
         
                 sql = "SELECT * FROM `classes` WHERE DATE(`createDate`) = DATE(%s) AND `stream` = %s AND `semester` = %s"
-                db.cursor.execute(sql, (date, student['course'], student['semester'],))
-                res = db.cursor.fetchall()
+                try:
+                    db.cursor.execute(sql, (date, student['course'], student['semester'],))
+                    res = db.cursor.fetchall()
+                except:
+                    db.disconnect()
+                    return jsonify({"message": "Internal server error code: DCE"}), 500
                 db.disconnect()
                 return jsonify(res),200
     return classes(date)

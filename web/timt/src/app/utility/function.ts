@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment.development";
+import { environment } from "../../environments/environment";
 import { formatDate } from "@angular/common";
 export function debug(msg: any | null) {
     if (!environment.production) {

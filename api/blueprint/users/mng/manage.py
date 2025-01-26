@@ -48,8 +48,8 @@ def app():
                     # detect email exists or not 
                     sql = "SELECT id FROM `user` WHERE `email` = %s;"
                     try:
-                        app.cursor.execute(sql, (data['email'],))
-                        user = app.cursor.fetchone()
+                        db.cursor.execute(sql, (data['email'],))
+                        user = db.cursor.fetchone()
                         if user:
                             db.disconnect()
                             return jsonify({"message": "User already exists"}), 400
@@ -63,21 +63,21 @@ def app():
                     sql = """INSERT INTO `user`(`id`, `email`, `passwd`, `groups`, `createBy`) VALUES (%s, %s, %s, %s, %s)"""
 
                     try:
-                        app.cursor.execute(sql, (user_id, data['email'], generate_password_hash(data['dob']), "ST", user_id_ad))
-                        app.conn.commit()
+                        db.cursor.execute(sql, (user_id, data['email'], generate_password_hash(data['dob']), "ST", user_id_ad))
+                        db.conn.commit()
                         app.app.logger.info(f'Created new user: {data["email"]}')
 
                         try:
                             sql = "SELECT `id` FROM `course` WHERE `name` = %s;"
-                            app.cursor.execute(sql, (data['course'],))
-                            course = app.cursor.fetchone()['id']
+                            db.cursor.execute(sql, (data['course'],))
+                            course = db.cursor.fetchone()['id']
 
                             # user_id
                             sql = """INSERT INTO `student`(`id`, `roll`, `reg`, `course`, `semester`, `reg_by`) VALUES (%s, %s, %s, %s, %s, %s);"""
 
                             try:
-                                app.cursor.execute(sql, (user_id, data['roll'], data['reg'], course, data['semester'], user_id_ad))
-                                app.conn.commit()
+                                db.cursor.execute(sql, (user_id, data['roll'], data['reg'], course, data['semester'], user_id_ad))
+                                db.conn.commit()
                                 app.app.logger.info(f'Created new user: {data["email"]}')
                                 db.disconnect()
                                 return jsonify({"message": "User created"}), 201
@@ -117,7 +117,7 @@ def chpw():
                 return jsonify({"message": "Email not valid."})
 
         except Error as e:
-            return jsonify({"message": str(e)}), 500
+            return jsonify({"message": "Internal server error code: DEC"}), 500
         
         otp = generate_otp()
         sql =  "INSERT INTO `otp`(`otp`, `for`) VALUES (%s,%s);"
@@ -213,7 +213,7 @@ def chpw():
             return jsonify({"message": "success", "otp_token": id}), 200
         except Error as e:
             db.disconnect()
-            return jsonify({"message": str(e)}), 500
+            return jsonify({"message": "Internal server error code: DEC"}), 500
         
     # update passowrd
     elif "password" in data and "otp_token" in data and "otp" in data and "email" in data:
@@ -243,15 +243,15 @@ def chpw():
                 return jsonify({"message": "Invalid OTP token"}), 400
         except Error as e:
             db.disconnect()
-            return jsonify({"message": str(e)}), 500
+            return jsonify({"message": "Internal server error code: DEC"}), 500
     else:
         db.disconnect()
         return jsonify({"message": "No data provided"}), 400
     
     sql = "UPDATE `user` SET `passwd`=%s WHERE  `email` = %s;"
     try:
-        app.cursor.execute(sql, (passwd, email,))
-        app.conn.commit()
+        db.cursor.execute(sql, (passwd, email,))
+        db.conn.commit()
         db.disconnect()
         return jsonify({"message": "Password changed"}), 200
     

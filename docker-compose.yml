@@ -46,6 +46,8 @@ services:
       BOT_KEY: ${BOT_KEY}
       CHANNEL_ID: ${BOT_CHANNEL_ID}
       BOT_ENABLE: ${BOT_ENABLE}
+      SMTP_SERVER: ${MAIL_SERVER}
+      SMTP_PORT: ${MAIL_SERVER_PORT}
       MAIL: ${MAIL}
       MAIL_KEY: ${MAIL_KEY}
 
@@ -85,11 +87,20 @@ services:
       - MODE=${MODE}
     working_dir: /app
   
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
   nginx:
     image: nginx:latest
     container_name: nginx
     volumes:
       - ./web/nginx.conf:/etc/nginx/nginx.conf
       - ./web/timt/www/timt/browser:/usr/share/nginx/html
+      - ./web/admin/dist/angular-tailwind/browser:/usr/share/nginx/admin
     ports:
-      - ${NGINX_PORT}:80
+      - ${NGINX_PORT:-80}:80
+      - ${ADMIN_PORT:-81}:81

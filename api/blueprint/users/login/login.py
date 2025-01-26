@@ -19,16 +19,25 @@ def login():
         password = data.get('password')
 
         query = "SELECT id, passwd, groups FROM user WHERE email = %s AND status = 0"
-        db.cursor.execute(query, (username,))
-        user = db.cursor.fetchone()
+        try:
+            db.cursor.execute(query, (username,))
+            user = db.cursor.fetchone()
+        except:
+            db.disconnect()
+            return jsonify({"message": "Internal server error code: DEC"}), 500
 
         if user and check_password_hash(user['passwd'], password):
             user_id = user['id']
             response = {}
             response['lable'] = str(getLabel(user_id))
             query = "SELECT name, phone, address, gender, birth, img FROM user_info WHERE user_id = %s;"
-            db.cursor.execute(query, (user_id,))
-            user_info = db.cursor.fetchone()
+            try:
+                db.cursor.execute(query, (user_id,))
+                user_info = db.cursor.fetchone()
+            except:
+                db.disconnect()
+                return jsonify({"message": "Internal server error code: DEC"}), 500
+            
             if user_info:
                 response['info'] = user_info
                     

@@ -10,6 +10,6 @@ def getLabel(id):
                 return dba.cursor.fetchone()['label']
             except Error as e:
                 # self.app.logger.error(e)
-                return None
+                return -1
             finally:
                 dba.disconnect()

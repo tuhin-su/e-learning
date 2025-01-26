@@ -1,1 +1,1 @@
-docker-compose up db flask
+docker-compose up angular admin phpmyadmin db flask nginx

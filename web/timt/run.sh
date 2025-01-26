@@ -8,7 +8,7 @@ fi
 if [[ "$MODE" == "DEVELOPMENT" ]]; then
     echo "Starting development server..."
     # Run ng serve and check if it fails
-    ng serve --host 0.0.0.0 --port 5173 --disable-host-check || { echo "ng serve failed. Sleeping indefinitely..."; sleep infinity; }
+    ng serve --host 0.0.0.0 --port 4200 --disable-host-check || { echo "ng serve failed. Sleeping indefinitely..."; sleep infinity; }
 else
     echo "Starting production server..."
     ng build
