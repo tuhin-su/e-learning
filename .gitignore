@@ -26,3 +26,4 @@ tools
 docker/containers/angular
 docker/containers/flask
 docker/containers/react
+docker/containers/admin

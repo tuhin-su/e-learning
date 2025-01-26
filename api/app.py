@@ -1,8 +1,6 @@
 import json
 import os
 import logging
-import mysql.connector
-from mysql.connector import Error
 from flask import Flask, request, jsonify
 from flask_httpauth import HTTPTokenAuth
 from flask_cors import CORS
@@ -40,24 +38,6 @@ class apiHandler:
         if os.getenv('LOG') == "true":
             self.app.logger.disabled=False
 
-        # Initialize MySQL connection
-        self.conn = None
-        self.cursor = None
-        try:
-            self.conn = mysql.connector.connect(
-                host=os.getenv('DB_HOST'), 
-                database=os.getenv('DB_DATABASE'),
-                user=os.getenv('DB_USER'), 
-                password=os.getenv('DB_PASSWORD')
-            )
-            if self.conn.is_connected():
-                db_info = self.conn.get_server_info()
-                self.cursor = self.conn.cursor(dictionary=True)  # Use dictionary cursor to get column names
-                self.app.logger.info(f"Connected to MySQL database... MySQL Server version on {db_info}")
-        except Error as e:
-            self.app.logger.error(f"Error while connecting to MySQL: {e}")
-            raise e
-
         if  os.getenv("ADDRESS"):
             self.host = os.getenv("ADDRESS")
             
@@ -69,12 +49,6 @@ class apiHandler:
         self.token_expiration = timedelta(days=3)  # Token expiration time
 
         self.create_app()
-    
-    def close_connection(self):
-        if self.conn and self.conn.is_connected():
-            self.cursor.close()
-            self.conn.close()
-            self.app.logger.info("MySQL connection is closed")
     
     def generate_unique_id(self, username, password, groups):
         unique_value = str(uuid.uuid4())
@@ -115,19 +89,6 @@ class apiHandler:
             response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, PUT, DELETE"
             response.headers["Access-Control-Allow-Credentials"] = "true"
             return response
-    
-    def getLabel(self,id):
-        if id:
-            query = """SELECT g.label FROM `user` u JOIN `group` g ON u.`groups` = g.`code` WHERE u.`id` = %s;"""
-            try:
-                self.cursor.execute(query, (id,))
-                rst = self.cursor.fetchone()
-                if rst != None:
-                    return rst['label']
-                print(rst)
-            except mysql.connector.Error as e:
-                self.app.logger.error(e)
-                return None
         
     def run(self):
         logging.disable(logging.CRITICAL)
