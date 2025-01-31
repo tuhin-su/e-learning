@@ -1,0 +1,21 @@
+<div class="root">
+    <div class="w-full h-[54px] absolute top-0 flex items-center pl-2">
+      <button mat-button class="btn btn-circle bg-transparent outline-none hover:bg-blue-500" (click)="back();">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  
+    <!-- QR Scanner Section -->
+    <div class="root">
+      <div class="flex w-full h-full flex-col justify-center items-center">
+        <div id="scan-box" class="w-52 h-52 bg-black place-items-center rounded-box my_shdow overflow-hidden outline outline-[#647bfd7a] relative">
+          <div id="qr-reader" style="width: 100%; height: 100%;"></div>
+          <canvas #overlay style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  

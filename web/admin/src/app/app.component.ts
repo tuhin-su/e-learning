@@ -10,7 +10,13 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [NgClass,FormsModule, RouterOutlet, ResponsiveHelperComponent, NgxSonnerToaster],
+  imports: [
+    NgClass,
+    FormsModule,
+    RouterOutlet,
+    ResponsiveHelperComponent,
+    NgxSonnerToaster
+  ]
 })
 export class AppComponent {
   title = 'Angular Tailwind';

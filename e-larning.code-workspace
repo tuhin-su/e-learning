@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "web/admin"
+		},
+		{
+			"path": "web/timt"
+		},
+		{
+			"path": "api"
+		},
+		{
+			"path": "db"
+		}
+	],
+	"settings": {}
+}

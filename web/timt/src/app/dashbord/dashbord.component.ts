@@ -44,11 +44,8 @@ export class DashbordComponent implements OnInit {
     window.open('https://www.timt.org.in/');
   }
 
-  showToken(){
-    const token = this.globalStorageService.get('token');
-    if (token != null) {
-      this.alert.showSuccessAlert(token);
-    }
+  openAccess(){
+    this.router.navigate(['/access']);
   }
 
   openShowCase(){

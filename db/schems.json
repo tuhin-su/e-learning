@@ -545,5 +545,28 @@
         "nullable": true
       }
     }
+  },
+  "web_login":{
+    "columns": {
+      "key": {
+        "type": "VARCHAR",
+        "length": 255,
+        "nullable": false    
+      },
+      "createDate": {
+        "type": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "nullable": false
+      },
+      "last_login": {
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      "active":{
+        "type": "INT",
+        "default": 0,
+        "nullable": false
+      }
+    }
   }
 }
