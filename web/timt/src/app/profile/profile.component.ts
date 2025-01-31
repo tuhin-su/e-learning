@@ -89,6 +89,7 @@ export class ProfileComponent {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files[0]) {
+      this.loadingService.showLoading();
       const file = input.files[0];
 
       try {
@@ -136,11 +137,14 @@ export class ProfileComponent {
           }
         } else {
           this.alertService.showErrorAlert('No face detected, choose another image.', false);
+          this.loadingService.hideLoading();
         }
       } catch (error) {
+        this.loadingService.hideLoading();
         console.error('Error processing the file:', error);
         this.alertService.showErrorAlert('An error occurred while processing the image.', false);
       }
+      this.loadingService.hideLoading();
     }
   }
 
