@@ -8,10 +8,10 @@
     <!-- List items -->
     <li *ngFor="let item of menu.items">
       <!-- Menu List -->
-      <div (click)="toggleMenu(item)" class="group relative text-muted-foreground">
+      <div (click)="toggleMenu(item)" class="group relative ">
         <!-- Icon -->
         <div
-          [ngClass]="item.active && !menuService.showSideBar ? 'text-primary' : 'text-muted-foreground/50'"
+          [ngClass]="item.active && !menuService.showSideBar ? 'text-blue-500' : 'text-muted-foreground/50'"
           class="pointer-events-none absolute m-2">
           <svg-icon src="{{ item.icon }}" [svgClass]="'h-5 w-5'"> </svg-icon>
         </div>
@@ -28,7 +28,7 @@
             routerLink="{{ item.route }}"
             class="flex h-9 cursor-pointer items-center justify-start rounded text-muted-foreground hover:bg-card hover:text-foreground">
             <a
-              routerLinkActive="text-primary"
+              routerLinkActive="text-blue-500"
               class="ml-10 truncate text-xs font-semibold tracking-wide focus:outline-none">
               {{ item.label }}
             </a>

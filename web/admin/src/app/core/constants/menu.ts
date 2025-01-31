@@ -10,10 +10,10 @@ export class Menu {
           icon: 'assets/icons/heroicons/outline/chart-pie.svg',
           label: 'Dashboard',
           route: '/dashboard',
-          children: [
-            { label: 'Nfts', route: '/dashboard/nfts' },
-            // { label: 'Podcast', route: '/dashboard/podcast' },
-          ],
+          // children: [
+          //   { label: 'Nothing', route: '/dashboard/nothing' },
+          //   // { label: 'Podcast', route: '/dashboard/podcast' },
+          // ],
         },
         {
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',

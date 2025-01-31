@@ -1,143 +1,139 @@
 import { Component, OnDestroy, OnInit, effect } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/core/services/theme.service';
 import { ChartOptions } from '../../../../../shared/models/chart-options';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: '[nft-chart-card]',
   templateUrl: './nft-chart-card.component.html',
   standalone: true,
-  imports: [AngularSvgIconModule, NgApexchartsModule],
+  imports: [AngularSvgIconModule, NgApexchartsModule, CommonModule,FormsModule],
 })
 export class NftChartCardComponent implements OnInit, OnDestroy {
   public chartOptions: Partial<ChartOptions>;
 
+  months: string[]= ['January', 'February','March', 'April', 'May','June', 'July', 'August', 'September','October','November', 'December'];
+  items: string[]= this.months;
+
+  selectedOption = '';
+  isYearlyActive: boolean = false;
+  isMonthlyActive: boolean = false;
+  
+
+  activateYearly() {
+    this.isYearlyActive = true;
+    this.isMonthlyActive = false;
+    this.items = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2014"]
+    const currentdate = new Date();
+    const currentyear = currentdate.getFullYear();
+    this.selectedOption = currentyear.toString();
+
+  }
+
+
+  activateMonthly() {
+    this.isMonthlyActive = true;
+    this.isYearlyActive = false;
+    this.items = this.months;
+    const currentdate = new Date();
+    const monthindex = currentdate.getMonth();
+    this.selectedOption = this.months[monthindex];
+  }
+  days: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
   constructor(private themeService: ThemeService) {
-    let baseColor = '#FFFFFF';
-    const data = [2100, 3200, 3200, 2400, 2400, 1800, 1800, 2400, 2400, 3200, 3200, 3000, 3000, 3250, 3250];
-    const categories = [
-      '10AM',
-      '10.30AM',
-      '11AM',
-      '11.15AM',
-      '11.30AM',
-      '12PM',
-      '1PM',
-      '2PM',
-      '3PM',
-      '4PM',
-      '5PM',
-      '6PM',
-      '7PM',
-      '8PM',
-      '9PM',
-    ];
+    const categories = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
+
+    // Example categories (dynamically you can fetch them)
+    const categoryNames = ['BCA', 'BBA', 'BHM', 'MCA'];
+
+    const generateStrongColor = () => {
+      let color = '';
+      while (true) {
+        const letters = '0123456789ABCDEF';
+        color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        const rgb = this.hexToRgb(color);
+        if (this.isBrightEnough(rgb)) {
+          break;
+        }
+      }
+      return color;
+    };
+
+    const categoryColors = categoryNames.map(() => generateStrongColor());
+
+    // Generate random data for each category
+    const generateRandomData = () => Array.from({ length: 30 }, () => Math.floor(Math.random() * 100) + 1);
 
     this.chartOptions = {
-      series: [
-        {
-          name: 'Etherium',
-          data: data,
-        },
-      ],
+      series: categoryNames.map((name) => ({
+        name,
+        data: generateRandomData(),
+      })),
       chart: {
         fontFamily: 'inherit',
-        type: 'area',
-        height: 150,
-        toolbar: {
-          show: false,
-        },
-        sparkline: {
-          enabled: true,
-        },
+        type: 'line',
+        height: 400,
+        toolbar: { show: false },
+        sparkline: { enabled: true },
       },
-      dataLabels: {
-        enabled: false,
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          opacityFrom: 0.4,
-          opacityTo: 0.2,
-          stops: [15, 120, 100],
-        },
+      dataLabels: { enabled: false },
+      fill:{
+        type: 'solid',
+        colors: ["#383838"],
       },
       stroke: {
         curve: 'smooth',
         show: true,
         width: 3,
-        colors: [baseColor], // line color
+        colors: categoryColors,
       },
       xaxis: {
         categories: categories,
-        labels: {
-          show: false,
-        },
+        labels: { show: false },
         crosshairs: {
           position: 'front',
-          stroke: {
-            color: baseColor,
-            width: 1,
-            dashArray: 4,
-          },
+          stroke: { color: '#FFFFFF', width: 1, dashArray: 4 },
         },
-        tooltip: {
-          enabled: true,
-        },
+        tooltip: { enabled: true },
       },
       tooltip: {
         theme: 'light',
         y: {
-          formatter: function (val) {
-            return val + '$';
-          },
+          formatter: (val) => `${val}$`,
         },
       },
-      colors: [baseColor], //line colors
+      colors: categoryColors,
     };
 
     effect(() => {
-      /** change chart theme */
-      let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-      primaryColor = this.HSLToHex(primaryColor);
-      this.chartOptions.tooltip = {
-        theme: this.themeService.theme().mode,
-      };
-      this.chartOptions.colors = [primaryColor];
-      this.chartOptions.stroke!.colors = [primaryColor];
-      this.chartOptions.xaxis!.crosshairs!.stroke!.color = primaryColor;
+      let primaryColor = this.themeService.theme().mode === 'light' ? '#FFD700' : '#0000FF';
+      this.chartOptions.tooltip = { theme: this.themeService.theme().mode };
+      this.chartOptions.colors = [primaryColor, ...categoryColors.slice(1)];
+      this.chartOptions.stroke!.colors = [primaryColor, ...categoryColors.slice(1)];
     });
-  }
-
-  private HSLToHex(color: string): string {
-    const colorArray = color.split('%').join('').split(' ');
-    const colorHSL = colorArray.map(Number);
-    const hsl = {
-      h: colorHSL[0],
-      s: colorHSL[1],
-      l: colorHSL[2],
-    };
-
-    const { h, s, l } = hsl;
-
-    const hDecimal = l / 100;
-    const a = (s * Math.min(hDecimal, 1 - hDecimal)) / 100;
-    const f = (n: number) => {
-      const k = (n + h / 30) % 12;
-      const color = hDecimal - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-
-      // Convert to Hex and prefix with "0" if required
-      return Math.round(255 * color)
-        .toString(16)
-        .padStart(2, '0');
-    };
-    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {}
+
+  // Convert hex to RGB
+  private hexToRgb(hex: string): { r: number; g: number; b: number } {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+  }
+
+  // Ensure the color is bright enough
+  private isBrightEnough(rgb: { r: number; g: number; b: number }): boolean {
+    const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+    return brightness > 128;
+  }
 }
