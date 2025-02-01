@@ -6,157 +6,178 @@ import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;
+import android.webkit.ValueCallback;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
+
+import in.timt.app.LocalHttpServer;
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_PERMISSIONS_1 = 1;
-    private static final int REQUEST_PERMISSIONS_2 = 2;
+    private static final int REQUEST_PERMISSIONS = 1;
+    private LocalHttpServer localHttpServer;
     private WebView webView;
-    private String savedUrl = "https://app.timt.in";  // Default URL
+    private String savedUrl = "http://127.0.0.1:65534";  // Default URL
+    private ValueCallback<Uri[]> fileUploadCallback;
+    private ActivityResultLauncher<Intent> filePickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initialize and start the server
+        localHttpServer = new LocalHttpServer(this, 65534); // Set the port to whatever you want
+        try {
+            localHttpServer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         setContentView(R.layout.activity_main);
 
-        // Initialize WebView and setup settings
         webView = findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
+        webView.post(() -> adjustWebViewSize());
 
-        // Modern WebView settings
+        WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);  // Enable DOM storage
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  // Use cache when offline
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
-        webSettings.setGeolocationEnabled(true);  // Allow Geolocation
-        webSettings.setMediaPlaybackRequiresUserGesture(false);  // Allow autoplay of media
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
 
-        // Set WebChromeClient to handle location/camera permissions
+        // Handle permissions for WebView (Camera, Location, File access)
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onPermissionRequest(final android.webkit.PermissionRequest request) {
-                if (request.getResources().length > 0) {
-                    request.grant(request.getResources());
+                runOnUiThread(() -> request.grant(request.getResources()));
+            }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                if (fileUploadCallback != null) {
+                    fileUploadCallback.onReceiveValue(null);
                 }
+                fileUploadCallback = filePathCallback;
+
+                Intent intent = fileChooserParams.createIntent();
+                try {
+                    filePickerLauncher.launch(intent);
+                } catch (Exception e) {
+                    fileUploadCallback = null;
+                    return false;
+                }
+                return true;
             }
         });
 
-        // Handle page loading and errors
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                savedUrl = url; // Save the URL when the page starts loading
-            }
+        webView.setWebViewClient(new WebViewClient());
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (Uri.parse(url).getHost() != null && !Uri.parse(url).getHost().equals("app.timt.in")) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                view.loadUrl("file:///android_asset/error.html");
-            }
-        });
-
-        // If activity is being recreated (e.g., after rotation or permission request), reload the saved URL
         if (savedInstanceState != null) {
             savedUrl = savedInstanceState.getString("savedUrl", savedUrl);
         }
-
-        // Load the website (either saved URL or default URL)
         webView.loadUrl(savedUrl);
 
-        // Request permissions when the app is launched
         requestPermissions();
+
+        filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (fileUploadCallback != null) {
+                Uri[] results = null;
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    results = new Uri[]{result.getData().getData()};
+                }
+                fileUploadCallback.onReceiveValue(results);
+                fileUploadCallback = null;
+            }
+        });
+    }
+
+    private void adjustWebViewSize() {
+        float screenSizeCm = 16.33f;
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float cmToPx = screenSizeCm * (metrics.xdpi / 2.54f);
+        if (cmToPx > 0) {
+            ViewGroup.LayoutParams params = webView.getLayoutParams();
+            params.width = (int) cmToPx;
+            webView.setLayoutParams(params);
+        }
     }
 
     private void requestPermissions() {
-        String[] permissions1 = {
+        String[] permissions = {
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
 
-        // Request the first set of permissions
-        ActivityCompat.requestPermissions(this, permissions1, REQUEST_PERMISSIONS_1);
+        if (!hasPermissions(permissions)) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
+        }
+    }
+
+    private boolean hasPermissions(String[] permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_1:
-                // Check if the first set of permissions was granted
-                boolean allPermissionsGranted = true;
-                for (int result : grantResults) {
-                    if (result != PackageManager.PERMISSION_GRANTED) {
-                        allPermissionsGranted = false;
-                    }
+        if (requestCode == REQUEST_PERMISSIONS) {
+            boolean allGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false;
+                    break;
                 }
-
-                if (allPermissionsGranted) {
-                    // Request the second set of permissions (including Camera)
-                    String[] permissions2 = {Manifest.permission.CAMERA};
-                    ActivityCompat.requestPermissions(this, permissions2, REQUEST_PERMISSIONS_2);
-                } else {
-                    // Handle the case where permissions were not granted
-                    // (e.g., show a message to the user)
-                    Toast.makeText(this, "Permissions not granted", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-            case REQUEST_PERMISSIONS_2:
-                // Handle the camera permission request result
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Camera permission granted, continue with your app logic
-                } else {
-                    // Handle the case where the camera permission was not granted
-                    Toast.makeText(this, "Camera permission not granted", Toast.LENGTH_SHORT).show();
-                }
-                break;
+            }
+//            if (!allGranted) {
+////                Toast.makeText(this, "Some permissions were denied", Toast.LENGTH_LONG).show();
+//            }
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Save the current URL before activity is destroyed
         outState.putString("savedUrl", savedUrl);
     }
 
     @Override
     public void onBackPressed() {
-        // Check if the WebView can go back
-        if (webView != null && webView.canGoBack()) {
-            webView.goBack();  // Go back to the previous page in WebView
+        if (webView.canGoBack()) {
+            webView.goBack();
         } else {
-            super.onBackPressed();  // Default back button behavior (exit app if no pages to go back)
+            super.onBackPressed();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Stop the server when the activity is destroyed
+        if (localHttpServer != null) {
+            localHttpServer.stop();
         }
     }
 }

@@ -1,10 +1,15 @@
 <div class="root flex-col relative">
 
-  <!-- top secttion -->
-  <div data-aos="fade-down" class="bg-blue-500 w-[140%] h-[200px] absolute top-[-90px] text-center flex justify-center items-center z-[3]" style="border-radius: 100%;">
-    <h1 class="decoration-auto parkinsans text-2xl text-white mt-[20%]">Classes</h1>
-  </div>
+  <!-- top bar -->
+  <div class="top-nav z-10">
+    <button mat-flat-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
 
+    <h1 style="margin: 0 auto; color: wheat; font-size: large;" class="parkinsans">Class Content</h1>
+
+    <img src="/icon/school/presentation.png" style="max-height: 50%;">
+  </div>
   
 
   <!-- create class btn -->
