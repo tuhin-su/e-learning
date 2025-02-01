@@ -95,4 +95,15 @@ export class UserService {
     });
     return this.http.post<any>(userData, data, { headers });
   }
+
+  logout(){
+    const logoutUrl = `${this.api}/logout`;
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.post<any>(logoutUrl, null, { headers });
+
+  }
 }

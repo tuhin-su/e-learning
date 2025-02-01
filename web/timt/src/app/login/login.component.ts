@@ -79,7 +79,12 @@ export class LoginComponent implements OnInit {
             }
           },
           (error) => {
-            this.alertService.showErrorAlert(error.error.message)
+            if(error.error.message != undefined){
+              this.alertService.showErrorAlert(error.error.message)
+            }
+            else{
+              this.alertService.showErrorAlert("Unable connect to server. please check your connection and try again later");
+            }
             this.loadingService.hideLoading();
 
           }

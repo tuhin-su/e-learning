@@ -32,10 +32,10 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "student_@admin.in",
+  "username": "staff@email.com",
   "password": "passwd",
   "groups": "ST",
-  "ref": "1197c6924f4e11d1003b3681a483088a3a491ce2bf90e928e9f935756b3f8829"
+  "ref": "0"
 }
 
 
@@ -137,7 +137,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "id":"5dbf5e71cadcffdc933f726341ce7252ec20ddf2608d018e2fea351f1efdb037",
+  "id":"fb6624ff4ab624728d4bb2305828c47698b94f809b8eeaefea63c4681c21d3a9",
   "roll":"2002",
   "reg":"23001",
   "course":"1",

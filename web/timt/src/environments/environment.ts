@@ -1,4 +1,4 @@
 export const environment = {
-    api: 'http://flask:5000',
+    api: 'http://localhost:5000',
     production: false
 };

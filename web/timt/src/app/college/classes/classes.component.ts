@@ -15,6 +15,8 @@ import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import { ClassCardComponent } from '../../components/class-card/class-card.component';
 import { LoadingService } from '../../services/loading-service.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-classes',
   imports: [
@@ -62,7 +64,8 @@ export class ClassesComponent {
     private fb: FormBuilder,
     private service: CollegeService,
     private alertService: AlertService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -200,4 +203,8 @@ export class ClassesComponent {
   ));
   this.loadingService.hideLoading();
  }
+ back() {
+  debug("back");
+  this.router.navigate(["/"])
+}
 }

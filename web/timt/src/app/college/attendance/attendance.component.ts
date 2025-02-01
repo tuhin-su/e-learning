@@ -17,6 +17,7 @@ import {MatTableModule} from '@angular/material/table';
 import { debug } from '../../utility/function';
 import { LoadingService } from '../../services/loading-service.service';
 import { Route, Router } from '@angular/router';
+import { GlobalStorageService } from '../../services/global-storage.service';
 
 export interface PeriodicElement {
   position: number;
@@ -77,7 +78,8 @@ throw new Error('Method not implemented.');
     private router: Router,
     private faceRecognitionService: FaceRecognitionService,
     private alertService: AlertService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private globalStorage: GlobalStorageService
   ) { }
   ngOnDestroy(): void {
     clearInterval(this.detectionInterval);
@@ -102,7 +104,7 @@ throw new Error('Method not implemented.');
     ]
     if (this.user) {
       this.user = JSON.parse(this.user);
-      this.lable = Number(localStorage.getItem('lable'));
+      this.lable = Number(this.globalStorage.get('lable'));
       if (this.lable == 3) {
         let pddate = localStorage.getItem('presentDate');
         if (pddate != null) {
