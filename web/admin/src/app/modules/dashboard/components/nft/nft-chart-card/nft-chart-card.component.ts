@@ -78,7 +78,7 @@ export class NftChartCardComponent implements OnInit, OnDestroy {
       chart: {
         fontFamily: 'inherit',
         type: 'line',
-        height: 400,
+        height: '350',
         toolbar: { show: false },
         sparkline: { enabled: true },
       },
@@ -119,7 +119,9 @@ export class NftChartCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activateMonthly();
+  }
 
   ngOnDestroy(): void {}
 
