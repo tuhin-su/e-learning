@@ -93,7 +93,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   }
 
   onOkError(){
-    this.router.navigate(['/login']);
+    this.router.navigate(['/welcome']);
   }
 
   async onSubmit() {
