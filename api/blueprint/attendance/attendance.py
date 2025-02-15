@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request, current_app
-import mysql.connector
+import mysql.connector # type: ignore
 from flask import request, jsonify
 import base64
-import face_recognition
+import face_recognition # type: ignore
 import io
 import base64
 from modules.DataBase import DBA
@@ -15,7 +15,7 @@ except:
 attendance_bp = Blueprint("Attendance", __name__)
 
 
-@attendance_bp.route('/attendance', methods=['POST', 'PUT'])
+@attendance_bp.route('/attendance', methods=['POST', 'PUT', 'GET'])
 def attendance():
     app = current_app.config["app"]
     
@@ -89,6 +89,18 @@ def attendance():
                     return jsonify({"message": error_message}), 400
                 finally:
                     db.disconnect()
+            
+            elif request.method == 'GET':
+                sql = "SELECT `id`, `attendance_date` FROM `attends` WHERE `user_id` = '511aee95c3a6bbc303e9bda596b9b4cfe9bc02c529c9311ee04d930cc7ddfe1c' AND `attendance_date_only` = CURRENT_DATE();"
+                try:
+                    db.cursor.execute(sql)
+                    result = db.cursor.fetchone()
+                    db.disconnect()
+                    if result:
+                        return jsonify({"record": result}), 200
+                except:
+                    db.disconnect()
+                return jsonify({"message": "Record not found"}), 400
             else:
                 return jsonify({"message": "Invalid request"}), 400
         except mysql.connector.Error as e:

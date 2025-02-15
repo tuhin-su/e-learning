@@ -93,7 +93,7 @@ throw new Error('Method not implemented.');
   async ngOnInit() {
     this.user = this.globalStorage.get('info');
     this.lable = Number(this.globalStorage.get('lable'));
-
+    await this.checkAttable();
     await this.faceRecognitionService.loadModels();
     this.months = [
       { lable: "January", value: 1 },
@@ -109,14 +109,24 @@ throw new Error('Method not implemented.');
       { lable: "November",value:11},
       { lable: "December",value:12}
     ]
-    if (this.user) {
-      if (this.lable == 3) {
-        this.attAble = true;
-      }
-    }
     this.getCources();
   }
 
+  async checkAttable(){
+    await firstValueFrom(
+      this.service.getAttendance().pipe(
+        tap(
+          (res) => {
+            if (res) {
+              this.attAble = false;
+            } else {
+              this.attAble = true;
+            }
+          }
+        )
+      )
+    )
+  }
   enableScan() {
     this.scan = true;
     this.startVideo();

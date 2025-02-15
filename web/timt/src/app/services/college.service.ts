@@ -49,6 +49,18 @@ export class CollegeService {
     return this.http.put<any>(attendanceUrl, {}, { headers });
   }
 
+  // get attendance
+  getAttendance(){
+    const attendanceUrl = `${this.api}/attendance`;
+
+    const token = this.storage.get('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    return this.http.get<any>(attendanceUrl, { headers });
+  }
+
   getAllStudent(data:{stream:string, sem:string, date: string}){
     const attendanceUrl = `${this.api}/attendance`;
 
