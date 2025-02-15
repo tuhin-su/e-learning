@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -13,7 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.ValueCallback;
-
+import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -21,36 +22,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
+
+import in.timt.app.LocalHttpServer;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSIONS = 1;
-    private final LocalHttpServer localHttpServer;
+    private LocalHttpServer localHttpServer;
     private WebView webView;
-    private String savedUrl = "https://app.timt.in/";  // Default URL
+    private String savedUrl = "http://127.0.0.1:65534";  // Default URL
     private ValueCallback<Uri[]> fileUploadCallback;
     private ActivityResultLauncher<Intent> filePickerLauncher;
 
-    public MainActivity(LocalHttpServer localHttpServer) {
-        this.localHttpServer = localHttpServer;
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialize and start the server
-//        localHttpServer = new LocalHttpServer(this, 65534); // Set the port to whatever you want
-//        try {
-//            localHttpServer.start();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        localHttpServer = new LocalHttpServer(this, 65534); // Set the port to whatever you want
+        try {
+            localHttpServer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         setContentView(R.layout.activity_main);
 
         webView = findViewById(R.id.webView);
-        webView.post(this::adjustWebViewSize);
+        webView.post(() -> adjustWebViewSize());
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -153,11 +151,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
+//            if (!allGranted) {
+////                Toast.makeText(this, "Some permissions were denied", Toast.LENGTH_LONG).show();
+//            }
         }
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("savedUrl", savedUrl);
     }
@@ -166,9 +167,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack();
-            if(webView.canGoBack()){
-                webView.reload();
-            }
         } else {
             super.onBackPressed();
         }
@@ -178,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         // Stop the server when the activity is destroyed
-//        if (localHttpServer != null) {
-//            localHttpServer.stop();
-//        }
+        if (localHttpServer != null) {
+            localHttpServer.stop();
+        }
     }
 }

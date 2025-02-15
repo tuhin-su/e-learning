@@ -119,14 +119,16 @@ throw new Error('Method not implemented.');
           (res) => {
             if (res) {
               this.attAble = false;
-            } else {
-              this.attAble = true;
             }
+          },
+          (error) => {
+            this.attAble = true;
           }
         )
       )
     )
   }
+  
   enableScan() {
     this.scan = true;
     this.startVideo();
