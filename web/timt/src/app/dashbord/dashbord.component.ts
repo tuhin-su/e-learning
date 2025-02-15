@@ -9,6 +9,7 @@ import { capitalizeUserName } from '../utility/function';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+
 @Component({
   selector: 'app-dashbord',
   imports: [MatDividerModule,MatCardModule,MatIconModule,MatButtonModule,MatBadgeModule,RouterModule],
@@ -58,5 +59,9 @@ export class DashbordComponent implements OnInit {
 
   openUrl(url: string){
     window.open(url);
+  }
+
+  logout(){
+    this.router.navigate(['/logout']);
   }
 }

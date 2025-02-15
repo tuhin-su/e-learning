@@ -39,20 +39,24 @@ export interface PeriodicElement {
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.scss'
 })
-export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AttendanceComponent implements OnInit, OnDestroy {
 deleteUser(arg0: any) {
 throw new Error('Method not implemented.');
 }
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('overlay') overlayRef!: ElementRef<HTMLCanvasElement>;
-  detectionInterval:any;
 
+  detectionInterval:any;
   success: boolean = false;
-  user: any = localStorage.getItem('info');
+
+  user?: any;
   lable?: any;
-  storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 }; // Store the location to compare
+
+  storedLocation: { lat: number; lng: number } = { lat: 0, lng: 0 };
+
   attAble:boolean=false;
   months?:any
+
   selectedDate: string = '0';
   semester:{ lable: String, value: Number }[] = [];
   selectedsem: string ='0';
@@ -87,6 +91,9 @@ throw new Error('Method not implemented.');
   }
 
   async ngOnInit() {
+    this.user = this.globalStorage.get('info');
+    this.lable = Number(this.globalStorage.get('lable'));
+
     await this.faceRecognitionService.loadModels();
     this.months = [
       { lable: "January", value: 1 },
@@ -103,34 +110,18 @@ throw new Error('Method not implemented.');
       { lable: "December",value:12}
     ]
     if (this.user) {
-      this.user = JSON.parse(this.user);
-      this.lable = Number(this.globalStorage.get('lable'));
       if (this.lable == 3) {
-        let pddate = localStorage.getItem('presentDate');
-        if (pddate != null) {
-          const storedDate = new Date(pddate);
-          const currentDate = new Date();
-          currentDate.setHours(0, 0, 0, 0);
-          storedDate.setHours(0, 0, 0, 0);
-          if (currentDate.getTime() !== storedDate.getTime()) {
-            this.attAble=true;
-          }
-        }else{
-          this.attAble=true;
-        }
+        this.attAble = true;
       }
     }
     this.getCources();
-  }
-
-  ngAfterViewInit() {
-    // this.startVideo();
   }
 
   enableScan() {
     this.scan = true;
     this.startVideo();
   }
+
   startVideo(){
     this.releaseStream();
     navigator.mediaDevices.getUserMedia({ video: true }).then(
@@ -146,7 +137,7 @@ throw new Error('Method not implemented.');
   releaseStream() {
     if (this.currentStream) {
       this.currentStream.getTracks().forEach((track: { stop: () => any; }) => track.stop());
-      this.videoRef.nativeElement.srcObject = null; // Detach the stream from the video element
+      this.videoRef.nativeElement.srcObject = null;
       this.currentStream = null;
     }
   }
@@ -166,7 +157,7 @@ throw new Error('Method not implemented.');
       if (ctx) {
         ctx.clearRect(0, 0, overlay.width, overlay.height);
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
-        // faceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
+        // faceapi.draw.drawFaceLandmarks(overlay, resizedDetections); 
 
         if (detections.length > 0) {
           const bestFace = detections[0];
@@ -324,8 +315,6 @@ throw new Error('Method not implemented.');
                 }
 
               }else{
-                const currentDate = new Date();
-                localStorage.setItem('presentDate', currentDate.toISOString());
                 this.attAble= false;
               }
 
@@ -344,8 +333,6 @@ throw new Error('Method not implemented.');
           (response) => {
             if (!response.message) {
               this.alertService.showSuccessAlert("Attendees Update successfully!");
-              const currentDate = new Date();
-              localStorage.setItem('presentDate', currentDate.toISOString());
               this.attAble=false
             }
           }
@@ -411,7 +398,7 @@ throw new Error('Method not implemented.');
             const distance = this.calculateDistance(currentLocation, this.storedLocation);
             if (this.distent != undefined && distance <= this.distent) {
               const currentDate = new Date();
-              localStorage.setItem('presentDate', currentDate.toISOString()); // Store the current date
+    
               /// give att
               await firstValueFrom(this.service.sendHaven(this.giveUser.user_id).pipe(
                 tap(
@@ -428,6 +415,7 @@ throw new Error('Method not implemented.');
                   }
                 )
               ))
+
             } else {
               this.alertService.showErrorAlert("You are too far from the collage location.");
             }

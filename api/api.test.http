@@ -19,9 +19,9 @@ POST {{ apiUrl }}/static_users
 Content-Type: application/json
 
 {
-  "username": "admin@email.com",
+  "username": "student@email.com",
   "password": "passwd",
-  "groups": "AD",
+  "groups": "ST",
   "ref": "0"
 }
 
@@ -137,7 +137,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "id":"fb6624ff4ab624728d4bb2305828c47698b94f809b8eeaefea63c4681c21d3a9",
+  "id":"511aee95c3a6bbc303e9bda596b9b4cfe9bc02c529c9311ee04d930cc7ddfe1c",
   "roll":"2002",
   "reg":"23001",
   "course":"1",
