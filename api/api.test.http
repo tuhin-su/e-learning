@@ -252,3 +252,24 @@ Content-Type: application/json
 {
   "email": "admin@email.com"
 }
+
+### New Request WebQr
+# @name newQR
+GET {{apiUrl}}/user/login/weblogin/new
+Content-Type: application/json
+
+
+
+### Renew Key#
+# @name renewQR
+GET {{apiUrl}}/user/login/weblogin/xxxx
+Content-Type: application/json
+
+#### WEBLOGIN AUTH
+POST {{apiUrl}}/user/login/weblogin/auth
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "key": "key"
+}

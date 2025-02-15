@@ -144,6 +144,12 @@
   }
 }
 
+html,body{
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden
+}
+
 @layer components {
   .dropdown-content {
     @apply pointer-events-none scale-95 opacity-0 duration-100 ease-in;

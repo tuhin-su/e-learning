@@ -1,52 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NgClass, NgIf } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { UserService } from 'src/app/core/services/user.service';
+import QRCode from 'qrcode';
+import { firstValueFrom, tap } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, AngularSvgIconModule, NgClass, NgIf, ButtonComponent],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, AngularSvgIconModule, HttpClientModule],
 })
 export class SignInComponent implements OnInit {
-  form!: FormGroup;
-  submitted = false;
-  passwordTextType!: boolean;
+  qr_img="";
+  key="new";
 
-  constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router) {}
+  constructor(private readonly _router: Router, private readonly _userService: UserService) {}
 
-  onClick() {
-    console.log('Button clicked');
-  }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
+    this.requstSesstion();
+    setInterval(() => {
+      this.requstSesstion();
+    }, 8000);
   }
 
-  get f() {
-    return this.form.controls;
+  requstSesstion(){
+    firstValueFrom(this._userService.getQrKey(this.key).pipe(
+      tap(
+        (res)=>{
+          if (res.key) {
+            this.renderQrCode(res.key);
+            this.key=res.key;
+          }
+          if (res.sesstion) {
+            console.log(res.sesstion);
+          }
+          
+        }
+      )
+    ))
   }
 
-  togglePasswordTextType() {
-    this.passwordTextType = !this.passwordTextType;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-    const { email, password } = this.form.value;
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
+  renderQrCode(text:string) {
+    if (!text) {
+      return
     }
-
-    this._router.navigate(['/']);
+    
+    QRCode.toDataURL(text, {
+      errorCorrectionLevel: 'H',
+      type: 'image/png',
+      width: 300,
+      margin: 0,
+      color: {
+        dark: '#536DFE',
+        light: '#ffffff'
+      }
+    }).then((base64DataUrl: string) => {
+      this.qr_img = base64DataUrl;
+    }).catch((err: any) => {
+      console.error('Error generating QR code:', err);
+    });
   }
 }

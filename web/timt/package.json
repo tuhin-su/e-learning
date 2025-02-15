@@ -22,6 +22,7 @@
     "@angular/router": "^19.0.0",
     "aos": "^2.3.4",
     "face-api.js": "^0.22.2",
+    "html5-qrcode": "^2.3.8",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

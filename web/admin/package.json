@@ -1,6 +1,6 @@
 {
   "name": "timt-admin",
-  "displayName": "TIMT Admin panel",
+  "displayName": "Admin Panel",
   "version": "0.9.1",
   "description": "Angular & Tailwind CSS Admin Dashboard Starter Kit, Free and Open Source",
   "homepage": "https://github.com/tuhin-su/timt-admin#readme",
@@ -48,7 +48,9 @@
     "chart.js": "^4.4.7",
     "ng-apexcharts": "^1.7.1",
     "ngx-sonner": "^2.0.1",
+    "qrcode": "^1.5.4",
     "rxjs": "~7.4.0",
+    "sweetalert2": "^11.15.10",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
@@ -59,6 +61,7 @@
     "@playwright/test": "^1.42.1",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "@types/qrcode": "^1.5.5",
     "autoprefixer": "^10.4.7",
     "cz-conventional-changelog": "^3.3.0",
     "jasmine-core": "~3.10.0",
