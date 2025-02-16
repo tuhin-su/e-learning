@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "in.timt.app"
-        minSdk 24
+        minSdk 21
         targetSdk 34
-        versionCode 9
-        versionName "TIMT-OR2"
+        versionCode 13
+        versionName "TIMT-R13"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
