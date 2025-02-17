@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from '../../../layout/service/layout.service';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
     standalone: true,
-    selector: 'app-revenue-stream-widget',
-    imports: [ChartModule],
+    selector: 'app-attendens-stream-widget',
+    imports: [ChartModule,SelectButtonModule],
     template: `<div class="card !mb-8">
-        <div class="font-semibold text-xl mb-4">Revenue Stream</div>
-        <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="h-80" />
+        <div class="font-semibold text-xl mb-4 w-full bg-red-600 relative">
+            <span>This Month Attendens</span>
+            <div class="flex flex-col md:flex-row gap-4">
+                <!-- <p-selectbutton [(ngModel)]="selectButtonValue" [options]="selectButtonValues" optionLabel="name" />     -->
+            </div>
+        </div>
+        <p-chart type="line" [data]="chartData" [options]="chartOptions" class="h-80" />
     </div>`
 })
-export class RevenueStreamWidget {
+export class AttendensStreamWidget  implements OnInit{
     chartData: any;
-
+    selectButtonValue: any = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];;
     chartOptions: any;
 
     subscription!: Subscription;
@@ -36,35 +42,23 @@ export class RevenueStreamWidget {
         const textMutedColor = documentStyle.getPropertyValue('--text-color-secondary');
 
         this.chartData = {
-            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                    type: 'bar',
-                    label: 'Subscriptions',
-                    backgroundColor: documentStyle.getPropertyValue('--p-primary-400'),
-                    data: [4000, 10000, 15000, 4000],
-                    barThickness: 32
+                    label: 'First Dataset',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    fill: false,
+                    backgroundColor: documentStyle.getPropertyValue('--p-primary-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-primary-500'),
+                    tension: 0.4
                 },
                 {
-                    type: 'bar',
-                    label: 'Advertising',
-                    backgroundColor: documentStyle.getPropertyValue('--p-primary-300'),
-                    data: [2100, 8400, 2400, 7500],
-                    barThickness: 32
-                },
-                {
-                    type: 'bar',
-                    label: 'Affiliate',
+                    label: 'Second Dataset',
+                    data: [28, 48, 40, 19, 86, 27, 90],
+                    fill: false,
                     backgroundColor: documentStyle.getPropertyValue('--p-primary-200'),
-                    data: [4100, 5200, 3400, 7400],
-                    borderRadius: {
-                        topLeft: 8,
-                        topRight: 8,
-                        bottomLeft: 0,
-                        bottomRight: 0
-                    },
-                    borderSkipped: false,
-                    barThickness: 32
+                    borderColor: documentStyle.getPropertyValue('--p-primary-200'),
+                    tension: 0.4
                 }
             ]
         };

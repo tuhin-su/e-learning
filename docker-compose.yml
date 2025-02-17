@@ -19,8 +19,12 @@ services:
     environment:
       PMA_HOST: ${DATABASE_HOST}
       PMA_PORT: 3306
+      PMA_ALLOW_FRAME: 'true'
+      PMA_NO_XFRAME: '1'
     ports:
       - ${DATABASE_ADMIN_PORT}:80
+
+
 
   flask:
     build:
