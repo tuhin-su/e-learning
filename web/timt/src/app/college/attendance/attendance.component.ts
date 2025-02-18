@@ -91,6 +91,7 @@ throw new Error('Method not implemented.');
   }
 
   async ngOnInit() {
+    this.getCources();
     this.user = this.globalStorage.get('info');
     this.lable = Number(this.globalStorage.get('lable'));
     await this.checkAttable();
@@ -109,7 +110,7 @@ throw new Error('Method not implemented.');
       { lable: "November",value:11},
       { lable: "December",value:12}
     ]
-    this.getCources();
+    
   }
 
   async checkAttable(){

@@ -29,7 +29,14 @@ export class AppComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private cdRef: ChangeDetectorRef // Inject ChangeDetectorRef
-  ) {}
+  ) {
+     // Initialize AOS for animations
+     AOS.init({
+      duration: 1000, // Customize the duration or other options
+      easing: 'ease-in-out', // Customize easing
+      once: true, // Only animate once
+    });
+  }
 
   ngOnInit(): void {
     // Subscribe to the loading observable
@@ -38,13 +45,6 @@ export class AppComponent implements OnInit {
         this.isLoading = loadingState;
         this.cdRef.detectChanges(); // Manually trigger change detection
       }
-    });
-
-    // Initialize AOS for animations
-    AOS.init({
-      duration: 1000, // Customize the duration or other options
-      easing: 'ease-in-out', // Customize easing
-      once: true, // Only animate once
     });
   }
 }
