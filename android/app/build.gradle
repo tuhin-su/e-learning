@@ -10,8 +10,8 @@ android {
         applicationId "in.timt.app"
         minSdk 21
         targetSdk 34
-        versionCode 13
-        versionName "TIMT-R13"
+        versionCode 15
+        versionName "TIMT-R15"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
