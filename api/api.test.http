@@ -9,7 +9,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "admin@email.com",
+  "username": "admin2@email.com",
   "password": "passwd"
 }
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "name": "João Souza Silva tow",
+  "name": "João Souza ST",
   "phone": "3121286800",
   "address": "Rua Inexistente, 2000",
   "gender": "M",
@@ -137,9 +137,9 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "id":"511aee95c3a6bbc303e9bda596b9b4cfe9bc02c529c9311ee04d930cc7ddfe1c",
-  "roll":"2002",
-  "reg":"23001",
+  "id":"dd621e96aacbcd662ae57a5259790842dcb89a5f046948c51459faf1727e46ce",
+  "roll":"2003",
+  "reg":"23002",
   "course":"1",
   "semester":"4"
 }
@@ -166,7 +166,7 @@ Authorization: Bearer {{ token }}
 {
   "FROM":"student_ac",
   "data":{
-    "email":"student_demo2@email.com",
+    "email":"student@email.com",
     "dob":"10112001",
     "roll":"12345",
     "reg":"29941",
@@ -273,3 +273,15 @@ Authorization: Bearer {{ token }}
 {
   "key": "key"
 }
+
+
+#### info attendence
+GET {{apiUrl}}/info/atttendance/today_total
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+#### info clases
+GET {{apiUrl}}/info/classes/today_total
+Content-Type: application/json
+Authorization: Bearer {{token}}
