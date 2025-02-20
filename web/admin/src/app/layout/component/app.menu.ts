@@ -31,7 +31,7 @@ export class AppMenu {
                 items: [
                     { label: 'User', icon: 'pi pi-fw pi-users', routerLink: ['/'] },
                     { label: 'Student', icon: 'pi pi-fw pi-graduation-cap', routerLink: ['/pages/dba'] },
-                    { label: 'Group', icon: 'pi pi-fw pi-building', routerLink: ['/pages/dba'] },
+                    { label: 'Group', icon: 'pi pi-fw pi-building', routerLink: ['/pages/groups'] },
                     { label: 'Database', icon: 'pi pi-fw pi-database', routerLink: ['/pages/dba'] },
                 ]
             },

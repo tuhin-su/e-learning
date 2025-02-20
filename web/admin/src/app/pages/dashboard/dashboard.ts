@@ -9,7 +9,7 @@ import { SystemMonitor } from "./components/systemMonitor";
 @Component({
     standalone: true,
     selector: 'app-dashboard',
-    imports: [StatsWidget, RecentSalesWidget, BestSellingWidget, AttendensStreamWidget, NotificationsWidget, SystemMonitor],
+    imports: [StatsWidget, AttendensStreamWidget, SystemMonitor],
     template: `
         <div class="grid grid-cols-12 gap-8">
             <app-stats-widget class="contents" />
