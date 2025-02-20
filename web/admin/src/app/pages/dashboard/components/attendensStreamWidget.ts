@@ -9,7 +9,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     selector: 'app-attendens-stream-widget',
     imports: [ChartModule,SelectButtonModule],
     template: `<div class="card !mb-8">
-        <div class="font-semibold text-xl mb-4 w-full bg-red-600 relative">
+        <div class="font-semibold text-xl mb-4 w-full relative">
             <span>This Month Attendens</span>
             <div class="flex flex-col md:flex-row gap-4">
                 <!-- <p-selectbutton [(ngModel)]="selectButtonValue" [options]="selectButtonValues" optionLabel="name" />     -->
