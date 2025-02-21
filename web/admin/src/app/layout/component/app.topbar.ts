@@ -16,7 +16,7 @@ import { LayoutService } from '../service/layout.service';
                 <i class="pi pi-bars"></i>
             </button>
             <a class="layout-topbar-logo" routerLink="/">
-                <span>Control Panel</span>
+                <span>ADMIN PANEL</span>
             </a>
         </div>
 
