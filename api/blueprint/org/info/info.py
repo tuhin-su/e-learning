@@ -102,4 +102,47 @@ def app_class(rtype):
                 return jsonify ({"message": str(e)}),400
             finally:
                 db.disconnect()
-        
+
+
+
+@app_info.route("/info/notices/<rtype>", methods=["GET"])
+def app_notices(rtype):
+    main_app=current_app.config["app"]
+    @main_app.auth.login_required
+    def exec():
+        if rtype ==None or rtype=="":
+            return jsonify ({"message": "Which is required"}), 400
+            user_id = main_app.auth.current_user()["user_id"]
+        if getLabel(user_id) != 1 and getLabel(user_id) !=0:
+            db.disconnect()
+            return jsonify ({"message" : "You are not authorized to perform this action "}),403
+        return exec()
+    if rtype == "month_total":
+        db.connect()
+        sql  = "SELECT COUNT(id) as total FROM posts_data WHERE YEAR(createDate)=YEAR(CURRENT_DATE()) AND MONTH(createDate)=MONTH(CURRENT_DATE());"
+
+    try:
+        db.cursor.execute(sql)
+        data = db.cursor.fetchone()["total"]
+        sql = "SELECT COUNT(id) as total FROM posts_data WHERE YEAR(createDate)=YEAR(CURRENT_DATE());"
+        try:
+            db.cursor.execute(sql)
+            year = db.cursor.fetchone()["total"]
+            return jsonify ({
+                "month": data,
+                "year" : year
+                }),200
+        except Error as e:
+            db.disconnect()
+            return jsonify ({"message": str(e)}),400
+
+    except Error as e:
+        db.disconnect()
+        return jsonify ({"message": str(e)}),400
+    finally:
+        db.disconnect()    
+
+
+
+
+

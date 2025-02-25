@@ -285,3 +285,9 @@ Authorization: Bearer {{token}}
 GET {{apiUrl}}/info/classes/today_total
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+
+##### info notices 
+GET {{apiUrl}}/info/notices/month_total
+Content-Type: application/json
+Authorization: Bearer {{token}}
