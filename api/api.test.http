@@ -9,7 +9,7 @@ POST {{ apiUrl }}/login
 Content-Type: application/json
 
 {
-  "username": "admin2@email.com",
+  "username": "admin@email.com",
   "password": "passwd"
 }
 
@@ -285,3 +285,19 @@ Authorization: Bearer {{token}}
 GET {{apiUrl}}/info/classes/today_total
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+
+##### info notices 
+GET {{apiUrl}}/info/notices/month_total
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+##### info attence_chart 
+POST {{apiUrl}}/info/attendance
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "month": 1
+}
