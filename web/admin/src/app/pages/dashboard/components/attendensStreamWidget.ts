@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, firstValueFrom, Subscription, tap } from 'rxjs';
 import { LayoutService } from '../../../layout/service/layout.service';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
+import { FunctionaltyService } from '../../../services/functionalty.service';
+import { AlertService } from '../../../services/alert.service';
 @Component({
     standalone: true,
     selector: 'app-attendens-stream-widget',
@@ -20,88 +21,120 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 })
 export class AttendensStreamWidget  implements OnInit{
     chartData: any;
-    selectButtonValue: any = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];;
+    selectButtonValue: any = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];alertService: any;
+    
+;
     chartOptions: any;
 
     subscription!: Subscription;
 
-    constructor(public layoutService: LayoutService) {
-        this.subscription = this.layoutService.configUpdate$.pipe(debounceTime(25)).subscribe(() => {
-            this.initChart();
-        });
+    constructor(
+        private functionality : FunctionaltyService,
+        private alertservice : AlertService
+    ) {
     }
 
     ngOnInit() {
-        this.initChart();
+        this.fetchAttendentChart()
     }
 
-    initChart() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const borderColor = documentStyle.getPropertyValue('--surface-border');
-        const textMutedColor = documentStyle.getPropertyValue('--text-color-secondary');
-
-        this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--p-primary-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-primary-500'),
-                    tension: 0.4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--p-primary-200'),
-                    borderColor: documentStyle.getPropertyValue('--p-primary-200'),
-                    tension: 0.4
-                }
-            ]
-        };
-
-        this.chartOptions = {
-            maintainAspectRatio: false,
-            aspectRatio: 0.8,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    stacked: true,
-                    ticks: {
-                        color: textMutedColor
-                    },
-                    grid: {
-                        color: 'transparent',
-                        borderColor: 'transparent'
-                    }
-                },
-                y: {
-                    stacked: true,
-                    ticks: {
-                        color: textMutedColor
-                    },
-                    grid: {
-                        color: borderColor,
-                        borderColor: 'transparent',
-                        drawTicks: false
-                    }
-                }
-            }
-        };
-    }
 
     ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+    
+    }
+    
+
+//  generate 1st date to currentDate
+
+generateLabels(startDate: Date, endDate: Date): string[] {
+    const labels = [];
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+        labels.push(currentDate.getDate().toString()); // Adds only the day of the month as a label
+        currentDate.setDate(currentDate.getDate() + 1);  // Increment the date by one day
+    }
+
+    return labels;
+}
+
+    
+
+    //   fetch attendence charts value
+
+    async fetchAttendentChart() {
+        await firstValueFrom(this.functionality.getAttendenceChart({"month":1}).pipe(
+            tap(
+                (response) => {
+                    if (response) {
+                        console.log(response.BBA);
+                        const documentStyle = getComputedStyle(document.documentElement);
+                        const textColor = documentStyle.getPropertyValue('--text-color');
+                        const borderColor = documentStyle.getPropertyValue('--surface-border');
+                        const textMutedColor = documentStyle.getPropertyValue('--text-color-secondary');
+                        const today = new Date();
+                        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                        const labels = this.generateLabels(firstDayOfMonth, today); 
+                        
+                        const coursename = Object.keys(response);
+                
+                        this.chartData = {
+                            labels: labels,
+                            datasets: []
+                        };
+                
+                        for (let i = 0; i < coursename.length; i++) {
+                            this.chartData.datasets.push({
+                                label: coursename[i],
+                                data: response[coursename[i]], // Fixed data reference
+                                fill: false,
+                                backgroundColor: documentStyle.getPropertyValue('--p-primary-500'),
+                                borderColor: documentStyle.getPropertyValue('--p-primary-500'),
+                                tension: 0.4
+                            });
+                        }
+                
+                        this.chartOptions = {
+                            maintainAspectRatio: false,
+                            aspectRatio: 0.8,
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: textColor
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                    ticks: {
+                                        color: textMutedColor
+                                    },
+                                    grid: {
+                                        color: 'transparent',
+                                        borderColor: 'transparent'
+                                    }
+                                },
+                                y: {
+                                    stacked: true,
+                                    ticks: {
+                                        color: textMutedColor
+                                    },
+                                    grid: {
+                                        color: borderColor,
+                                        borderColor: 'transparent',
+                                        drawTicks: false
+                                    }
+                                }
+                            }
+                        };
+                    }
+                },
+                (error) => {
+                    this.alertService.showWarningAlert(error.error.message);
+                }
+
+            )
+        ));
     }
 }

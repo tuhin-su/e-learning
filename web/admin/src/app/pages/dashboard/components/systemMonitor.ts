@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
+import { firstValueFrom, tap } from 'rxjs';
 
 @Component({
     standalone: true,
@@ -13,6 +14,9 @@ export class SystemMonitor implements OnInit {
     pieOptions: any;
     lineData: any;
     lineOptions: any;
+    functionalityService: any;
+    data: any;
+    alertService: any;
 
     ngOnInit(): void {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -46,4 +50,6 @@ export class SystemMonitor implements OnInit {
 
     }
 
+
+   
 }
