@@ -8,7 +8,7 @@ from modules.utilty import getLabel
 import calendar
 
 app_info = Blueprint("InformationForAdmins", __name__)
-db = DBA()
+
 
 # retun oldest attendance year
 @app_info.route("/info/atttendance/<rtype>", methods=["GET"])
@@ -16,18 +16,17 @@ def app(rtype):
     main_app = current_app.config["app"]
     @main_app.auth.login_required
     def exec():
+        db = DBA()
         if rtype  == None or rtype == "":
             return jsonify({"message": "which is required"}), 400
         
+        db.connect()
         user_id = main_app.auth.current_user()['user_id']
         if getLabel(user_id) != 1 and getLabel(user_id) != 0:
             db.disconnect()
             return jsonify({"message": "You are not authorized to perform this action"}), 403
 
         # after pass all the checks
-
-        
-      
         if rtype == "from_year":
             return jsonify({"message": "2004"}), 200
         
@@ -35,7 +34,6 @@ def app(rtype):
             return jsonify({"message": "2023"}), 200
         
         if rtype =="today_total":
-            db.connect()
             sql = "SELECT COUNT(id) as total FROM attends WHERE attendance_date_only=CURRENT_DATE();";
             try:
                 db.cursor.execute(sql)
@@ -44,7 +42,12 @@ def app(rtype):
                 try:
                     db.cursor.execute(sql)
                     total=db.cursor.fetchone()["total"]
-                    total = (data/total)*100
+                    try:
+                        total = (data/total)*100
+                    except:
+                        total = 0
+                        
+                    db.disconnect()
                     return jsonify ({
                             "total":data, 
                             "percentage":total
@@ -55,45 +58,41 @@ def app(rtype):
             except Error as e:
                 db.disconnect()
                 return jsonify ({"message": str(e)}),400
-            finally:
-                db.disconnect()
-                
-        
-        
         if rtype == "from_month":
             return jsonify({"message": {
                 "year": "2004",
                 "month": "1"
             }}), 200
-
         return jsonify({"message": "Invalid request"}), 400
     return exec()
-
-
 
 @app_info.route("/info/classes/<rtype>", methods=["GET"])
 def app_class(rtype):
     main_app = current_app.config["app"]
     @main_app.auth.login_required
     def exec():
+        db = DBA()
         if rtype  == None or rtype == "":
             return jsonify({"message": "which is required"}), 400
         
+        db.connect()
         user_id = main_app.auth.current_user()['user_id']
         if getLabel(user_id) != 1 and getLabel(user_id) != 0:
             db.disconnect()
             return jsonify({"message": "You are not authorized to perform this action"}), 403
         
         if rtype =="today_total":
-                db.connect()
                 sql = "SELECT COUNT(id) as total FROM classes WHERE createDate=CURRENT_DATE();"
                 try:
                     db.cursor.execute(sql)
                     data = db.cursor.fetchone()['total']
+
                     sql="SELECT COUNT(host) as month FROM classes where YEAR(createDate)= YEAR(CURRENT_DATE) AND MONTH(createDate)=MONTH(CURRENT_DATE);"
                     try:
                         db.cursor.execute(sql)
                         month = db.cursor.fetchone()['month']
+
+                        db.disconnect()
                         return jsonify({
                             "total": data,
                             "month": month
@@ -101,12 +100,10 @@ def app_class(rtype):
                     except Error as e:
                         db.disconnect()
                         return jsonify ({"message": str(e)}),400
+                    
                 except Error as e:
                     db.disconnect()
                     return jsonify ({"message": str(e)}),400
-                finally:
-                    db.disconnect()
-        
         return jsonify({"message": "Invalid request"}), 400
     return exec()
 
@@ -117,47 +114,50 @@ def app_notices(rtype):
     main_app=current_app.config["app"]
     @main_app.auth.login_required
     def exec():
+        db = DBA()
         if rtype ==None or rtype=="":
             return jsonify ({"message": "Which is required"}), 400
+        db.connect()
         user_id = main_app.auth.current_user()["user_id"]
         if getLabel(user_id) != 1 and getLabel(user_id) !=0: 
             db.disconnect()
             return jsonify ({"message" : "You are not authorized to perform this action "}),403
         
         if rtype == "month_total":
-            db.connect()
+            
             sql  = "SELECT COUNT(id) as total FROM posts_data WHERE YEAR(createDate)=YEAR(CURRENT_DATE()) AND MONTH(createDate)=MONTH(CURRENT_DATE());"
-
-        try:
-            db.cursor.execute(sql)
-            data = db.cursor.fetchone()["total"]
-            sql = "SELECT COUNT(id) as total FROM posts_data WHERE YEAR(createDate)=YEAR(CURRENT_DATE());"
             try:
                 db.cursor.execute(sql)
-                year = db.cursor.fetchone()["total"]
-                return jsonify ({
-                    "month": data,
-                    "year" : year
-                    }),200
+                data = db.cursor.fetchone()["total"]
+                sql = "SELECT COUNT(id) as total FROM posts_data WHERE YEAR(createDate)=YEAR(CURRENT_DATE());"
+                try:
+                    db.cursor.execute(sql)
+                    year = db.cursor.fetchone()["total"]
+                    db.disconnect()
+                    return jsonify ({
+                        "month": data,
+                        "year" : year
+                        }),200
+                except Error as e:
+                    db.disconnect()
+                    return jsonify ({"message": str(e)}),400
+
             except Error as e:
                 db.disconnect()
                 return jsonify ({"message": str(e)}),400
-
-        except Error as e:
-            db.disconnect()
-            return jsonify ({"message": str(e)}),400
-        finally:
-            db.disconnect()
+            
         return jsonify({"message": "Invalid request"}), 400
     return exec()
 
-@app_info.route("/info/attendance", methods=["POST"])
+@app_info.route("/info/attendance/stream", methods=["POST"])
 def app_attendance():
     main_app = current_app.config["app"]
 
     # Authentication
     @main_app.auth.login_required
     def exec():
+        db = DBA()
+        db.connect()
         user_id = main_app.auth.current_user()["user_id"]
         if getLabel(user_id) not in [0, 1]: 
             db.disconnect()
@@ -189,7 +189,6 @@ def app_attendance():
         # Calculate last day of the selected month
         last_day = calendar.monthrange(current_year, current_month)[1]
 
-        db.connect()
         returnData = {}  # Response object
 
         # Fetch all courses
@@ -223,6 +222,5 @@ def app_attendance():
 
             returnData[course['name']] = days
 
-        return jsonify({"message": returnData}), 200
-
-    return exec()  # Call the wrapped function
+        return jsonify(returnData), 200
+    return exec()
