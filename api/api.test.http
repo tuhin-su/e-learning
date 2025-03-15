@@ -294,7 +294,7 @@ Authorization: Bearer {{token}}
 
 
 ##### info attence_chart 
-POST {{apiUrl}}/info/attendance
+POST {{apiUrl}}/info/attendance/stream
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

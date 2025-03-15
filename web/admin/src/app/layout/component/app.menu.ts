@@ -30,9 +30,10 @@ export class AppMenu {
                 label: 'Management',
                 items: [
                     { label: 'User', icon: 'pi pi-fw pi-users', routerLink: ['/'] },
+                    {label: 'Course Managment', icon: 'pi pi-fw pi-users', routerLink:['/pages/course']},
                     { label: 'Student', icon: 'pi pi-fw pi-graduation-cap', routerLink: ['/pages/dba'] },
                     { label: 'Group', icon: 'pi pi-fw pi-building', routerLink: ['/pages/dba'] },
-                    { label: 'Database', icon: 'pi pi-fw pi-database', routerLink: ['/pages/dba'] },
+                    { label: 'Database', icon: 'pi pi-fw pi-database', routerLink: ['/pages/database'] },
                 ]
             },
             {
