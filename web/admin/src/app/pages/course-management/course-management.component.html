@@ -1,19 +1,10 @@
-
 <div class="card">
     <div class="font-semibold text-xl mb-4">Course</div>
-    <p-table
-        [value]="courses"
-        dataKey="id"
-        [rows]="10"
-        [loading]="loading"
-        [rowHover]="true"
-        [showGridlines]="true"
-        [paginator]="true"
-        responsiveLayout="scroll"
-    >
+    <p-table [value]="courses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
+        [paginator]="true" responsiveLayout="scroll">
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
-               
+
 
             </div>
         </ng-template>
@@ -27,14 +18,14 @@
                 </th>
                 <th style="min-width: 12rem">
                     <div class="flex justify-between items-center">
-                        Name 
+                        Name
                         <p type="text" field="country.name" display="menu" placeholder="Search by country"></p>
                     </div>
                 </th>
 
                 <th style="min-width: 12rem">
                     <div class="flex justify-between items-center">
-                        Discription 
+                        Discription
                         <p type="text" field="country.name" display="menu" placeholder="Search by country"></p>
                     </div>
                 </th>
@@ -55,14 +46,14 @@
                 <th style="min-width: 12rem">
                     <div class="flex justify-between items-center">
                         Status
-                        
+
                     </div>
                 </th>
 
                 <th style="min-width: 12rem">
                     <div class="flex justify-between items-center">
                         Createdate
-                        
+
                     </div>
                 </th>
 
@@ -98,20 +89,75 @@
                         <span class="text">{{ course.course_duration}}yr</span>
                     </div>
                 </td>
-                
+
                 <td>
                     {{ course.status==0?'Active':'Inactive' }}
                 </td>
 
                 <td>
                     <div class="flex items-center gap-2">
-                        <span class="text">{{ course.createDate | date: 'dd/MM/yy'}}  </span>
+                        <span class="text">{{ course.createDate | date: 'dd/MM/yy'}} </span>
                     </div>
                 </td>
 
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mb-2" (click)="editCourse(course)">Edit</button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCourse(course)">Delete</button>
+                    <!-- Edit Button -->
+
+                    <button pButton pRipple type="button" icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mr-2 mb-2"
+                        (click)="openEditDialog(course)">Edit</button>
+
+                    <!-- Edit Dialog -->
+                    <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true"
+                        [responsive]="true">
+                        <div class="p-fluid">
+                            <div class="m-10">
+                                <div class="p-field m-5 ">
+                                    <label class="m-2 mr-[6rem] text-blue-400 font-bold" for="courseId">ID : </label>
+                                    <input id="courseId" type="text" pInputText [(ngModel)]="course.id" disabled />
+                                </div>
+                                <div class="p-field m-5 ">
+                                    <label class="m-2 mr-5  text-blue-400 font-bold" for="courseName">Course Name : </label>
+                                    <input id="courseName" type="text" pInputText [(ngModel)]="course.name" />
+                                </div>
+                                <div class="p-field m-5 ">
+                                    <label class="m-2 mr-8  text-blue-400 font-bold" for="courseDescription">Description : </label>
+                                    <input id="courseDescription" type="text" pInputText
+                                        [(ngModel)]="course.description" />
+                                </div>
+                                <div class="p-field m-5 ">
+                                    <label class="m-2 mr-7  text-blue-400 font-bold" for="courseFees">Course Fees : </label>
+                                    <input id="courseFees" type="number" pInputText [(ngModel)]="course.course_fees" />
+                                </div>
+                                <div class="p-field m-5 ">
+                                    <label class="m-2 mr-[3.2rem]  text-blue-400 font-bold" for="courseDuration">Duration : </label>
+                                    <input id="courseDuration" type="number" pInputText [(ngModel)]="course.course_duration" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <div style="flex: 1; display: flex; justify-content: flex-start;">
+                                <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
+                                    style="font-size: 14px; padding: 8px 16px; border-radius: 5px;"></button>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()"
+                                    [disabled]="!course.name"
+                                    style="background-color: #28a745; border-color: #28a745; font-size: 14px; padding: 8px 16px; border-radius: 5px;"></button>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </p-dialog>
+
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteCourse(course)">Delete</button>
                 </td>
             </tr>
         </ng-template>
@@ -127,4 +173,3 @@
         </ng-template>
     </p-table>
 </div>
-
