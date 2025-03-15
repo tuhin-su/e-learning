@@ -16,6 +16,7 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
+import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { Customer, CustomerService, Representative } from '../service/customer.service';
 import { Product, ProductService } from '../service/product.service';
@@ -29,6 +30,7 @@ import { firstValueFrom, tap } from 'rxjs';
   selector: 'app-coursemanagement',
   imports: [
     TableModule,
+    DialogModule,
     MultiSelectModule,
     SelectModule,
     InputIconModule,
@@ -53,8 +55,10 @@ export class CourseManagementComponent implements OnInit {
 
   courses: any[] = [];
   loading: boolean = true;
-
+  display: boolean = false;  // Controls dialog visibility
+  course: any = {};  // Holds the data of the course being edited
   
+
     constructor(
        private management : ManagementService,
     ) {}
@@ -82,10 +86,17 @@ export class CourseManagementComponent implements OnInit {
     )
     }
 
-
-    editCourse(course: any) {
-        console.log(course);
-    }
+    openEditDialog(course: any): void {
+        this.course = { ...course };  // Clone the course data to edit it
+        this.display = true;  // Show the dialog
+      }
+    
+      saveCourse(): void {
+        // Logic to save the course (e.g., send it to the backend)
+        console.log('Course saved:', this.course);
+        this.display = false;  // Close the dialog
+      }
+    
 
     deleteCourse(course: any) {
         console.log(course);

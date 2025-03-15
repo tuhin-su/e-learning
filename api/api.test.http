@@ -301,3 +301,34 @@ Authorization: Bearer {{token}}
 {
   "month": 1
 }
+
+###### info edit course
+
+POST {{apiUrl}}/info/course/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  "name": "BCAA",
+  "description":"bachelor of computer application",
+  "course_fees" : "20000",
+  "course_duration" : "4",
+   "id": 1
+  
+  
+}
+
+### delete api
+
+POST {{apiUrl}}/info/course/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  
+   "id": 1
+  
+  
+}
