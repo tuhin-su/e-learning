@@ -10,7 +10,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
@@ -18,11 +18,12 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
-import { Customer, CustomerService, Representative } from '../service/customer.service';
-import { Product, ProductService } from '../service/product.service';
+import { FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
 import { firstValueFrom, tap } from 'rxjs';
-
+import { AlertService } from '../../services/alert.service';
 
 
 
@@ -30,6 +31,7 @@ import { firstValueFrom, tap } from 'rxjs';
   selector: 'app-coursemanagement',
   imports: [
     TableModule,
+    ReactiveFormsModule,
     DialogModule,
     MultiSelectModule,
     SelectModule,
@@ -56,21 +58,29 @@ export class CourseManagementComponent implements OnInit {
   courses: any[] = [];
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
-  course: any = {};  // Holds the data of the course being edited
-  
+  isEditing: boolean = false;
+  courseForm:FormGroup = new FormGroup({});
 
     constructor(
        private management : ManagementService,
-    ) {}
+       private fb : FormBuilder,
+       private alert: AlertService
+    ) {
+      this.courseForm = this.fb.group({
+        id:[''],
+        name: ['', Validators.required],
+        description:['', Validators.required],
+        course_fees: ['', Validators.required],
+        course_duration: ['', Validators.required],
+      });
+    }
 
     ngOnInit() {
-       
-
-       this.fetchcourses();
+       this.fetchCourses();
     }
 
 
-    fetchcourses(){
+    fetchCourses(){
         firstValueFrom(this.management.getStreamInfo().pipe(
             tap(
                 (response) => {
@@ -86,20 +96,72 @@ export class CourseManagementComponent implements OnInit {
     )
     }
 
-    openEditDialog(course: any): void {
-        this.course = { ...course };  // Clone the course data to edit it
+    openEditDialog(course: any, isEditing: boolean = false): void {
+        this.isEditing = isEditing;
+        this.courseForm.patchValue({
+          id: course.id,
+          name: course.name,
+          description: course.description,
+          course_fees: course.course_fees,
+          course_duration: course.course_duration,
+        });
         this.display = true;  // Show the dialog
       }
     
-      saveCourse(): void {
-        // Logic to save the course (e.g., send it to the backend)
-        console.log('Course saved:', this.course);
-        this.display = false;  // Close the dialog
+      async saveCourse() {
+       if(this.isEditing){
+        await firstValueFrom(this.management.editCourse(this.courseForm.value).pipe(
+            tap(
+                (response) => {
+                    if(response){
+                        this.alert.showSuccessAlert(response.message);
+                        this.display = false;
+                        this.fetchCourses();
+                    }
+                },
+                (error) => {
+                    this.alert.showErrorAlert(error.error.message);
+                }
+            )
+        ));
+        return;
+       }
+
+       if(this.courseForm.valid){
+        await firstValueFrom(this.management.creteCourse(this.courseForm.value).pipe(
+          tap(
+            (response) => {
+              if(response){
+                this.alert.showSuccessAlert(response.message);
+                this.display = false;
+                this.fetchCourses();
+              }
+            },
+            (error) => {
+              this.alert.showErrorAlert(error.error.message);
+            }
+          )
+        ))
+       }
+        
+        this.display = false;
       }
     
 
-    deleteCourse(course: any) {
-        console.log(course);
+    async deleteCourse(course: any) {
+        await firstValueFrom(this.management.deleteCourse(course.id).pipe(
+            tap(
+                (response) => {
+                    if(response){
+                        this.alert.showSuccessAlert(response.message);
+                        this.fetchCourses();
+                    }
+                },
+                (error) => {
+                    this.alert.showErrorAlert(error.error.message);
+                }
+            )
+        ))
     }
 
 
