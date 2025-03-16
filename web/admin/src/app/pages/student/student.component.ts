@@ -55,18 +55,18 @@ import { AlertService } from '../../services/alert.service';
 })
 export class  StudentComponent implements OnInit {
 
-  courses: any[] = [];
+  students: any[] = [];
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
   isEditing: boolean = false;
-  courseForm:FormGroup = new FormGroup({});
+  studentForm:FormGroup = new FormGroup({});
 
     constructor(
        private management : ManagementService,
        private fb : FormBuilder,
        private alert: AlertService
     ) {
-      this.courseForm = this.fb.group({
+      this.studentForm = this.fb.group({
         id:[''],
         name: ['', Validators.required],
         description:['', Validators.required],
@@ -76,18 +76,18 @@ export class  StudentComponent implements OnInit {
     }
 
     ngOnInit() {
-       this.fetchCourses();
+       this.fetchStudent();
     }
 
 
-    fetchCourses(){
-        firstValueFrom(this.management.getStreamInfo().pipe(
+    fetchStudent(){
+        firstValueFrom(this.management.getStudentInfo().pipe(
             tap(
                 (response) => {
                     if(response){
                         this.loading = false
                         console.log(response);
-                        this.courses = response;
+                        this.students = response;
                     }
                 }
                    
@@ -96,27 +96,27 @@ export class  StudentComponent implements OnInit {
     )
     }
 
-    openEditDialog(course: any, isEditing: boolean = false): void {
+    openEditDialog(student: any, isEditing: boolean = false): void {
         this.isEditing = isEditing;
-        this.courseForm.patchValue({
-          id: course.id,
-          name: course.name,
-          description: course.description,
-          course_fees: course.course_fees,
-          course_duration: course.course_duration,
+        this.studentForm.patchValue({
+          id: student.id,
+          name: student.name,
+          description: student.description,
+          course_fees: student.course_fees,
+          course_duration: student.course_duration,
         });
         this.display = true;  // Show the dialog
       }
     
       async saveCourse() {
        if(this.isEditing){
-        await firstValueFrom(this.management.editCourse(this.courseForm.value).pipe(
+        await firstValueFrom(this.management.editCourse(this.studentForm.value).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
                         this.display = false;
-                        this.fetchCourses();
+                        this.fetchStudent();
                     }
                 },
                 (error) => {
@@ -127,14 +127,14 @@ export class  StudentComponent implements OnInit {
         return;
        }
 
-       if(this.courseForm.valid){
-        await firstValueFrom(this.management.creteCourse(this.courseForm.value).pipe(
+       if(this.studentForm.valid){
+        await firstValueFrom(this.management.creteCourse(this.studentForm.value).pipe(
           tap(
             (response) => {
               if(response){
                 this.alert.showSuccessAlert(response.message);
                 this.display = false;
-                this.fetchCourses();
+                this.fetchStudent();
               }
             },
             (error) => {
@@ -154,7 +154,7 @@ export class  StudentComponent implements OnInit {
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
-                        this.fetchCourses();
+                        this.fetchStudent();
                     }
                 },
                 (error) => {

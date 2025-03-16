@@ -59,4 +59,15 @@ export class ManagementService {
     return this.http.post<any>(loginUrl, payload, { headers });
   }
 
+
+  getStudentInfo(): Observable<any>{
+    const loginUrl = `${this.api}/student/fetch`;
+    const payload = {}
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
 }

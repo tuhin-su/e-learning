@@ -4,39 +4,41 @@
         <span>Student</span>
         <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
     </div>
-    <p-table [value]="courses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
+    <p-table [value]="students" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
         [paginator]="true" responsiveLayout="scroll">
         <ng-template #header>
             <tr>
-                <th style="min-width: 12rem">Id</th>
-                <th style="min-width: 12rem">Name</th>
+                <th style="min-width: 12rem">Student_Name</th>
+                <th style="min-width: 12rem">Phone_number</th>
                 <th style="min-width: 12rem">Roll</th>
                 <th style="min-width: 10rem">Registration</th>
                 <th style="min-width: 10rem">Course</th>
                 <th style="min-width: 12rem">Semester</th>
                 <th style="min-width: 12rem">Status</th>
                 <th style="min-width: 12rem">Register By</th>
+                <th style="min-width: 12rem">Phone_number</th>
                 <th style="min-width: 12rem">Create Date</th>
                 <th style="min-width: 12rem">Action</th>
             </tr>
         </ng-template>
-        <ng-template #body let-course>
+        <ng-template #body let-student>
             <tr>
-                <td>{{ course.id }}</td>
-                <td>{{ course.name }}</td>
-                <td>{{ course.description }}</td>
-                <td>RS - {{ course.course_fees }}</td>
-                <td>{{ course.course_duration }}yr</td>
-                <td>{{ course.course_duration }}yr</td>
-                <td>{{ course.course_duration }}yr</td>
-                <td>{{ course.status == 0 ? 'Active' : 'Inactive' }}</td>
-                <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
+                <td>{{ student.student_name }}</td>
+                <td>{{ student.student_phone }}</td>
+                <td>{{ student.roll }}</td>
+                <td>{{ student.reg }}</td>
+                <td>{{ student.course_name}}</td>
+                <td>{{ student.semester}}  year</td>
+                <td>{{student.status == 0 ? 'Active' : 'Inactive' }}</td>
+                <td>{{ student.Admin_name}}</td>
+                <td>{{ student.Admin_ph}}</td>
+                <td>{{ student.createDate | date: 'dd/MM/yy' }}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil"
                         class="p-button-rounded p-button-success mr-2 mb-2"
-                        (click)="openEditDialog(course, true)">Edit</button>
+                        (click)="openEditDialog(student, true)">Edit</button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                        (click)="deleteCourse(course)">Delete</button>
+                        (click)="deleteCourse(student)">Delete</button>
                 </td>
             </tr>
         </ng-template>
@@ -55,7 +57,7 @@
 
     <!-- Edit Dialog -->
     <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">
-        <form [formGroup]="courseForm">
+        <form [formGroup]="studentForm">
             <div class="p-fluid">
                 <div class="m-10">
                     <div class="p-field m-5">
@@ -86,7 +88,7 @@
                     class="p-button-secondary text-sm p-2 rounded"></button>
     
                 <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()"
-                    [disabled]="courseForm.invalid"
+                    [disabled]="studentForm.invalid"
                     class="p-button-success text-sm p-2 rounded"></button>
             </div>
         </form>

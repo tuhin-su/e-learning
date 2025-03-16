@@ -319,7 +319,7 @@ Authorization: Bearer {{token}}
   
 }
 
-### delete api
+### info delete api
 
 POST {{apiUrl}}/info/course/delete
 Content-Type: application/json
@@ -333,7 +333,7 @@ Authorization: Bearer {{token}}
   
 }
 
-#### create course
+#### info create course
 
 POST {{apiUrl}}/info/course/create
 Content-Type: application/json
@@ -347,5 +347,16 @@ Authorization: Bearer {{token}}
   "course_duration" : "6",
    "status":0
   
+  
+}
+
+
+### student fetch 
+
+POST {{apiUrl}}/student/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
   
 }
