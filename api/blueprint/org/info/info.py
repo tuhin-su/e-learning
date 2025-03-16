@@ -241,13 +241,12 @@ def app_courses():
     mainApp=current_app.config["app"]
     @mainApp.auth.login_required
     def info():
+        db = DBA()
+        db.connect
         user_id_ad = mainApp.auth.current_user()['user_id']
         if getLabel(user_id_ad) != 1 :
             db.disconnect()
             return jsonify({"message": "You are not authorized to perform this action"}), 403
-        
-        db = DBA()
-        db.connect()
         
 
         try:
@@ -277,13 +276,14 @@ def app_courses_delete():
     mainApp=current_app.config["app"]
     @mainApp.auth.login_required
     def info():
+        db = DBA()
+        db.connect
         user_id_ad = mainApp.auth.current_user()['user_id']
         if getLabel(user_id_ad) != 1:
             db.disconnect()
             return jsonify({"message": "You are not authorized to perform this action"}), 403
         
-        db = DBA()
-        db.connect()
+       
         try:
             edited_data = request.get_json()
             sql_update = "UPDATE `course` SET `status`=%s WHERE `id`= %s "
@@ -302,3 +302,41 @@ def app_courses_delete():
         finally:
             db.disconnect()
     return info()
+
+
+#* create course api #*
+
+@app_info.route("/info/course/create", methods=["POST"])
+def app_course_create():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+        data = request.json
+        requre_fild = [ 'name', 'description', 'course_fees', 'course_duration']
+        for i in requre_fild:
+            if i not in data:
+                db.disconnect()
+                return jsonify({"message": f"{i} is required"}), 400
+            
+        sql = ''' INSERT INTO `course`(`name`, `description`, `course_fees`, `course_duration`, `status`)
+            VALUES ( %s, %s, %s, %s, %s) '''
+        try:
+            db.cursor.execute(sql, (data['name'], data['description'], data['course_fees'], data['course_duration'],0))
+            db.conn.commit()
+            db.disconnect()
+            return jsonify({"message": "course added successfully"}), 200
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+        
+    return info()
+        

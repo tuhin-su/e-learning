@@ -51,7 +51,7 @@ export class ManagementService {
   }
 
   creteCourse(payload:any): Observable<any>{
-    const loginUrl = `${this.api}/info/course/new`;
+    const loginUrl = `${this.api}/info/course/create`;
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.storage.get('token')}`

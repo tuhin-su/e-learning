@@ -1,6 +1,7 @@
+
 <div class="card">
     <div class="font-semibold text-xl mb-4 flex justify-between items-center">
-        <span>Course</span>
+        <span>Student</span>
         <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
     </div>
     <p-table [value]="courses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
@@ -9,11 +10,13 @@
             <tr>
                 <th style="min-width: 12rem">Id</th>
                 <th style="min-width: 12rem">Name</th>
-                <th style="min-width: 12rem">Description</th>
-                <th style="min-width: 10rem">Course Fees</th>
-                <th style="min-width: 10rem">Duration</th>
+                <th style="min-width: 12rem">Roll</th>
+                <th style="min-width: 10rem">Registration</th>
+                <th style="min-width: 10rem">Course</th>
+                <th style="min-width: 12rem">Semester</th>
                 <th style="min-width: 12rem">Status</th>
-                <th style="min-width: 12rem">Created Date</th>
+                <th style="min-width: 12rem">Register By</th>
+                <th style="min-width: 12rem">Create Date</th>
                 <th style="min-width: 12rem">Action</th>
             </tr>
         </ng-template>
@@ -23,6 +26,8 @@
                 <td>{{ course.name }}</td>
                 <td>{{ course.description }}</td>
                 <td>RS - {{ course.course_fees }}</td>
+                <td>{{ course.course_duration }}yr</td>
+                <td>{{ course.course_duration }}yr</td>
                 <td>{{ course.course_duration }}yr</td>
                 <td>{{ course.status == 0 ? 'Active' : 'Inactive' }}</td>
                 <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
@@ -46,6 +51,7 @@
             </tr>
         </ng-template>
     </p-table>
+
 
     <!-- Edit Dialog -->
     <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">

@@ -332,3 +332,20 @@ Authorization: Bearer {{token}}
   
   
 }
+
+#### create course
+
+POST {{apiUrl}}/info/course/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  "name": "BCAcabc",
+  "description":"bachelor of computer application",
+  "course_fees" : "20000",
+  "course_duration" : "6",
+   "status":0
+  
+  
+}
