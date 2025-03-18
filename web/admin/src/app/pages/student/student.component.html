@@ -1,84 +1,85 @@
-
-<div class="card">
-    <div class="font-semibold text-xl mb-4 flex justify-between items-center">
-        <span>Student</span>
-        <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
+<div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
+    <div class="font-semibold text-2xl mb-4 flex justify-between items-center text-white">
+        <span>Student Management</span>
+        <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
+            (click)="openEditDialog({}, false)"></button>
     </div>
     <p-table [value]="students" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
         [paginator]="true" responsiveLayout="scroll">
         <ng-template #header>
-            <tr>
-                <th style="min-width: 12rem">Student_Name</th>
-                <th style="min-width: 12rem">Phone_number</th>
+            <tr class="bg-blue-500 text-white">
+                <th style="min-width: 12rem">Student Name</th>
+                <th style="min-width: 12rem">Phone Number</th>
                 <th style="min-width: 12rem">Roll</th>
                 <th style="min-width: 10rem">Registration</th>
                 <th style="min-width: 10rem">Course</th>
                 <th style="min-width: 12rem">Semester</th>
                 <th style="min-width: 12rem">Status</th>
                 <th style="min-width: 12rem">Register By</th>
-                <th style="min-width: 12rem">Phone_number</th>
+                <th style="min-width: 12rem">Phone Number</th>
                 <th style="min-width: 12rem">Create Date</th>
-                <th style="min-width: 12rem">Action</th>
+                <th style="min-width: 12rem">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-student>
-            <tr>
+            <tr [ngClass]="{'bg-gray-100': student.status === 1, 'bg-green-100': student.status === 0}">
                 <td>{{ student.student_name }}</td>
                 <td>{{ student.student_phone }}</td>
                 <td>{{ student.roll }}</td>
                 <td>{{ student.reg }}</td>
-                <td>{{ student.course_name}}</td>
-                <td>{{ student.semester}}  year</td>
-                <td>{{student.status == 0 ? 'Active' : 'Inactive' }}</td>
-                <td>{{ student.Admin_name}}</td>
-                <td>{{ student.Admin_ph}}</td>
+                <td>{{ student.course_name }}</td>
+                <td>{{ student.semester }} year</td>
+                <td>{{ student.status === 0 ? 'Active' : 'Inactive' }}</td>
+                <td>{{ student.Admin_name }}</td>
+                <td>{{ student.Admin_ph }}</td>
                 <td>{{ student.createDate | date: 'dd/MM/yy' }}</td>
-                <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil"
-                        class="p-button-rounded p-button-success mr-2 mb-2"
-                        (click)="openEditDialog(student, true)">Edit</button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                        (click)="deleteCourse(student)">Delete</button>
+                <td class="flex space-x-2">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                        (click)="openEditDialog(student, true)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                        (click)="deleteStudent(student)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template #emptymessage>
             <tr>
-                <td colspan="8">No courses found.</td>
+                <td colspan="8" class="text-center text-gray-500">No students found.</td>
             </tr>
         </ng-template>
         <ng-template #loadingbody>
             <tr>
-                <td colspan="8">Loading courses data. Please wait.</td>
+                <td colspan="8" class="text-center text-gray-500">Loading student data. Please wait...</td>
             </tr>
         </ng-template>
     </p-table>
-
 
     <!-- Edit Dialog -->
     <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">
         <form [formGroup]="studentForm">
             <div class="p-fluid">
-                <div class="m-10">
+                <div class="m-20">
                     <div class="p-field m-5">
-                        <label class="m-2 mr-[6rem] text-blue-400 font-bold" for="courseId">ID:</label>
-                        <input id="courseId" type="text" pInputText formControlName="id" [readonly] />
+                        <label class="m-2 mr-8 text-blue-400 font-bold" for="studentRoll">Student Roll : </label>
+                        <input id="studentRoll" type="text" pInputText formControlName="roll" />
                     </div>
                     <div class="p-field m-5">
-                        <label class="m-2 mr-5 text-blue-400 font-bold" for="courseName">Course Name:</label>
-                        <input id="courseName" type="text" pInputText formControlName="name" />
+                        <label class="m-2 mr-8 text-blue-400 font-bold" for="registration">Registration : </label>
+                        <input id="registration" type="text" pInputText formControlName="reg" />
                     </div>
                     <div class="p-field m-5">
-                        <label class="m-2 mr-8 text-blue-400 font-bold" for="courseDescription">Description:</label>
-                        <input id="courseDescription" type="text" pInputText formControlName="description" />
+                        <label class="m-2 mr-7 text-blue-400 font-bold" for="courseName">Course Name:</label>
+                        <p-dropdown [options]="stream"  optionLabel="name" optionValue="id"  (onChange)="selectCourse($event)"
+                            placeholder="Select Stream">
+                        </p-dropdown>
+                    </div>
+    
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-[3.5rem] text-blue-400 font-bold" for="semester">Semester:</label>
+                        <input id="semester" type="text" pInputText formControlName="semester" />
                     </div>
                     <div class="p-field m-5">
-                        <label class="m-2 mr-7 text-blue-400 font-bold" for="courseFees">Course Fees:</label>
-                        <input id="courseFees" type="text" pInputText formControlName="course_fees" />
-                    </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-[3rem] text-blue-400 font-bold" for="courseDuration">Duration:</label>
-                        <input id="courseDuration" type="number" pInputText formControlName="course_duration" />
+                        <label class="m-2 mr-[4.8rem] text-blue-400 font-bold" for="status">Status:</label>
+                        <input id="status" type="number" pInputText formControlName="status" />
                     </div>
                 </div>
             </div>
@@ -87,11 +88,15 @@
                 <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
                     class="p-button-secondary text-sm p-2 rounded"></button>
     
-                <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()"
-                    [disabled]="studentForm.invalid"
+                <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="studentForm.invalid"
                     class="p-button-success text-sm p-2 rounded"></button>
             </div>
         </form>
     </p-dialog>
-    
+
 </div>
+
+
+
+
+

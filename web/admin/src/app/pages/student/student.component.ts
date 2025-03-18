@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
 import { firstValueFrom, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -33,6 +34,7 @@ import { AlertService } from '../../services/alert.service';
     TableModule,
     ReactiveFormsModule,
     DialogModule,
+    DropdownModule,
     MultiSelectModule,
     SelectModule,
     InputIconModule,
@@ -60,6 +62,9 @@ export class  StudentComponent implements OnInit {
   display: boolean = false;  // Controls dialog visibility
   isEditing: boolean = false;
   studentForm:FormGroup = new FormGroup({});
+  loadingService: any;
+  stream?:{ lable: String, value: Number }[] = [];
+  selectedstream: any;
 
     constructor(
        private management : ManagementService,
@@ -68,15 +73,18 @@ export class  StudentComponent implements OnInit {
     ) {
       this.studentForm = this.fb.group({
         id:[''],
-        name: ['', Validators.required],
-        description:['', Validators.required],
-        course_fees: ['', Validators.required],
-        course_duration: ['', Validators.required],
+        roll: ['', Validators.required],
+        reg: ['', Validators.required],
+        course_id: ['', Validators.required],
+        semester: ['', Validators.required],
+        status: ['', [Validators.required, Validators.min(0)]],
       });
+      
     }
 
     ngOnInit() {
-       this.fetchStudent();
+      this.getCourses(),
+      this.fetchStudent();
     }
 
 
@@ -99,23 +107,48 @@ export class  StudentComponent implements OnInit {
     openEditDialog(student: any, isEditing: boolean = false): void {
         this.isEditing = isEditing;
         this.studentForm.patchValue({
-          id: student.id,
-          name: student.name,
-          description: student.description,
-          course_fees: student.course_fees,
-          course_duration: student.course_duration,
+          id:student.id,
+          roll: student.roll,
+          reg : student.reg,
+          course_id : student.course_id,
+          course_name: student.course_name,
+          semester: student.semester,
+          status: student.status,
         });
         this.display = true;  // Show the dialog
+        this.getCourses();
       }
-    
-      async saveCourse() {
+
+      selectCourse(event: any){
+        this.studentForm.patchValue({
+          "course_id" : event.value,
+         
+        })
+        console.log(event);
+       
+      }
+
+      async getCourses(){
+        await firstValueFrom(this.management.getStreamInfo().pipe(
+          tap(
+            (res)=>{
+              if(res){
+                   this.stream = res
+              }
+            }
+          )
+        ));
+      }
+
+     
+      async saveStudent() {
        if(this.isEditing){
-        await firstValueFrom(this.management.editCourse(this.studentForm.value).pipe(
+        await firstValueFrom(this.management.editStudent(this.studentForm.value).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
-                        this.display = false;
+                        this.display =false;
                         this.fetchStudent();
                     }
                 },
@@ -127,29 +160,29 @@ export class  StudentComponent implements OnInit {
         return;
        }
 
-       if(this.studentForm.valid){
-        await firstValueFrom(this.management.creteCourse(this.studentForm.value).pipe(
-          tap(
-            (response) => {
-              if(response){
-                this.alert.showSuccessAlert(response.message);
-                this.display = false;
-                this.fetchStudent();
-              }
-            },
-            (error) => {
-              this.alert.showErrorAlert(error.error.message);
-            }
-          )
-        ))
-       }
+      //  if(this.studentForm.valid){
+      //   await firstValueFrom(this.management.creteCourse(this.studentForm.value).pipe(
+      //     tap(
+      //       (response) => {
+      //         if(response){
+      //           this.alert.showSuccessAlert(response.message);
+      //           this.display = false;
+      //           this.fetchStudent();
+      //         }
+      //       },
+      //       (error) => {
+      //         this.alert.showErrorAlert(error.error.message);
+      //       }
+      //     )
+      //   ))
+      //  }
         
         this.display = false;
       }
     
 
-    async deleteCourse(course: any) {
-        await firstValueFrom(this.management.deleteCourse(course.id).pipe(
+    async deleteStudent(student: any) {
+        await firstValueFrom(this.management.deleteStudent(student.id).pipe(
             tap(
                 (response) => {
                     if(response){

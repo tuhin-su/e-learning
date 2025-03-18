@@ -72,6 +72,7 @@ export class CourseManagementComponent implements OnInit {
         description:['', Validators.required],
         course_fees: ['', Validators.required],
         course_duration: ['', Validators.required],
+        status: ['',Validators.required],
       });
     }
 
@@ -104,6 +105,7 @@ export class CourseManagementComponent implements OnInit {
           description: course.description,
           course_fees: course.course_fees,
           course_duration: course.course_duration,
+          status: course.status,
         });
         this.display = true;  // Show the dialog
       }

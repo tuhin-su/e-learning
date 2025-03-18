@@ -310,10 +310,11 @@ Authorization: Bearer {{token}}
 
 {
  
-  "name": "BCAA",
+  "name": "BCA",
   "description":"bachelor of computer application",
   "course_fees" : "20000",
   "course_duration" : "4",
+  "status":0,
    "id": 1
   
   
@@ -359,4 +360,32 @@ Authorization: Bearer {{token}}
 
 {
   
+}
+
+
+
+### student edit
+
+POST {{apiUrl}}/student/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "roll": "1234566",
+  "reg":"29941",
+  "course" : "2",
+  "semester" : "4",
+  "status":0,
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+}
+
+
+### student delete
+
+POST {{apiUrl}}/student/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
 }

@@ -242,7 +242,7 @@ def app_courses():
     @mainApp.auth.login_required
     def info():
         db = DBA()
-        db.connect
+        db.connect()
         user_id_ad = mainApp.auth.current_user()['user_id']
         if getLabel(user_id_ad) != 1 :
             db.disconnect()
@@ -251,9 +251,9 @@ def app_courses():
 
         try:
             edited_data = request.get_json()
-            sql_update = "UPDATE `course` SET `name`=%s,`description`=%s,`course_fees`=%s,`course_duration`=%s WHERE `id`= %s "
+            sql_update = "UPDATE `course` SET `name`=%s,`description`=%s,`course_fees`=%s,`course_duration`=%s, `status`=%s WHERE `id`= %s "
             try:
-                db.cursor.execute(sql_update,(edited_data['name'], edited_data['description'], edited_data['course_fees'], edited_data['course_duration'], edited_data['id']))
+                db.cursor.execute(sql_update,(edited_data['name'], edited_data['description'], edited_data['course_fees'], edited_data['course_duration'],edited_data['status'] , edited_data['id']))
                 db.conn.commit()
                 db.disconnect()
                 return jsonify({"message": "Successfully updated"}), 200
@@ -277,7 +277,7 @@ def app_courses_delete():
     @mainApp.auth.login_required
     def info():
         db = DBA()
-        db.connect
+        db.connect()
         user_id_ad = mainApp.auth.current_user()['user_id']
         if getLabel(user_id_ad) != 1:
             db.disconnect()

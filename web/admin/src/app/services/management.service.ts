@@ -70,4 +70,31 @@ export class ManagementService {
     return this.http.post<any>(loginUrl, payload, { headers });
   }
 
+
+  // edit student
+
+  editStudent(payload:any): Observable<any>{
+    const loginUrl = `${this.api}/student/edit`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+
+  // delete student
+
+  deleteStudent(id: any): Observable<any>{
+    const loginUrl = `${this.api}/student/delete`;
+    const payload = {
+      "id": id
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
 }

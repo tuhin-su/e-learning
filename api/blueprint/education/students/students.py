@@ -45,7 +45,7 @@ def app():
     return hendel()
 
 
-
+#* fetch student 
 
 @students.route('/student/fetch', methods=['POST'])
 def app_student_fetch():
@@ -67,6 +67,7 @@ def app_student_fetch():
     student.id, 
     student.roll, 
     student.reg, 
+    student.course AS course_id,
     course.name AS course_name, 
     student.semester, 
     student.status, 
@@ -92,3 +93,80 @@ LIMIT 300;'''
         finally:
             db.disconnect()
     return hendel()
+
+
+
+#* edit student
+@students.route("/student/edit", methods=["POST"])
+def app_student():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect
+        user_id = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+
+        try:
+            db.connect()
+            edited_data = request.get_json()
+            sql_update = "UPDATE `student` SET `roll`=%s,`reg`=%s,`course`=%s,`semester`=%s,`status`=%s WHERE `id` = %s"
+            try:
+                db.cursor.execute(sql_update,(edited_data['roll'], edited_data['reg'], edited_data['course_id'], edited_data['semester'], edited_data['status'], edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully updated"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+#* delete student
+
+@students.route("/student/delete", methods=["POST"])
+def app_student_delete():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect
+        user_id = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+
+        try:
+            db.connect()
+            edited_data = request.get_json()
+            sql_update = "UPDATE `student` SET `status`=%s WHERE `id` = %s"
+            try:
+                db.cursor.execute(sql_update,(1,edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully deleted"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+
+
+        
