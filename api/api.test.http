@@ -294,10 +294,98 @@ Authorization: Bearer {{token}}
 
 
 ##### info attence_chart 
-POST {{apiUrl}}/info/attendance
+POST {{apiUrl}}/info/attendance/stream
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "month": 1
+}
+
+###### info edit course
+
+POST {{apiUrl}}/info/course/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  "name": "BCA",
+  "description":"bachelor of computer application",
+  "course_fees" : "20000",
+  "course_duration" : "4",
+  "status":0,
+   "id": 1
+  
+  
+}
+
+### info delete api
+
+POST {{apiUrl}}/info/course/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  
+   "id": 1
+  
+  
+}
+
+#### info create course
+
+POST {{apiUrl}}/info/course/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+  "name": "BCAcabc",
+  "description":"bachelor of computer application",
+  "course_fees" : "20000",
+  "course_duration" : "6",
+   "status":0
+  
+  
+}
+
+
+### student fetch 
+
+POST {{apiUrl}}/student/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  
+}
+
+
+
+### student edit
+
+POST {{apiUrl}}/student/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "roll": "1234566",
+  "reg":"29941",
+  "course" : "2",
+  "semester" : "4",
+  "status":0,
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+}
+
+
+### student delete
+
+POST {{apiUrl}}/student/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
 }

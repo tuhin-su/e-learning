@@ -1,0 +1,20 @@
+.status-active {
+    color: rgb(98, 245, 0); /* Green for active */
+    font-weight: bold;
+  }
+  
+  .status-inactive {
+    color: rgb(241, 52, 52); /* Red for inactive */
+    font-weight: bold;
+  }
+  
+  .pi {
+    margin-right: 5px; /* Space between icon and text */
+  }
+  
+  .status-active .pi-check-circle,
+  .status-inactive .pi-times-circle {
+    font-size: 13px; /* Adjust icon size */
+    font-weight: bold;
+  }
+  

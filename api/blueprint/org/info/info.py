@@ -149,6 +149,11 @@ def app_notices(rtype):
         return jsonify({"message": "Invalid request"}), 400
     return exec()
 
+
+
+
+# api of attendence chart
+
 @app_info.route("/info/attendance/stream", methods=["POST"])
 def app_attendance():
     main_app = current_app.config["app"]
@@ -224,3 +229,114 @@ def app_attendance():
 
         return jsonify(returnData), 200
     return exec()
+
+
+
+
+
+# * Edit api
+
+@app_info.route("/info/course/edit", methods=["POST"])
+def app_courses():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+
+        try:
+            edited_data = request.get_json()
+            sql_update = "UPDATE `course` SET `name`=%s,`description`=%s,`course_fees`=%s,`course_duration`=%s, `status`=%s WHERE `id`= %s "
+            try:
+                db.cursor.execute(sql_update,(edited_data['name'], edited_data['description'], edited_data['course_fees'], edited_data['course_duration'],edited_data['status'] , edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully updated"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+# * delete api
+
+@app_info.route("/info/course/delete", methods=["POST"])
+def app_courses_delete():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+       
+        try:
+            edited_data = request.get_json()
+            sql_update = "UPDATE `course` SET `status`=%s WHERE `id`= %s "
+            try:
+                db.cursor.execute(sql_update,(1, edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully Deleted"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+#* create course api #*
+
+@app_info.route("/info/course/create", methods=["POST"])
+def app_course_create():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+        data = request.json
+        requre_fild = [ 'name', 'description', 'course_fees', 'course_duration']
+        for i in requre_fild:
+            if i not in data:
+                db.disconnect()
+                return jsonify({"message": f"{i} is required"}), 400
+            
+        sql = ''' INSERT INTO `course`(`name`, `description`, `course_fees`, `course_duration`, `status`)
+            VALUES ( %s, %s, %s, %s, %s) '''
+        try:
+            db.cursor.execute(sql, (data['name'], data['description'], data['course_fees'], data['course_duration'],0))
+            db.conn.commit()
+            db.disconnect()
+            return jsonify({"message": "course added successfully"}), 200
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+        
+    return info()
+        

@@ -1,0 +1,98 @@
+<div class="card">
+    <div class="font-semibold text-xl mb-4 flex justify-between items-center">
+        <span>Course</span>
+        <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
+    </div>
+    <p-table [value]="courses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
+        [paginator]="true" responsiveLayout="scroll">
+        <ng-template #header>
+            <tr>
+                <th style="min-width: 12rem">Id</th>
+                <th style="min-width: 12rem">Name</th>
+                <th style="min-width: 12rem">Description</th>
+                <th style="min-width: 10rem">Course Fees</th>
+                <th style="min-width: 10rem">Duration</th>
+                <th style="min-width: 12rem">Status</th>
+                <th style="min-width: 12rem">Created Date</th>
+                <th style="min-width: 12rem">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-course>
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.description }}</td>
+                <td>RS - {{ course.course_fees }}</td>
+                <td>{{ course.course_duration }}yr</td>
+                <td>
+                    <span [ngClass]="course.status === 0 ? 'status-active' : 'status-inactive'">
+                      {{ course.status === 0 ? 'Active' : 'Inactive' }}
+                      <i class="pi" [ngClass]="course.status === 0 ? 'pi-check-circle' : 'pi-times-circle'"></i>
+                    </span>
+                  </td>
+                <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mr-2 mb-2"
+                        (click)="openEditDialog(course, true)">Edit</button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteCourse(course)">Delete</button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No courses found.</td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="8">Loading courses data. Please wait.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Edit Dialog -->
+    <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">
+        <form [formGroup]="courseForm">
+            <div class="p-fluid">
+                <div class="m-10">
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-[6rem] text-blue-400 font-bold" for="courseId">ID:</label>
+                        <input id="courseId" type="text" pInputText formControlName="id" [readonly] />
+                    </div>
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-5 text-blue-400 font-bold" for="courseName">Course Name:</label>
+                        <input id="courseName" type="text" pInputText formControlName="name" />
+                    </div>
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-8 text-blue-400 font-bold" for="courseDescription">Description:</label>
+                        <input id="courseDescription" type="text" pInputText formControlName="description" />
+                    </div>
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-7 text-blue-400 font-bold" for="courseFees">Course Fees:</label>
+                        <input id="courseFees" type="text" pInputText formControlName="course_fees" />
+                    </div>
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-[3rem] text-blue-400 font-bold" for="courseDuration">Duration:</label>
+                        <input id="courseDuration" type="number" pInputText formControlName="course_duration" />
+                    </div>
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-[3rem] text-blue-400 font-bold" for="status">Status:</label>
+                        <input id="status" type="number" pInputText formControlName="status" />
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flex justify-between w-full">
+                <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
+                    class="p-button-secondary text-sm p-2 rounded"></button>
+    
+                <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()"
+                    [disabled]="courseForm.invalid"
+                    class="p-button-success text-sm p-2 rounded"></button>
+            </div>
+        </form>
+    </p-dialog>
+    
+</div>
