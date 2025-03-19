@@ -1,3 +1,4 @@
+
 <div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
     <div class="font-semibold text-2xl mb-4 flex justify-between items-center text-white">
         <span>Student Management</span>
@@ -8,11 +9,11 @@
         [paginator]="true" responsiveLayout="scroll">
         <ng-template #header>
             <tr class="bg-blue-500 text-white">
-                <th style="min-width: 12rem">Student Name</th>
+                <th style="min-width: 12rem">User Name</th>
                 <th style="min-width: 12rem">Phone Number</th>
-                <th style="min-width: 12rem">Roll</th>
-                <th style="min-width: 10rem">Registration</th>
-                <th style="min-width: 10rem">Course</th>
+                <th style="min-width: 12rem">Address</th>
+                <th style="min-width: 10rem">Gender</th>
+                <th style="min-width: 10rem">Date of Birth</th>
                 <th style="min-width: 12rem">Semester</th>
                 <th style="min-width: 12rem">Status</th>
                 <th style="min-width: 12rem">Register By</th>
@@ -22,7 +23,7 @@
             </tr>
         </ng-template>
         <ng-template #body let-student>
-            <tr [ngClass]="{'bg-gray-100': student.status === 1, 'bg-green-100': student.status === 0}">
+            <tr [ngClass]="{'bg-gray-600': student.status === 1, 'bg-green-400': student.status === 0}">
                 <td>{{ student.student_name }}</td>
                 <td>{{ student.student_phone }}</td>
                 <td>{{ student.roll }}</td>
@@ -35,6 +36,8 @@
                       <i class="pi" [ngClass]="student.status === 0 ? 'pi-check-circle' : 'pi-times-circle'"></i>
                     </span>
                   </td>
+                  
+                  
                 <td>{{ student.Admin_name }}</td>
                 <td>{{ student.Admin_ph }}</td>
                 <td>{{ student.createDate | date: 'dd/MM/yy' }}</td>

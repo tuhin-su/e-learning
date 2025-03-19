@@ -24,7 +24,12 @@
                 <td>{{ course.description }}</td>
                 <td>RS - {{ course.course_fees }}</td>
                 <td>{{ course.course_duration }}yr</td>
-                <td>{{ course.status == 0 ? 'Active' : 'Inactive' }}</td>
+                <td>
+                    <span [ngClass]="course.status === 0 ? 'status-active' : 'status-inactive'">
+                      {{ course.status === 0 ? 'Active' : 'Inactive' }}
+                      <i class="pi" [ngClass]="course.status === 0 ? 'pi-check-circle' : 'pi-times-circle'"></i>
+                    </span>
+                  </td>
                 <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil"
