@@ -37,7 +37,6 @@ services:
       - ${API_PORT}:5000
     volumes:
       - ./api:/app
-      - ./docker/containers/flask:/home/vscode
     environment:
       SECRET_KEY: ${API_SECRET_KEY}
       DB_HOST: ${DATABASE_HOST}
