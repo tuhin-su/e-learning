@@ -104,7 +104,7 @@ services:
     volumes:
       - ./web/nginx.conf:/etc/nginx/nginx.conf
       - ./web/timt/www/timt/browser:/usr/share/nginx/html
-      - ./web/admin/dist/angular-tailwind/browser:/usr/share/nginx/admin
+      - ./web/admin/dist/admin/browser:/usr/share/nginx/admin
     ports:
       - ${NGINX_PORT:-80}:80
       - ${ADMIN_PORT:-81}:81
