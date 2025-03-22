@@ -1,0 +1,12 @@
+FROM node:lts-alpine
+
+ARG HOST_UID
+
+ENV CHROME_BIN='/usr/bin/chromium-browser'
+
+WORKDIR /app/angular
+
+RUN npm install -g npm@latest @angular/cli
+
+
+CMD ["sleep", "infinity"]

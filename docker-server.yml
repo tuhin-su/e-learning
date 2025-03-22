@@ -27,7 +27,7 @@ services:
   flask:
     build:
       context: ./docker/build
-      dockerfile: Dockerfile.flask
+      dockerfile: Dockerfile.dep.flask
     working_dir: /app
     restart: always
     command: "bash run.sh"
@@ -55,7 +55,7 @@ services:
   admin:
     build:
       context: ./docker/build
-      dockerfile: Dockerfile.angular
+      dockerfile: Dockerfile.dep.angular
     container_name: admin
     command: "sh run.sh"
     dns:

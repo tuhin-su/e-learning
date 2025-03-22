@@ -1,0 +1,12 @@
+FROM python:3.9-slim
+ 
+# Update package lists, install packages, and clean up
+RUN apt update -y && \
+    apt install -y build-essential cmake libgtk-3-dev libboost-python-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Keep the container running
+CMD ["sleep", "infinity"]
