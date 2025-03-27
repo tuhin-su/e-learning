@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
 import { SliderModule } from 'primeng/slider';
-import { Table, TableModule } from 'primeng/table';
+import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToastModule } from 'primeng/toast';
@@ -22,9 +22,10 @@ import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
-import { firstValueFrom, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
+import { group } from '@angular/animations';
 
 
 
@@ -57,26 +58,35 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export class  UserComponent implements OnInit {
 
-  students: any[] = [];
+
+  users: any[] = [];
+  page: number = 1;  // Start with the first page
+  size: number = 15; // Default size (15 records per page)
+  hasmoredata:boolean = false;
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
   isEditing: boolean = false;
-  studentForm:FormGroup = new FormGroup({});
+  userForm:FormGroup = new FormGroup({});
   loadingService: any;
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
+  totalRecords: any[] =[];
 
     constructor(
        private management : ManagementService,
        private fb : FormBuilder,
        private alert: AlertService
     ) {
-      this.studentForm = this.fb.group({
+      this.userForm = this.fb.group({
         id:[''],
-        roll: ['', Validators.required],
-        reg: ['', Validators.required],
-        course_id: ['', Validators.required],
-        semester: ['', Validators.required],
+        img:['', Validators.required],
+        name: ['', Validators.required],
+        phone: ['', Validators.required],
+        birth: ['', Validators.required],
+        email: ['', Validators.required],
+        gender: ['', Validators.required],
+        address: ['', Validators.required],
+        groups : ['',Validators.required],
         status: ['', [Validators.required, Validators.min(0)]],
       });
       
@@ -84,43 +94,69 @@ export class  UserComponent implements OnInit {
 
     ngOnInit() {
       this.getCourses(),
-      this.fetchStudent();
+      this.fetchUser(0,15);
     }
 
-
-    fetchStudent(){
-        firstValueFrom(this.management.getStudentInfo().pipe(
-            tap(
-                (response) => {
-                    if(response){
-                        this.loading = false
-                        console.log(response);
-                        this.students = response;
-                    }
-                }
-                   
-            )
+    loadUsersLazy(event: any) {
+      this.loading = true;
+      const { first, rows } = event; // 'first' is the starting index and 'rows' is the number of rows per page
+    
+      // Make an API call to fetch data based on the pagination parameters
+      this.fetchUser(first, rows).then((data: any) => {
+        this.users = data.users;
+        this.totalRecords = data.totalRecords;
+        this.loading = false;
+      }).catch(error => {
+        console.error("Error loading users:", error);
+        this.loading = false;
+      });
+    }
+    
+    fetchUser(current: number, max: number) {
+      const payload = {
+        current: current,  // current page number or index
+        max: max           // number of records per page
+      };
+    
+      return firstValueFrom(
+        this.management.getUserInfo(payload).pipe(
+          tap((response) => {
+            if (response) {
+              this.loading = false;
+              console.log(response);  // Debugging: check API response
+              // Set users and total records from the API response
+              this.users = response;
+              this.totalRecords = response.totalRecords;
+            }
+          }),
+          catchError((error) => {
+            console.error("Error in fetching user data:", error);
+            this.loading = false;
+            return of({ users: [], totalRecords: 0 }); // return an empty array on error to prevent app crash
+          })
         )
-    )
+      );
     }
+    
 
-    openEditDialog(student: any, isEditing: boolean = false): void {
+    openEditDialog(user: any, isEditing: boolean = false): void {
         this.isEditing = isEditing;
-        this.studentForm.patchValue({
-          id:student.id,
-          roll: student.roll,
-          reg : student.reg,
-          course_id : student.course_id,
-          course_name: student.course_name,
-          semester: student.semester,
-          status: student.status,
+        this.userForm.patchValue({
+          id:user.id,
+          img : user.img,
+          name:user.name,
+          phone: user.phone,
+          gender: user.gender,
+          address:user.address,
+          groups:user.group,
+          status:user.status
         });
         this.display = true;  // Show the dialog
         this.getCourses();
       }
 
       selectCourse(event: any){
-        this.studentForm.patchValue({
+        this.userForm.patchValue({
           "course_id" : event.value,
          
         })
@@ -143,13 +179,13 @@ export class  UserComponent implements OnInit {
      
       async saveStudent() {
        if(this.isEditing){
-        await firstValueFrom(this.management.editStudent(this.studentForm.value).pipe(
+        await firstValueFrom(this.management.editStudent(this.userForm.value).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
                         this.display =false;
-                        this.fetchStudent();
+                        // this.fetchUser();
                     }
                 },
                 (error) => {
@@ -160,23 +196,6 @@ export class  UserComponent implements OnInit {
         return;
        }
 
-      //  if(this.studentForm.valid){
-      //   await firstValueFrom(this.management.creteCourse(this.studentForm.value).pipe(
-      //     tap(
-      //       (response) => {
-      //         if(response){
-      //           this.alert.showSuccessAlert(response.message);
-      //           this.display = false;
-      //           this.fetchStudent();
-      //         }
-      //       },
-      //       (error) => {
-      //         this.alert.showErrorAlert(error.error.message);
-      //       }
-      //     )
-      //   ))
-      //  }
-        
         this.display = false;
       }
     
@@ -187,7 +206,7 @@ export class  UserComponent implements OnInit {
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
-                        this.fetchStudent();
+                        // this.fetchUser();
                     }
                 },
                 (error) => {

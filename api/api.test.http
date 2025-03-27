@@ -389,3 +389,35 @@ Authorization: Bearer {{token}}
 {
   "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
 }
+
+
+
+### user fetch 
+
+POST {{apiUrl}}/user/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "current":0,
+  "max": 15
+}
+
+
+
+### user edit
+
+POST {{apiUrl}}/user/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "student2",
+  "phone":"8159861554",
+  "address" : "abcd",
+  "gender" : "M",
+  "birth":"2024-12-12",
+  "email":"student_demo@email.com",
+  "status":0,
+  "user_id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+}

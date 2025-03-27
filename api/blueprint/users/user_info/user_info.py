@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from modules.DataBase import DBA
+from modules.utilty import getLabel
 
 user_info = Blueprint("User info", __name__)
 db = DBA()
@@ -72,6 +73,9 @@ def app():
                 return jsonify({"message": str(e)}), 400
         return user_info();
 
+
+
+
 @user_info.route('/user/info/<id>', methods=['GET'])
 def get_user_info(id):
     app = current_app.config["app"]
@@ -95,3 +99,101 @@ def get_user_info(id):
             return jsonify({"message": str(e)}), 500
 
     return fetch_user_info()
+
+
+
+#* fetch all user..
+
+@user_info.route('/user/fetch', methods=['POST'])
+def app_user_fetch():
+    app = current_app.config['app']
+    @app.auth.login_required
+
+    def handel():
+        db = DBA()
+        db.connect()
+        user_id = app.auth.current_user()['user_id']
+        lable = getLabel(user_id)
+        current = 0
+        max = 15
+
+        if lable!=1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to access this endpoint"}), 403
+        
+        if request.json.get("current") is not None:
+            current = request.json["current"]
+
+        if request.json.get("max") is not None:
+            max = request.json["max"]
+
+        
+        sql = f"""
+            SELECT user_info.img, user_info.name, user_info.phone, user_info.address, 
+                   user_info.gender, user_info.birth, user.email, user.groups, 
+                   user.status, user.createDate 
+                   FROM user_info 
+                   INNER JOIN user ON user_info.user_id = user.id 
+                   LIMIT %s OFFSET %s
+        """
+        try:
+            db.cursor.execute(sql,(max, current))
+            data = db.cursor.fetchall()
+            db.disconnect()
+            return jsonify(data), 200
+        
+        except Error as e:
+            db.disconnect()
+            return jsonify ({"massage": str(e)}),400
+        
+        finally:
+            db.disconnect()
+
+    return handel()    
+
+
+
+
+#* edit user  not right
+
+@user_info.route("/user/edit", methods=["POST"])
+def app_update_user():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect
+        user_id = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+
+        try:
+            db.connect()
+            edited_data = request.get_json()
+            sql_update = """UPDATE `user_info` JOIN `user`  ON user_info.user_id = user.id  SET
+                            user_info.name = %s,
+                            user_info.phone = %s',
+                            user_info.address = %s,
+                            user_info.gender = %s,
+                            user_info.birth = %s,
+                            user.email = %s,
+                            user.status = %s
+                            WHERE user_info.user_id = %s;"""
+            try:
+                db.cursor.execute(sql_update,(edited_data['name'], edited_data['phone'], edited_data['address'], edited_data['gender'], edited_data['birth'], edited_data['email', edited_data['status'], edited_data['user_id']]))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully updated"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
