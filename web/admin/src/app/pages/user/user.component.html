@@ -40,7 +40,7 @@
                 <td>{{ user.phone }}</td>
                 <td>{{ user.address }}</td>
                 <td>{{ user.gender}}</td>
-                <td>{{ user.birth }}</td>
+                <td>{{ user.birth |date: 'dd/MM/yy' }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.groups }}</td>
                 
@@ -56,7 +56,7 @@
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
                         (click)="openEditDialog(user, true)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                        (click)="deleteStudent(user)"></button>
+                        (click)="deleteUser(user)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -73,13 +73,13 @@
     </p-table>
 
     <!-- Edit Dialog -->
-    <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">
+    <p-dialog [(visible)]="display" header="Edit User" [modal]="true" [closable]="true" [responsive]="true">
         <form [formGroup]="userForm">
             <div class="p-fluid">
                 <div class="m-20">
                     <div class="p-field m-5">
                         <label class="m-2 mr-8 text-blue-400 font-bold" for="img"> Image: </label>
-                        <input id="img" type="upload" pInputText formControlName="img" />
+                        <input id="img" type="file" pInputText formControlName="img" />
                     </div>
                     <div class="p-field m-5">
                         <label class="m-2 mr-8 text-blue-400 font-bold" for="name"> Name: </label>
@@ -101,7 +101,7 @@
 
                     <div class="p-field m-5">
                         <label class="m-2 mr-[4.8rem] text-blue-400 font-bold" for="birth">Birth:</label>
-                        <input id="birth" type="number" pInputText formControlName="birth" />
+                        <input id="birth" type="text" pInputText formControlName="birth" />
                     </div>
                     <div class="p-field m-5">
                         <label class="m-2 mr-[4.8rem] text-blue-400 font-bold" for="email">Email:</label>
@@ -112,6 +112,12 @@
                         <label class="m-2 mr-[4.8rem] text-blue-400 font-bold" for="groups">Groups:</label>
                         <input id="groups" type="text" pInputText formControlName="groups" />
                     </div>
+
+                    <div class="p-field m-5">
+                        <label class="m-2 mr-[4.8rem] text-blue-400 font-bold" for="status">Status:</label>
+                        <input id="status" type="text" pInputText formControlName="status" />
+                    </div>
+
                 </div>
             </div>
     
@@ -119,7 +125,7 @@
                 <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
                     class="p-button-secondary text-sm p-2 rounded"></button>
     
-                <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="userForm.invalid"
+                <button pButton label="Save" icon="pi pi-check" (click)="saveUser()"
                     class="p-button-success text-sm p-2 rounded"></button>
             </div>
         </form>

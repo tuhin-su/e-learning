@@ -412,12 +412,50 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
+  "user_id": "6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85",
   "name": "student2",
-  "phone":"8159861554",
-  "address" : "abcd",
-  "gender" : "M",
-  "birth":"2024-12-12",
-  "email":"student_demo@email.com",
-  "status":0,
-  "user_id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+  "phone": "8159861554",
+  "address": "abcd",
+  "gender": "M",
+  "birth": "2024-12-12",
+  "email": "student_demo@email.com",
+  "groups": "ST",
+  "status": 0
+}
+
+
+
+
+### user delete
+
+POST {{apiUrl}}/user/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+}
+
+
+
+#### info create user 
+
+POST {{apiUrl}}/user/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+ "email": "rana@gmail.com" ,
+ "passwd": "hi#53" ,
+ "groups" : "AD" ,
+ "status" : "0 ",
+ "name": "Rana" ,
+ "phone": "4782789389" ,
+ "address": "absd344" ,
+ "gender": "F" , 
+ "birth": "2003/11/08" ,
+ "img": "hello" 
+
+  
 }

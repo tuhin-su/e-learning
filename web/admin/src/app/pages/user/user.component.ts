@@ -25,7 +25,8 @@ import { ManagementService } from '../../services/management.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
-import { group } from '@angular/animations';
+import { DatePipe } from '@angular/common';
+import { convertToISODate, convertToMySQLDate } from '../../utility/function';
 
 
 
@@ -54,7 +55,7 @@ import { group } from '@angular/animations';
     
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
-  providers: [ConfirmationService, MessageService,ManagementService]
+  providers: [ConfirmationService, MessageService,ManagementService,DatePipe]
 })
 export class  UserComponent implements OnInit {
 
@@ -75,11 +76,12 @@ export class  UserComponent implements OnInit {
     constructor(
        private management : ManagementService,
        private fb : FormBuilder,
-       private alert: AlertService
+       private alert: AlertService,
+       private datepipe: DatePipe
     ) {
       this.userForm = this.fb.group({
         id:[''],
-        img:['', Validators.required],
+        img:['',],
         name: ['', Validators.required],
         phone: ['', Validators.required],
         birth: ['', Validators.required],
@@ -87,15 +89,18 @@ export class  UserComponent implements OnInit {
         gender: ['', Validators.required],
         address: ['', Validators.required],
         groups : ['',Validators.required],
-        status: ['', [Validators.required, Validators.min(0)]],
+        status :[Validators.required]
+        
       });
       
     }
 
     ngOnInit() {
-      this.getCourses(),
+      
       this.fetchUser(0,15);
     }
+
+
 
     loadUsersLazy(event: any) {
       this.loading = true;
@@ -112,6 +117,9 @@ export class  UserComponent implements OnInit {
       });
     }
     
+
+
+
     fetchUser(current: number, max: number) {
       const payload = {
         current: current,  // current page number or index
@@ -123,7 +131,7 @@ export class  UserComponent implements OnInit {
           tap((response) => {
             if (response) {
               this.loading = false;
-              console.log(response);  // Debugging: check API response
+              // console.log(response);  // Debugging: check API response
               // Set users and total records from the API response
               this.users = response;
               this.totalRecords = response.totalRecords;
@@ -138,54 +146,42 @@ export class  UserComponent implements OnInit {
       );
     }
     
+    // Thu, 12 Dec 2024 00:00:00 GMT
+
 
     openEditDialog(user: any, isEditing: boolean = false): void {
         this.isEditing = isEditing;
+        const convert_birth =convertToMySQLDate(user.birth)
         this.userForm.patchValue({
-          id:user.id,
+          id:user.user_id,
           img : user.img,
           name:user.name,
           phone: user.phone,
           gender: user.gender,
           address:user.address,
-          groups:user.group,
-          status:user.status
+          birth:convert_birth  , 
+          email: user.email,
+          groups:user.groups,
+          status: user.status,
+          
         });
         this.display = true;  // Show the dialog
-        this.getCourses();
+        
       }
 
-      selectCourse(event: any){
-        this.userForm.patchValue({
-          "course_id" : event.value,
-         
-        })
-        console.log(event);
-       
-      }
 
-      async getCourses(){
-        await firstValueFrom(this.management.getStreamInfo().pipe(
-          tap(
-            (res)=>{
-              if(res){
-                   this.stream = res
-              }
-            }
-          )
-        ));
-      }
+      
 
      
-      async saveStudent() {
+      async saveUser() {
        if(this.isEditing){
-        await firstValueFrom(this.management.editStudent(this.userForm.value).pipe(
+        await firstValueFrom(this.management.editUser(this.userForm.value).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
                         this.display =false;
-                        // this.fetchUser();
+                        this.fetchUser(0,15);
                     }
                 },
                 (error) => {
@@ -200,13 +196,13 @@ export class  UserComponent implements OnInit {
       }
     
 
-    async deleteStudent(student: any) {
-        await firstValueFrom(this.management.deleteStudent(student.id).pipe(
+    async deleteUser(user: any) {
+        await firstValueFrom(this.management.deleteUser(user.user_id).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
-                        // this.fetchUser();
+                        this.fetchUser(0,15);
                     }
                 },
                 (error) => {

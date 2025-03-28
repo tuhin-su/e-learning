@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, current_app
 from mysql.connector import Error
 from modules.DataBase import DBA
 from modules.utilty import getLabel
+from werkzeug.security import generate_password_hash
 
 user_info = Blueprint("User info", __name__)
 db = DBA()
@@ -129,7 +130,7 @@ def app_user_fetch():
 
         
         sql = f"""
-            SELECT user_info.img, user_info.name, user_info.phone, user_info.address, 
+            SELECT user_info.img, user_info.user_id, user_info.name, user_info.phone, user_info.address, 
                    user_info.gender, user_info.birth, user.email, user.groups, 
                    user.status, user.createDate 
                    FROM user_info 
@@ -154,7 +155,7 @@ def app_user_fetch():
 
 
 
-#* edit user  not right
+#* edit user  
 
 @user_info.route("/user/edit", methods=["POST"])
 def app_update_user():
@@ -162,7 +163,7 @@ def app_update_user():
     @mainApp.auth.login_required
     def info():
         db = DBA()
-        db.connect
+        db.connect()
         user_id = mainApp.auth.current_user()['user_id']
         if getLabel(user_id) != 1 :
             db.disconnect()
@@ -174,15 +175,24 @@ def app_update_user():
             edited_data = request.get_json()
             sql_update = """UPDATE `user_info` JOIN `user`  ON user_info.user_id = user.id  SET
                             user_info.name = %s,
-                            user_info.phone = %s',
+                            user_info.phone = %s,
                             user_info.address = %s,
                             user_info.gender = %s,
                             user_info.birth = %s,
                             user.email = %s,
+                            user.groups = %s,
                             user.status = %s
-                            WHERE user_info.user_id = %s;"""
+                            WHERE user_info.user_id = %s"""
             try:
-                db.cursor.execute(sql_update,(edited_data['name'], edited_data['phone'], edited_data['address'], edited_data['gender'], edited_data['birth'], edited_data['email', edited_data['status'], edited_data['user_id']]))
+                db.cursor.execute(sql_update,(edited_data["name"], 
+                                              edited_data["phone"], 
+                                              edited_data["address"], 
+                                              edited_data["gender"], 
+                                              edited_data["birth"], 
+                                              edited_data["email"],
+                                              edited_data["groups"],
+                                              edited_data["status"], 
+                                              edited_data["id"]))
                 db.conn.commit()
                 db.disconnect()
                 return jsonify({"message": "Successfully updated"}), 200
@@ -197,3 +207,106 @@ def app_update_user():
             db.disconnect()
     return info()
 
+
+
+
+#* user deleted..
+
+@user_info.route("/user/delete", methods=["POST"])
+def app_courses_delete():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+       
+        try:
+            edited_data = request.get_json()
+            sql_update = "UPDATE `user` SET `status`=%s WHERE `id`= %s "
+            try:
+                db.cursor.execute(sql_update,(1, edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully Deleted"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+
+#* user create 
+
+@user_info.route("/user/create", methods=["POST"])
+def app_user_create():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+        data = request.json
+        email = data.get("email")
+        password = generate_password_hash(data.get("passwd"))
+        groups = data.get("groups")
+        user_id = mainApp.generate_unique_id(email,password,groups)
+
+        try:
+            sql = "SELECT id FROM `user` WHERE email = %s"
+            db.cursor.execute(sql,(email,))
+            user = db.cursor.fetchone()
+            if user:
+                db.disconnect()
+                return jsonify ({"message":"User already exit"}),400
+
+        except Error as e:
+            mainApp.app.logger.error(f"Error checking user: {e}")
+            db.disconnect()
+            return jsonify({"message": str(e)}), 500
+
+        requre_fild = ["email", "passwd","groups", "name"]
+        for i in requre_fild:
+            if i not in data:
+                db.disconnect()
+                return jsonify({"message": f"{i} is required"}), 400
+                
+        sql = "INSERT INTO user(id, email, passwd, createDate, groups, status, createBy) VALUES (%s,%s,%s, current_timestamp(),%s,%s,%s)"
+        sql1 = "INSERT INTO user_info(user_id, name, phone, address, gender, birth, img) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        # db.conn.start_transaction()
+            
+        try:
+            db.cursor.execute(sql,(user_id, email, password, data["groups"],data["status"], user_id_ad ))
+            try:
+                db.cursor.execute(sql1,(user_id,data["name"], data["phone"], data["address"], data["gender"],data["birth"], data["img"]))
+                db.conn.commit()  
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+            db.conn.commit()
+            db.disconnect()
+            return jsonify({"message": "User added successfully"}), 200
+        except Error as e:
+            db.conn.rollback()
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+        
+    return info()
+        
