@@ -131,7 +131,7 @@ def app_user_fetch():
         
         sql = f"""
             SELECT user_info.img, user_info.user_id, user_info.name, user_info.phone, user_info.address, 
-                   user_info.gender, user_info.birth, user.email, user.groups, 
+                   user_info.gender, user_info.birth, user.email, user.passwd, user.groups, 
                    user.status, user.createDate 
                    FROM user_info 
                    INNER JOIN user ON user_info.user_id = user.id 
@@ -279,7 +279,7 @@ def app_user_create():
             db.disconnect()
             return jsonify({"message": str(e)}), 500
 
-        requre_fild = ["email", "passwd","groups", "name"]
+        requre_fild = ["email","groups", "name"]
         for i in requre_fild:
             if i not in data:
                 db.disconnect()

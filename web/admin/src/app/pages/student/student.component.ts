@@ -88,6 +88,11 @@ export class  StudentComponent implements OnInit {
     }
 
 
+    onGlobalFilter(table: Table, event: Event) {
+      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+
     fetchStudent(){
         firstValueFrom(this.management.getStudentInfo().pipe(
             tap(

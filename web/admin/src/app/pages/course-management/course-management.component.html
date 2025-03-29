@@ -1,10 +1,26 @@
 <div class="card">
     <div class="font-semibold text-xl mb-4 flex justify-between items-center">
-        <span>Course</span>
+        <span>Course Management</span>
+        <p-iconfield iconPosition="left" class= "flex items-center">
+            <p-inputicon>
+                <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
+        </p-iconfield>
+
         <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
     </div>
-    <p-table [value]="courses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true"
-        [paginator]="true" responsiveLayout="scroll">
+    <p-table #dt1 
+    [value]="courses" 
+    dataKey="id" 
+    [rows]="10" 
+    [loading]="loading" 
+    [rowHover]="true" 
+    [showGridlines]="true"
+    [globalFilterFields]="['name', 'description', 'id','course_fees', 'course_duration', 'status']"   
+    [paginator]="true" 
+    responsiveLayout="scroll">
+
         <ng-template #header>
             <tr>
                 <th style="min-width: 12rem">Id</th>
@@ -31,13 +47,14 @@
                     </span>
                   </td>
                 <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
-                <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil"
-                        class="p-button-rounded p-button-success mr-2 mb-2"
-                        (click)="openEditDialog(course, true)">Edit</button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                        (click)="deleteCourse(course)">Delete</button>
+                
+                <td class="flex space-x-2">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                        (click)="openEditDialog(course, true)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                        (click)="deleteCourse(course)"></button>
                 </td>
+              
             </tr>
         </ng-template>
         <ng-template #emptymessage>
@@ -53,44 +70,74 @@
     </p-table>
 
     <!-- Edit Dialog -->
-    <p-dialog [(visible)]="display" header="Edit Course" [modal]="true" [closable]="true" [responsive]="true">
+
+
+    <p-dialog [(visible)]="display" header="Course" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '400px'}">
         <form [formGroup]="courseForm">
-            <div class="p-fluid">
-                <div class="m-10">
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-[6rem] text-blue-400 font-bold" for="courseId">ID:</label>
-                        <input id="courseId" type="text" pInputText formControlName="id" [readonly] />
+            <div class="p-fluid" style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                <div style="margin: 10px;">
+                    <!-- Course ID -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="courseId" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-id-card" style="margin-right: 8px; color: #3b82f6;"></i> ID:
+                        </label>
+                        <input id="courseId" type="text" pInputText formControlName="id" [readonly]="true"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; background-color: #e5e7eb;"/>
                     </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-5 text-blue-400 font-bold" for="courseName">Course Name:</label>
-                        <input id="courseName" type="text" pInputText formControlName="name" />
+    
+                    <!-- Course Name -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="courseName" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i> Course Name:
+                        </label>
+                        <input id="courseName" type="text" pInputText formControlName="name"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-8 text-blue-400 font-bold" for="courseDescription">Description:</label>
-                        <input id="courseDescription" type="text" pInputText formControlName="description" />
+    
+                    <!-- Course Description -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="courseDescription" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-align-left" style="margin-right: 8px; color: #3b82f6;"></i> Description:
+                        </label>
+                        <input id="courseDescription" type="text" pInputText formControlName="description"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-7 text-blue-400 font-bold" for="courseFees">Course Fees:</label>
-                        <input id="courseFees" type="text" pInputText formControlName="course_fees" />
+    
+                    <!-- Course Fees -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="courseFees" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-money-bill" style="margin-right: 8px; color: #3b82f6;"></i> Course Fees:
+                        </label>
+                        <input id="courseFees" type="text" pInputText formControlName="course_fees"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-[3rem] text-blue-400 font-bold" for="courseDuration">Duration:</label>
-                        <input id="courseDuration" type="number" pInputText formControlName="course_duration" />
+    
+                    <!-- Course Duration -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="courseDuration" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-clock" style="margin-right: 8px; color: #3b82f6;"></i> Duration (in year):
+                        </label>
+                        <input id="courseDuration" type="number" pInputText formControlName="course_duration"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-                    <div class="p-field m-5">
-                        <label class="m-2 mr-[3rem] text-blue-400 font-bold" for="status">Status:</label>
-                        <input id="status" type="number" pInputText formControlName="status" />
+    
+                    <!-- Status -->
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="status" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Status:
+                        </label>
+                        <input id="status" type="number" pInputText formControlName="status"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
                 </div>
-            </div>
     
-            <div class="flex justify-between w-full">
-                <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
-                    class="p-button-secondary text-sm p-2 rounded"></button>
-    
-                <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()"
-                    [disabled]="courseForm.invalid"
-                    class="p-button-success text-sm p-2 rounded"></button>
+                <!-- Buttons -->
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
+                        style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
+                    <button pButton label="Save" icon="pi pi-check" (click)="saveCourse()" [disabled]="courseForm.invalid"
+                        style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
+                </div>
             </div>
         </form>
     </p-dialog>

@@ -26,6 +26,7 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { DatePipe } from '@angular/common';
+import { Button } from 'primeng/button';
 import { convertToISODate, convertToMySQLDate } from '../../utility/function';
 
 
@@ -86,6 +87,7 @@ export class  UserComponent implements OnInit {
         phone: ['', Validators.required],
         birth: ['', Validators.required],
         email: ['', Validators.required],
+        passwd:[''],
         gender: ['', Validators.required],
         address: ['', Validators.required],
         groups : ['',Validators.required],
@@ -100,6 +102,10 @@ export class  UserComponent implements OnInit {
       this.fetchUser(0,15);
     }
 
+
+    onGlobalFilter(table: Table, event: Event) {
+      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 
 
     loadUsersLazy(event: any) {
@@ -192,6 +198,23 @@ export class  UserComponent implements OnInit {
         return;
        }
 
+       if(this.userForm.valid){
+        await firstValueFrom(this.management.createUser(this.userForm.value).pipe(
+          tap(
+            (response) => {
+              if(response){
+                this.alert.showSuccessAlert(response.message);
+                this.display = false;
+                this.fetchUser(0,15);
+              }
+            },
+            (error) => {
+              this.alert.showErrorAlert(error.error.message);
+            }
+          )
+        ))
+       }
+        
         this.display = false;
       }
     

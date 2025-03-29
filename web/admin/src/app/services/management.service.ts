@@ -134,4 +134,14 @@ export class ManagementService {
     };
     return this.http.post<any>(loginUrl, payload, { headers });
   }
+
+
+  createUser(payload:any): Observable<any>{
+    const loginUrl = `${this.api}/user/create`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
 }
