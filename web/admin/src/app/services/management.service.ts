@@ -98,6 +98,18 @@ export class ManagementService {
   }
 
 
+  //  migrate the student 
+  migrateStudent(payload:any): Observable<any>{
+    const loginUrl = `${this.api}/student/migration`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+
+
   // get user information
 
   getUserInfo(payload:{current:string | number, max:string|number}): Observable<any>{
@@ -138,6 +150,35 @@ export class ManagementService {
 
   createUser(payload:any): Observable<any>{
     const loginUrl = `${this.api}/user/create`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+
+  getgroups(payload:{current:string | number, max:string|number}): Observable<any>{
+    const loginUrl = `${this.api}/group/fetch`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+  editGroup(payload:any): Observable<any>{
+    const loginUrl = `${this.api}/group/edit`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`,
+      
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+  createGroup(payload:any): Observable<any>{
+    const loginUrl = `${this.api}/group/create`;
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.storage.get('token')}`

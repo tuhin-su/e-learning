@@ -380,6 +380,17 @@ Authorization: Bearer {{token}}
 }
 
 
+### student migration
+
+POST {{apiUrl}}/student/migration
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "semester" : "6",
+  "from_semester": "4"
+}
+
 ### student delete
 
 POST {{apiUrl}}/student/delete
@@ -459,3 +470,53 @@ Authorization: Bearer {{token}}
 
   
 }
+
+### group fetch
+
+POST {{apiUrl}}/group/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+ 
+  
+}
+
+
+
+
+### group edit
+
+POST {{apiUrl}}/group/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "1",
+  "name": "AD",
+  "description": "Admin",
+  "label": "1"
+  
+}
+
+
+#### create groups
+
+POST {{apiUrl}}/group/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ "name": "Rana" ,
+ "code": "AD" ,
+ "description": "Adn" ,
+ "label": "4" 
+ 
+
+  
+}
+
+
+
+

@@ -5,24 +5,44 @@
         border-radius: 5px;
         padding: 8px;
         font-size: 14px;
+        
     }
 </style>
 
 
 <div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
-    <div class="font-semibold text-xl mb-4 flex justify-between items-center text-slate-800">
-        <span>Student Management</span>
+    <div class="font-semibold text-xl mb-4 flex justify-between items-center text-slate-800 
+            bg-white shadow-md rounded-lg p-4">
+    
+    <!-- Title Section -->
+    <span class="text-2xl font-bold text-gray-800">Student Management</span>
 
-        <p-iconfield iconPosition="left" class= "flex items-center">
-            <p-inputicon>
-                <i class="pi pi-search"></i>
-            </p-inputicon>
-            <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
-        </p-iconfield>
+    <!-- Search Field -->
+    <p-iconfield iconPosition="left" class="flex items-center bg-gray-100 p-2 rounded-md shadow-sm">
+        <p-inputicon>
+            <i class="pi pi-search text-gray-600"></i>
+        </p-inputicon>
+        <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" 
+               placeholder="Search keyword" 
+               class="border-0 focus:ring-0 focus:outline-none bg-transparent text-gray-800" />
+    </p-iconfield>
 
-        <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
-            (click)="openEditDialog({}, false)"></button>
-    </div>
+    <!-- Create New Student Button -->
+    <button pButton label="Create New Student" icon="pi pi-plus" 
+            class="p-button-success text-lg rounded-md shadow-md hover:bg-green-600 transition" 
+            (click)="openEditDialog({}, false)">
+    </button>
+
+    <!-- Migration Button -->
+    <button pButton label="Migration" icon="pi pi-calendar-plus" 
+            class="p-button-info text-lg rounded-md shadow-md hover:bg-blue-600 transition" 
+            (click)="openSemDialogbox('student')">
+    </button>
+
+</div>
+
+
+    
     <p-table #dt1 
     [value]="students" 
     dataKey="id" 
@@ -56,7 +76,7 @@
                 <td>{{ student.roll }}</td>
                 <td>{{ student.reg }}</td>
                 <td>{{ student.course_name }}</td>
-                <td>{{ student.semester }} year</td>
+                <td>{{ student.semester }} Sem </td>
                 <td>
                     <span [ngClass]="student.status === 0 ? 'status-active' : 'status-inactive'">
                       {{ student.status === 0 ? 'Active' : 'Inactive' }}
@@ -71,6 +91,7 @@
                         (click)="openEditDialog(student, true)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
                         (click)="deleteStudent(student)"></button>
+                   
                 </td>
             </tr>
         </ng-template>
@@ -152,6 +173,112 @@
             </div>
         </form>
     </p-dialog>
+    
+
+
+
+    <!-- Migration -->
+    <!-- <p-dialog [(visible)]="displayStudentDialog" header="Student" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '400px'}">
+        <form [formGroup]="semesterForm">
+            <div class="p-field" style="margin-bottom: 15px;">
+                <label for="from_semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                    <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i>From_Semester:
+                </label>
+                <p-dropdown 
+                    [options]="semesterOptions" 
+                    optionLabel="name" 
+                    optionValue="id"  
+                    formControlName="from_semester" 
+                    class="custom-dropdown"
+                    [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
+                    [filter]="true"
+                    [filterBy]="'name'"
+                ></p-dropdown>
+            </div>
+            <div class="p-field" style="margin-bottom: 15px;">
+                <label for="semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                    <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i>TO_Semester:
+                </label>
+                <p-dropdown 
+                    [options]="semesterOptions" 
+                    optionLabel="name" 
+                    optionValue="id" 
+                    formControlName="semester" 
+                    class="custom-dropdown"
+                    [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
+                    [filter]="true"
+                    [filterBy]="'name'"
+                ></p-dropdown>
+            </div>
+
+
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button pButton label="Cancel" icon="pi pi-times" (click)="displayStudentDialog = false"
+                    style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
+                <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="studentForm.invalid"
+                    style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
+            </div>
+            
+        </form>
+    </p-dialog>
+     -->
+
+   
+     <p-dialog  [(visible)]="displayStudentDialog" header="Student" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '500px'}">
+        <form [formGroup]="semesterForm" class="h-[14rem]">
+            <div class="p-field" style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <!-- From Semester Field -->
+                <div style="flex: 1; min-width: 150px; padding: 5px;">
+                    <label for="from_semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                        <i class="pi pi-calendar" style="color: #3b82f6;"></i>
+                        From Semester:
+                    </label>
+                    <p-dropdown 
+                        [options]="semesterOptions" 
+                        optionLabel="name" 
+                        optionValue="id"  
+                        formControlName="from_semester" 
+                        class="custom-dropdown"
+                        [panelStyle]="{'border-radius': '8px', 'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)', 'padding': '10px'}"
+                        [filterBy]="'name'"
+                        
+                    ></p-dropdown>
+                </div>
+    
+                <!-- Arrow Icon -->
+                <i class="pi pi-arrow-right" style="font-size: 28px; color: #3b82f6; align-self: center;"></i>
+    
+                <!-- To Semester Field -->
+                <div style="flex: 1; min-width: 150px; padding: 5px;">
+                    <label for="semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                        <i class="pi pi-calendar-plus" style="color: #3b82f6;"></i>
+                        To Semester:
+                    </label>
+                    <p-dropdown 
+                        [options]="semesterOptions" 
+                        optionLabel="name" 
+                        optionValue="id" 
+                        formControlName="semester" 
+                        class="custom-dropdown"
+                        [panelStyle]="{'border-radius': '8px', 'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)', 'padding': '10px'}"
+                        [filterBy]="'name'"
+                        
+                    ></p-dropdown>
+                </div>
+            </div>
+    
+            <!-- Buttons -->
+            <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+                <button pButton label="Cancel" icon="pi pi-times" (click)="displayStudentDialog = false"
+                    style="background-color: #e5e7eb; color: #111827; padding: 12px 25px; border-radius: 5px;"> 
+                </button>
+                <button pButton label="Save" icon="pi pi-check" (click)="saveSemester()" [disabled]="semesterForm.invalid"
+                    style="background-color: #10b981; color: white; padding: 12px 25px; border-radius: 5px;"> 
+                </button>
+            </div>
+        </form>
+    </p-dialog>
+    
     
 </div>
 

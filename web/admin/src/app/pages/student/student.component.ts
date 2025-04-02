@@ -60,11 +60,25 @@ export class  StudentComponent implements OnInit {
   students: any[] = [];
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
+  displayStudentDialog : boolean = false;
   isEditing: boolean = false;
   studentForm:FormGroup = new FormGroup({});
+  semesterForm:FormGroup = new FormGroup({});
   loadingService: any;
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
+
+  semesterOptions = [
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
+    { id: 3, name: '3' },
+    { id: 4, name: '4' },
+    { id: 5, name: '5' },
+    { id: 6, name: '6' },
+    { id: 7, name: '7' },
+    { id: 8, name: '8' }
+  ]
+
 
     constructor(
        private management : ManagementService,
@@ -78,6 +92,12 @@ export class  StudentComponent implements OnInit {
         course_id: ['', Validators.required],
         semester: ['', Validators.required],
         status: ['', [Validators.required, Validators.min(0)]],
+      });
+
+
+      this.semesterForm = this.fb.group({
+        from_semester: ['', Validators.required],
+        semester: ['',Validators.required],
       });
       
     }
@@ -99,7 +119,7 @@ export class  StudentComponent implements OnInit {
                 (response) => {
                     if(response){
                         this.loading = false
-                        console.log(response);
+                        // console.log(response);
                         this.students = response;
                     }
                 }
@@ -124,12 +144,24 @@ export class  StudentComponent implements OnInit {
         this.getCourses();
       }
 
+
+
       selectCourse(event: any){
         this.studentForm.patchValue({
           "course_id" : event.value,
          
         })
-        console.log(event);
+        // console.log(event);
+       
+      }
+
+      openSemDialogbox(student: any): void {
+        this.semesterForm.patchValue({
+          from_semester: student.from_semester,
+          semester: student.semester,
+  
+        });
+        this.displayStudentDialog = true;  // Show the dialog
        
       }
 
@@ -164,27 +196,31 @@ export class  StudentComponent implements OnInit {
         ));
         return;
        }
-
-      //  if(this.studentForm.valid){
-      //   await firstValueFrom(this.management.creteCourse(this.studentForm.value).pipe(
-      //     tap(
-      //       (response) => {
-      //         if(response){
-      //           this.alert.showSuccessAlert(response.message);
-      //           this.display = false;
-      //           this.fetchStudent();
-      //         }
-      //       },
-      //       (error) => {
-      //         this.alert.showErrorAlert(error.error.message);
-      //       }
-      //     )
-      //   ))
-      //  }
         
         this.display = false;
       }
     
+
+
+     
+      async saveSemester() {
+         await firstValueFrom(this.management.migrateStudent(this.semesterForm.value).pipe(
+             tap(
+                 (response) => {
+                     if(response){
+                         this.alert.showSuccessAlert(response.message);
+                         this.displayStudentDialog =false;
+                         this.fetchStudent();
+                     }
+                 },
+                 (error) => {
+                     this.alert.showErrorAlert(error.error.message);
+                 }
+             )
+         ));
+         return;
+       }
+     
 
     async deleteStudent(student: any) {
         await firstValueFrom(this.management.deleteStudent(student.id).pipe(
@@ -202,5 +238,7 @@ export class  StudentComponent implements OnInit {
         ))
     }
 
+
+    
 
 }
