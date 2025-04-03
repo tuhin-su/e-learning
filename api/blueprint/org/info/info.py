@@ -340,3 +340,142 @@ def app_course_create():
         
     return info()
         
+
+
+
+
+
+ #* fetch  groups
+
+
+@app_info.route('/group/fetch', methods=['POST'])
+def app_group_fetch():
+    app = current_app.config['app']
+    @app.auth.login_required
+
+    def handel():
+        db = DBA()
+        db.connect()
+        user_id = app.auth.current_user()['user_id']
+        lable = getLabel(user_id)
+        current = 0
+        max = 15
+
+        if lable!=1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to access this endpoint"}), 403
+        
+        if request.json.get("current") is not None:
+            current = request.json["current"]
+
+        if request.json.get("max") is not None:
+            max = request.json["max"]
+
+        
+        sql = f"""SELECT * FROM `group` WHERE 1 LIMIT %s OFFSET %s"""
+        try:
+            db.cursor.execute(sql,(max, current))
+            data = db.cursor.fetchall()
+            db.disconnect()
+            return jsonify(data), 200
+        
+        except Error as e:
+            db.disconnect()
+            return jsonify ({"massage": str(e)}),400
+        
+        finally:
+            db.disconnect()
+
+    return handel()           
+
+
+
+
+
+#* edit group
+
+@app_info.route("/group/edit", methods=["POST"])
+def app_update_group():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+
+        try:
+            db.connect()
+            edited_data = request.get_json()
+            sql_update = """ UPDATE `group` SET name = %s, description = %s, label = %s  WHERE id = %s; """
+            try:
+                db.cursor.execute(sql_update,(edited_data['name'], 
+                                              edited_data['description'], 
+                                              edited_data['label'], 
+                                              edited_data['id']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully updated"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
+
+
+
+
+
+
+
+#* create Group #*
+
+@app_info.route("/group/create", methods=["POST"])
+def app_group_create():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+        data = request.json
+ 
+        requre_fild = [ 'name', 'description','code']
+        for i in requre_fild:
+            if i not in data:
+                db.disconnect()
+                return jsonify({"message": f"{i} is required"}), 400
+            
+
+        sql = "SELECT 1 FROM `group` WHERE LOWER(code) = LOWER(%s)"
+        db.cursor.execute(sql,(data['code'],))
+        existing_data = db.cursor.fetchone()
+        if existing_data:
+            return jsonify({"message":"Group code already exists"}), 400
+            
+        sql = ''' INSERT INTO `group`(`name`, `code`, `description`, `createDate`, `label`) VALUES (%s,%s,%s,current_timestamp(),%s) '''
+        try:
+            db.cursor.execute(sql, (data['name'],data['code'], data['description'], data['label']))
+            db.conn.commit()
+            db.disconnect()
+            return jsonify({"message": "group added successfully"}), 200
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+        
+    return info()
+        

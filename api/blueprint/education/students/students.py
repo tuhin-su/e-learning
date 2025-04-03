@@ -169,4 +169,40 @@ def app_student_delete():
 
 
 
+
+#* student migration *#
+
+
+@students.route("/student/migration", methods=["POST"])
+def app_student_migration():
+    mainApp=current_app.config["app"]
+
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect
+        user_id = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id) != 1 :
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
         
+
+        try:
+            db.connect()
+            edited_data = request.get_json()
+            sql_update = "UPDATE `student` SET `semester`=%s WHERE `semester`= %s"
+            try:
+                db.cursor.execute(sql_update,(edited_data['semester'], edited_data['from_semester']))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully updated"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()

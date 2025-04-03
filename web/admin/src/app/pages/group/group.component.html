@@ -1,0 +1,150 @@
+<div class="card">
+    <div class="font-semibold text-xl mb-4 flex justify-between items-center text-slate-800">
+        <span>Group Management</span>
+
+<!-- 
+        for searching -->
+        
+        <p-iconfield iconPosition="left" class= "flex items-center">
+            <p-inputicon>
+                <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
+        </p-iconfield>
+
+        <button pButton label="Create New Group" icon="pi pi-plus" class="p-button-success text-lg " (click)="openEditDialog({},false)"></button>
+    </div>
+
+    <!-- <p-table #dt1 
+    [value]="groups" 
+    [globalFilterFields]="['name','id', 'description','code','createDate','label']"
+    [scrollable]="true" 
+    [rowHover]="true" 
+    scrollHeight="400px" 
+    styleClass="mt-4"
+    (onLazyLoad)="loadUsersLazy($event)">
+        <ng-template #header>
+            <tr class="bg-blue-500 text-white" >
+                <th style="min-width:200px" pFrozenColumn class="font-bold">Id</th>
+                <th style="min-width:100px">Name</th>
+                <th style="min-width:200px">Description</th>
+                <th style="min-width:200px">Code</th>
+                <th style="min-width:200px">createDate</th>
+                <th style="min-width:200px">Lable</th>
+                <th style="min-width:200px">Action</th>
+                
+            </tr>
+        </ng-template>
+        <ng-template #body let-group>
+            <tr>
+                <td style="min-width:100px">{{ group.id }}</td>
+                <td pFrozenColumn class="font-bold">{{ group.name }}</td>
+                <td>{{ group.description }}</td>
+                <td>{{ group.code }}</td>
+                <td>{{ group.createDate | date: 'dd/MM/yy'}}</td>
+                <td>{{ group.label }}</td>
+                <td class="flex space-x-2">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="openEditDialog(group,true)"> Edit </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table> -->
+
+
+    <p-table #dt1 
+    [value]="groups" 
+    [globalFilterFields]="['name','id', 'description','code','createDate','label']"
+    [scrollable]="true" 
+    [rowHover]="true" 
+    scrollHeight="400px" 
+    styleClass="mt-4"
+    (onLazyLoad)="loadUsersLazy($event)">
+    
+    <ng-template  #header>
+        <tr style=" font-weight: bold;text-align: center; padding: 10px 0;">
+            <th style="min-width: 100px; padding: 12px; font-weight: bold; background-color: #ddedf7; ">Id</th>
+            <th style="min-width: 150px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Name</th>
+            <th style="min-width: 200px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Description</th>
+            <th style="min-width: 150px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Code</th>
+            <th style="min-width: 150px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Create Date</th>
+            <th style="min-width: 150px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Label</th>
+            <th style="min-width: 150px; padding: 12px; font-weight: bold; background-color: #ddedf7;">Action</th>
+        </tr>
+    </ng-template>
+
+    <ng-template #body let-group>
+        <tr style="text-align: center; padding: 10px;">
+            <td style="padding: 10px;">{{ group.id }}</td>
+            <td style="padding: 10px;font-weight: bold;">{{ group.name }}</td>
+            <td style="padding: 10px;">{{ group.description }}</td>
+            <td style="padding: 10px;">{{ group.code }}</td>
+            <td style="padding: 10px;">{{ group.createDate | date: 'dd/MM/yy'}}</td>
+            <td style="padding: 10px;">{{ group.label }}</td>
+            <td style="padding: 10px;">
+                <button pButton pRipple type="button" icon="pi pi-pencil" 
+                    class="p-button-rounded p-button-info" 
+                    (click)="openEditDialog(group, true)" 
+                    style="padding: 6px 12px; font-weight: bold; border: none; background-color: #3498db; color: white;">
+                    Edit
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+    
+
+     <!-- Edit Dialog -->
+   
+     <p-dialog [(visible)]="display" header="Edit groups" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '400px'}">
+        <form [formGroup]="groupForm">
+            <div class="p-fluid" style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <div style="margin: 10px;">
+                    
+    
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="name" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-user" style="margin-right: 8px; color: #3b82f6;"></i> Name:
+                        </label>
+                        <input id="name" type="text" placeholder="ex: AD " pInputText formControlName="name" 
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;"/>
+                    </div>
+    
+                    
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="description" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-file-text" style="margin-right: 8px; color: #3b82f6;"></i> Description:
+                        </label>
+                        <input id="description" type="text" placeholder="ex: Admin" pInputText formControlName="description" 
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;"/>
+                    </div>
+    
+                    <div class="p-field" style="margin-bottom: 15px;">
+                        <label for="label" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-tag" style="margin-right: 8px; color: #3b82f6;"></i> Label:
+                        </label>
+                        <input id="label" type="text" placeholder="ex: 1 " pInputText formControlName="label" 
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;"/>
+                    </div>
+
+                    <div class="p-field" style="margin-bottom: 15px;" *ngIf="!isEditing">
+                        <label for="code" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-code" style="margin-right: 8px; color: #3b82f6;"></i> Code:
+                        </label>
+                        <input id="code" type="text" placeholder="ex:AD" pInputText formControlName="code" 
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;"/>
+                    </div>
+
+                </div>
+    
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <button pButton label="Cancel" icon="pi pi-times" (click)="display = false" style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"></button>
+                    <button pButton label="Save" icon="pi pi-check" (click)="saveGroup()" style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"></button>
+                </div>
+            </div>
+        </form>
+    </p-dialog>
+
+
+
+</div>

@@ -81,6 +81,11 @@ export class CourseManagementComponent implements OnInit {
     }
 
 
+
+    onGlobalFilter(table: Table, event: Event) {
+      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
     fetchCourses(){
         firstValueFrom(this.management.getStreamInfo().pipe(
             tap(

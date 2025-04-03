@@ -380,6 +380,17 @@ Authorization: Bearer {{token}}
 }
 
 
+### student migration
+
+POST {{apiUrl}}/student/migration
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "semester" : "6",
+  "from_semester": "4"
+}
+
 ### student delete
 
 POST {{apiUrl}}/student/delete
@@ -389,3 +400,123 @@ Authorization: Bearer {{token}}
 {
   "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
 }
+
+
+
+### user fetch 
+
+POST {{apiUrl}}/user/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "current":0,
+  "max": 15
+}
+
+
+
+### user edit
+
+POST {{apiUrl}}/user/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "user_id": "6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85",
+  "name": "student2",
+  "phone": "8159861554",
+  "address": "abcd",
+  "gender": "M",
+  "birth": "2024-12-12",
+  "email": "student_demo@email.com",
+  "groups": "ST",
+  "status": 0
+}
+
+
+
+
+### user delete
+
+POST {{apiUrl}}/user/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id":"6856baa6e40622c1973a1e12a96ca943f5f49d03dede5cdc4d8386491f651e85"
+}
+
+
+
+#### info create user 
+
+POST {{apiUrl}}/user/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+ "email": "rana@gmail.com" ,
+ "passwd": "hi#53" ,
+ "groups" : "AD" ,
+ "status" : "0 ",
+ "name": "Rana" ,
+ "phone": "4782789389" ,
+ "address": "absd344" ,
+ "gender": "F" , 
+ "birth": "2003/11/08" ,
+ "img": "hello" 
+
+  
+}
+
+### group fetch
+
+POST {{apiUrl}}/group/fetch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ 
+ 
+  
+}
+
+
+
+
+### group edit
+
+POST {{apiUrl}}/group/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "1",
+  "name": "AD",
+  "description": "Admin",
+  "label": "1"
+  
+}
+
+
+#### create groups
+
+POST {{apiUrl}}/group/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ "name": "Rana" ,
+ "code": "AD" ,
+ "description": "Adn" ,
+ "label": "4" 
+ 
+
+  
+}
+
+
+
+
