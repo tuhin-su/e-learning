@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,14 +21,16 @@ import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
-import { catchError, firstValueFrom, of, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, switchMap, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { DatePipe } from '@angular/common';
 import { Button } from 'primeng/button';
 import { convertToISODate, convertToMySQLDate } from '../../utility/function';
-
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { ScrollerModule } from 'primeng/scroller';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-user',
@@ -37,6 +38,7 @@ import { convertToISODate, convertToMySQLDate } from '../../utility/function';
     TableModule,
     ReactiveFormsModule,
     DialogModule,
+    AvatarModule,
     DropdownModule,
     MultiSelectModule,
     SelectModule,
@@ -52,7 +54,9 @@ import { convertToISODate, convertToMySQLDate } from '../../utility/function';
     ButtonModule,
     RatingModule,
     RippleModule,
-    IconFieldModule],
+    IconFieldModule,
+    ScrollerModule
+  ],
     
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -62,7 +66,7 @@ export class  UserComponent implements OnInit {
 
 
   users: any[] = [];
-  page: number = 1;  // Start with the first page
+  page: number = 0;  // Start with the first page
   size: number = 15; // Default size (15 records per page)
   hasmoredata:boolean = false;
   loading: boolean = true;
@@ -73,6 +77,8 @@ export class  UserComponent implements OnInit {
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
   totalRecords: any[] =[];
+
+  itemCount = 0;
 
     constructor(
        private management : ManagementService,
@@ -99,7 +105,7 @@ export class  UserComponent implements OnInit {
 
     ngOnInit() {
       
-      this.fetchUser(0,15);
+      this.fetchUser();
     }
 
 
@@ -108,45 +114,54 @@ export class  UserComponent implements OnInit {
   }
 
 
-    loadUsersLazy(event: any) {
-      this.loading = true;
-      const { first, rows } = event; // 'first' is the starting index and 'rows' is the number of rows per page
-    
-      // Make an API call to fetch data based on the pagination parameters
-      this.fetchUser(first, rows).then((data: any) => {
-        this.users = data.users;
-        this.totalRecords = data.totalRecords;
-        this.loading = false;
-      }).catch(error => {
-        console.error("Error loading users:", error);
-        this.loading = false;
-      });
+
+
+
+
+  exportToExcel(): void {
+    if(!this.users){
+      return;
     }
+    const filteredUsers = this.users.map(user => ({
+      'Name': user.name,
+      'Email': user.email,
+      'Group': user.groups,
+      'Address':user.address,
+      'Phone number': user.phone
+    }));
+  const worksheet = XLSX.utils.json_to_sheet(filteredUsers);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'users');
+
+  const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+  saveAs(blob, 'users.xlsx');
+}
     
 
 
 
-    fetchUser(current: number, max: number) {
+     async fetchUser() {
+      this.loading = true;
       const payload = {
-        current: current,  // current page number or index
-        max: max           // number of records per page
+        current: this.users.length,
+        max: this.size
       };
     
-      return firstValueFrom(
+      await firstValueFrom(
         this.management.getUserInfo(payload).pipe(
           tap((response) => {
             if (response) {
               this.loading = false;
-              // console.log(response);  // Debugging: check API response
-              // Set users and total records from the API response
-              this.users = response;
+              this.users.concat(response)
               this.totalRecords = response.totalRecords;
             }
           }),
           catchError((error) => {
             console.error("Error in fetching user data:", error);
             this.loading = false;
-            return of({ users: [], totalRecords: 0 }); // return an empty array on error to prevent app crash
+            return of({ users: [], totalRecords: 0 });
           })
         )
       );
@@ -187,7 +202,7 @@ export class  UserComponent implements OnInit {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
                         this.display =false;
-                        this.fetchUser(0,15);
+                        this.fetchUser();
                     }
                 },
                 (error) => {
@@ -205,7 +220,7 @@ export class  UserComponent implements OnInit {
               if(response){
                 this.alert.showSuccessAlert(response.message);
                 this.display = false;
-                this.fetchUser(0,15);
+                this.fetchUser();
               }
             },
             (error) => {
@@ -219,13 +234,14 @@ export class  UserComponent implements OnInit {
       }
     
 
-    async deleteUser(user: any) {
+  
+      async deleteUser(user: any) {
         await firstValueFrom(this.management.deleteUser(user.user_id).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
-                        this.fetchUser(0,15);
+                        this.fetchUser();
                     }
                 },
                 (error) => {
@@ -234,6 +250,21 @@ export class  UserComponent implements OnInit {
             )
         ))
     }
-
+    
+    onScroll(event: any) {
+      const {
+        first,
+        rows
+      } = event;
+    
+      const totalScrolled = first + rows;
+    
+      if(this.users){
+        if (totalScrolled >= this.users.length) {
+          console.log("📦 Reached end of scroll!");
+          this.fetchUser()
+        }
+      }
+    }
 
 }

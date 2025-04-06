@@ -1,4 +1,4 @@
-@apiUrl = http://localhost:5000
+@apiUrl = http://api.timt.in
 ### REQUEST VER
 GET {{ apiUrl }}/ver
 Content-Type: application/json
@@ -100,9 +100,9 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-    "sem": "2",
+    "sem": "5",
     "stream": "BCA",
-    "date": "10/11/2024"
+    "date": "11/02/2025"
 }
 
 
