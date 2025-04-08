@@ -48,7 +48,7 @@
         <ng-template #body let-user>
             <tr [ngClass]="{'bg-gray-600': user.status === 1, 'bg-green-400': user.status === 0}">
                 <td class="flex items-center gap-2">
-                    <img src="{{ user.img ?? 'assets/images/user.png' }}" width="32" style="vertical-align: middle" />
+                    <img src="{{ user.img ? user.img : 'user.png' }}" width="32" style="vertical-align: middle" />
                     <span class="image-text">{{ user.name }}</span>
                 </td>
                 <td>{{ user.phone }}</td>
