@@ -57,7 +57,7 @@ import { AvatarModule } from 'primeng/avatar';
     IconFieldModule,
     ScrollerModule
   ],
-    
+
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
   providers: [ConfirmationService, MessageService,ManagementService,DatePipe]
@@ -98,15 +98,12 @@ export class  UserComponent implements OnInit {
         address: ['', Validators.required],
         groups : ['',Validators.required],
         status :[Validators.required]
-        
+
       });
-      
+
     }
 
-    ngOnInit() {
-      
-      this.fetchUser();
-    }
+    ngOnInit() {}
 
 
     onGlobalFilter(table: Table, event: Event) {
@@ -138,7 +135,7 @@ export class  UserComponent implements OnInit {
 
   saveAs(blob, 'users.xlsx');
 }
-    
+
 
 
 
@@ -148,13 +145,14 @@ export class  UserComponent implements OnInit {
         current: this.users.length,
         max: this.size
       };
-    
+
       await firstValueFrom(
         this.management.getUserInfo(payload).pipe(
           tap((response) => {
             if (response) {
               this.loading = false;
               this.users.concat(response)
+              this.users = [...this.users, ...response];
               this.totalRecords = response.totalRecords;
             }
           }),
@@ -166,7 +164,7 @@ export class  UserComponent implements OnInit {
         )
       );
     }
-    
+
     // Thu, 12 Dec 2024 00:00:00 GMT
 
 
@@ -180,20 +178,20 @@ export class  UserComponent implements OnInit {
           phone: user.phone,
           gender: user.gender,
           address:user.address,
-          birth:convert_birth  , 
+          birth:convert_birth  ,
           email: user.email,
           groups:user.groups,
           status: user.status,
-          
+
         });
         this.display = true;  // Show the dialog
-        
+
       }
 
 
-      
 
-     
+
+
       async saveUser() {
        if(this.isEditing){
         await firstValueFrom(this.management.editUser(this.userForm.value).pipe(
@@ -229,12 +227,12 @@ export class  UserComponent implements OnInit {
           )
         ))
        }
-        
+
         this.display = false;
       }
-    
 
-  
+
+
       async deleteUser(user: any) {
         await firstValueFrom(this.management.deleteUser(user.user_id).pipe(
             tap(
@@ -250,15 +248,15 @@ export class  UserComponent implements OnInit {
             )
         ))
     }
-    
+
     onScroll(event: any) {
       const {
         first,
         rows
       } = event;
-    
+
       const totalScrolled = first + rows;
-    
+
       if(this.users){
         if (totalScrolled >= this.users.length) {
           console.log("📦 Reached end of scroll!");
@@ -267,4 +265,15 @@ export class  UserComponent implements OnInit {
       }
     }
 
+    onLazyLoad(event: any) {
+
+
+        this.loading = true;
+
+
+        setTimeout(() => {
+          this.fetchUser();
+          this.loading = false;
+        }, 1000);
+      }
 }
