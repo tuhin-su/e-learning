@@ -25,7 +25,8 @@ import { ManagementService } from '../../services/management.service';
 import { firstValueFrom, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -52,8 +53,8 @@ import { DropdownModule } from 'primeng/dropdown';
     IconFieldModule],
     
    templateUrl: './student.component.html',
-  styleUrl: './student.component.scss',
-  providers: [ConfirmationService, MessageService,ManagementService]
+   styleUrl: './student.component.scss',
+   providers: [ConfirmationService, MessageService,ManagementService]
 })
 export class  StudentComponent implements OnInit {
 
@@ -67,6 +68,8 @@ export class  StudentComponent implements OnInit {
   loadingService: any;
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
+  itemCount = 0;
+
 
   semesterOptions = [
     { id: 1, name: '1' },
@@ -78,6 +81,7 @@ export class  StudentComponent implements OnInit {
     { id: 7, name: '7' },
     { id: 8, name: '8' }
   ]
+ 
 
 
     constructor(
@@ -108,9 +112,34 @@ export class  StudentComponent implements OnInit {
     }
 
 
+
+
     onGlobalFilter(table: Table, event: Event) {
       table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
+
+
+  exportToExcel(): void {
+
+    const filteredStudents = this.students.map(student => ({
+      'Student Name': student.student_name,
+      'Roll Number': student.roll,
+      'Course': student.course_name,
+      'Semester': student.semester,
+      'Phone number': student.student_phone
+    }));
+  const worksheet = XLSX.utils.json_to_sheet(filteredStudents);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
+
+  const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+  saveAs(blob, 'students.xlsx');
+}
+
+
 
 
     fetchStudent(){
@@ -153,6 +182,14 @@ export class  StudentComponent implements OnInit {
         })
         // console.log(event);
        
+      }
+
+
+      onscroll() {
+        for (let i = 0; i < 20; i++) {
+          this.students.push(`student ${this.itemCount + i + 1}`);
+        }
+        this.itemCount += 20;
       }
 
       openSemDialogbox(student: any): void {

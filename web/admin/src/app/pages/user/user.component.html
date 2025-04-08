@@ -1,36 +1,44 @@
 
-<div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
+<div  class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
+    
     <div class="font-semibold text-xl mb-4 flex justify-between items-center text-slate-800">
-        <span>User Management</span>
-
-<!-- 
-        for searching -->
-        
-        <p-iconfield iconPosition="left" class= "flex items-center">
+        <span>User Management</span>  
+        <p-iconfield iconPosition="left" class="flex items-center bg-white rounded-lg px-2 shadow-md">
             <p-inputicon>
-                <i class="pi pi-search"></i>
+                <i class="pi pi-search text-blue-500"></i>
             </p-inputicon>
-            <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
+            <input pInputText type="text" placeholder="Search keyword" class="outline-none"/>
         </p-iconfield>
+        
 
-        <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
-            (click)="openEditDialog({}, false)"></button>
+        <div class="flex gap-2">
+            <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
+                (click)="openEditDialog({}, false)"></button>
+        
+            <button pButton icon="pi pi-download"
+                class="p-button-rounded p-button-success p-button-lg"
+                style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white;"
+                (click)="exportToExcel()">
+            </button>
+        </div>
+        
     </div>
-    <p-table 
+
+    <p-table *ngIf="users"
     #dt1
-    [value]="users" 
-    dataKey="id" 
-    [rows]="10" 
-    [loading]="loading" 
-    [rowHover]="true" 
-    [showGridlines]="true" 
-    [paginator]="true" 
+    [value]="users"
+    dataKey="id"
+    [loading]="loading"
+    [rowHover]="true"
+    [showGridlines]="true"
     [globalFilterFields]="['name', 'groups', 'gender','phone', 'status']"
-    responsiveLayout="scroll"
-    [scrollable]="true" 
     [virtualScroll]="true"
-    [scrollHeight]="'400px'"  
-    (onLazyLoad)="loadUsersLazy($event)">
+    [lazy]="true"
+    (onLazyLoad)="onScroll($event)"
+    [virtualScrollItemSize]="60"
+    [rows]="20"
+    [scrollHeight]="'400px'">
+  
 
         <ng-template #header>
             <tr class="bg-blue-500 text-white">
@@ -50,9 +58,12 @@
             <tr [ngClass]="{'bg-gray-600': user.status === 1, 'bg-green-400': user.status === 0}">
                 <td>
                     <div class="flex items-center gap-2">
-                        <img  src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ user.img }}" width="32" style="vertical-align: middle" />
+                        <img  src="{{ user.img }}" width="32" style="vertical-align: middle" />
                         <span class="image-text">{{ user.name }}</span>
                     </div>
+
+                    <!-- <p-avatar [image]="user.img" [icon]="!user.img ? 'pi pi-user' : null" styleClass="my-avatar"></p-avatar> -->
+
                 </td>
                
                 <td>{{ user.phone }}</td>
@@ -79,6 +90,8 @@
             </tr>
         </ng-template>
         <ng-template #emptymessage>
+            
+
             <tr>
                 <td colspan="8" class="text-center text-gray-500">No users found.</td>
             </tr>
@@ -91,7 +104,6 @@
     </p-table>
 
     <!-- Edit Dialog -->
-   
     <p-dialog [(visible)]="display" header="Edit User" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '400px'}">
         <form [formGroup]="userForm">
             <div class="p-fluid" style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
