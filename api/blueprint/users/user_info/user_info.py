@@ -133,8 +133,8 @@ def app_user_fetch():
             SELECT user_info.img, user_info.user_id, user_info.name, user_info.phone, user_info.address, 
                    user_info.gender, user_info.birth, user.email, user.passwd, user.groups, 
                    user.status, user.createDate 
-                   FROM user_info 
-                   INNER JOIN user ON user_info.user_id = user.id 
+                   FROM user
+                    LEFT JOIN user_info ON user_info.user_id = user.id 
                    LIMIT %s OFFSET %s
         """
         try:
@@ -213,8 +213,9 @@ def app_update_user():
 #* user deleted..
 
 @user_info.route("/user/delete", methods=["POST"])
-def app_courses_delete():
+def app_user_delete():
     mainApp=current_app.config["app"]
+
     @mainApp.auth.login_required
     def info():
         db = DBA()
@@ -312,5 +313,41 @@ def app_user_create():
         
 
 
+
+
+#* user inactive *#
+
+@user_info.route("/user/inactive", methods=["POST"])
+def app_users_inactive():
+    mainApp=current_app.config["app"]
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+       
+        try:
+            edited_data = request.get_json()
+            print(edited_data)
+            sql_update = "UPDATE `user` JOIN student ON student.id = user.id SET user.status = '1', student.status = '1' WHERE student.semester = %s; "
+            try:
+                db.cursor.execute(sql_update,(edited_data['sem'],))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully Inactivate"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()
 
 

@@ -59,12 +59,22 @@ def app_student_fetch():
         db.connect()
         user_id = app.auth.current_user()['user_id']
         lable = getLabel(user_id)
+        current = 0
+        max = 15
 
         # if not authorized then send this
         if lable != 1 :
             db.disconnect()
             return jsonify({"message": "You are not authorized to access this endpoint"}), 403
         
+
+        if request.json.get("current") is not None:
+            current = request.json["current"]
+
+        if request.json.get("max") is not None:
+            max = request.json["max"]
+
+
         sql = '''SELECT 
     student.id, 
     student.roll, 
@@ -79,13 +89,13 @@ def app_student_fetch():
     user_info.phone AS student_phone,
     admin_info.name AS Admin_name,
     admin_info.phone AS Admin_ph
-FROM student
-INNER JOIN user_info ON student.id = user_info.user_id
-LEFT JOIN user_info AS admin_info ON student.reg_by = admin_info.user_id
-INNER JOIN course ON student.course = course.id  
-LIMIT 300;'''
+    FROM student
+    LEFT JOIN user_info ON student.id = user_info.user_id
+    LEFT JOIN user_info AS admin_info ON student.reg_by = admin_info.user_id
+    LEFT JOIN course ON student.course = course.id  
+    LIMIT %s OFFSET %s;'''
         try:
-            db.cursor.execute(sql)
+            db.cursor.execute(sql,(max,current))
             data = db.cursor.fetchall()
             db.disconnect()
             return jsonify(data),200

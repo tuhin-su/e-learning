@@ -1,4 +1,4 @@
-@apiUrl = http://api.timt.in
+@apiUrl = http://localhost:5000
 ### REQUEST VER
 GET {{ apiUrl }}/ver
 Content-Type: application/json
@@ -470,6 +470,21 @@ Authorization: Bearer {{token}}
 
   
 }
+
+
+
+
+#### all  user inactive 
+POST {{apiUrl}}/user/inactive
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "sem":7
+}
+
+
+
 
 ### group fetch
 

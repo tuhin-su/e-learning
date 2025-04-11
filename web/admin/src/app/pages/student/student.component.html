@@ -57,14 +57,15 @@
     <p-table #dt1 
     [value]="students" 
     dataKey="id" 
-    [rows]="10" 
     [loading]="loading" 
     [rowHover]="true" 
     [showGridlines]="true"
     [globalFilterFields]="['student_name', 'roll', 'reg','student_phone', 'course_name', 'semester', 'status']"   
-    (onScroll) = "onscroll()"
-    [paginator]="true" 
-    responsiveLayout="scroll">
+    [virtualScroll]="true" 
+    (onLazyLoad)="onLazyLoad($event)" 
+    [virtualScrollItemSize]="60"
+    [rows]="20" 
+    [scrollHeight]="'calc(100vh - 260px)'">
 
         <ng-template #header>
             <tr class="bg-blue-500 text-white">

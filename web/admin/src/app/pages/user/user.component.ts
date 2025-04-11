@@ -63,7 +63,7 @@ import { AvatarModule } from 'primeng/avatar';
   providers: [ConfirmationService, MessageService,ManagementService,DatePipe]
 })
 export class  UserComponent implements OnInit {
-
+  @ViewChild('dt1') dt1!: Table;
 
   users: any[] = [];
   page: number = 0;  // Start with the first page
@@ -71,14 +71,27 @@ export class  UserComponent implements OnInit {
   hasmoredata:boolean = false;
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
+  displayUserDialog : boolean = false;
   isEditing: boolean = false;
   userForm:FormGroup = new FormGroup({});
+  semesterForm:FormGroup = new FormGroup({});
   loadingService: any;
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
   totalRecords: any[] =[];
-
   itemCount = 0;
+
+  semesterOptions = [
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
+    { id: 3, name: '3' },
+    { id: 4, name: '4' },
+    { id: 5, name: '5' },
+    { id: 6, name: '6' },
+    { id: 7, name: '7' },
+    { id: 8, name: '8' }
+  ]
+
 
     constructor(
        private management : ManagementService,
@@ -101,18 +114,30 @@ export class  UserComponent implements OnInit {
 
       });
 
+      this.semesterForm = this.fb.group({
+        sem: ['', Validators.required]
+      });
+
     }
 
     ngOnInit() {}
 
 
-    onGlobalFilter(table: Table, event: Event) {
-      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+   
+    onGlobalFilter(event: Event) {
+      const inputValue = (event.target as HTMLInputElement).value;
+      this.dt1.filterGlobal(inputValue, 'contains');
+    }
 
 
-
-
+    openSemDialogbox(user: any): void {
+      this.semesterForm.patchValue({
+        sem: user.semester,
+      
+      });
+      this.displayUserDialog = true;  // Show the dialog
+     
+    }
 
 
   exportToExcel(): void {
@@ -248,6 +273,29 @@ export class  UserComponent implements OnInit {
             )
         ))
     }
+
+
+
+
+    async userInactive() {
+      await firstValueFrom(this.management.inactiveUser(this.semesterForm.value).pipe(
+          tap(
+              (response) => {
+                  if(response){
+                      this.alert.showSuccessAlert(response.message);
+                      this.displayUserDialog =false;
+                      this.fetchUser();
+                  }
+              },
+              (error) => {
+                  this.alert.showErrorAlert(error.error.message);
+              }
+          )
+      ));
+      return;
+    }
+
+
 
     onScroll(event: any) {
       const {
