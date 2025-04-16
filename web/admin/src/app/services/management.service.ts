@@ -196,4 +196,14 @@ export class ManagementService {
     };
     return this.http.post<any>(loginUrl, payload, { headers });
   }
+
+
+  getattendence(payload :{stream: string , sem : string, year : Date |null , month: Date | null, date: Date |null }): Observable<any>{
+    const loginUrl = `${this.api}/attendance`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
 }
