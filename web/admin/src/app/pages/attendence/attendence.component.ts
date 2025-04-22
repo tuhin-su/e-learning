@@ -139,10 +139,6 @@ async getAttendance() {
     month : this.selectedMonth,
     date: this.selectedDate
   }
-  console.log(this.selectedstream)
-  console.log(this.selectedsem)
-  console.log(this.selectedYear)
-  
   await firstValueFrom(this.management.getAttendance(payload).pipe(
     tap(
       (res)=>{
