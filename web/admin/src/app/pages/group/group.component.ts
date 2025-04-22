@@ -89,30 +89,30 @@ export class GroupComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchgroup(0,15)
+        this.fetchgroup()
     }
 
 
-    loadUsersLazy(event: any) {
-        this.loading = true;
-        const { first, rows } = event; // 'first' is the starting index and 'rows' is the number of rows per page
+    // loadUsersLazy(event: any) {
+    //     this.loading = true;
+    //     const { first, rows } = event; // 'first' is the starting index and 'rows' is the number of rows per page
       
-        // Make an API call to fetch data based on the pagination parameters
-        this.fetchgroup(first, rows).then((data: any) => {
-          this.groups = data.groups;
-          this.totalRecords = data.totalRecords;
-          this.loading = false;
-        }).catch(error => {
-          console.error("Error loading users:", error);
-          this.loading = false;
-        });
-      }
+    //     // Make an API call to fetch data based on the pagination parameters
+    //     this.fetchgroup(first, rows).then((data: any) => {
+    //       this.groups = data.groups;
+    //       this.totalRecords = data.totalRecords;
+    //       this.loading = false;
+    //     }).catch(error => {
+    //       console.error("Error loading users:", error);
+    //       this.loading = false;
+    //     });
+    //   }
       
 
-      fetchgroup(current: number, max: number) {
+      fetchgroup() {
         const payload = {
-          current: current,  // current page number or index
-          max: max           // number of records per page
+          current: this.page,  // current page number or index
+          max: this.size          // number of records per page
         };
       
         return firstValueFrom(this.management.getgroups(payload).pipe(
@@ -166,7 +166,7 @@ export class GroupComponent implements OnInit {
                     if(response){
                         this.alert.showSuccessAlert(response.message);
                         this.display =false;
-                        this.fetchgroup(0,15);
+                        this.fetchgroup();
                     }
                 },
                 (error) => {
@@ -184,7 +184,7 @@ export class GroupComponent implements OnInit {
               if(response){
                 this.alert.showSuccessAlert(response.message);
                 this.display = false;
-                this.fetchgroup(0,15);
+                this.fetchgroup();
               }
             },
             (error) => {
@@ -198,6 +198,29 @@ export class GroupComponent implements OnInit {
       }
     
 
-   
+
+      onScroll(event: any) {
+        const {
+          first,
+          rows
+        } = event;
+  
+        const totalScrolled = first + rows;
+  
+        if(this.groups){
+          if (totalScrolled >= this.groups.length) {
+            console.log("📦 Reached end of scroll!");
+            this.fetchgroup()
+          }
+        }
+      }
+  
+      onLazyLoad(event: any) {
+          this.loading = true;
+          setTimeout(() => {
+            this.fetchgroup();
+            this.loading = false;
+          }, 1000);
+        }
 
 }

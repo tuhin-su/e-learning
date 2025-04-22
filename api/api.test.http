@@ -1,4 +1,4 @@
-@apiUrl = http://api.timt.in
+@apiUrl = http://localhost:5000
 ### REQUEST VER
 GET {{ apiUrl }}/ver
 Content-Type: application/json
@@ -100,9 +100,9 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-    "sem": "5",
-    "stream": "BCA",
-    "date": "11/02/2025"
+    "sem": "4",
+    "stream": "3",
+    "date": "02/11/2025"
 }
 
 
@@ -471,6 +471,21 @@ Authorization: Bearer {{token}}
   
 }
 
+
+
+
+#### all  user inactive 
+POST {{apiUrl}}/user/inactive
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "sem":7
+}
+
+
+
+
 ### group fetch
 
 POST {{apiUrl}}/group/fetch
@@ -518,5 +533,17 @@ Authorization: Bearer {{token}}
 }
 
 
+
+### attendence get
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/attendance/record
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "sem": "4",
+    "stream": "1",
+    "date": "22/04/2025"
+}
 
 

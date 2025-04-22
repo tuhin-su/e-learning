@@ -134,7 +134,8 @@ import { ReactiveFormsModule } from '@angular/forms';
                                
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <p-button  styleClass="w-full" (onClick)="onSubmit()" routerLink="/">Sign In</p-button>
+                            <button pButton type="submit" label="Sign In" class="w-full"></button>
+
                         </div>
                       
                     </div>

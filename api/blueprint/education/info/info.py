@@ -11,7 +11,7 @@ def app():
     def info():
         db = DBA()
         db.connect()
-        sql = "SELECT * FROM `course` WHERE 1";
+        sql = "SELECT * FROM `course` WHERE 1 ";
         try:
             db.cursor.execute(sql)
             data = db.cursor.fetchall()

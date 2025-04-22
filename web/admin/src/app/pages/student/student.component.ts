@@ -22,7 +22,7 @@ import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
-import { firstValueFrom, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
 import * as XLSX from 'xlsx';
@@ -59,6 +59,8 @@ import { saveAs } from 'file-saver';
 export class  StudentComponent implements OnInit {
 
   students: any[] = [];
+  page: number = 0;  // Start with the first page
+  size: number = 15; // Default size (15 records per page)
   loading: boolean = true;
   display: boolean = false;  // Controls dialog visibility
   displayStudentDialog : boolean = false;
@@ -69,7 +71,7 @@ export class  StudentComponent implements OnInit {
   stream?:{ lable: String, value: Number }[] = [];
   selectedstream: any;
   itemCount = 0;
-
+  totalRecords: any[]=[];
 
   semesterOptions = [
     { id: 1, name: '1' },
@@ -81,6 +83,7 @@ export class  StudentComponent implements OnInit {
     { id: 7, name: '7' },
     { id: 8, name: '8' }
   ]
+
  
 
 
@@ -108,7 +111,7 @@ export class  StudentComponent implements OnInit {
 
     ngOnInit() {
       this.getCourses(),
-      this.fetchStudent();
+      this.fetchStudent()
     }
 
 
@@ -143,17 +146,28 @@ export class  StudentComponent implements OnInit {
 
 
     fetchStudent(){
-        firstValueFrom(this.management.getStudentInfo().pipe(
+      this.loading = true;
+      const payload = {
+        current: this.students.length,
+        max: this.size
+      };
+        firstValueFrom(this.management.getStudentInfo(payload).pipe(
             tap(
                 (response) => {
                     if(response){
                         this.loading = false
+                        this.students.concat(response)
+                        this.students = [...this.students, ...response];
+                        this.totalRecords = response.totalRecords;
                         // console.log(response);
-                        this.students = response;
+                        // this.students = response;
                     }
-                }
-                   
-            )
+                }),
+                catchError((error) => {
+                  console.error("Error in fetching user data:", error);
+                  this.loading = false;
+                  return of({ students: [], totalRecords: 0 });
+                })
         )
     )
     }
@@ -184,13 +198,6 @@ export class  StudentComponent implements OnInit {
        
       }
 
-
-      onscroll() {
-        for (let i = 0; i < 20; i++) {
-          this.students.push(`student ${this.itemCount + i + 1}`);
-        }
-        this.itemCount += 20;
-      }
 
       openSemDialogbox(student: any): void {
         this.semesterForm.patchValue({
@@ -276,6 +283,30 @@ export class  StudentComponent implements OnInit {
     }
 
 
+
+    onScroll(event: any) {
+      const {
+        first,
+        rows
+      } = event;
+
+      const totalScrolled = first + rows;
+
+      if(this.students){
+        if (totalScrolled >= this.students.length) {
+          console.log("📦 Reached end of scroll!");
+          this.fetchStudent()
+        }
+      }
+    }
+
+    onLazyLoad(event: any) {
+        this.loading = true;
+        setTimeout(() => {
+          this.fetchStudent();
+          this.loading = false;
+        }, 1000);
+      }
     
 
 }

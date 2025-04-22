@@ -4,17 +4,24 @@
         <span>User Management</span>
 
         <!-- Search Input Section -->
-        <div class="flex items-center bg-white rounded-lg px-2 shadow-md">
-            <p-inputicon>
-                <i class="pi pi-search text-blue-500"></i>
-            </p-inputicon>
-            <input pInputText type="text" placeholder="Search keyword" class="outline-none" />
+        <div class="flex justify-between items-center flex-column sm:flex-row">
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search keyword" />
+            </p-iconfield>
         </div>
 
         <!-- Button Section -->
-        <div class="flex gap-2">
+        <div class="flex gap-5">
             <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
                 (click)="openEditDialog({}, false)"></button>
+
+                <button pButton label="Inactive"  icon="pi pi-trash" class="p-button-success p-button-success p-button-lg"
+                style="background: linear-gradient(90deg, #e21f5a, #ff2b59); border: none; color: white;"
+                (click)="openSemDialogbox('user')">
+            </button>
 
             <button pButton icon="pi pi-download" class="p-button-rounded p-button-success p-button-lg"
                 style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white;"
@@ -23,10 +30,19 @@
         </div>
     </div>
 
-    <p-table *ngIf="users" #dt1 [value]="users" dataKey="id" [loading]="loading" [rowHover]="true"
-        [showGridlines]="true" [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']"
-        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [virtualScrollItemSize]="60"
-        [rows]="20" [scrollHeight]="'calc(100vh - 260px)'">
+    <p-table #dt1 
+    *ngIf="users" 
+    [value]="users" 
+    dataKey="id" 
+    [loading]="loading" 
+    [rowHover]="true"   
+    [showGridlines]="true" 
+    [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']"  
+    [virtualScroll]="true"  
+    [lazy]="true"
+    (onLazyLoad)="onLazyLoad($event)" 
+    [virtualScrollItemSize]="60" [rows]="20"
+    [scrollHeight]="'calc(100vh - 260px)'">
 
         <!-- Header Template -->
         <ng-template #header>
@@ -194,6 +210,37 @@
                         style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"></button>
                 </div>
             </div>
+        </form>
+    </p-dialog>
+
+
+    <!-- inactive user -->
+
+    <p-dialog [(visible)]="displayUserDialog" header="Select Semester" [modal]="true" [closable]="true"
+        [responsive]="true" [style]="{ 'min-width': '450px', 'padding': '20px' }" contentStyleClass="pt-4">
+        <form [formGroup]="semesterForm" class="flex flex-col justify-between h-[16rem]">
+
+            <!-- Dropdown Section -->
+            <div class="flex justify-center mb-6">
+                <p-dropdown [options]="semesterOptions" optionLabel="name" optionValue="id"
+                    formControlName="sem" placeholder="Select Semester"
+                    class="w-full max-w-md text-lg rounded-md shadow-md" [panelStyle]="{
+            'border-radius': '8px',
+            'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)',
+            'padding': '10px'
+          }" [filterBy]="'name'"></p-dropdown>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-between px-2">
+                <button pButton label="Cancel" icon="pi pi-times" (click)="displayUserDialog = false"
+                    class="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 transition"></button>
+
+                <button pButton label="Save" icon="pi pi-check" (click)="userInactive()"  [disabled]="semesterForm.invalid"
+                class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition">
+                </button>
+            </div>
+
         </form>
     </p-dialog>
 

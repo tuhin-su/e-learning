@@ -9,6 +9,7 @@ import { CourseManagementComponent } from './course-management/course-management
 import { StudentComponent } from './student/student.component';
 import { UserComponent } from './user/user.component';
 import { GroupComponent } from './group/group.component';
+import { AttendenceComponent } from './attendence/attendence.component';
 
 export default [
     { path: 'documentation', component: Documentation },
@@ -21,6 +22,7 @@ export default [
     {path: 'student', component:StudentComponent},
     {path: 'user', component:UserComponent},
     {path: 'group', component:GroupComponent},
+    {path: 'attendence', component:AttendenceComponent},
     { path: '**', redirectTo: '/notfound' }
 ] as Routes;
 

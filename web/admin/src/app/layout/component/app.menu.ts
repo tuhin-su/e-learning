@@ -33,6 +33,7 @@ export class AppMenu {
                     {label: 'Course Management', icon: 'pi pi-fw pi-users', routerLink:['/pages/course']},
                     { label: 'Student Management', icon: 'pi pi-fw pi-graduation-cap', routerLink: ['/pages/student'] },
                     { label: 'Group Management', icon: 'pi pi-fw pi-building', routerLink: ['/pages/group'] },
+                    { label: 'Attendence', icon: 'pi pi-fw pi-building', routerLink: ['/pages/attendence'] },
                     { label: 'Database', icon: 'pi pi-fw pi-database', routerLink: ['/pages/database'] },
                 ]
             },

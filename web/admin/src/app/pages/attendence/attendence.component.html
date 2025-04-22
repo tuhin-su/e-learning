@@ -1,0 +1,168 @@
+<style>
+    .dropdown-wrapper {
+        margin-bottom: 1rem;
+        /* spacing between dropdowns */
+    }
+
+    p-dropdown {
+        width: 100%;
+        /* full width dropdown */
+    }
+
+    .ui-dropdown {
+        padding: 0.5rem;
+    }
+</style>
+
+
+<div class="card  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
+
+    <div class="font-semibold text-xl mb-6 text-slate-800 border border-slate-200 p-6 rounded-lg shadow-md bg-white">
+        <span class="block mb-4 text-2xl font-bold">Attendance</span>
+    
+        <!-- Filter Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    
+            <!-- Stream Dropdown -->
+            <div class="dropdown-wrapper w-full">
+                <p-dropdown
+                    [options]="stream"
+                    optionLabel="name"
+                    optionValue="id"
+                    [(ngModel)]="selectedstream"
+                    (onChange)="selectStream($event)"
+                    placeholder="Stream"
+                    [filter]="true"
+                    [filterBy]="'name'"
+                    styleClass="w-full"
+                    appendTo="body"
+                    [showClear]="true"
+                    [dropdownIcon]="'pi pi-chevron-down'">
+                </p-dropdown>
+            </div>
+    
+            <!-- Semester Dropdown -->
+            <div class="dropdown-wrapper w-full">
+                <p-dropdown
+                    [options]="semester"
+                    [(ngModel)]="selectedsem"
+                    placeholder="Semester"
+                    [filterBy]="'name'"
+                    (onChange)="getAttendance()"
+                    [editable]="true"
+                    styleClass="w-full"
+                    appendTo="body"
+                    [showClear]="true"
+                    [dropdownIcon]="'pi pi-chevron-down'">
+                </p-dropdown>
+            </div>
+    
+            <!-- Year Picker -->
+            <div class="dropdown-wrapper w-full">
+                <p-calendar
+                    [(ngModel)]="selectedYear"
+                    (ngModelChange)="selectYear($event)"
+                    [view]="'year'"
+                    [dateFormat]="'yy'"
+                    placeholder="Select Year"
+                    inputId="yearpicker"
+                    (onChange)="getAttendance()"
+                    [showIcon]="true"
+                    styleClass="w-full"
+                    [icon]="'pi pi-calendar'">
+                </p-calendar>
+            </div>
+    
+            <!-- Month Picker -->
+            <div class="dropdown-wrapper w-full">
+                <p-calendar
+                    [(ngModel)]="selectedMonth"
+                    (ngModelChange)="selectMonth($event)"
+                    [view]="'month'"
+                    [dateFormat]="'MM'"
+                    placeholder="Select Month"
+                    inputId="monthpicker"
+                    [showIcon]="true"
+                    [yearNavigator]="true"
+                    [monthNavigator]="true"
+                    styleClass="w-full"
+                    (onChange)="getAttendance()"
+                    [icon]="'pi pi-calendar'">
+                </p-calendar>
+            </div>
+    
+            <!-- Date Picker -->
+            <div class="dropdown-wrapper w-full">
+                <p-calendar
+                    [(ngModel)]="selectedDate"
+                    (ngModelChange)="selectDate($event)"
+                    [dateFormat]="'dd'"
+                    placeholder="Select Date"
+                    inputId="datepicker"
+                    [showIcon]="true"
+                    styleClass="w-full"
+                    (onChange)="getAttendance()"
+                    [icon]="'pi pi-calendar'">
+                </p-calendar>
+            </div>
+    
+            <!-- Export Button -->
+            <div class=" items-center justify-center w-full">
+                <button
+                    pButton
+                    icon="pi pi-download"
+                    class="p-button p-button-success w-full"
+                    style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white;"
+                    (click)="exportToExcel()">
+                    Export
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p-table #dt1 *ngIf="attendence" [value]="attendence" dataKey="id" [loading]="loading" [rowHover]="true"
+        [showGridlines]="true" [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']">
+
+        <!-- Header Template -->
+        <ng-template #header>
+            <tr class="bg-blue-500 text-white">
+                <th style="min-width: 10rem; text-align: left;"> NO </th>
+                <th style="min-width: 12rem; text-align: left;"> Name </th>
+                <th style="min-width: 12rem; text-align: left;"> Roll </th>
+                <th style="min-width: 12rem; text-align: left;"> Date </th>
+               
+            </tr>
+        </ng-template>
+
+        <!-- Body Template -->
+        <ng-template #body let-attendence>
+            <tr>
+
+                <td>{{ attendence.attend_id }}</td>
+                <td>{{ attendence.name }}</td>
+                <td>{{ attendence.roll }}</td>
+                <td>{{ attendence.attendance_date | date: 'dd/MM/yy' }}</td>
+                
+               
+            </tr>
+        </ng-template>
+
+        <!-- Empty Message Template -->
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="10" class="text-center text-gray-500">No attendence found.</td>
+            </tr>
+        </ng-template>
+
+        <!-- Loading Message Template -->
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="10" class="text-center text-gray-500">Loading attendence data. Please wait...</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+
+</div>

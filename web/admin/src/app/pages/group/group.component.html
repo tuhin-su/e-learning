@@ -56,9 +56,13 @@
     [globalFilterFields]="['name','id', 'description','code','createDate','label']"
     [scrollable]="true" 
     [rowHover]="true" 
-    scrollHeight="400px" 
     styleClass="mt-4"
-    (onLazyLoad)="loadUsersLazy($event)">
+    [virtualScroll]="true" 
+    [lazy]="true" 
+    (onLazyLoad)="onLazyLoad($event)" 
+    [virtualScrollItemSize]="60"
+    [rows]="20" 
+    [scrollHeight]="'calc(100vh - 260px)'">
     
     <ng-template  #header>
         <tr style=" font-weight: bold;text-align: center; padding: 10px 0;">
