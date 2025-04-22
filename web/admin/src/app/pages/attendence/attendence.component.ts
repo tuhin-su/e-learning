@@ -78,15 +78,13 @@ export class   AttendenceComponent implements OnInit {
   stream?:any;
   selectedstream: any;
   selectedMonth: Date | null = null;
-  selectedYear: any ;
+  selectedYear: Date | null = null ;
   selectedDate: Date | null = null;
 
     constructor(
        private management : ManagementService,
-       private service: CollegeService,
-       private fb : FormBuilder,
        private alert: AlertService,
-       private datepipe: DatePipe
+       
     ) {}
 
     ngOnInit() {
@@ -96,10 +94,6 @@ export class   AttendenceComponent implements OnInit {
       this.selectedYear = new Date(now.getFullYear(), 0); // Just the year, month set to Jan
       this.selectedMonth = new Date(now.getFullYear(), now.getMonth()); // Current month
       this.selectedDate = now; // Full current date
-
-
-      
-
 
       this.getAttendance(),
       this.getCourses()
@@ -145,19 +139,24 @@ async getAttendance() {
     month : this.selectedMonth,
     date: this.selectedDate
   }
-  this.loadingService.showLoading();
-  await firstValueFrom(this.management.getattendence(payload).pipe(
+  console.log(this.selectedstream)
+  console.log(this.selectedsem)
+  console.log(this.selectedYear)
+  
+  await firstValueFrom(this.management.getAttendance(payload).pipe(
     tap(
       (res)=>{
+        this.loading = false;
         if (res.attendance.length > 0) {
           for (let index = 0; index < res.attendance.length; index++) {
             this.attendence.push({
               position: index + 1,
               name: res.attendance[index].name,
               roll: res.attendance[index].roll,
+              date: res.attendance[index].date
             });
           }
-          this.loadingService.hideLoading();
+          this.loading = false;
       }
         else{
           this.alert.showWarningAlert("No attendence record found");

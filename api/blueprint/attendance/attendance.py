@@ -219,3 +219,90 @@ def attFace():
         return jsonify({'massage': 'Invalid data'}), 400
 
     return heandel()
+
+
+
+
+
+
+
+@attendance_bp.route('/attendance/record', methods=['POST', 'PUT', 'GET'])
+def attendance_record():
+    app = current_app.config["app"]
+
+    @app.auth.login_required
+    def handle_attendance():
+        db = DBA()
+        db.connect()
+
+        user_id = app.auth.current_user()
+        current_app.logger.info(f'User {user_id["user_id"]} accessed attendance')
+
+        if request.method == 'POST':
+            # Check user access level
+            if getLabel(user_id['user_id']) > 2:
+                db.disconnect()
+                return jsonify({"message": "Access denied"}), 403
+
+            data = request.json or {}
+
+            # Required fields
+            required_fields = ["stream", "sem"]
+            for field in required_fields:
+                if field not in data:
+                    db.disconnect()
+                    return jsonify({"message": f"{field} is required"}), 400
+
+            stream = data.get("stream")
+            sem = data.get("sem")
+            date = data.get("date")
+            month = data.get("month")
+            year = data.get("year")
+
+            # Base query
+            query = """
+                SELECT 
+                    a.id AS attend_id,
+                    a.user_id,
+                    u.name AS name,
+                    a.attendance_date,
+                    u.img,
+                    s.roll
+                FROM attends a
+                JOIN user_info u ON a.user_id = u.user_id
+                LEFT JOIN student s ON u.user_id = s.id
+                WHERE s.course = %s AND s.semester = %s
+            """
+            params = [stream, sem]
+
+            # Add date filters based on input
+            if date and month and year:
+                date = f"{month/date/year}"
+                query += " AND DATE(a.attendance_date) = STR_TO_DATE(%s, '%%m/%%d/%%Y')"
+                params.append(date)
+            elif month and year:
+                query += " AND MONTH(a.attendance_date) = %s AND YEAR(a.attendance_date) = %s"
+                params.extend([month, year])
+            elif year:
+                query += " AND YEAR(a.attendance_date) = %s"
+                params.append(year)
+
+            # return  jsonify({"msg": query %  tuple(params) })
+            try:
+                db.cursor.execute(query, tuple(params))
+                attendance = db.cursor.fetchall()
+            except Exception as e:
+                current_app.logger.error(f"Error fetching attendance: {e}")
+                db.disconnect()
+                return jsonify({"message": "Database error", "error": str(e)}), 500
+
+            db.disconnect()
+            return jsonify({"attendance": attendance}), 200
+
+        db.disconnect()
+        return jsonify({"message": "Invalid request method"}), 405
+
+    return handle_attendance()
+
+
+

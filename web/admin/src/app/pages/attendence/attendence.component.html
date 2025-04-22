@@ -48,6 +48,7 @@
                     [(ngModel)]="selectedsem"
                     placeholder="Semester"
                     [filterBy]="'name'"
+                    (onChange)="getAttendance()"
                     [editable]="true"
                     styleClass="w-full"
                     appendTo="body"
@@ -65,6 +66,7 @@
                     [dateFormat]="'yy'"
                     placeholder="Select Year"
                     inputId="yearpicker"
+                    (onChange)="getAttendance()"
                     [showIcon]="true"
                     styleClass="w-full"
                     [icon]="'pi pi-calendar'">
@@ -84,6 +86,7 @@
                     [yearNavigator]="true"
                     [monthNavigator]="true"
                     styleClass="w-full"
+                    (onChange)="getAttendance()"
                     [icon]="'pi pi-calendar'">
                 </p-calendar>
             </div>
@@ -98,6 +101,7 @@
                     inputId="datepicker"
                     [showIcon]="true"
                     styleClass="w-full"
+                    (onChange)="getAttendance()"
                     [icon]="'pi pi-calendar'">
                 </p-calendar>
             </div>

@@ -1,4 +1,4 @@
-@apiUrl = https://api.timt.in
+@apiUrl = http://localhost:5000
 ### REQUEST VER
 GET {{ apiUrl }}/ver
 Content-Type: application/json
@@ -533,5 +533,17 @@ Authorization: Bearer {{token}}
 }
 
 
+
+### attendence get
+@token = {{login.response.body.token}}
+POST {{ apiUrl }}/attendance/record
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "sem": "4",
+    "stream": "1",
+    "date": "22/04/2025"
+}
 
 

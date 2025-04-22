@@ -198,12 +198,33 @@ export class ManagementService {
   }
 
 
-  getattendence(payload :{stream: string , sem : string, year : Date |null , month: Date | null, date: Date |null }): Observable<any>{
-    const loginUrl = `${this.api}/attendance`;
+  getAttendance(payload: {
+    stream: string,
+    sem: string,
+    year: Date | null,
+    month: Date | null,
+    date: Date | null
+  }): Observable<any> {
+    const loginUrl = `${this.api}/attendance/record`;
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.storage.get('token')}`
     };
-    return this.http.post<any>(loginUrl, payload, { headers });
+  
+    // Format date as MM/DD/YYYY
+    let formattedDate = null;
+    if (payload.date) {
+      const d = new Date(payload.date);
+      formattedDate = `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
+    }
+  
+    const newPayload = {
+      stream: payload.stream,
+      sem: payload.sem,
+      date: formattedDate
+    };
+  
+    return this.http.post<any>(loginUrl, newPayload, { headers });
   }
+  
 }
