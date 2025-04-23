@@ -77,9 +77,9 @@ export class   AttendenceComponent implements OnInit {
   selectedsem: any;
   stream?:any;
   selectedstream: any;
-  selectedMonth: Date | null = null;
-  selectedYear: Date | null = null ;
-  selectedDate: Date | null = null;
+  selectedMonth: number | null = null;
+  selectedYear: number | null = null ;
+  selectedDate: number| null = null;
 
     constructor(
        private management : ManagementService,
@@ -90,12 +90,13 @@ export class   AttendenceComponent implements OnInit {
     ngOnInit() {
       
 
-      const now = new Date();
-      this.selectedYear = new Date(now.getFullYear(), 0); // Just the year, month set to Jan
-      this.selectedMonth = new Date(now.getFullYear(), now.getMonth()); // Current month
-      this.selectedDate = now; // Full current date
+      // const now = new Date();
+      // this.selectedYear = now.getFullYear(); // number (e.g., 2025)
+      // this.selectedMonth = now.getMonth();   // number (0 = January, 11 = December)
+      // this.selectedDate = now.getTime();     // number (timestamp in ms since epoch)
 
-      this.getAttendance(),
+
+      
       this.getCourses()
       
     }
@@ -114,10 +115,10 @@ export class   AttendenceComponent implements OnInit {
     }
     const filteredattendence = this.attendence.map(attendence => ({
      
-      'NO': attendence.attend_id,
+      'NO': attendence.position,
       'Name': attendence.name,
       'Roll': attendence.roll,
-      'Date':attendence.attendance_date,
+      'Date':attendence.date ,
     }));
   const worksheet = XLSX.utils.json_to_sheet(filteredattendence);
   const workbook = XLSX.utils.book_new();
@@ -132,13 +133,17 @@ export class   AttendenceComponent implements OnInit {
 
 
 async getAttendance() {
+
+  this.attendence = [];
+
   const payload = {
-    sem: this.selectedsem,
     stream: this.selectedstream,
+    sem: this.selectedsem,
     year : this.selectedYear,
     month : this.selectedMonth,
     date: this.selectedDate
   }
+  
   await firstValueFrom(this.management.getAttendance(payload).pipe(
     tap(
       (res)=>{
@@ -149,10 +154,10 @@ async getAttendance() {
               position: index + 1,
               name: res.attendance[index].name,
               roll: res.attendance[index].roll,
-              date: res.attendance[index].date
+              date: res.attendance[index].attendance_date
             });
           }
-          this.loading = false;
+          
       }
         else{
           this.alert.showWarningAlert("No attendence record found");
@@ -170,7 +175,7 @@ selectStream(event: any){
       const val = i + 1;
       return { label: `Semester ${val}`, value: val };
     });
-
+    
   }
 }
 
@@ -203,36 +208,33 @@ async getCourses() {
 }
 
 
+selectedYearDate: Date | null = null; // for p-calendar binding
+  
 
-selectYear(event: any) {
+selectYear(event: Date) {
+  this.attendence = [];
   if (event instanceof Date) {
-    const year = event.getFullYear();
-    console.log(year);
+    this.selectedYearDate = event;
+    this.selectedYear = event.getFullYear(); // for actual use
+    console.log('Selected year (number):', this.selectedYear);
+    this.getAttendance();
   } else {
     console.warn('Invalid date object:', event);
   }
 }
 
-
-
+selectedMonthDate: Date | null = null; // for p-calendar binding
 
 selectMonth(event: Date): void {
-  const month = event.getMonth() + 1; // Months are 0-indexed
-  const year = event.getFullYear();
-
-  console.log(`Selected Month: ${month}, Year: ${year}`);
-  // You can add further logic here
+  this.selectedMonthDate = event;
+  this.selectedMonth = event.getMonth() + 1; // JS months are 0-indexed
 }
 
-
+selecteddateDate: Date | null = null; // for p-calendar binding
 
 selectDate(event: Date): void {
-  const day = event.getDate();
-  const month = event.getMonth() + 1; // Months are 0-indexed
-  const year = event.getFullYear();
-
-  console.log(`Selected Date: ${day}/${month}/${year}`);
-  // You can add your custom logic here
+  this.selecteddateDate = event;
+  this.selectedDate = event.getDate(); // Get the actual date (1-31)
 }
 
 
