@@ -226,16 +226,16 @@ def attFace():
 
 
 
-@attendance_bp.route('/attendance/record', methods=['POST', 'PUT', 'GET'])
+@attendance_bp.route('/attendance/record', methods=['POST' , 'GET'])
 def attendance_record():
-    app = current_app.config["app"]
+    main_app = current_app.config["app"]
 
-    @app.auth.login_required
-    def handle_attendance():
+    @main_app.auth.login_required
+    def attendance():
         db = DBA()
         db.connect()
 
-        user_id = app.auth.current_user()
+        user_id = main_app.auth.current_user()
         current_app.logger.info(f'User {user_id["user_id"]} accessed attendance')
 
         if request.method == 'POST':
@@ -255,10 +255,11 @@ def attendance_record():
 
             stream = data.get("stream")
             sem = data.get("sem")
-            date = data.get("date")
-            month = data.get("month")
             year = data.get("year")
-
+            month = data.get("month")
+            date = data.get("date")
+            
+    
             # Base query
             query = """
                 SELECT 
@@ -276,10 +277,10 @@ def attendance_record():
             params = [stream, sem]
 
             # Add date filters based on input
-            if date and month and year:
-                date = f"{month/date/year}"
-                query += " AND DATE(a.attendance_date) = STR_TO_DATE(%s, '%%m/%%d/%%Y')"
-                params.append(date)
+            if year and month  and date :
+                full_date = f"{year}/{month}/{date}"
+                query += " AND DATE(a.attendance_date) = %s"
+                params.append(full_date)
             elif month and year:
                 query += " AND MONTH(a.attendance_date) = %s AND YEAR(a.attendance_date) = %s"
                 params.extend([month, year])
@@ -287,7 +288,7 @@ def attendance_record():
                 query += " AND YEAR(a.attendance_date) = %s"
                 params.append(year)
 
-            # return  jsonify({"msg": query %  tuple(params) })
+            # return  jsonify({"msg": query, "para": tuple(params) })
             try:
                 db.cursor.execute(query, tuple(params))
                 attendance = db.cursor.fetchall()
@@ -302,7 +303,7 @@ def attendance_record():
         db.disconnect()
         return jsonify({"message": "Invalid request method"}), 405
 
-    return handle_attendance()
+    return attendance()
 
 
 
