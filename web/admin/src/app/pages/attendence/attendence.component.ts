@@ -148,7 +148,7 @@ async getAttendance() {
     tap(
       (res)=>{
         this.loading = false;
-        if (res.attendance.length > 0) {
+        if (res && Array.isArray(res.attendance) && res.attendance.length > 0) {
           for (let index = 0; index < res.attendance.length; index++) {
             this.attendence.push({
               position: index + 1,
@@ -208,30 +208,26 @@ async getCourses() {
 }
 
 
-selectedYearDate: Date | null = null; // for p-calendar binding
-  
 
+
+selectedYearDate: Date | null = null; // for p-calendar binding
 selectYear(event: Date) {
-  this.attendence = [];
   if (event instanceof Date) {
     this.selectedYearDate = event;
     this.selectedYear = event.getFullYear(); // for actual use
-    console.log('Selected year (number):', this.selectedYear);
-    this.getAttendance();
   } else {
     console.warn('Invalid date object:', event);
   }
 }
 
-selectedMonthDate: Date | null = null; // for p-calendar binding
 
+selectedMonthDate: Date | null = null; // for p-calendar binding
 selectMonth(event: Date): void {
   this.selectedMonthDate = event;
   this.selectedMonth = event.getMonth() + 1; // JS months are 0-indexed
 }
 
 selecteddateDate: Date | null = null; // for p-calendar binding
-
 selectDate(event: Date): void {
   this.selecteddateDate = event;
   this.selectedDate = event.getDate(); // Get the actual date (1-31)

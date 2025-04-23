@@ -31,7 +31,6 @@
                     optionValue="id"
                     [(ngModel)]="selectedstream"
                     (onChange)="selectStream($event)"
-                    (onChange)="getAttendance()"
                     placeholder="Stream"
                     [filter]="true"
                     [filterBy]="'name'"
@@ -49,7 +48,6 @@
                     [(ngModel)]="selectedsem"
                     placeholder="Semester"
                     [filterBy]="'name'"
-                    (onChange)="getAttendance()"
                     [editable]="true"
                     styleClass="w-full"
                     appendTo="body"
@@ -63,7 +61,6 @@
                 <p-calendar
                     (ngModelChange)="selectYear($event)"
                     [(ngModel)]="selectedYearDate"
-                    (onSelect)="getAttendance()"
                     [view]="'year'"
                     [dateFormat]="'yy'"
                     placeholder="Select Year"
@@ -79,7 +76,6 @@
                 <p-calendar
                     [(ngModel)]="selectedMonthDate"
                     (ngModelChange)="selectMonth($event)"
-                    (onSelect)="getAttendance()"
                     [view]="'month'"
                     [dateFormat]="'MM'"
                     placeholder="Select Month"
@@ -97,7 +93,6 @@
                 <p-calendar
                     [(ngModel)]="selecteddateDate"
                     (ngModelChange)="selectDate($event)"
-                    (onSelect)="getAttendance()"
                     [dateFormat]="'dd'"
                     placeholder="Select Date"
                     inputId="datepicker"
@@ -106,16 +101,27 @@
                     [icon]="'pi pi-calendar'">
                 </p-calendar>
             </div>
+
+
+            <!-- search button -->
+            <div class=" items-center justify-center ">
+                <button
+                    pButton
+                    icon="pi pi-search"
+                    class="p-button p-button-rounded"
+                    style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white; border-radius: 50%;  align-items: center; justify-content: center;"
+                    (click)="getAttendance()">
+                 </button>
+            </div>
     
             <!-- Export Button -->
-            <div class=" items-center justify-center w-full">
+            <div class=" items-center justify-center ">
                 <button
                     pButton
                     icon="pi pi-download"
-                    class="p-button p-button-success w-full"
-                    style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white;"
+                    class="p-button p-button-rounded"
+                    style="background: linear-gradient(90deg, #25c1d1, #7bfeef); border: none; color: white; border-radius: 50%;   "
                     (click)="exportToExcel()">
-                    Export
                 </button>
             </div>
         </div>

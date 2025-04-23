@@ -261,8 +261,7 @@ def attendance_record():
             
     
             # Base query
-            query = """
-                SELECT 
+            query = """SELECT 
                     a.id AS attend_id,
                     a.user_id,
                     u.name AS name,
@@ -276,6 +275,7 @@ def attendance_record():
             """
             params = [stream, sem]
 
+            
             # Add date filters based on input
             if year and month  and date :
                 full_date = f"{year}/{month}/{date}"
@@ -288,7 +288,7 @@ def attendance_record():
                 query += " AND YEAR(a.attendance_date) = %s"
                 params.append(year)
 
-            # return  jsonify({"msg": query, "para": tuple(params) })
+            # return  jsonify({"msg": query % tuple(params)})
             try:
                 db.cursor.execute(query, tuple(params))
                 attendance = db.cursor.fetchall()
