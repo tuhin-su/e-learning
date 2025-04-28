@@ -258,3 +258,7 @@ def chpw():
     except Error as e:
         db.disconnect()
         return jsonify({"message": str(e)}), 500
+    
+
+
+    

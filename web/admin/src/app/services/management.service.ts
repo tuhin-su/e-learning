@@ -213,4 +213,29 @@ export class ManagementService {
     return this.http.post<any>(loginUrl, payload, { headers });
   }
   
+
+
+
+  createStudent(payload:{
+    email: string,
+    passwd: string | null,
+    groups : string,
+    name : string,
+    phone: number | string,
+    address : number | string,
+    gender : string,
+    birth: string,
+    img : number | string| null,
+    roll : number | string,
+    reg : number | string,
+    course : number | string,
+    semester : number | string
+  }): Observable<any>{
+    const loginUrl = `${this.api}/student/create`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
 }

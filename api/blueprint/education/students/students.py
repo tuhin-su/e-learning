@@ -76,34 +76,41 @@ def app_student_fetch():
 
 
         sql = '''SELECT 
-    student.id, 
-    student.roll, 
-    student.reg, 
-    student.course AS course_id,
-    course.name AS course_name, 
-    student.semester, 
-    student.status, 
-    student.reg_by, 
-    student.createDate, 
-    user_info.name AS student_name, 
-    user_info.phone AS student_phone,
-    admin_info.name AS Admin_name,
-    admin_info.phone AS Admin_ph
-    FROM student
-    LEFT JOIN user_info ON student.id = user_info.user_id
-    LEFT JOIN user_info AS admin_info ON student.reg_by = admin_info.user_id
-    LEFT JOIN course ON student.course = course.id  
-    LIMIT %s OFFSET %s;'''
+                    student.id, 
+                    student.roll, 
+                    student.reg, 
+                    student.course AS course_id,
+                    course.name AS course_name, 
+                    student.semester, 
+                    student.status, 
+                    student.reg_by, 
+                    student.createDate, 
+                    user_info.name AS student_name, 
+                    user_info.phone AS student_phone,
+                    admin_info.name AS Admin_name,
+                    admin_info.phone AS Admin_ph
+                    FROM student
+                    LEFT JOIN user_info ON student.id = user_info.user_id
+                    LEFT JOIN user_info AS admin_info ON student.reg_by = admin_info.user_id
+                    LEFT JOIN course ON student.course = course.id  
+                    LIMIT %s OFFSET %s'''
+        
+
         try:
             db.cursor.execute(sql,(max,current))
             data = db.cursor.fetchall()
             db.disconnect()
+
             return jsonify(data),200
+        
         except Error as e:
             db.disconnect()
+            
             return jsonify({"message": str(e)}), 400
+        
         finally:
             db.disconnect()
+            
     return hendel()
 
 
@@ -221,5 +228,119 @@ def app_student_migration():
 
 
 
+# ##* Create student 
+# import csv
+# import json
+# import os
+# import pandas as pd
+# from uuid import uuid4
+# from datetime import datetime
+# from werkzeug.utils import secure_filename
 
 
+# ALLOWED_EXTENSIONS = {'json', 'csv', 'xlsx', 'pdf'}
+
+# def allowed_file(filename):
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# @students.route('/student/upload', methods=['POST'])
+# def app_student_upload():
+#     app = current_app.config["app"]
+
+#     @app.auth.login_required
+#     def handle_upload():
+#         db = DBA()
+#         db.connect()
+#         user_id = app.auth.current_user()['user_id']
+#         label = getLabel(user_id)
+
+#         if label != 1:
+#             db.disconnect()
+#             return jsonify({"message": "You are not authorized to access this endpoint"}), 403
+
+#         if 'file' not in request.files:
+#             return jsonify({"message": "No file part in the request"}), 400
+
+#         file = request.files['file']
+
+#         if file.filename == '':
+#             return jsonify({"message": "No selected file"}), 400
+
+#         if file and allowed_file(file.filename):
+#             filename = secure_filename(file.filename)
+#             ext = filename.rsplit('.', 1)[1].lower()
+
+#             try:
+#                 data_list = []
+
+#                 if ext == 'json':
+#                     data_list = json.load(file)
+#                 elif ext == 'csv':
+#                     reader = csv.DictReader(file.stream.read().decode("utf-8").splitlines())
+#                     data_list = [row for row in reader]
+#                 elif ext == 'xlsx':
+#                     df = pd.read_excel(file)
+#                     data_list = df.to_dict(orient='records')
+#                 elif ext == 'pdf':
+#                     db.disconnect()
+#                     return jsonify({"message": "PDF received. No data was inserted from it."}), 202
+
+#                 for entry in data_list:
+#                     new_user_id = str(uuid4())
+#                     now = datetime.now()
+
+#                     # Insert into user table
+#                     db.cursor.execute('''
+#                         INSERT INTO `user`(`id`, `email`, `passwd`, `createDate`, `groups`, `status`, `createBy`)
+#                         VALUES (%s, %s, %s, %s, %s, %s, %s)
+#                     ''', (
+#                         new_user_id,
+#                         entry.get("email"),
+#                         entry.get("passwd", "default123"),  # You might hash this
+#                         now,
+#                         entry.get("group", "student"),
+#                         entry.get("status", "active"),
+#                         user_id
+#                     ))
+
+#                     # Insert into user_info table
+#                     db.cursor.execute('''
+#                         INSERT INTO `user_info`(`user_id`, `name`, `phone`, `address`, `gender`, `birth`, `img`)
+#                         VALUES (%s, %s, %s, %s, %s, %s, %s)
+#                     ''', (
+#                         new_user_id,
+#                         entry.get("name"),
+#                         entry.get("phone"),
+#                         entry.get("address"),
+#                         entry.get("gender"),
+#                         entry.get("birth"),
+#                         entry.get("img")
+#                     ))
+
+#                     # Insert into student table
+#                     db.cursor.execute('''
+#                         INSERT INTO `student`(`id`, `roll`, `reg`, `course`, `semester`, `status`, `reg_by`, `createDate`)
+#                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+#                     ''', (
+#                         new_user_id,
+#                         entry.get("roll"),
+#                         entry.get("reg"),
+#                         entry.get("course_id"),
+#                         entry.get("semester"),
+#                         entry.get("status", "active"),
+#                         user_id,
+#                         now
+#                     ))
+
+#                 db.connection.commit()
+#                 db.disconnect()
+#                 return jsonify({"message": f"{len(data_list)} records inserted successfully."}), 201
+
+#             except Exception as e:
+#                 db.connection.rollback()
+#                 db.disconnect()
+#                 return jsonify({"message": f"Error processing file: {str(e)}"}), 500
+
+#         return jsonify({"message": "Invalid file type"}), 400
+
+#     return handle_upload()

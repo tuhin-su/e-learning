@@ -22,7 +22,7 @@
         <p-inputicon>
             <i class="pi pi-search text-gray-600"></i>
         </p-inputicon>
-        <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" 
+        <input pInputText type="text" (input)="onGlobalFilter( $event)" 
                placeholder="Search keyword" 
                class="border-0 focus:ring-0 focus:outline-none bg-transparent text-gray-800" />
     </p-iconfield>
@@ -55,6 +55,7 @@
 
     
     <p-table #dt1 
+    *ngIf="students"
     [value]="students" 
     dataKey="id" 
     [loading]="loading" 
@@ -62,9 +63,9 @@
     [showGridlines]="true"
     [globalFilterFields]="['student_name', 'roll', 'reg','student_phone', 'course_name', 'semester', 'status']"   
     [virtualScroll]="true" 
+    [lazy]="true"
     (onLazyLoad)="onLazyLoad($event)" 
-    [virtualScrollItemSize]="60"
-    [rows]="20" 
+    [virtualScrollItemSize]="60" [rows]="20" 
     [scrollHeight]="'calc(100vh - 260px)'">
 
         <ng-template #header>
@@ -175,24 +176,63 @@
                         <input id="status" type="number" pInputText formControlName="status" 
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-                </div>
-    
-                <div style="margin: 10px;" >
-                    <div *ngIf="!isEditing" class="p-field" style="margin-bottom: 15px;">
-                        <label for="upload" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-                            <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload file :
-                        </label>
-                        <input id="upload" type="file" pInputText formControlName="status" 
-                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
+
+
+                    <div  style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
+                            style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
+                        <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="studentForm.invalid"
+                            style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
                     </div>
                 </div>
 
-                <div  style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
-                        style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
-                    <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="studentForm.invalid"
-                        style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
-                </div>
+
+
+    
+          
+            
+
+
+                                        <!-- STUDENT CREATE -->
+ 
+                <div style="margin: 10px;">
+                    <!-- File Upload Section -->
+                    <div *ngIf="!isEditing  && !isDataReceived"  class="p-field" style="margin-bottom: 15px;">
+                      <label for="upload" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                        <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload CSV/Excel :
+                      </label>
+                      <input id="upload" type="file" (change)="onFileSelected($event)"
+                        style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
+                    </div>
+                  
+                    <!-- Spinner -->
+                    <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>
+                  
+                    <!-- Data Table -->
+                    <p-table [value]="tableData" *ngIf="!isLoading && tableData.length > 0">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th *ngFor="let header of tableHeaders">{{ header }}</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                          <td *ngFor="let header of tableHeaders">{{ rowData[header] }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+
+
+                    <div *ngIf="!isEditing" style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button pButton label="Cancel" icon="pi pi-times" (click)="display=false"
+                            style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
+                        <button pButton label="Save" icon="pi pi-check" (click)="saveCreateStudent()" 
+                            style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
+                    </div>
+
+                  </div>
+                  
+                  
             </div>
         </form>
     </p-dialog>
@@ -201,51 +241,7 @@
 
 
     <!-- Migration -->
-    <!-- <p-dialog [(visible)]="displayStudentDialog" header="Student" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '400px'}">
-        <form [formGroup]="semesterForm">
-            <div class="p-field" style="margin-bottom: 15px;">
-                <label for="from_semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-                    <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i>From_Semester:
-                </label>
-                <p-dropdown 
-                    [options]="semesterOptions" 
-                    optionLabel="name" 
-                    optionValue="id"  
-                    formControlName="from_semester" 
-                    class="custom-dropdown"
-                    [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
-                    [filter]="true"
-                    [filterBy]="'name'"
-                ></p-dropdown>
-            </div>
-            <div class="p-field" style="margin-bottom: 15px;">
-                <label for="semester" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-                    <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i>TO_Semester:
-                </label>
-                <p-dropdown 
-                    [options]="semesterOptions" 
-                    optionLabel="name" 
-                    optionValue="id" 
-                    formControlName="semester" 
-                    class="custom-dropdown"
-                    [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
-                    [filter]="true"
-                    [filterBy]="'name'"
-                ></p-dropdown>
-            </div>
-
-
-            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                <button pButton label="Cancel" icon="pi pi-times" (click)="displayStudentDialog = false"
-                    style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;"> </button>
-                <button pButton label="Save" icon="pi pi-check" (click)="saveStudent()" [disabled]="studentForm.invalid"
-                    style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px;"> </button>
-            </div>
-            
-        </form>
-    </p-dialog>
-     -->
-
+    
    
      <p-dialog  [(visible)]="displayStudentDialog" header="Student" [modal]="true" [closable]="true" [responsive]="true" [style]="{'min-width': '500px'}">
         <form [formGroup]="semesterForm" class="h-[14rem]">

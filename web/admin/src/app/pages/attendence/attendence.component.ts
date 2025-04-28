@@ -81,6 +81,7 @@ export class   AttendenceComponent implements OnInit {
   selectedYear: number | null = null ;
   selectedDate: number| null = null;
 
+
     constructor(
        private management : ManagementService,
        private alert: AlertService,
@@ -133,21 +134,20 @@ export class   AttendenceComponent implements OnInit {
 
 
 async getAttendance() {
-
   this.attendence = [];
+  this.loading = true; // Start loading
 
   const payload = {
     stream: this.selectedstream,
     sem: this.selectedsem,
-    year : this.selectedYear,
-    month : this.selectedMonth,
+    year: this.selectedYear,
+    month: this.selectedMonth,
     date: this.selectedDate
-  }
-  
-  await firstValueFrom(this.management.getAttendance(payload).pipe(
-    tap(
-      (res)=>{
-        this.loading = false;
+  };
+
+  try {
+    const res = await firstValueFrom(this.management.getAttendance(payload).pipe(
+      tap((res) => {
         if (res && Array.isArray(res.attendance) && res.attendance.length > 0) {
           for (let index = 0; index < res.attendance.length; index++) {
             this.attendence.push({
@@ -157,15 +157,18 @@ async getAttendance() {
               date: res.attendance[index].attendance_date
             });
           }
-          
-      }
-        else{
-          this.alert.showWarningAlert("No attendence record found");
+        } else {
+          this.alert.showWarningAlert("No attendance record found");
         }
-      }
-    )
-  ));
+      })
+    ));
+  } catch (err) {
+    this.alert.showErrorAlert("Failed to fetch attendance");
+  } finally {
+    this.loading = false; // Stop loading
+  }
 }
+
 
 
 selectStream(event: any){

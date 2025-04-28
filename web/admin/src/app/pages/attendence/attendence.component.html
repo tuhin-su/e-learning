@@ -103,27 +103,32 @@
             </div>
 
 
-            <!-- search button -->
-            <div class=" items-center justify-center ">
+           <div class=" gap-20  flex">
+             <!-- search button -->
+             <div class=" items-center justify-center w-10 h-10">
                 <button
                     pButton
+                   
                     icon="pi pi-search"
-                    class="p-button p-button-rounded"
-                    style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white; border-radius: 50%;  align-items: center; justify-content: center;"
-                    (click)="getAttendance()">
+                    class="p-button-info text-lg rounded-md shadow-md hover:bg-blue-600 transition "
+                    style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white;  display: flex; align-items: center; justify-content: center;"
+                    (click)="getAttendance()"> Search
                  </button>
             </div>
-    
+
+
+            
             <!-- Export Button -->
-            <div class=" items-center justify-center ">
+            <div class=" items-center justify-center  w-10 h-10 ">
                 <button
                     pButton
                     icon="pi pi-download"
                     class="p-button p-button-rounded"
-                    style="background: linear-gradient(90deg, #25c1d1, #7bfeef); border: none; color: white; border-radius: 50%;   "
+                    style="background: linear-gradient(90deg, #25c1d1, #7bfeef); border: none; color: white; display: flex; border-radius: 50%;   "
                     (click)="exportToExcel()">
                 </button>
             </div>
+           </div>
         </div>
     </div>
     

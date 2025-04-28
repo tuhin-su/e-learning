@@ -27,11 +27,15 @@ import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+
 
 
 @Component({
   selector: 'app-student',
   imports: [
+    ProgressSpinnerModule,
     TableModule,
     ReactiveFormsModule,
     DialogModule,
@@ -57,7 +61,7 @@ import { saveAs } from 'file-saver';
    providers: [ConfirmationService, MessageService,ManagementService]
 })
 export class  StudentComponent implements OnInit {
-
+  @ViewChild('dt1') dt1!: Table;
   students: any[] = [];
   page: number = 0;  // Start with the first page
   size: number = 15; // Default size (15 records per page)
@@ -72,6 +76,14 @@ export class  StudentComponent implements OnInit {
   selectedstream: any;
   itemCount = 0;
   totalRecords: any[]=[];
+
+  tableData: any[] = [];
+  tableHeaders: string[] = [];
+  isLoading = false;
+  isDataReceived: boolean = false;
+  requiredHeaders = []; 
+  // "address", "email", "passwd", "groups", "name", "birth", "course","gender", "phone", "reg", "roll"," semester", "img"
+
 
   semesterOptions = [
     { id: 1, name: '1' },
@@ -110,16 +122,17 @@ export class  StudentComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.getCourses(),
-      this.fetchStudent()
+      this.getCourses()
+      
     }
 
 
 
 
-    onGlobalFilter(table: Table, event: Event) {
-      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+    onGlobalFilter(event: Event) {
+      const inputValue = (event.target as HTMLInputElement).value;
+      this.dt1.filterGlobal(inputValue, 'contains');
+    }
 
 
 
@@ -194,7 +207,7 @@ export class  StudentComponent implements OnInit {
           "course_id" : event.value,
          
         })
-        // console.log(event);
+         console.log(event);
        
       }
 
@@ -215,6 +228,7 @@ export class  StudentComponent implements OnInit {
             (res)=>{
               if(res){
                    this.stream = res
+                   console.log(this.stream)
               }
             }
           )
@@ -302,11 +316,135 @@ export class  StudentComponent implements OnInit {
 
     onLazyLoad(event: any) {
         this.loading = true;
+
         setTimeout(() => {
           this.fetchStudent();
           this.loading = false;
         }, 1000);
       }
     
+
+
+                              // Create student 
+
+      onFileSelected(event: Event): void {
+      
+        const input = event.target as HTMLInputElement;
+        const file = input.files?.[0];
+        if (!file) return;
+    
+        this.isLoading = true;
+        const fileName = file.name.toLowerCase();
+    
+        if (fileName.endsWith('.xls') || fileName.endsWith('.xlsx')) {
+          this.readExcel(file);
+          
+        } else {
+          alert('Unsupported file format. Please upload a CSV or Excel file.');
+          this.isLoading = false;
+        }
+      }
+      
+      
+      readExcel(file: File): void {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json<Record<string, any>>(worksheet, { defval: '' });
+      
+          if (jsonData.length) {
+            // Normalize headers
+            const originalHeaders = Object.keys(jsonData[0]);
+            this.tableHeaders = originalHeaders.map(h => h.trim().toLowerCase());
+      
+            if (!this.validateHeaders(this.tableHeaders)) {
+              alert('Missing required headers. Please ensure the file includes: ' + this.requiredHeaders.join(', '));
+              this.isLoading = false;
+              return;
+            }
+      
+            this.tableData = [];
+            jsonData.forEach((originalRow, index) => {
+              const row: any = {};
+              originalHeaders.forEach(h => {
+                row[h.trim().toLowerCase()] = originalRow[h];
+              });
+      
+              setTimeout(() => {
+                this.tableData = [...this.tableData, row];
+                if (index === jsonData.length - 1) this.isLoading = false;
+              }, index * 200);
+            });
+          } else {
+            this.isLoading = false;
+          }
+        };
+        reader.readAsArrayBuffer(file);
+        this.isDataReceived = true;
+      }
+      
+
+validateHeaders(headers: string[]): boolean {
+  const lowerHeaders = headers.map(h => h.trim().toLowerCase());
+  return this.requiredHeaders.every(req => lowerHeaders.includes(req));
+}
+
+
+
+
+async saveCreateStudent(): Promise<void> {
+  if (!this.tableData || !this.tableData.length) {
+    this.alert.showErrorAlert('No student data to submit.');
+    return;
+  }
+
+  const courses = await firstValueFrom(this.management.getStreamInfo());
+
+  for (const student of this.tableData) {
+    console.log(student);
+    break;
+    const matchedCourse = courses.find((course: any) =>
+      course.name.toLowerCase().trim() === student.course?.toLowerCase().trim()
+    );
+
+    if (!matchedCourse) {
+      this.alert.showErrorAlert(`Course not found for student: ${student.name}`);
+      continue; // Skip to next student
+    }
+
+    const { course, ...rest } = student; // Remove the `course` property
+
+    const studentToSend = {
+      ...rest,
+      birth: String(student.birth), // Ensure birth is string
+      course: matchedCourse.id   // Include only course_id
+    };
+    
+    console.log(studentToSend)
+    
+    // try {
+    //   await firstValueFrom(
+    //     this.management.createStudent(studentToSend).pipe(
+    //       tap((res) => {
+    //         if (res) {
+    //           this.alert.showSuccessAlert(res.message || 'Student created successfully.');
+    //         }
+    //       })
+    //     )
+    //   );
+    // } catch (error: any) {
+    //   this.alert.showErrorAlert(error?.error?.message || 'Error creating student.');
+    // }
+  }
+
+  this.display = false;
+  this.fetchStudent(); // Refresh list after processing
+}
+
+
+
 
 }
