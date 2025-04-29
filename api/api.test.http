@@ -577,3 +577,13 @@ Authorization: Bearer {{ token }}
 
 
 
+### attendence delete on apps
+
+POST {{apiUrl}}/attendence/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "2"
+ 
+}

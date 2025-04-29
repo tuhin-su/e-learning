@@ -1,5 +1,6 @@
+
 from flask import Blueprint, jsonify, request, current_app
-import mysql.connector # type: ignore
+from mysql.connector import Error
 from flask import request, jsonify
 import base64
 import face_recognition # type: ignore
@@ -307,3 +308,36 @@ def attendance_record():
 
 
 
+
+@attendance_bp.route("/attendence/delete", methods=["POST"])
+def attendence_delete():
+    mainApp=current_app.config["app"]
+
+    @mainApp.auth.login_required
+    def info():
+        db = DBA()
+        db.connect()
+        user_id_ad = mainApp.auth.current_user()['user_id']
+        if getLabel(user_id_ad) != 1 & getLabel(user_id_ad)  != 2:
+            db.disconnect()
+            return jsonify({"message": "You are not authorized to perform this action"}), 403
+        
+       
+        try:
+            edited_data = request.get_json()
+            sql = "DELETE FROM `attends` WHERE id = %s"
+            try:
+                db.cursor.execute(sql,(edited_data['id'],))
+                db.conn.commit()
+                db.disconnect()
+                return jsonify({"message": "Successfully Deleted"}), 200
+            except Error as e:
+                db.conn.rollback()
+                db.disconnect()
+                return jsonify({"message": str(e)}), 400
+        except Error as e:
+            db.disconnect()
+            return jsonify({"message": str(e)}), 400
+        finally:
+            db.disconnect()
+    return info()

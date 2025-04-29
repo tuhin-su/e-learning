@@ -22,7 +22,7 @@ import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManagementService } from '../../services/management.service';
-import { catchError, firstValueFrom, of, tap } from 'rxjs';
+import { catchError, firstValueFrom, map, of, tap } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { DropdownModule } from 'primeng/dropdown';
 import * as XLSX from 'xlsx';
@@ -81,6 +81,8 @@ export class StudentComponent implements OnInit {
     tableHeaders: string[] = [];
     isLoading = false;
     isDataReceived: boolean = false;
+    isErrorData : boolean = false;
+    errorTableData: any [] = [];
     requiredHeaders = [];
     // "address", "email", "passwd", "groups", "name", "birth", "course","gender", "phone", "reg", "roll"," semester", "img"
 
@@ -201,6 +203,11 @@ export class StudentComponent implements OnInit {
             this.isDataReceived = false;
             this.tableData = [];
         }
+        if(!this.isEditing && this.errorTableData){
+            this.isErrorData = false;
+            this.errorTableData = [];
+
+        }
 
         this.display = true;  // Show the dialog
         this.getCourses();
@@ -213,7 +220,7 @@ export class StudentComponent implements OnInit {
             "course_id": event.value,
 
         })
-        console.log(event);
+        
 
     }
 
@@ -234,7 +241,7 @@ export class StudentComponent implements OnInit {
                 (res) => {
                     if (res) {
                         this.stream = res
-                        console.log(this.stream)
+                        
                     }
                 }
             )
@@ -440,7 +447,7 @@ export class StudentComponent implements OnInit {
 
             const { course, ...rest } = student; // Remove the `course` property
 
-            const studentToSend = {
+            let studentToSend = {
                 ...rest,
                 birth: String(student.birth), // Ensure birth is string
                 course: matchedCourse.id   // Include only course_id
@@ -454,18 +461,49 @@ export class StudentComponent implements OnInit {
                     if (res) {
                       this.alert.showSuccessAlert(res.message || 'Student created successfully.');
                     }
-                  })
-                )
-              );
+                  },
+
+                  (error) => {
+      
+                    this.isErrorData = false
+                    this.errorTableData.push({
+                    ...rest,
+                    course: matchedCourse.name,
+                    error: error?.error?.message || 'Unknown error'
+
+                  }) ; 
+
+                  this.isErrorData = true;
+
+                  }
+
+                  )
+                ));
+
             } catch (error: any) {
               this.alert.showErrorAlert(error?.error?.message || 'Error creating student.');
             }
         }
-
-        this.display = false;
+        console.log(this.errorTableData)
+        
+        this.display = true;
         this.fetchStudent(); // Refresh list after processing
     }
 
+
+    
+
+    exportErrorData(): void {
+    const worksheet = XLSX.utils.json_to_sheet(this.errorTableData);
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Error Students');
+    
+    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+    saveAs(blob, 'error-students.xlsx');
+}
 
 
 

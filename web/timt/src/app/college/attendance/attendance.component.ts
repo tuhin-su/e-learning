@@ -40,9 +40,7 @@ export interface PeriodicElement {
   styleUrl: './attendance.component.scss'
 })
 export class AttendanceComponent implements OnInit, OnDestroy {
-deleteUser(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('overlay') overlayRef!: ElementRef<HTMLCanvasElement>;
 
@@ -495,4 +493,21 @@ throw new Error('Method not implemented.');
     ));
     this.loadingService.hideLoading();
   }
+
+    async deleteUser(user: any) {
+      await firstValueFrom(this.service.deleteAttendence(user.id).pipe(
+          tap(
+              (response) => {
+                  if(response){
+                      this.alertService.showSuccessAlert(response.message);
+                      this.getAllStudents();
+                  }
+              },
+              (error) => {
+                  this.alertService.showErrorAlert(error.error.message);
+              }
+          )
+      ))
+  }
+
 }

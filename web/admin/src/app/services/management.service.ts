@@ -219,7 +219,7 @@ export class ManagementService {
   createStudent(payload:{
     email: string,
     passwd: string | null,
-    groups : string,
+    group : string,
     name : string,
     phone: number | string,
     address : number | string,
