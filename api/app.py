@@ -26,6 +26,7 @@ from blueprint.users.mng.manage import mng
 from blueprint.education.info.info import info
 from blueprint.public.download.download_bp import download_bp
 from blueprint.org.info.info import app_info
+from blueprint.users.mng.studentmng import studentmng
 
 class apiHandler:
     def __init__(self):
@@ -74,6 +75,7 @@ class apiHandler:
         self.app.register_blueprint(info) # give info
         self.app.register_blueprint(download_bp) # download public 
         self.app.register_blueprint(app_info) # give info admins
+        self.app.register_blueprint(studentmng) #  create the student
         
         @self.auth.verify_token
         def verify_token(token):

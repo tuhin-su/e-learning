@@ -247,7 +247,7 @@ def app_user_delete():
 
 
 
-#* user create 
+#* user create  *#
 
 @user_info.route("/user/create", methods=["POST"])
 def app_user_create():

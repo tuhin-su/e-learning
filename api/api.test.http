@@ -529,26 +529,61 @@ Authorization: Bearer {{token}}
  "description": "Adn" ,
  "label": "4" 
  
+#### create groups
 
+POST {{apiUrl}}/group/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ "name": "Rana" ,
+ "code": "AD" ,
+ "description": "Adn" ,
+ "label": "4" 
+ 
+
+  
+}
   
 }
 
 
 
-### attendence get
-@token = {{login.response.body.token}}
-POST {{ apiUrl }}/attendance/record
+### student create
+
+POST {{ apiUrl }}/student/create
 Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-    "sem": "4",
-    "stream": "1",
-    "year": "2025",
-    "month": "",
-    "date" : ""
-    
-    
+"address": "abcd",
+"email": "student3_demo@email.com",
+"passwd" : "eeef",
+"groups": "ST",
+"name": "student Rana",
+
+"birth": "2003/11/08",
+"course": "1",
+
+"gender": "f",
+"img": "hhh",
+"phone": "8159861554",
+"reg": 454,
+"roll": 4355,
+"semester": 4
+
+
 }
 
 
+
+### attendence delete on apps
+
+POST {{apiUrl}}/attendence/delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "2"
+ 
+}

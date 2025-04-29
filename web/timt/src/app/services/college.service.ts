@@ -172,4 +172,17 @@ export class CollegeService {
   }
 
 
+  deleteAttendence(id: any): Observable<any>{
+    const loginUrl = `${this.api}/attendence/delete`;
+    const payload = {
+      "id": id
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.storage.get('token')}`
+    };
+    return this.http.post<any>(loginUrl, payload, { headers });
+  }
+
+
 }
