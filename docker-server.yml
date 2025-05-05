@@ -83,4 +83,4 @@ services:
       - ${ADMIN_PORT:-81}:81
 
 volumes:
-  db_data:
+  data_base_timt_app:
