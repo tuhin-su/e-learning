@@ -77,7 +77,7 @@
             <div class="p-fluid" style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                 <div style="margin: 10px;">
                     <!-- Course ID -->
-                    <div class="p-field" style="margin-bottom: 15px;">
+                    <div *ngIf="isEditing" class="p-field" style="margin-bottom: 15px;">
                         <label for="courseId" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-id-card" style="margin-right: 8px; color: #3b82f6;"></i> ID:
                         </label>

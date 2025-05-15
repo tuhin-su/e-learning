@@ -458,12 +458,12 @@ Authorization: Bearer {{token}}
 
 {
  
- "email": "rana@gmail.com" ,
+ "email": "rana34@gmail.com" ,
  "passwd": "hi#53" ,
  "groups" : "AD" ,
  "status" : "0 ",
- "name": "Rana" ,
- "phone": "4782789389" ,
+ "name": "R4ana" ,
+ "phone": "47827893894" ,
  "address": "absd344" ,
  "gender": "F" , 
  "birth": "2003/11/08" ,

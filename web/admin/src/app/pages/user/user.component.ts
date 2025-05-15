@@ -101,7 +101,7 @@ export class  UserComponent implements OnInit {
     ) {
       this.userForm = this.fb.group({
         id:[''],
-        img:['',],
+        img:[''],
         name: ['', Validators.required],
         phone: ['', Validators.required],
         birth: ['', Validators.required],
@@ -198,7 +198,7 @@ export class  UserComponent implements OnInit {
         const convert_birth =convertToMySQLDate(user.birth)
         this.userForm.patchValue({
           id:user.user_id,
-          img : user.img,
+          // img : user.img ,
           name:user.name,
           phone: user.phone,
           gender: user.gender,
@@ -218,43 +218,54 @@ export class  UserComponent implements OnInit {
 
 
       async saveUser() {
-       if(this.isEditing){
-        await firstValueFrom(this.management.editUser(this.userForm.value).pipe(
-            tap(
+        if (this.isEditing) {
+          await firstValueFrom(
+            this.management.editUser(this.userForm.value).pipe(
+              tap(
                 (response) => {
-                    if(response){
-                        this.alert.showSuccessAlert(response.message);
-                        this.display =false;
-                        this.fetchUser();
-                    }
+                  if (response) {
+                    this.alert.showSuccessAlert(response.message);
+                    this.display = false;
+                    this.fetchUser();
+                  }
                 },
                 (error) => {
-                    this.alert.showErrorAlert(error.error.message);
+                  this.alert.showErrorAlert(error.error.message);
                 }
+              )
             )
-        ));
-        return;
-       }
-
-       if(this.userForm.valid){
-        await firstValueFrom(this.management.createUser(this.userForm.value).pipe(
-          tap(
-            (response) => {
-              if(response){
-                this.alert.showSuccessAlert(response.message);
-                this.display = false;
-                this.fetchUser();
-              }
-            },
-            (error) => {
-              this.alert.showErrorAlert(error.error.message);
-            }
-          )
-        ))
-       }
-
+          );
+          return;
+        }
+      
+        if (this.userForm.valid) {
+          const payload = {
+            ...this.userForm.value,
+            img: this.userForm.value.img || null
+          };
+      
+          await firstValueFrom(
+            this.management.createUser(payload).pipe(
+              tap(
+                (response) => {
+                  if (response) {
+                   
+                    this.alert.showSuccessAlert(response.message);
+                    this.display = false;
+                    this.fetchUser();
+                  }
+                },
+                (error) => {
+                  this.alert.showErrorAlert(error.error.message);
+                }
+              )
+            )
+          );
+        }
+      
         this.display = false;
       }
+      
 
 
 

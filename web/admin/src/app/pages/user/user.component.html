@@ -15,7 +15,7 @@
 
         <!-- Button Section -->
         <div class="flex gap-5">
-            <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-success text-lg"
+            <button pButton label="Create New User" icon="pi pi-plus" class="p-button-success text-lg"
                 (click)="openEditDialog({}, false)"></button>
 
                 <button pButton label="Inactive"  icon="pi pi-trash" class="p-button-success p-button-success p-button-lg"
@@ -64,7 +64,7 @@
         <ng-template #body let-user>
             <tr [ngClass]="{'bg-gray-600': user.status === 1, 'bg-green-400': user.status === 0}">
                 <td class="flex items-center gap-2">
-                    <img src="{{ user.img ? user.img : 'user.png' }}" width="32" style="vertical-align: middle" />
+                    <img src="{{ user.img ? user.img : '/images/user.png'  }}" width="32" style="vertical-align: middle" />
                     <span class="image-text">{{ user.name }}</span>
                 </td>
                 <td>{{ user.phone }}</td>
@@ -107,7 +107,7 @@
 
 
     <!-- Edit Dialog -->
-    <p-dialog [(visible)]="display" header="Edit User" [modal]="true" [closable]="true" [responsive]="true"
+    <p-dialog [(visible)]="display" header=" User" [modal]="true" [closable]="true" [responsive]="true"
         [style]="{'min-width': '400px'}">
         <form [formGroup]="userForm">
             <div class="p-fluid"
@@ -117,7 +117,7 @@
                         <label for="img" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-image" style="margin-right: 8px; color: #3b82f6;"></i> Image:
                         </label>
-                        <input id="img" type="text" pInputText formControlName="img"
+                        <input id="img" type="file" pInputText formControlName="img"
                             style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" />
                     </div>
 
@@ -162,7 +162,7 @@
                             style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-calendar" style="margin-right: 8px; color: #3b82f6;"></i> Birth:
                         </label>
-                        <input id="birth" type="text" placeholder="yy/mm/dd" pInputText formControlName="birth"
+                        <input id="birth" type="date" placeholder="yy/mm/dd" pInputText formControlName="birth"
                             style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" />
                     </div>
 
