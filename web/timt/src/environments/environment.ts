@@ -1,4 +1,4 @@
 export const environment = {
-    api: 'http://localhost:5000',
+    api: 'http://api.timt.test:5000',
     production: false
 };
