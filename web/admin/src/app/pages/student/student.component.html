@@ -115,7 +115,7 @@
         [style]="{'min-width': '400px'}">
 
         <form [formGroup]="studentForm">
-            
+
             <div class="p-fluid"
                 style="padding: 20px; background-color: #f0f4f8; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                 <div *ngIf="isEditing" style="margin: 10px;">
@@ -190,23 +190,27 @@
 
                 <div style="margin: 10px;">
 
-                    
-                    <!-- File Upload Section -->
-                    <div *ngIf="!isEditing && !isDataReceived && !isErrorData" class="p-field" style="margin-bottom: 15px;">
-    <!-- Download Link -->
-    <div style="margin-bottom: 10px;">
-        <a href="assets/user.xlsx" download style="color: #10b981; font-weight: bold; display: flex; align-items: center; text-decoration: none;">
-            <i class="pi pi-download" style="margin-right: 8px; color: #10b981;"></i> Download Sample Excel
-        </a>
-    </div>
 
-    <!-- Upload Section -->
-    <label for="upload" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-        <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload Excel :
-    </label>
-    <input id="upload" type="file" (change)="onFileSelected($event)"
-        style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
-</div>
+                    <!-- File Upload Section -->
+                    <div *ngIf="!isEditing && !isDataReceived && !isErrorData" class="p-field"
+                        style="margin-bottom: 15px;">
+                        <!-- Download Link -->
+                        <div style="margin-bottom: 10px;">
+                            <a href="assets/user.xlsx" download
+                                style="color: #10b981; font-weight: bold; display: flex; align-items: center; text-decoration: none;">
+                                <i class="pi pi-download" style="margin-right: 8px; color: #10b981;"></i> Download
+                                Sample Excel
+                            </a>
+                        </div>
+
+                        <!-- Upload Section -->
+                        <label for="upload"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+                            <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload Excel :
+                        </label>
+                        <input id="upload" type="file" (change)="onFileSelected($event)"
+                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
+                    </div>
 
 
                     <!-- Spinner -->
@@ -227,7 +231,8 @@
                     </p-table>
 
 
-                    <div *ngIf="!isEditing  && !isErrorData" style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <div *ngIf="!isEditing  && !isErrorData"
+                        style="display: flex; justify-content: space-between; margin-top: 20px;">
                         <button pButton label="Cancel" icon="pi pi-times" (click)="display=false"
                             style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px;">
                         </button>
@@ -240,9 +245,9 @@
 
 
                 <div *ngIf="!isEditing && errorTableData">
-                    
-                    <p-table *ngIf="errorTableData.length" [value]="errorTableData" 
-                        [responsiveLayout]="'scroll'" class="p-datatable-sm">
+
+                    <p-table *ngIf="errorTableData.length" [value]="errorTableData" [responsiveLayout]="'scroll'"
+                        class="p-datatable-sm">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Name</th>
@@ -277,10 +282,9 @@
                         </ng-template>
                     </p-table>
 
-                    
-                        <button *ngIf="isErrorData" pButton  icon="pi pi-download" 
-                            class="p-button-rounded p-button-success p-button-lg" 
-                            style="background: linear-gradient(90deg, #254dd1, #7b9efe); 
+
+                    <button *ngIf="isErrorData" pButton icon="pi pi-download"
+                        class="p-button-rounded p-button-success p-button-lg" style="background: linear-gradient(90deg, #254dd1, #7b9efe); 
                             position:absolute;
                             right:60px;
                             top:15px;
@@ -288,11 +292,10 @@
                            color: white; 
                            padding: 10px 20px; 
                            transition: background 0.3s ease;
-                           " 
-                    (click)="exportErrorData()">
-                   </button>
-                    
-                    
+                           " (click)="exportErrorData()">
+                    </button>
+
+
                 </div>
 
 

@@ -81,6 +81,17 @@ export class  UserComponent implements OnInit {
   totalRecords: any[] =[];
   itemCount = 0;
 
+genderOptions = [
+    { label: 'Male', value: 'M' },
+    { label: 'Female', value: 'F' },
+    { label: 'Others', value: 'O' }
+];
+
+statusOptions = [
+    { label: 'Active', value: 0 },
+    { label: 'Inactive', value: 1 }
+];
+
   semesterOptions = [
     { id: 1, name: '1' },
     { id: 2, name: '2' },
@@ -210,6 +221,7 @@ export class  UserComponent implements OnInit {
 
         });
         this.display = true;  // Show the dialog
+        
 
       }
 

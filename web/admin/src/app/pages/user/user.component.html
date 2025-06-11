@@ -18,7 +18,7 @@
             <button pButton label="Create New User" icon="pi pi-plus" class="p-button-success text-lg"
                 (click)="openEditDialog({}, false)"></button>
 
-                <button pButton label="Inactive"  icon="pi pi-trash" class="p-button-success p-button-success p-button-lg"
+            <button pButton label="Inactive" icon="pi pi-trash" class="p-button-success p-button-success p-button-lg"
                 style="background: linear-gradient(90deg, #e21f5a, #ff2b59); border: none; color: white;"
                 (click)="openSemDialogbox('user')">
             </button>
@@ -30,19 +30,10 @@
         </div>
     </div>
 
-    <p-table #dt1 
-    *ngIf="users" 
-    [value]="users" 
-    dataKey="id" 
-    [loading]="loading" 
-    [rowHover]="true"   
-    [showGridlines]="true" 
-    [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']"  
-    [virtualScroll]="true"  
-    [lazy]="true"
-    (onLazyLoad)="onLazyLoad($event)" 
-    [virtualScrollItemSize]="60" [rows]="20"
-    [scrollHeight]="'calc(100vh - 260px)'">
+    <p-table #dt1 *ngIf="users" [value]="users" dataKey="id" [loading]="loading" [rowHover]="true"
+        [showGridlines]="true" [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']"
+        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [virtualScrollItemSize]="60" [rows]="20"
+        [scrollHeight]="'calc(100vh - 260px)'">
 
         <!-- Header Template -->
         <ng-template #header>
@@ -64,7 +55,8 @@
         <ng-template #body let-user>
             <tr [ngClass]="{'bg-gray-600': user.status === 1, 'bg-green-400': user.status === 0}">
                 <td class="flex items-center gap-2">
-                    <img src="{{ user.img ? user.img : '/images/user.png'  }}" width="32" style="vertical-align: middle" />
+                    <img src="{{ user.img ? user.img : '/images/user.png'  }}" width="32"
+                        style="vertical-align: middle" />
                     <span class="image-text">{{ user.name }}</span>
                 </td>
                 <td>{{ user.phone }}</td>
@@ -153,9 +145,12 @@
                             style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-male" style="margin-right: 8px; color: #3b82f6;"></i> Gender:
                         </label>
-                        <input id="gender" type="text" pInputText formControlName="gender"
-                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" />
+
+                        <p-dropdown id="gender" [options]="genderOptions" formControlName="gender" optionLabel="label"
+                            optionValue="value" class="w-full border-round">
+                        </p-dropdown>
                     </div>
+
 
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="birth"
@@ -184,14 +179,16 @@
                             style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" />
                     </div>
 
-                    <div class="p-field" style="margin-bottom: 15px;">
+                    <div class="p-field" style="margin-bottom: 15px; width: 100%;" >
                         <label for="status"
                             style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Status:
                         </label>
-                        <input id="status" type="text" pInputText formControlName="status"
-                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" />
+                        <p-dropdown class="w-full" id="status" [options]="statusOptions" optionLabel="label" optionValue="value"
+                            formControlName="status" placeholder="Select Status">
+                        </p-dropdown>
                     </div>
+
 
                     <div class="p-field" style="margin-bottom: 15px;" *ngIf="!isEditing">
                         <label for="passwd"
@@ -222,9 +219,8 @@
 
             <!-- Dropdown Section -->
             <div class="flex justify-center mb-6">
-                <p-dropdown [options]="semesterOptions" optionLabel="name" optionValue="id"
-                    formControlName="sem" placeholder="Select Semester"
-                    class="w-full max-w-md text-lg rounded-md shadow-md" [panelStyle]="{
+                <p-dropdown [options]="semesterOptions" optionLabel="name" optionValue="id" formControlName="sem"
+                    placeholder="Select Semester" class="w-full max-w-md text-lg rounded-md shadow-md" [panelStyle]="{
             'border-radius': '8px',
             'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)',
             'padding': '10px'
@@ -236,8 +232,9 @@
                 <button pButton label="Cancel" icon="pi pi-times" (click)="displayUserDialog = false"
                     class="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 transition"></button>
 
-                <button pButton label="Save" icon="pi pi-check" (click)="userInactive()"  [disabled]="semesterForm.invalid"
-                class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition">
+                <button pButton label="Save" icon="pi pi-check" (click)="userInactive()"
+                    [disabled]="semesterForm.invalid"
+                    class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition">
                 </button>
             </div>
 
