@@ -192,15 +192,22 @@
 
                     
                     <!-- File Upload Section -->
-                    <div *ngIf="!isEditing  && !isDataReceived && !isErrorData" class="p-field" style="margin-bottom: 15px;">
-                        <label for="upload"
-                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-                            <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload
-                            Excel :
-                        </label>
-                        <input id="upload" type="file" (change)="onFileSelected($event)"
-                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
-                    </div>
+                    <div *ngIf="!isEditing && !isDataReceived && !isErrorData" class="p-field" style="margin-bottom: 15px;">
+    <!-- Download Link -->
+    <div style="margin-bottom: 10px;">
+        <a href="assets/user.xlsx" download style="color: #10b981; font-weight: bold; display: flex; align-items: center; text-decoration: none;">
+            <i class="pi pi-download" style="margin-right: 8px; color: #10b981;"></i> Download Sample Excel
+        </a>
+    </div>
+
+    <!-- Upload Section -->
+    <label for="upload" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
+        <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Upload Excel :
+    </label>
+    <input id="upload" type="file" (change)="onFileSelected($event)"
+        style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
+</div>
+
 
                     <!-- Spinner -->
                     <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>
