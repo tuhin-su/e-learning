@@ -265,7 +265,15 @@ export class StudentComponent implements OnInit {
                         if (response) {
                             this.alert.showSuccessAlert(response.message);
                             this.display = false;
-                            this.fetchStudent();
+                            this.students.forEach((student: any) => {
+                                if (student.id == this.studentForm.value.id) {
+                                    student.roll = this.studentForm.value.roll;
+                                    student.reg = this.studentForm.value.reg;
+                                    student.course_id = this.studentForm.value.course_id;
+                                    student.semester = this.studentForm.value.semester;
+                                    student.status = this.studentForm.value.status;
+                                }
+                            })
                         }
                     },
                     (error) => {

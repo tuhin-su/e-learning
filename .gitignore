@@ -9,7 +9,7 @@ db/db_data/
 *.log
 portainer_data/
 *.venv
-
+api/core.*
 *.backup
 config.yml
 nginx/conf.d/*.conf

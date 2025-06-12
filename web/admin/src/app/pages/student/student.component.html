@@ -157,10 +157,10 @@
                             style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i> Course Name:
                         </label>
-                        <p-dropdown [options]="stream" optionLabel="name" optionValue="id"
+                        <p-dropdown [options]="stream" formControlName="course_id"
                             (onChange)="selectCourse($event)" placeholder="Select Stream" class="custom-dropdown"
                             [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
-                            [filter]="true" [filterBy]="'name'" />
+                            [filter]="true" [filterBy]="'name'" optionLabel="name" optionValue="id" />
 
                     </div>
 
