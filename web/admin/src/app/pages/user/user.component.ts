@@ -245,7 +245,12 @@ export class UserComponent implements OnInit {
                             if (response) {
                                 this.alert.showSuccessAlert(response.message);
                                 this.display = false;
-                                this.fetchUser();
+                                this.users.forEach((user, index) => {
+                                    if (user.user_id === this.userForm.value.id) {
+                                        this.users[index] = this.userForm.value;
+                                    }
+                                });
+                                this.visibleUsers = this.users;
                             }
                         },
                         (error) => {
