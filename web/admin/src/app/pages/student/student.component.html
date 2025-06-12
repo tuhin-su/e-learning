@@ -41,11 +41,59 @@
 
 
     <!-- Student Table -->
-    <p-table #dt1 *ngIf="students" [value]="students" dataKey="id" [loading]="loading" [rowHover]="true"
-        [showGridlines]="true" [virtualScroll]="true" [lazy]="true" [rows]="20" [virtualScrollItemSize]="60"
-        [scrollHeight]="'calc(100vh - 260px)'"
+     <div class="flex flex-wrap gap-4 items-center mb-4">
+
+        <!-- Course Filter -->
+        <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-slate-700">Course:</label>
+        <p-dropdown
+            [options]="courseOptions"
+            [(ngModel)]="selectedCourse"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="All"
+            (onChange)="applyFilters()"
+            class="w-40" />
+        </div>
+
+        <!-- Semester Filter -->
+        <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-slate-700">Semester:</label>
+        <p-dropdown
+            [options]="semesterOptions"
+            [(ngModel)]="selectedSemester"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="All"
+            (onChange)="applyFilters()"
+            class="w-32" />
+        </div>
+
+        <!-- Status Filter -->
+        <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-slate-700">Status:</label>
+        <p-dropdown
+            [options]="statusOptions"
+            [(ngModel)]="selectedStatus"
+            placeholder="All"
+            (onChange)="applyFilters()"
+            class="w-32" />
+        </div>
+
+        <!-- Reset Filters -->
+        <button
+        pButton
+        label="Reset"
+        icon="pi pi-refresh"
+        class="p-button-sm p-button-secondary"
+        (click)="resetFilters()">
+        </button>
+    </div>
+
+    <p-table #dt1 *ngIf="filteredStudents" [value]="filteredStudents" dataKey="id" [loading]="loading" [rowHover]="true"
+        [showGridlines]="true" [rows]="20" [scrollHeight]="'calc(100vh - 300px)'"
         [globalFilterFields]="['student_name', 'roll', 'reg','student_phone', 'course_name', 'semester', 'status']"
-        (onLazyLoad)="onLazyLoad($event)" class="rounded-xl overflow-hidden shadow-lg text-sm">
+        class="rounded-xl overflow-hidden shadow-lg text-sm">
 
         <!-- Table Header -->
         <ng-template #header>
@@ -67,9 +115,9 @@
         <!-- Table Rows -->
         <ng-template #body let-student>
             <tr [ngClass]="{
-                'bg-white': student.status === 0,
-                'bg-gray-50': student.status !== 0
-            }" class="transition-colors duration-300 hover:bg-blue-50">
+            'bg-white': student.status === 0,
+            'bg-gray-50': student.status !== 0
+        }" class="transition-colors duration-300 hover:bg-blue-50">
                 <td class="p-3">{{ student.student_name }}</td>
                 <td class="p-3">{{ student.student_phone }}</td>
                 <td class="p-3">{{ student.roll }}</td>
@@ -78,9 +126,9 @@
                 <td class="p-3">{{ student.semester }} Sem</td>
                 <td class="p-3">
                     <span class="inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-medium" [ngClass]="{
-                        'bg-green-100 text-green-700': student.status === 0,
-                        'bg-red-100 text-red-700': student.status !== 0
-                    }">
+                    'bg-green-100 text-green-700': student.status === 0,
+                    'bg-red-100 text-red-700': student.status !== 0
+                }">
                         <i class="pi"
                             [ngClass]="student.status === 0 ? 'pi-check-circle text-green-500' : 'pi-times-circle text-red-500'">
                         </i>
@@ -124,6 +172,14 @@
         </ng-template>
     </p-table>
 
+    <!-- Load More Button -->
+    <div class="flex justify-center mt-4">
+        <button pButton type="button" label="Load More" icon="pi pi-chevron-down"
+            class="p-button-outlined p-button-secondary" (click)="fetchStudent()" [disabled]="loading">
+        </button>
+    </div>
+
+
 
     <!-- Edit Dialog -->
     <p-dialog [(visible)]="display" header="Student" [modal]="true" [closable]="true" [responsive]="true"
@@ -157,8 +213,8 @@
                             style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
                             <i class="pi pi-book" style="margin-right: 8px; color: #3b82f6;"></i> Course Name:
                         </label>
-                        <p-dropdown [options]="stream" formControlName="course_id"
-                            (onChange)="selectCourse($event)" placeholder="Select Stream" class="custom-dropdown"
+                        <p-dropdown [options]="stream" formControlName="course_id" (onChange)="selectCourse($event)"
+                            placeholder="Select Stream" class="custom-dropdown"
                             [panelStyle]="{'border-radius': '5px', 'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'}"
                             [filter]="true" [filterBy]="'name'" optionLabel="name" optionValue="id" />
 

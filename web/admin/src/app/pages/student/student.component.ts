@@ -105,6 +105,17 @@ export class StudentComponent implements OnInit {
         { label: 'Suspended', value: 2 }
     ];
 
+    filteredStudents: any[] = [];
+
+    selectedCourse: string | null = null;
+    selectedSemester: number | null = null;
+    selectedStatus: number | null = null;
+
+    courseOptions = [
+        { label: 'BCA', value: 'BCA' },
+        { label: 'MCA', value: 'MCA' },
+        { label: 'BBA', value: 'BBA' }
+    ];
 
 
 
@@ -133,7 +144,22 @@ export class StudentComponent implements OnInit {
 
     ngOnInit() {
         this.getCourses()
+        this.fetchStudent();
+    }
 
+    applyFilters() {
+        this.filteredStudents = this.students.filter(student => {
+            return (!this.selectedCourse || student.course_name === this.selectedCourse) &&
+                (!this.selectedSemester || student.semester === this.selectedSemester) &&
+                (this.selectedStatus === null || student.status === this.selectedStatus);
+        });
+    }
+
+    resetFilters() {
+        this.selectedCourse = null;
+        this.selectedSemester = null;
+        this.selectedStatus = null;
+        this.filteredStudents = [...this.students];
     }
 
 
@@ -182,8 +208,8 @@ export class StudentComponent implements OnInit {
                         this.students.concat(response)
                         this.students = [...this.students, ...response];
                         this.totalRecords = response.totalRecords;
-                        // console.log(response);
-                        // this.students = response;
+                        this.filteredStudents = [...this.students];
+                        this.applyFilters();
                     }
                 }),
             catchError((error) => {
@@ -339,7 +365,7 @@ export class StudentComponent implements OnInit {
         } = event;
 
         const totalScrolled = first + rows;
-
+        console.log(totalScrolled);
         if (this.students) {
             if (totalScrolled >= this.students.length) {
                 console.log("📦 Reached end of scroll!");
