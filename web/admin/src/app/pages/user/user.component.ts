@@ -102,7 +102,7 @@ export class UserComponent implements OnInit {
         { id: 7, name: '7' },
         { id: 8, name: '8' }
     ];
-    groups: Array<{ name: string; value: string }> = [];
+    groupsOptions: any[] = [];
     visibleUsers: any[] = [];
     rowsToShow = 20;
 
@@ -136,27 +136,22 @@ export class UserComponent implements OnInit {
             current: this.page, // current page number or index
             max: this.size // number of records per page
         };
-        const dropdownGroups = await firstValueFrom(
+        await firstValueFrom(
             this.management.getgroups(payload).pipe(
-                tap((response) => console.log('API Response:', response)),
-                map((response) => {
-                    if (response?.groups?.length) {
-                        return response.groups.map((group: any) => ({
-                            name: group.name,
-                            value: group.code
-                        }));
+                tap((response) => {
+                    if (response) {
+                        this.loading = false;
+                        this.groupsOptions = response;
+                        // console.log(this.groupsOptions);
                     }
-                    return [];
                 }),
-                catchError((err) => {
-                    console.error('API Error:', err);
-                    return of([]); // fallback value
+                catchError((error) => {
+                    console.error('Error in fetching user data:', error);
+                    this.loading = false;
+                    return of({ users: [], totalRecords: 0 }); // return an empty array on error to prevent app crash
                 })
             )
-        );
-        this.groups = dropdownGroups;
-        console.log(this.groups);
-
+        )
         this.fetchUser();
     }
 
