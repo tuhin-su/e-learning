@@ -286,12 +286,12 @@ def app_user_create():
                 db.disconnect()
                 return jsonify({"message": f"{i} is required"}), 400
                 
-        sql = "INSERT INTO user(id, email, passwd, createDate, groups, status, createBy) VALUES (%s,%s,%s, current_timestamp(),%s,%s,%s)"
+        sql = "INSERT INTO user(id, email, passwd, createDate, groups, status, createBy) VALUES (%s,%s,%s, current_timestamp(),%s,0,%s)"
         sql1 = "INSERT INTO user_info(user_id, name, phone, address, gender, birth, img) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         # db.conn.start_transaction()
             
         try:
-            db.cursor.execute(sql,(user_id, email, password, data["groups"],data["status"], user_id_ad ))
+            db.cursor.execute(sql,(user_id, email, password, data["groups"], user_id_ad ))
             try:
                 db.cursor.execute(sql1,(user_id,data["name"], data["phone"], data["address"], data["gender"],data["birth"], data["img"]))
                 db.conn.commit()  

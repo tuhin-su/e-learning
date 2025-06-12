@@ -1,4 +1,4 @@
-@apiUrl = http://localhost:5000
+@apiUrl = http://api.timt.test:5000
 # @apiUrl = https://api.timt.in
 ### REQUEST VER
 GET {{ apiUrl }}/ver
@@ -458,10 +458,9 @@ Authorization: Bearer {{token}}
 
 {
  
- "email": "rana34@gmail.com" ,
+ "email": "madhumita@gmail.com" ,
  "passwd": "hi#53" ,
- "groups" : "AD" ,
- "status" : "0 ",
+ "groups" : "ST" ,
  "name": "R4ana" ,
  "phone": "47827893894" ,
  "address": "absd344" ,

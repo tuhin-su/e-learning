@@ -75,7 +75,7 @@ export class GroupComponent implements OnInit {
         private management : ManagementService,
         private fb : FormBuilder,
         private alert: AlertService,
-      
+
     ) {
         this.groupForm = this.fb.group({
             id:[''],
@@ -83,9 +83,9 @@ export class GroupComponent implements OnInit {
             description: ['', Validators.required],
             code: ['',],
             label: ['', Validators.required],
-            
-           
-    })    
+
+
+    })
     }
 
     ngOnInit() {
@@ -96,7 +96,7 @@ export class GroupComponent implements OnInit {
     // loadUsersLazy(event: any) {
     //     this.loading = true;
     //     const { first, rows } = event; // 'first' is the starting index and 'rows' is the number of rows per page
-      
+
     //     // Make an API call to fetch data based on the pagination parameters
     //     this.fetchgroup(first, rows).then((data: any) => {
     //       this.groups = data.groups;
@@ -107,14 +107,14 @@ export class GroupComponent implements OnInit {
     //       this.loading = false;
     //     });
     //   }
-      
+
 
       fetchgroup() {
         const payload = {
           current: this.page,  // current page number or index
           max: this.size          // number of records per page
         };
-      
+
         return firstValueFrom(this.management.getgroups(payload).pipe(
             tap((response) => {
               if (response) {
@@ -133,7 +133,7 @@ export class GroupComponent implements OnInit {
           )
         );
       }
-      
+
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -151,13 +151,13 @@ export class GroupComponent implements OnInit {
           label:group.label,
         });
         this.display = true;  // Show the dialog
-        
+
       }
 
 
-      
 
-     
+
+
       async saveGroup() {
        if(this.isEditing){
         await firstValueFrom(this.management.editGroup(this.groupForm.value).pipe(
@@ -193,10 +193,10 @@ export class GroupComponent implements OnInit {
           )
         ))
        }
-        
+
         this.display = false;
       }
-    
+
 
 
       onScroll(event: any) {
@@ -204,9 +204,9 @@ export class GroupComponent implements OnInit {
           first,
           rows
         } = event;
-  
+
         const totalScrolled = first + rows;
-  
+
         if(this.groups){
           if (totalScrolled >= this.groups.length) {
             console.log("📦 Reached end of scroll!");
@@ -214,7 +214,7 @@ export class GroupComponent implements OnInit {
           }
         }
       }
-  
+
       onLazyLoad(event: any) {
           this.loading = true;
           setTimeout(() => {
