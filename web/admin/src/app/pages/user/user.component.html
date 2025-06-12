@@ -14,37 +14,21 @@
 
         <!-- Button Section -->
         <div class="flex gap-5">
-            <button pButton label="Create New User" icon="pi pi-plus" class="p-button-success text-lg" (click)="openEditDialog({}, false)"></button>
+            <button pButton label="Create New User" icon="pi pi-plus" class="p-button-success text-lg"
+                (click)="openEditDialog({}, false)"></button>
 
-            <button
-                pButton
-                label="Inactive"
-                icon="pi pi-trash"
-                class="p-button-success p-button-success p-button-lg"
+            <button pButton label="Inactive" icon="pi pi-trash" class="p-button-success p-button-success p-button-lg"
                 style="background: linear-gradient(90deg, #e21f5a, #ff2b59); border: none; color: white"
-                (click)="openSemDialogbox('user')"
-            ></button>
+                (click)="openSemDialogbox('user')"></button>
 
-            <button pButton icon="pi pi-download" class="p-button-rounded p-button-success p-button-lg" style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white" (click)="exportToExcel()"></button>
+            <button pButton icon="pi pi-download" class="p-button-rounded p-button-success p-button-lg"
+                style="background: linear-gradient(90deg, #254dd1, #7b9efe); border: none; color: white"
+                (click)="exportToExcel()"></button>
         </div>
     </div>
 
-    <p-table
-        #dt1
-        *ngIf="users"
-        [value]="users"
-        dataKey="id"
-        [loading]="loading"
-        [rowHover]="true"
-        [showGridlines]="true"
-        [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']"
-        [virtualScroll]="true"
-        [lazy]="true"
-        (onLazyLoad)="onLazyLoad($event)"
-        [virtualScrollItemSize]="60"
-        [rows]="20"
-        [scrollHeight]="'calc(100vh - 260px)'"
-    >
+    <p-table #dt1 *ngIf="users" [value]="visibleUsers" dataKey="id" [rowHover]="true" [showGridlines]="true"
+        [globalFilterFields]="['name', 'groups', 'gender', 'phone', 'status']" [rows]="20">
         <!-- Header Template -->
         <ng-template #header>
             <tr class="bg-blue-500 text-white">
@@ -65,7 +49,7 @@
         <ng-template #body let-user>
             <tr [ngClass]="{ 'bg-gray-600': user.status === 1, 'bg-green-400': user.status === 0 }">
                 <td class="flex items-center gap-2">
-                    <img src="{{ user.img ? user.img : '/images/user.png' }}" width="32" style="vertical-align: middle" />
+                    <img [src]="user.img ? user.img : '/user.png'" width="32" />
                     <span class="image-text">{{ user.name }}</span>
                 </td>
                 <td>{{ user.phone }}</td>
@@ -82,87 +66,123 @@
                 </td>
                 <td>{{ user.createDate | date: 'dd/MM/yy' }}</td>
                 <td class="flex space-x-2">
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="openEditDialog(user, true)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                        (click)="openEditDialog(user, true)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                        (click)="deleteUser(user)"></button>
                 </td>
             </tr>
         </ng-template>
 
-        <!-- Empty Message Template -->
+        <!-- Empty Message -->
         <ng-template #emptymessage>
             <tr>
                 <td colspan="10" class="text-center text-gray-500">No users found.</td>
             </tr>
         </ng-template>
-
-        <!-- Loading Message Template -->
-        <ng-template #loadingbody>
-            <tr>
-                <td colspan="10" class="text-center text-gray-500">Loading users data. Please wait...</td>
-            </tr>
-        </ng-template>
     </p-table>
 
+    <!-- Load More Button -->
+    <div class="flex justify-center mt-4">
+        <button pButton type="button" label="Load More" class="p-button-outlined p-button-primary"
+            (click)="fetchUser()"></button>
+    </div>
+
+
     <!-- Edit Dialog -->
-    <p-dialog [(visible)]="display" header=" User" [modal]="true" [closable]="true" [responsive]="true" [style]="{ 'min-width': '400px' }">
+    <p-dialog [(visible)]="display" header=" User" [modal]="true" [closable]="true" [responsive]="true"
+        [style]="{ 'min-width': '400px' }">
         <form [formGroup]="userForm">
-            <div class="p-fluid" style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1)">
+            <div class="p-fluid"
+                style="padding: 20px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1)">
                 <div style="margin: 10px">
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="img" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-image" style="margin-right: 8px; color: #3b82f6"></i> Image: </label>
-                        <input id="img" type="file" pInputText formControlName="img" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="img" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center">
+                            <i class="pi pi-image" style="margin-right: 8px; color: #3b82f6"></i> Image: </label>
+                        <input id="img" type="file" pInputText formControlName="img"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="name" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-user" style="margin-right: 8px; color: #3b82f6"></i> Name: </label>
-                        <input id="name" type="text" pInputText formControlName="name" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="name" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center">
+                            <i class="pi pi-user" style="margin-right: 8px; color: #3b82f6"></i> Name: </label>
+                        <input id="name" type="text" pInputText formControlName="name"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="phone" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-phone" style="margin-right: 8px; color: #3b82f6"></i> Phone: </label>
-                        <input id="phone" type="text" pInputText formControlName="phone" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="phone"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-phone" style="margin-right: 8px; color: #3b82f6"></i> Phone: </label>
+                        <input id="phone" type="text" pInputText formControlName="phone"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="address" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-home" style="margin-right: 8px; color: #3b82f6"></i> Address: </label>
-                        <input id="address" type="text" pInputText formControlName="address" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="address"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-home" style="margin-right: 8px; color: #3b82f6"></i> Address: </label>
+                        <input id="address" type="text" pInputText formControlName="address"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="gender" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-male" style="margin-right: 8px; color: #3b82f6"></i> Gender: </label>
+                        <label for="gender"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-male" style="margin-right: 8px; color: #3b82f6"></i> Gender: </label>
 
-                        <p-dropdown id="gender" [options]="genderOptions" formControlName="gender" optionLabel="label" optionValue="value" class="w-full border-round"> </p-dropdown>
+                        <p-dropdown id="gender" [options]="genderOptions" formControlName="gender" optionLabel="label"
+                            optionValue="value" class="w-full border-round"> </p-dropdown>
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="birth" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-calendar" style="margin-right: 8px; color: #3b82f6"></i> Birth: </label>
-                        <input id="birth" type="date" placeholder="yy/mm/dd" pInputText formControlName="birth" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="birth"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-calendar" style="margin-right: 8px; color: #3b82f6"></i> Birth: </label>
+                        <input id="birth" type="date" placeholder="yy/mm/dd" pInputText formControlName="birth"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="email" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-envelope" style="margin-right: 8px; color: #3b82f6"></i> Email: </label>
-                        <input id="email" type="text" pInputText formControlName="email" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="email"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-envelope" style="margin-right: 8px; color: #3b82f6"></i> Email: </label>
+                        <input id="email" type="text" pInputText formControlName="email"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px">
-                        <label for="groups" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-users" style="margin-right: 8px; color: #3b82f6"></i> Groups: </label>
-                        <p-dropdown id="groups" [options]="groups" optionLabel="name" optionValue="name" formControlName="groups" placeholder="Select a group" styleClass="w-full" [showClear]="true"> </p-dropdown>
+                        <label for="groups"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-users" style="margin-right: 8px; color: #3b82f6"></i> Groups: </label>
+                        <p-dropdown id="groups" [options]="groups" optionLabel="name" optionValue="name"
+                            formControlName="groups" placeholder="Select a group" styleClass="w-full"
+                            [showClear]="true"> </p-dropdown>
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px" *ngIf="isEditing">
-                        <label for="status" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6"></i> Status: </label>
-                        <p-dropdown class="w-full" id="status" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="status" placeholder="Select Status"> </p-dropdown>
+                        <label for="status"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6"></i> Status:
+                        </label>
+                        <p-dropdown class="w-full" id="status" [options]="statusOptions" optionLabel="label"
+                            optionValue="value" formControlName="status" placeholder="Select Status"> </p-dropdown>
                     </div>
 
                     <div class="p-field" style="margin-bottom: 15px" *ngIf="!isEditing">
-                        <label for="passwd" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i class="pi pi-lock" style="margin-right: 8px; color: #3b82f6"></i> Password: </label>
-                        <input id="passwd" type="password" pInputText formControlName="passwd" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
+                        <label for="passwd"
+                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center"> <i
+                                class="pi pi-lock" style="margin-right: 8px; color: #3b82f6"></i> Password: </label>
+                        <input id="passwd" type="password" pInputText formControlName="passwd"
+                            style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px" />
                     </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; margin-top: 20px">
-                    <button pButton label="Cancel" icon="pi pi-times" (click)="display = false" style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px"></button>
-                    <button pButton label="Save" icon="pi pi-check" (click)="saveUser()" style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px"></button>
+                    <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
+                        style="background-color: #e5e7eb; color: #111827; padding: 10px 20px; border-radius: 5px"></button>
+                    <button pButton label="Save" icon="pi pi-check" (click)="saveUser()"
+                        style="background-color: #10b981; color: white; padding: 10px 20px; border-radius: 5px"></button>
                 </div>
             </div>
         </form>
@@ -170,31 +190,27 @@
 
     <!-- inactive user -->
 
-    <p-dialog [(visible)]="displayUserDialog" header="Select Semester" [modal]="true" [closable]="true" [responsive]="true" [style]="{ 'min-width': '450px', padding: '20px' }" contentStyleClass="pt-4">
+    <p-dialog [(visible)]="displayUserDialog" header="Select Semester" [modal]="true" [closable]="true"
+        [responsive]="true" [style]="{ 'min-width': '450px', padding: '20px' }" contentStyleClass="pt-4">
         <form [formGroup]="semesterForm" class="flex flex-col justify-between h-[16rem]">
             <!-- Dropdown Section -->
             <div class="flex justify-center mb-6">
-                <p-dropdown
-                    [options]="semesterOptions"
-                    optionLabel="name"
-                    optionValue="id"
-                    formControlName="sem"
-                    placeholder="Select Semester"
-                    class="w-full max-w-md text-lg rounded-md shadow-md"
-                    [panelStyle]="{
+                <p-dropdown [options]="semesterOptions" optionLabel="name" optionValue="id" formControlName="sem"
+                    placeholder="Select Semester" class="w-full max-w-md text-lg rounded-md shadow-md" [panelStyle]="{
                         'border-radius': '8px',
                         'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)',
                         padding: '10px'
-                    }"
-                    [filterBy]="'name'"
-                ></p-dropdown>
+                    }" [filterBy]="'name'"></p-dropdown>
             </div>
 
             <!-- Buttons -->
             <div class="flex justify-between px-2">
-                <button pButton label="Cancel" icon="pi pi-times" (click)="displayUserDialog = false" class="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 transition"></button>
+                <button pButton label="Cancel" icon="pi pi-times" (click)="displayUserDialog = false"
+                    class="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 transition"></button>
 
-                <button pButton label="Save" icon="pi pi-check" (click)="userInactive()" [disabled]="semesterForm.invalid" class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition"></button>
+                <button pButton label="Save" icon="pi pi-check" (click)="userInactive()"
+                    [disabled]="semesterForm.invalid"
+                    class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition"></button>
             </div>
         </form>
     </p-dialog>

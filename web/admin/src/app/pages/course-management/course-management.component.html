@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow-sketch">
     <div class="font-semibold text-xl mb-4 flex justify-between items-center">
         <span>Course Management</span>
         <p-iconfield iconPosition="left" class= "flex items-center">
@@ -10,15 +10,15 @@
 
         <button pButton label="Create New Course" icon="pi pi-plus" class="p-button-primary" (click)="openEditDialog({}, false)"></button>
     </div>
-    <p-table #dt1 
-    [value]="courses" 
-    dataKey="id" 
-    [rows]="10" 
-    [loading]="loading" 
-    [rowHover]="true" 
+    <p-table #dt1
+    [value]="courses"
+    dataKey="id"
+    [rows]="10"
+    [loading]="loading"
+    [rowHover]="true"
     [showGridlines]="true"
-    [globalFilterFields]="['name', 'description', 'id','course_fees', 'course_duration', 'status']"   
-    [paginator]="true" 
+    [globalFilterFields]="['name', 'description', 'id','course_fees', 'course_duration', 'status']"
+    [paginator]="true"
     responsiveLayout="scroll">
 
         <ng-template #header>
@@ -47,14 +47,14 @@
                     </span>
                   </td>
                 <td>{{ course.createDate | date: 'dd/MM/yy' }}</td>
-                
+
                 <td class="flex space-x-2">
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
                         (click)="openEditDialog(course, true)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
                         (click)="deleteCourse(course)"></button>
                 </td>
-              
+
             </tr>
         </ng-template>
         <ng-template #emptymessage>
@@ -84,7 +84,7 @@
                         <input id="courseId" type="text" pInputText formControlName="id" [readonly]="true"
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; background-color: #e5e7eb;"/>
                     </div>
-    
+
                     <!-- Course Name -->
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="courseName" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
@@ -93,7 +93,7 @@
                         <input id="courseName" type="text" pInputText formControlName="name"
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-    
+
                     <!-- Course Description -->
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="courseDescription" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
@@ -102,7 +102,7 @@
                         <input id="courseDescription" type="text" pInputText formControlName="description"
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-    
+
                     <!-- Course Fees -->
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="courseFees" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
@@ -111,7 +111,7 @@
                         <input id="courseFees" type="text" pInputText formControlName="course_fees"
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-    
+
                     <!-- Course Duration -->
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="courseDuration" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
@@ -120,7 +120,7 @@
                         <input id="courseDuration" type="number" pInputText formControlName="course_duration"
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
-    
+
                     <!-- Status -->
                     <div class="p-field" style="margin-bottom: 15px;">
                         <label for="status" style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
@@ -130,7 +130,7 @@
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;"/>
                     </div>
                 </div>
-    
+
                 <!-- Buttons -->
                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                     <button pButton label="Cancel" icon="pi pi-times" (click)="display = false"
@@ -141,5 +141,5 @@
             </div>
         </form>
     </p-dialog>
-    
+
 </div>

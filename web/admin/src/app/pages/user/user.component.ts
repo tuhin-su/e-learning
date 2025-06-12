@@ -102,8 +102,9 @@ export class UserComponent implements OnInit {
         { id: 7, name: '7' },
         { id: 8, name: '8' }
     ];
-    groups: Array<{ name: string, value: string }> = [];
-
+    groups: Array<{ name: string; value: string }> = [];
+    visibleUsers: any[] = [];
+    rowsToShow = 20;
 
     constructor(
         private management: ManagementService,
@@ -131,33 +132,33 @@ export class UserComponent implements OnInit {
     }
 
     async ngOnInit() {
-         const payload = {
-          current: this.page,  // current page number or index
-          max: this.size          // number of records per page
+        const payload = {
+            current: this.page, // current page number or index
+            max: this.size // number of records per page
         };
         const dropdownGroups = await firstValueFrom(
-  this.management.getgroups(payload).pipe(
-    tap(response => console.log('API Response:', response)),
-    map(response => {
-      if (response?.groups?.length) {
-        return response.groups.map((group: any) => ({
-          name: group.name,
-          value: group.code
-        }));
-      }
-      return [];
-    }),
-    catchError(err => {
-      console.error('API Error:', err);
-      return of([]);  // fallback value
-    })
-  )
-);
+            this.management.getgroups(payload).pipe(
+                tap((response) => console.log('API Response:', response)),
+                map((response) => {
+                    if (response?.groups?.length) {
+                        return response.groups.map((group: any) => ({
+                            name: group.name,
+                            value: group.code
+                        }));
+                    }
+                    return [];
+                }),
+                catchError((err) => {
+                    console.error('API Error:', err);
+                    return of([]); // fallback value
+                })
+            )
+        );
         this.groups = dropdownGroups;
-        console.log(this.groups)
+        console.log(this.groups);
+
+        this.fetchUser();
     }
-
-
 
     onGlobalFilter(event: Event) {
         const inputValue = (event.target as HTMLInputElement).value;
@@ -207,6 +208,8 @@ export class UserComponent implements OnInit {
                         this.users.concat(response);
                         this.users = [...this.users, ...response];
                         this.totalRecords = response.totalRecords;
+                        this.visibleUsers = this.users;
+
                     }
                 }),
                 catchError((error) => {
