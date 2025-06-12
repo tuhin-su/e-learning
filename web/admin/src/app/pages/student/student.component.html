@@ -1,116 +1,131 @@
-<style>
-    .custom-dropdown {
-        width: 100%;
-        border: 1px solid #d1d5db;
-        border-radius: 5px;
-        padding: 8px;
-        font-size: 14px;
+<div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-sketch">
+    <div class="flex flex-wrap items-center justify-between gap-4 bg-white rounded-xl p-5">
 
-    }
-</style>
+        <!-- Title -->
+        <div class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="pi pi-users text-blue-500 text-2xl"></i>
+            Student Management
+        </div>
 
+        <!-- Search Input -->
+        <div
+            class="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg shadow-inner w-full md:w-auto flex-1 md:flex-none">
+            <i class="pi pi-search text-gray-500 text-base"></i>
+            <input pInputText type="text"
+                class="bg-transparent border-none outline-none focus:ring-0 text-slate-800 placeholder:text-slate-400 w-full md:w-64"
+                placeholder="Search students..." (input)="onGlobalFilter($event)" />
+        </div>
 
-<div class="card bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 rounded-lg shadow-xl">
-    <div class="font-semibold text-xl mb-4 flex justify-between items-center text-slate-800 
-            bg-white shadow-md rounded-lg p-4">
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-2 justify-end">
+            <!-- Create Button -->
+            <button pButton type="button" icon="pi pi-plus" label="Create"
+                class="p-button-success p-button-sm rounded-md shadow hover:bg-green-600 transition"
+                (click)="openEditDialog({}, false)">
+            </button>
 
-        <!-- Title Section -->
-        <span class="text-2xl font-bold text-gray-800">Student Management</span>
+            <!-- Migration Button -->
+            <button pButton type="button" icon="pi pi-calendar-plus" label="Migrate"
+                class="p-button-info p-button-sm rounded-md shadow hover:bg-blue-600 transition"
+                (click)="openSemDialogbox('student')">
+            </button>
 
-        <!-- Search Field -->
-        <p-iconfield iconPosition="left" class="flex items-center bg-gray-100 p-2 rounded-md shadow-sm">
-            <p-inputicon>
-                <i class="pi pi-search text-gray-600"></i>
-            </p-inputicon>
-            <input pInputText type="text" (input)="onGlobalFilter( $event)" placeholder="Search keyword"
-                class="border-0 focus:ring-0 focus:outline-none bg-transparent text-gray-800" />
-        </p-iconfield>
-
-        <!-- Create New Student Button -->
-        <button pButton label="Create New Student" icon="pi pi-plus"
-            class="p-button-success text-lg rounded-md shadow-md hover:bg-green-600 transition"
-            (click)="openEditDialog({}, false)">
-        </button>
-
-        <!-- Migration Button -->
-        <button pButton label="Migration" icon="pi pi-calendar-plus"
-            class="p-button-info text-lg rounded-md shadow-md hover:bg-blue-600 transition"
-            (click)="openSemDialogbox('student')">
-        </button>
-
-        <button pButton icon="pi pi-download" class="p-button-rounded p-button-success p-button-lg" style="background: linear-gradient(90deg, #254dd1, #7b9efe); 
-               border: none; 
-               color: white; 
-               padding: 10px 20px; 
-               transition: background 0.3s ease;" (click)="exportToExcel()">
-        </button>
-
-
+            <!-- Export Button -->
+            <button pButton type="button" icon="pi pi-download"
+                class="p-button-sm p-button-rounded p-button-secondary text-white shadow"
+                style="background: linear-gradient(to right, #254dd1, #7b9efe); border: none;"
+                pTooltip="Export to Excel" tooltipPosition="top" (click)="exportToExcel()">
+            </button>
+        </div>
     </div>
 
 
-
+    <!-- Student Table -->
     <p-table #dt1 *ngIf="students" [value]="students" dataKey="id" [loading]="loading" [rowHover]="true"
-        [showGridlines]="true"
+        [showGridlines]="true" [virtualScroll]="true" [lazy]="true" [rows]="20" [virtualScrollItemSize]="60"
+        [scrollHeight]="'calc(100vh - 260px)'"
         [globalFilterFields]="['student_name', 'roll', 'reg','student_phone', 'course_name', 'semester', 'status']"
-        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [virtualScrollItemSize]="60" [rows]="20"
-        [scrollHeight]="'calc(100vh - 260px)'">
+        (onLazyLoad)="onLazyLoad($event)" class="rounded-xl overflow-hidden shadow-lg text-sm">
 
+        <!-- Table Header -->
         <ng-template #header>
-            <tr class="bg-blue-500 text-white">
-                <th style="min-width: 12rem">Student Name</th>
-                <th style="min-width: 12rem">Phone Number</th>
-                <th style="min-width: 12rem">Roll</th>
-                <th style="min-width: 10rem">Registration</th>
-                <th style="min-width: 10rem">Course</th>
-                <th style="min-width: 12rem">Semester</th>
-                <th style="min-width: 12rem">Status</th>
-                <th style="min-width: 12rem">Register By</th>
-                <th style="min-width: 12rem">Phone Number</th>
-                <th style="min-width: 12rem">Create Date</th>
-                <th style="min-width: 12rem">Actions</th>
+            <tr class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold">
+                <th class="p-3">Student Name</th>
+                <th class="p-3">Phone Number</th>
+                <th class="p-3">Roll</th>
+                <th class="p-3">Registration</th>
+                <th class="p-3">Course</th>
+                <th class="p-3">Semester</th>
+                <th class="p-3">Status</th>
+                <th class="p-3">Registered By</th>
+                <th class="p-3">Phone Number</th>
+                <th class="p-3">Created</th>
+                <th class="p-3">Actions</th>
             </tr>
         </ng-template>
+
+        <!-- Table Rows -->
         <ng-template #body let-student>
-            <tr [ngClass]="{'bg-gray-100': student.status === 1, 'bg-green-100': student.status === 0}">
-                <td>{{ student.student_name }}</td>
-                <td>{{ student.student_phone }}</td>
-                <td>{{ student.roll }}</td>
-                <td>{{ student.reg }}</td>
-                <td>{{ student.course_name }}</td>
-                <td>{{ student.semester }} Sem </td>
-                <td>
-                    <span [ngClass]="student.status === 0 ? 'status-active' : 'status-inactive'">
+            <tr [ngClass]="{
+                'bg-white': student.status === 0,
+                'bg-gray-50': student.status !== 0
+            }" class="transition-colors duration-300 hover:bg-blue-50">
+                <td class="p-3">{{ student.student_name }}</td>
+                <td class="p-3">{{ student.student_phone }}</td>
+                <td class="p-3">{{ student.roll }}</td>
+                <td class="p-3">{{ student.reg }}</td>
+                <td class="p-3">{{ student.course_name }}</td>
+                <td class="p-3">{{ student.semester }} Sem</td>
+                <td class="p-3">
+                    <span class="inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-medium" [ngClass]="{
+                        'bg-green-100 text-green-700': student.status === 0,
+                        'bg-red-100 text-red-700': student.status !== 0
+                    }">
+                        <i class="pi"
+                            [ngClass]="student.status === 0 ? 'pi-check-circle text-green-500' : 'pi-times-circle text-red-500'">
+                        </i>
                         {{ student.status === 0 ? 'Active' : 'Inactive' }}
-                        <i class="pi" [ngClass]="student.status === 0 ? 'pi-check-circle' : 'pi-times-circle'"></i>
                     </span>
                 </td>
-                <td>{{ student.Admin_name }}</td>
-                <td>{{ student.Admin_ph }}</td>
-                <td>{{ student.createDate | date: 'dd/MM/yy' }}</td>
-                <td class="flex space-x-2">
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                        (click)="openEditDialog(student, true)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                        (click)="deleteStudent(student)"></button>
-
+                <td class="p-3">{{ student.Admin_name }}</td>
+                <td class="p-3">{{ student.Admin_ph }}</td>
+                <td class="p-3">{{ student.createDate | date: 'dd/MM/yy' }}</td>
+                <td class="p-3">
+                    <div class="flex gap-2 justify-start items-center">
+                        <button pButton type="button" pRipple icon="pi pi-pencil"
+                            class="p-button-sm p-button-rounded p-button-info" (click)="openEditDialog(student, true)"
+                            pTooltip="Edit" tooltipPosition="top"></button>
+                        <button pButton type="button" pRipple icon="pi pi-trash"
+                            class="p-button-sm p-button-rounded p-button-danger" (click)="deleteStudent(student)"
+                            pTooltip="Delete" tooltipPosition="top"></button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
+
+        <!-- Empty Message -->
         <ng-template #emptymessage>
             <tr>
-                <td colspan="8" class="text-center text-gray-500">No students found.</td>
+                <td colspan="11" class="text-center text-gray-400 py-5">
+                    <i class="pi pi-info-circle text-xl text-blue-400 mr-2"></i>
+                    No students found.
+                </td>
             </tr>
         </ng-template>
+
+        <!-- Loading Message -->
         <ng-template #loadingbody>
             <tr>
-                <td colspan="8" class="text-center text-gray-500">Loading student data. Please wait...</td>
+                <td colspan="11" class="text-center text-gray-400 py-5">
+                    <i class="pi pi-spinner pi-spin text-xl text-indigo-500 mr-2"></i>
+                    Loading student data. Please wait...
+                </td>
             </tr>
         </ng-template>
     </p-table>
 
-    <!-- Edit Dialog -->
 
+    <!-- Edit Dialog -->
     <p-dialog [(visible)]="display" header="Student" [modal]="true" [closable]="true" [responsive]="true"
         [style]="{'min-width': '400px'}">
 
@@ -158,14 +173,15 @@
                             style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
                     </div>
 
-                    <div class="p-field" style="margin-bottom: 15px;">
-                        <label for="status"
-                            style="color: #3b82f6; font-weight: bold; display: flex; align-items: center;">
-                            <i class="pi pi-check-circle" style="margin-right: 8px; color: #3b82f6;"></i> Status:
+                    <div class="space-y-2 col-span-2">
+                        <label for="status" class="font-semibold text-blue-600 flex items-center">
+                            <i class="pi pi-check-circle mr-2 text-blue-600"></i> Status:
                         </label>
-                        <input id="status" type="number" pInputText formControlName="status"
-                            style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" />
+                        <p-dropdown id="status" formControlName="status" [options]="statusOptions" optionLabel="label"
+                            optionValue="value" placeholder="Select Status" class="w-full"
+                            [panelStyle]="{'border-radius': '6px', 'box-shadow': '0 2px 8px rgba(0, 0, 0, 0.1)'}"></p-dropdown>
                     </div>
+
 
 
                     <div style="display: flex; justify-content: space-between; margin-top: 20px;">
@@ -179,18 +195,8 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-
                 <!-- STUDENT CREATE -->
-
                 <div style="margin: 10px;">
-
-
                     <!-- File Upload Section -->
                     <div *ngIf="!isEditing && !isDataReceived && !isErrorData" class="p-field"
                         style="margin-bottom: 15px;">
@@ -243,7 +249,6 @@
 
                 </div>
 
-
                 <div *ngIf="!isEditing && errorTableData">
 
                     <p-table *ngIf="errorTableData.length" [value]="errorTableData" [responsiveLayout]="'scroll'"
@@ -282,15 +287,14 @@
                         </ng-template>
                     </p-table>
 
-
                     <button *ngIf="isErrorData" pButton icon="pi pi-download"
-                        class="p-button-rounded p-button-success p-button-lg" style="background: linear-gradient(90deg, #254dd1, #7b9efe); 
+                        class="p-button-rounded p-button-success p-button-lg" style="background: linear-gradient(90deg, #254dd1, #7b9efe);
                             position:absolute;
                             right:60px;
                             top:15px;
-                           border: none; 
-                           color: white; 
-                           padding: 10px 20px; 
+                           border: none;
+                           color: white;
+                           padding: 10px 20px;
                            transition: background 0.3s ease;
                            " (click)="exportErrorData()">
                     </button>
@@ -303,12 +307,7 @@
         </form>
     </p-dialog>
 
-
-
-
     <!-- Migration -->
-
-
     <p-dialog [(visible)]="displayStudentDialog" header="Student" [modal]="true" [closable]="true" [responsive]="true"
         [style]="{'min-width': '500px'}">
         <form [formGroup]="semesterForm" class="h-[14rem]">
@@ -356,6 +355,4 @@
             </div>
         </form>
     </p-dialog>
-
-
 </div>

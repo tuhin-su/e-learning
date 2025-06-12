@@ -81,8 +81,8 @@ export class StudentComponent implements OnInit {
     tableHeaders: string[] = [];
     isLoading = false;
     isDataReceived: boolean = false;
-    isErrorData : boolean = false;
-    errorTableData: any [] = [];
+    isErrorData: boolean = false;
+    errorTableData: any[] = [];
     requiredHeaders = [];
     // "address", "email", "passwd", "groups", "name", "birth", "course","gender", "phone", "reg", "roll"," semester", "img"
 
@@ -97,6 +97,14 @@ export class StudentComponent implements OnInit {
         { id: 7, name: '7' },
         { id: 8, name: '8' }
     ]
+
+
+    statusOptions = [
+        { label: 'Active', value: 0 },
+        { label: 'Inactive', value: 1 },
+        { label: 'Suspended', value: 2 }
+    ];
+
 
 
 
@@ -203,7 +211,7 @@ export class StudentComponent implements OnInit {
             this.isDataReceived = false;
             this.tableData = [];
         }
-        if(!this.isEditing && this.errorTableData){
+        if (!this.isEditing && this.errorTableData) {
             this.isErrorData = false;
             this.errorTableData = [];
 
@@ -220,7 +228,7 @@ export class StudentComponent implements OnInit {
             "course_id": event.value,
 
         })
-        
+
 
     }
 
@@ -241,7 +249,7 @@ export class StudentComponent implements OnInit {
                 (res) => {
                     if (res) {
                         this.stream = res
-                        
+
                     }
                 }
             )
@@ -281,7 +289,12 @@ export class StudentComponent implements OnInit {
                     if (response) {
                         this.alert.showSuccessAlert(response.message);
                         this.displayStudentDialog = false;
-                        this.fetchStudent();
+                        this.students.forEach((student: any) => {
+                            if (student.semester == this.semesterForm.value.from_semester) {
+                                student.semester = this.semesterForm.value.semester
+
+                            }
+                        })
                     }
                 },
                 (error) => {
@@ -455,55 +468,55 @@ export class StudentComponent implements OnInit {
 
 
             try {
-              await firstValueFrom(
-                this.management.createStudent(studentToSend).pipe(
-                  tap((res) => {
-                    if (res) {
-                      this.alert.showSuccessAlert(res.message || 'Student created successfully.');
-                    }
-                  },
+                await firstValueFrom(
+                    this.management.createStudent(studentToSend).pipe(
+                        tap((res) => {
+                            if (res) {
+                                this.alert.showSuccessAlert(res.message || 'Student created successfully.');
+                            }
+                        },
 
-                  (error) => {
-      
-                    this.isErrorData = false
-                    this.errorTableData.push({
-                    ...rest,
-                    course: matchedCourse.name,
-                    error: error?.error?.message || 'Unknown error'
+                            (error) => {
 
-                  }) ; 
+                                this.isErrorData = false
+                                this.errorTableData.push({
+                                    ...rest,
+                                    course: matchedCourse.name,
+                                    error: error?.error?.message || 'Unknown error'
 
-                  this.isErrorData = true;
+                                });
 
-                  }
+                                this.isErrorData = true;
 
-                  )
-                ));
+                            }
+
+                        )
+                    ));
 
             } catch (error: any) {
-              this.alert.showErrorAlert(error?.error?.message || 'Error creating student.');
+                this.alert.showErrorAlert(error?.error?.message || 'Error creating student.');
             }
         }
         console.log(this.errorTableData)
-        
+
         this.display = true;
         this.fetchStudent(); // Refresh list after processing
     }
 
 
-    
+
 
     exportErrorData(): void {
-    const worksheet = XLSX.utils.json_to_sheet(this.errorTableData);
-    
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Error Students');
-    
-    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([wbout], { type: 'application/octet-stream' });
+        const worksheet = XLSX.utils.json_to_sheet(this.errorTableData);
 
-    saveAs(blob, 'error-students.xlsx');
-}
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Error Students');
+
+        const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+        saveAs(blob, 'error-students.xlsx');
+    }
 
 
 
