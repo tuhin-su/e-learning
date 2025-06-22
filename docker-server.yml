@@ -11,6 +11,9 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db/sql:/docker-entrypoint-initdb.d
+    networks:
+        cloudefire-network:
+          ipv4_address: 10.10.0.15
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -23,6 +26,10 @@ services:
       PMA_NO_XFRAME: '1'
     ports:
       - ${DATABASE_ADMIN_PORT}:80
+  
+    networks:
+        cloudefire-network:
+          ipv4_address: 10.10.0.14
 
   flask:
     build:
@@ -51,6 +58,10 @@ services:
       SMTP_PORT: ${MAIL_SERVER_PORT}
       MAIL: ${MAIL}
       MAIL_KEY: ${MAIL_KEY}
+      
+    networks:
+      cloudefire-network:
+        ipv4_address: 10.10.0.13
 
   admin:
     build:
@@ -81,4 +92,14 @@ services:
     ports:
       - ${NGINX_PORT:-80}:80
       - ${ADMIN_PORT:-81}:81
+    networks:
+      cloudefire-network:
+        ipv4_address: 10.10.0.12
 
+networks:
+  cloudefire-network:
+    external: true
+
+volumes:
+  timtapp:
+    external: true
