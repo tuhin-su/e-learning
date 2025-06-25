@@ -1,0 +1,63 @@
+services:
+  node:
+    image: tuhinsu/node:lts
+    container_name: api.${PROJECT_DOMAIN}
+    volumes:
+      - ./api:/app
+      - dotfiles:/home/vscode
+    environment:
+      - PRODUCTION=${PRODUCTION}
+      - VERSION=${VERSION}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    user: vscode
+    # command: bash start.sh
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: db.${PROJECT_DOMAIN}
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+  
+  app:
+    image: tuhinsu/ionic:lts
+    container_name: app.${PROJECT_DOMAIN}
+    volumes:
+      - ./app:/app
+      - dotfiles:/home/vscode
+    command: sleep infinity
+    environment:
+      - PRODUCTION=${PRODUCTION}
+      - VERSION=${VERSION}
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin.${PROJECT_DOMAIN}
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog.${PROJECT_DOMAIN}
+    restart: unless-stopped
+    # ports:
+    #   - "8025:8025"
+    #   - "1025:1025"
+
+volumes:
+  dotfiles:
+    external: true      

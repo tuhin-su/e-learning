@@ -1,0 +1,34 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "e-learning server",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon",
+    "dev:client": "vite",
+    "build": "vite build",
+    "serve": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuhin-su/e-learning.git"
+  },
+  "author": "tuhin-su",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuhin-su/e-learning.git/issues"
+  },
+  "homepage": "https://github.com/tuhin-su/e-learning.git#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.2",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10",
+    "vite": "^6.3.5"
+  }
+}

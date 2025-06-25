@@ -1,0 +1,32 @@
+db/data/
+dist/
+data/
+.venv
+.vscode/
+*__pycache__
+.env
+*.log
+portainer_data/
+*.venv
+api/core.*
+*.backup
+config.yml
+nginx/conf.d/*.conf
+dev
+www
+.tmp
+*tmp
+dotfiles/*
+dotfiles/.*
+android/app/src/main/assets/*
+android/app/src/main/assets/models
+tools
+
+docker/containers/angular
+docker/containers/flask
+docker/containers/react
+docker/containers/admin
+
+modified:   android/app/release
+modified:   android/app/release/*
+node_module

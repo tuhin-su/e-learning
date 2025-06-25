@@ -1,0 +1,6 @@
+{
+  "watch": ["handlers", "routes", "index.js", "config"],
+  "ext": "js,json",
+  "exec": "node index.js",
+  "delay": "200"
+}

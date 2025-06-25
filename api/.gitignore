@@ -1,0 +1,6 @@
+.tmp
+.bkp
+*/node_modules
+db/data
+db/redis
+package-lock.json
